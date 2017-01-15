@@ -1,4 +1,4 @@
-package com.mercury1089.robot;
+package com.mercury1089.main;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
