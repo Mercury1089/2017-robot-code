@@ -32,7 +32,7 @@ public class Debug {
             String output = "";
             
             // Format: [<real_time> / <match_time>] <log_level>: <message>
-            output += "[" + matchTime.format(Calendar.getInstance().getTime()) + " / " + realTime.format(DRIVER_STATION.getMatchTime()) + "] ";
+            output += "[" + realTime.format(Calendar.getInstance().getTime()) + " / " + matchTime.format(DRIVER_STATION.getMatchTime()) + "] ";
             output += record.getLevel() + ": " + record.getMessage();
 
             return output;
