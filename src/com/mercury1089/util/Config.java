@@ -2,6 +2,7 @@ package com.mercury1089.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,13 +29,12 @@ public class Config {
 			if (!f.exists()) {
 				PROP.setProperty("fuel_ejected", "0");
 				
-				f.createNewFile();
 				save();
 			} else {
-				InputStream input = new FileInputStream(f);
+				FileReader reader = new FileReader(f);
 				
-				PROP.load(input);
-				input.close();
+				PROP.load(reader);
+				reader.close();
 			}
 		} catch (Exception e) {
 			Debug.logException(e);
@@ -83,5 +83,6 @@ public class Config {
 	public static void save() throws IOException {
 		FileWriter writer = new FileWriter(FILE);
 		PROP.store(writer, "Robot Configuration");
+		writer.close();
 	}
 }
