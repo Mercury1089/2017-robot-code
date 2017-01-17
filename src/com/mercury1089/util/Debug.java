@@ -35,6 +35,7 @@ public class Debug {
             // Format: [<real_time> / <match_time>] <log_level>: <message>
             output += "[" + realTime.format(record.getMillis()) + " / " + matchTime.format(DRIVER_STATION.getMatchTime()) + "] ";
             output += record.getLevel() + ": " + record.getMessage();
+	    output += "\n";
 
             return output;
         }
