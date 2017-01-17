@@ -24,7 +24,6 @@ public class Config {
 	 */
 	static {
 		File f = new File(FILE);
-		
 		try {
 			if (!f.exists()) {
 				PROP.setProperty("fuel_ejected", "0");

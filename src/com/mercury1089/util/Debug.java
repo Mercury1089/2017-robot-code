@@ -1,5 +1,6 @@
 package com.mercury1089.util;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,8 +20,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class Debug {
 	private static final DateFormat ISO8601 = new SimpleDateFormat("yyyy-dd-MM_hh-mm-ss.SS"); // Because of Windows, time has to be stored like this.
     private static final Logger LOGGER = Logger.getLogger("");
+    private static final String PATH = "home/lvuser/log/";
     private static final DriverStation DRIVER_STATION = DriverStation.getInstance();
-    private static FileHandler fh;
+    
     private static final Formatter FORMATTER = new Formatter() {
     	private DateFormat 
     		realTime = new SimpleDateFormat("hh:mm:ss.SS"),
@@ -45,16 +47,15 @@ public class Debug {
      * </pre>
      * Initializes the logger and its {@link FileHandler}.
      */
-    public void init() {
+    public static synchronized void init() {
     	try {
-			fh = new FileHandler("home/lvuser/log/log_" + ISO8601.format(Calendar.getInstance().getTime()) + ".txt");
+    		FileHandler fh = new FileHandler(PATH + "log_" + ISO8601.format(Calendar.getInstance().getTime()) + ".txt");
+			LOGGER.setUseParentHandlers(false);
+	    	fh.setFormatter(FORMATTER);
+	    	LOGGER.addHandler(fh);
 		} catch (Exception e) {
 			// He's dead, Jim!
-		} 
-    	
-    	LOGGER.setUseParentHandlers(false);
-    	LOGGER.addHandler(fh);
-    	fh.setFormatter(FORMATTER);
+		}
     }
     
     /**
@@ -66,7 +67,7 @@ public class Debug {
      * @param lvl the level of the log message
      * @param msg the message to write to the logfile
      */
-    public static void logMessage(Level lvl, String msg) {
+    public static synchronized void logMessage(Level lvl, String msg) {
     	LOGGER.log(lvl, msg);
     }
     
@@ -79,7 +80,7 @@ public class Debug {
      * 
      * @param e the {@Link Exception} that was thrown
      */
-    public static void logException(Exception e) {
+    public static synchronized void logException(Exception e) {
     	LOGGER.log(Level.SEVERE, e.getMessage(), e);
     }
 
