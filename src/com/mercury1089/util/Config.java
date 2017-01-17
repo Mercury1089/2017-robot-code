@@ -27,6 +27,7 @@ public class Config {
 		try {
 			if (!f.exists()) {
 				PROP.setProperty("fuel_ejected", "0");
+				PROP.setProperty("log_path", "home/lvuser/log/");
 				
 				save();
 			} else {
@@ -43,7 +44,7 @@ public class Config {
 	
 	/**
 	 * <pre>
-	 * public synchronized String getValue(String property,
+	 * public static synchronized String getValue(String property,
 	 *                                     String def)
 	 * </pre>
 	 * Gets a string based on the specified property.
@@ -54,32 +55,32 @@ public class Config {
 	 * 
 	 * @return the value of the property if it exists, {@code def} otherwise.
 	 */
-	public synchronized String getValue(String property, String def) {
+	public static synchronized String getValue(String property, String def) {
 		return PROP.getProperty(property, def);
 	}
 	
 	/**
 	 * <pre>
-	 * public synchronized void setProperty(String key)
+	 * public static synchronized void setProperty(String key)
 	 * </pre>
 	 * Sets a specified property's value based on the given string.
 	 * It is up to the user to encode the value into a string.
 	 * 
 	 * @param property the property name to set a value of in the config.properties file
 	 */
-	public synchronized void setValue(String property, String value) {
+	public static synchronized void setValue(String property, String value) {
         PROP.setProperty(property, value);
 	}
 	
 	/**
 	 * <pre>
-	 * public void save()
+	 * public static synchronized void save()
 	 * </pre>
 	 * Saves the config to the {@code config.properties} file.
 	 * 
 	 * @throws IOException 
 	 */
-	public static void save() throws IOException {
+	public static synchronized void save() throws IOException {
 		FileWriter writer = new FileWriter(FILE);
 		PROP.store(writer, "Robot Configuration");
 		writer.close();

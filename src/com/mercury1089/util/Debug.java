@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class Debug {
 	private static final DateFormat ISO8601 = new SimpleDateFormat("yyyy-dd-MM_hh-mm-ss.SS"); // Because of Windows, time has to be stored like this.
     private static final Logger LOGGER = Logger.getLogger("");
-    private static final String PATH = "home/lvuser/log/";
     private static final DriverStation DRIVER_STATION = DriverStation.getInstance();
     
     private static final Formatter FORMATTER = new Formatter() {
@@ -34,7 +33,7 @@ public class Debug {
             String output = "";
             
             // Format: [<real_time> / <match_time>] <log_level>: <message>
-            output += "[" + realTime.format(Calendar.getInstance().getTime()) + " / " + matchTime.format(DRIVER_STATION.getMatchTime()) + "] ";
+            output += "[" + realTime.format(record.getMillis()) + " / " + matchTime.format(DRIVER_STATION.getMatchTime()) + "] ";
             output += record.getLevel() + ": " + record.getMessage();
 
             return output;
@@ -43,13 +42,15 @@ public class Debug {
 
     /**
      * <pre>
-     * public void init()
+     * public void init(String path)
      * </pre>
      * Initializes the logger and its {@link FileHandler}.
+     * 
+     * @param path the directory that you want the log to be stored in
      */
-    public static synchronized void init() {
+    public static synchronized void init(String path) {
     	try {
-    		FileHandler fh = new FileHandler(PATH + "log_" + ISO8601.format(Calendar.getInstance().getTime()) + ".txt");
+    		FileHandler fh = new FileHandler(path + "log_" + ISO8601.format(Calendar.getInstance().getTime()) + ".txt");
 			LOGGER.setUseParentHandlers(false);
 	    	fh.setFormatter(FORMATTER);
 	    	LOGGER.addHandler(fh);
