@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
+import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1089.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -20,9 +21,14 @@ import org.usfirst.frc.team1089.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-	public static ExampleSubsystem exampleSubsystem;
 	public static OI oi;
 
+	// Declare subsystems (public static so there is only ever one instance)
+	public static ExampleSubsystem exampleSubsystem;
+	public static DriveTrain driveTrain;
+
+	
+	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -34,6 +40,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// Instantiate the sybsystems
 		exampleSubsystem = new ExampleSubsystem();
+		driveTrain = new DriveTrain();
 
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be

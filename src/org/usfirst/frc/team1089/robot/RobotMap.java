@@ -1,19 +1,58 @@
 package org.usfirst.frc.team1089.robot;
 
 /**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
+ * The {@code RobotMap} class contains constants for all the components' connected ports.
+ * It is is a mapping from the ports sensors and actuators are wired into. There are subclasses
+ * separating the types of ports for each subset of the robot.
+ * This provides flexibility changing wiring, makes checking the wiring easier, and significantly
+ * reduces use of magic numbers.
  */
 public class RobotMap {
-	// For example to map the left and right motors, you could define the
-	// following variables to use with your drivetrain subsystem.
-	// public static int leftMotor = 1;
-	// public static int rightMotor = 2;
+	/**
+	 * The {@code Analog} subclass contains all the ports for anything giving an analog output.
+	 * The only thing in this class is the gyro's port.
+	 */
+	public static class Analog {
+		public static final int GYRO = 0;
+	}
 
-	// If you are using multiple modules, make sure to define both the port
-	// number and the module. For example you with a rangefinder:
-	// public static int rangefinderPort = 1;
-	// public static int rangefinderModule = 1;
+	/**
+	 * The {@code Digital} subclass contains all the ports for anything giving an digital output.
+	 */
+	public static class Digital {
+	}
+	/**
+	 * The {@code Relay} subclass contains all the ports for anything in the relay section.
+	 */
+	public static class Relay {
+	}
+	/**
+	 * The {@code CAN} subclass contains all the ports for anything using the CAN interface.
+	 */
+	public static class CAN {
+		public static final int LEFT_FRONT_TALON_ID = 4;
+		public static final int RIGHT_FRONT_TALON_ID = 2;
+		public static final int LEFT_BACK_TALON_ID = 3;
+		public static final int RIGHT_BACK_TALON_ID = 1;
+		public static final int PDP_ID = 5;
+		public static final int PCM_ID = 6;
+	}
+
+	/**
+	 * The {@code USB} subclass contains all the ports for anything using the USB interface.
+	 * This only contains the joysticks.
+	 */
+	public static class USB {
+		public static final int LEFT_STICK = 1;
+		public static final int RIGHT_STICK = 0;
+		public static final int GAMEPAD = 2;
+	}
+
+	/**
+	 * The {@code PCM} subclass contains all the ports for anything connected to the pneumatics control module (PCM).
+	 */
+	public static class PCM {
+		// Add Pneumatics ports as we decide them
+	}
+
 }
