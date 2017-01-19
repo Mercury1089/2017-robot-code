@@ -20,7 +20,7 @@ import org.usfirst.frc.team1089.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static ExampleSubsystem exampleSubsystem;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -32,6 +32,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// Instantiate the sybsystems
+		exampleSubsystem = new ExampleSubsystem();
+
+		// OI must be constructed after subsystems. If the OI creates Commands
+        //(which it very likely will), subsystems are not guaranteed to be
+        // constructed yet. Thus, their requires() statements may grab null
+        // pointers. Bad news. Don't move it.
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
