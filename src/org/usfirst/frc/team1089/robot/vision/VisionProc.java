@@ -1,4 +1,4 @@
-package com.mercury1089.vision;
+package org.usfirst.frc.team1089.robot.vision;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
