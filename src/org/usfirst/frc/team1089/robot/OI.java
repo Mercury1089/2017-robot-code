@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
 
 
@@ -37,13 +38,15 @@ public class OI {
 //    public JoystickButton rightBtn2;
 
     public Joystick gamePad;
-//    public JoystickButton gamePadBtnA;
+    public JoystickButton gamePadBtnA;
 
     public OI() {
     	
         leftStick = new Joystick(RobotMap.DS_USB.LEFT_STICK);
         rightStick = new Joystick(RobotMap.DS_USB.RIGHT_STICK);
         gamePad = new Joystick(RobotMap.DS_USB.GAMEPAD);
+        gamePadBtnA = new JoystickButton(gamePad, RobotMap.GamepadButtons.A);
+        gamePadBtnA.whenPressed(new DegreeRotate(10));
         
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of
@@ -61,6 +64,7 @@ public class OI {
     	// until it is finished as determined by it's isFinished method.
     	// button.whenReleased(new ExampleCommand());
     }
+
 
     public Joystick getLeftStick() {
         return leftStick;

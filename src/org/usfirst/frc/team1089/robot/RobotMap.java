@@ -55,4 +55,37 @@ public class RobotMap {
 		// Add Pneumatics ports as we decide them
 	}
 
+	public static class GamepadButtons {
+		public static final int
+			A = 1,
+			B = 2,
+			X = 3,
+			Y = 4,
+			LB = 5,
+			RB = 6,
+			BACK = 7,
+			START = 8,
+			L3 = 9,
+			R3 = 10;
+	}
+	
+	/**
+	 * The {@code JoystickButtons} class contains all the button bindings for the
+	 * Joysticks.
+	 */
+	public static class JoystickButtons {
+		// Well this defeats the purpose of constants, doesn't it?
+		public static final int
+			BTN1 = 1,
+			BTN2 = 2,
+			BTN3 = 3,
+			BTN4 = 4,
+			BTN5 = 5,
+			BTN6 = 6,
+			BTN7 = 7,
+			BTN8 = 8,
+			BTN9 = 9,
+			BTN10 = 10,
+			BTN11 = 11;
+	}
 }

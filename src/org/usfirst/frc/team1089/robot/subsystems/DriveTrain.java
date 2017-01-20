@@ -12,13 +12,14 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
  */
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends PIDSubsystem {
 
     private AnalogGyro gyro;
     private CANTalon leftBack;
@@ -29,8 +30,12 @@ public class DriveTrain extends Subsystem {
     private AHRS navx;
     
 	public DriveTrain() {
+		
+		super("DriveTrain", 0.05, 0.0, 0.0);
+		setAbsoluteTolerance(0.1);
+		getPIDController().setContinuous(true);
 
-        gyro = new AnalogGyro(RobotMap.Analog.GYRO);
+		gyro = new AnalogGyro(RobotMap.Analog.GYRO);
         gyro.setSensitivity(0.007); // TODO Move this to Config
         
         navx = new AHRS(SerialPort.Port.kUSB1);
@@ -66,7 +71,9 @@ public class DriveTrain extends Subsystem {
         LiveWindow.addSensor("DriveTrain", "Nav-X", navx);
         LiveWindow.addActuator("DriveTrain", "LeftFront", leftFront);
         LiveWindow.addActuator("DriveTrain", "RightFront", rightFront);
-
+        
+        
+        getPIDController().disable();
 	}
 
     public void initDefaultCommand() {
@@ -94,5 +101,17 @@ public class DriveTrain extends Subsystem {
     public void stop() {
     	robotDrive.stopMotor();
     }
+
+	@Override
+	protected double returnPIDInput() {
+		// TODO Auto-generated method stub
+		return gyro.pidGet();
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		// TODO Auto-generated method stub
+		robotDrive.tankDrive(output, output);
+	}
 }
 
