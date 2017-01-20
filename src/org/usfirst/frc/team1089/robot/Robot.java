@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
 	// Declare subsystems (public static so there is only ever one instance)
 	public static ExampleSubsystem exampleSubsystem;
 	public static DriveTrain driveTrain;
-	public static Vision vision;
+	public static VisionSystem targetingSystem;
 	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
 		// Instantiate the subsystems
 		exampleSubsystem = new ExampleSubsystem();
 		driveTrain = new DriveTrain();
-		vision = new Vision();
+		targetingSystem = new VisionSystem();
 
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
