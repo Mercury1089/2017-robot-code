@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// Instantiate the sybsystems
+		// Instantiate the subsystems
 		exampleSubsystem = new ExampleSubsystem();
 		driveTrain = new DriveTrain();
 

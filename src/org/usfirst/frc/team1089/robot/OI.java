@@ -41,9 +41,9 @@ public class OI {
 
     public OI() {
     	
-        leftStick = new Joystick(RobotMap.USB.LEFT_STICK);
-        rightStick = new Joystick(RobotMap.USB.RIGHT_STICK);
-        gamePad = new Joystick(RobotMap.USB.GAMEPAD);
+        leftStick = new Joystick(RobotMap.DS_USB.LEFT_STICK);
+        rightStick = new Joystick(RobotMap.DS_USB.RIGHT_STICK);
+        gamePad = new Joystick(RobotMap.DS_USB.GAMEPAD);
         
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of

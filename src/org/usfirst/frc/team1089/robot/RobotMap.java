@@ -42,7 +42,7 @@ public class RobotMap {
 	 * The {@code USB} subclass contains all the ports for anything using the USB interface.
 	 * This only contains the joysticks.
 	 */
-	public static class USB {
+	public static class DS_USB {
 		public static final int LEFT_STICK = 1;
 		public static final int RIGHT_STICK = 0;
 		public static final int GAMEPAD = 2;

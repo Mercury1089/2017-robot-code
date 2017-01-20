@@ -7,7 +7,8 @@ import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
-
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -19,20 +20,20 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class DriveTrain extends Subsystem {
 
-	private OI oi;
-
     private AnalogGyro gyro;
     private CANTalon leftBack;
     private CANTalon rightBack;
     private CANTalon leftFront;
     private CANTalon rightFront;
     private RobotDrive robotDrive;
+    private AHRS navx;
     
 	public DriveTrain() {
-		oi = Robot.oi;
 
         gyro = new AnalogGyro(RobotMap.Analog.GYRO);
         gyro.setSensitivity(0.007); // TODO Move this to Config
+        
+        navx = new AHRS(SerialPort.Port.kUSB1);
 
         leftBack = new CANTalon(RobotMap.CAN.LEFT_BACK_TALON_ID);
         leftFront = new CANTalon(RobotMap.CAN.LEFT_FRONT_TALON_ID);
@@ -62,6 +63,7 @@ public class DriveTrain extends Subsystem {
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
 
         LiveWindow.addSensor("DriveTrain", "Gyro", gyro);
+        LiveWindow.addSensor("DriveTrain", "Nav-X", navx);
         LiveWindow.addActuator("DriveTrain", "LeftFront", leftFront);
         LiveWindow.addActuator("DriveTrain", "RightFront", rightFront);
 
@@ -84,8 +86,8 @@ public class DriveTrain extends Subsystem {
      */
     public void joystickDrive(Joystick leftStick, Joystick rightStick) {
     	// Apply the joystick deadzones to the move and rotate values
-    	double moveValue = oi.applyDeadzone(leftStick.getX(), oi.JS_DEADZONE_LIMIT);
-    	double rotateValue = oi.applyDeadzone(rightStick.getY(), oi.JS_DEADZONE_LIMIT);
+    	double moveValue = Robot.oi.applyDeadzone(rightStick.getX(), Robot.oi.JS_DEADZONE_LIMIT);
+    	double rotateValue = Robot.oi.applyDeadzone(leftStick.getY(), Robot.oi.JS_DEADZONE_LIMIT);
     	robotDrive.arcadeDrive(moveValue, rotateValue);
     }
     
