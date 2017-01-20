@@ -9,9 +9,7 @@ import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.GRIPPipeline;
 
-/**
- *
- */
+
 public class GetDistanceFromTarget extends Command {
 	private VisionThread vThread;
 	private Object imgLock;
