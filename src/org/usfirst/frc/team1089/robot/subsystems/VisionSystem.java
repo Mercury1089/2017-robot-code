@@ -15,9 +15,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
-/**
- * This {@link Subsystem} controls the robot's camera and vision targeting.
- */
+
 public class VisionSystem extends Subsystem {
 	public final AxisCamera AXIS_CAMERA;
 	public final int
