@@ -20,12 +20,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static OI oi;
-
 	// Declare subsystems (public static so there is only ever one instance)
 	public static ExampleSubsystem exampleSubsystem;
 	public static DriveTrain driveTrain;
 	public static VisionSystem targetingSystem;
+	public static OI oi;
 	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -40,7 +39,7 @@ public class Robot extends IterativeRobot {
 		exampleSubsystem = new ExampleSubsystem();
 		// driveTrain = new DriveTrain();
 		targetingSystem = new VisionSystem();
-
+		driveTrain = new DriveTrain();
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
