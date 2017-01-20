@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 /**
  *
  */
-public class DriveTrain extends PIDSubsystem {
+public class DriveTrain extends Subsystem {
 
     private AnalogGyro gyro;
     private CANTalon leftBack;
@@ -31,10 +31,10 @@ public class DriveTrain extends PIDSubsystem {
     
 	public DriveTrain() {
 		
-		super("DriveTrain", 0.05, 0.0, 0.0);
+/*		super("DriveTrain", 0.05, 0.0, 0.0);
 		setAbsoluteTolerance(0.1);
 		getPIDController().setContinuous(true);
-
+*/
 		gyro = new AnalogGyro(RobotMap.Analog.GYRO);
         gyro.setSensitivity(0.007); // TODO Move this to Config
         
@@ -73,7 +73,7 @@ public class DriveTrain extends PIDSubsystem {
         LiveWindow.addActuator("DriveTrain", "RightFront", rightFront);
         
         
-        getPIDController().disable();
+        /*getPIDController().disable();*/
 	}
 
     public void initDefaultCommand() {
@@ -102,7 +102,7 @@ public class DriveTrain extends PIDSubsystem {
     	robotDrive.stopMotor();
     }
 
-	@Override
+	/*@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
 		return gyro.pidGet();
@@ -112,6 +112,6 @@ public class DriveTrain extends PIDSubsystem {
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
 		robotDrive.tankDrive(output, output);
-	}
+	}*/
 }
 
