@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// Instantiate the subsystems
 		exampleSubsystem = new ExampleSubsystem();
-		driveTrain = new DriveTrain();
+		// driveTrain = new DriveTrain();
 		targetingSystem = new VisionSystem();
 
 		// OI must be constructed after subsystems. If the OI creates Commands
