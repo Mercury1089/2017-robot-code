@@ -122,6 +122,9 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Gyro", driveTrain.getGyro().getAngle());
+		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
+		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
+		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 	}
 
 	/**

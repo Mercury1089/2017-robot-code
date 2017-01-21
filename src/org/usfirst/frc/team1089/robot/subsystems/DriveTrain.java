@@ -111,6 +111,14 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     	return navx;
     }
 
+    public double getLeftEncoder() {
+    	return leftFront.getEncPosition();
+    }
+    
+    public double getRightEncoder() {
+    	return rightFront.getEncPosition();
+    }
+    
 	@Override
 	public void pidWrite(double output) {
 		// TODO Auto-generated method stub

@@ -17,7 +17,7 @@ public class DegreeRotate extends PIDCommand {
 	private DriverStation ds;
 	
     public DegreeRotate(double heading) {
-    	super(0.5, 0.0, 0.4);
+    	super(0.4, 0.0, 1);
     	requires(Robot.driveTrain);
     	_heading = heading;
     	getPIDController().setContinuous(true);
@@ -31,6 +31,7 @@ public class DegreeRotate extends PIDCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveTrain.getGyro().reset();
+    	Robot.driveTrain.getNAVX().reset();
     	getPIDController().setSetpoint(_heading);
     	DriverStation.reportError("Init", true);
     	DriverStation.reportError("Gyro Angle: " + Robot.driveTrain.getGyro().getAngle(),  false);
