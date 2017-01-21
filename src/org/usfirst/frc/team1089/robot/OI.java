@@ -47,7 +47,7 @@ public class OI {
         gamePad = new Joystick(RobotMap.DS_USB.GAMEPAD);
         gamePadBtnA = new JoystickButton(gamePad, RobotMap.GamepadButtons.A);
         gamePadBtnA.whenPressed(new DegreeRotate(45));
-        
+        /*gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);*/
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of
     	// three ways:
