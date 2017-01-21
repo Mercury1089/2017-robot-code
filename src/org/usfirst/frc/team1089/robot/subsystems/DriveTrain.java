@@ -106,6 +106,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     public AnalogGyro getGyro() { 	
     	return gyro;
     }
+    
+    public AHRS getNAVX() {
+    	return navx;
+    }
 
 	@Override
 	public void pidWrite(double output) {

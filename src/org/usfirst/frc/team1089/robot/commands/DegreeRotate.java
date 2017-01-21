@@ -63,7 +63,8 @@ public class DegreeRotate extends PIDCommand {
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
 		DriverStation.reportError("INPUT", true);
-		return Robot.driveTrain.getGyro().getAngle();
+		//return Robot.driveTrain.getGyro().getAngle();
+		return Robot.driveTrain.getNAVX().getAngle();
 	}
 
 	@Override
