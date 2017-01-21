@@ -1,22 +1,13 @@
 package org.usfirst.frc.team1089.robot.subsystems;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.opencv.core.*;
-import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team1089.robot.commands.GetDistanceFromTarget;
-import org.usfirst.frc.team1089.robot.util.GRIPPipeline;
 
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.vision.VisionPipeline;
-import edu.wpi.first.wpilibj.vision.VisionThread;
-
 
 public class VisionSystem extends Subsystem {
+	public final CameraServer CAM_SERVER;
 	public final AxisCamera AXIS_CAMERA;
 	public final int
 		IMG_WIDTH = 320,
@@ -26,8 +17,10 @@ public class VisionSystem extends Subsystem {
 	// Initializes the AXIS camera and 
 	// sets the proper resolution
 	public VisionSystem() {
+		// Set up camera server
+		CAM_SERVER = CameraServer.getInstance();
 		// Set up axis camera
-		AXIS_CAMERA = CameraServer.getInstance().addAxisCamera("axis-1089.local");
+		AXIS_CAMERA = CAM_SERVER.addAxisCamera("axis-1089.local");
 		AXIS_CAMERA.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	}
 

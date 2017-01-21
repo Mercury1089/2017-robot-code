@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot {
 	// Declare subsystems (public static so there is only ever one instance)
 	public static ExampleSubsystem exampleSubsystem;
 	public static DriveTrain driveTrain;
-	public static VisionSystem targetingSystem;
+	public static VisionSystem visionSystem;
 	public static OI oi;
 	
 	Command autonomousCommand;
