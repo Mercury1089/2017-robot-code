@@ -52,6 +52,7 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData("PID", driveTrain);
+		SmartDashboard.putNumber("Gyro", driveTrain.getGyro().getAngle());
 	}
 
 	/**
@@ -61,12 +62,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		driveTrain.getGyro().reset();
+		driveTrain.getNAVX().reset();
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Gyro", driveTrain.getGyro().getAngle());
+		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 	}
 
 	/**
@@ -120,6 +124,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Gyro", driveTrain.getGyro().getAngle());
 	}
 
 	/**

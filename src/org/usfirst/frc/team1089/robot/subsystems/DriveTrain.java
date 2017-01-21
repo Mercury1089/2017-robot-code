@@ -37,7 +37,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		getPIDController().setContinuous(true);
 */
 		gyro = new AnalogGyro(RobotMap.Analog.GYRO);
-        gyro.setSensitivity(0.007); // TODO Move this to Config
+        gyro.setSensitivity((1.1*5/3.38)/1000); // TODO Move this to Config
         
         navx = new AHRS(SerialPort.Port.kUSB1);
 
@@ -66,7 +66,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
         robotDrive.setExpiration(0.1);
         robotDrive.setSensitivity(0.5);
         robotDrive.setMaxOutput(1.0);
-        robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
         LiveWindow.addSensor("DriveTrain", "Gyro", gyro);
         LiveWindow.addSensor("DriveTrain", "Nav-X", navx);
@@ -106,11 +106,15 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     public AnalogGyro getGyro() { 	
     	return gyro;
     }
+    
+    public AHRS getNAVX() {
+    	return navx;
+    }
 
 	@Override
 	public void pidWrite(double output) {
 		// TODO Auto-generated method stub
-		robotDrive.tankDrive(output, -output);
+		robotDrive.tankDrive(output, output);
 	}
 
 }

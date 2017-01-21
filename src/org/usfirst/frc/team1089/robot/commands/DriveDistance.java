@@ -37,8 +37,8 @@ public class DriveDistance extends Command {
     protected void execute() {
     	encoderL.reset();
     	encoderR.reset();
-    	//if ()
-    	//	Robot.driveTrain.drive(0.75, 0.75);   // Need drive(double a, double b) method in DriveTrain
+    	/*if ()
+    		Robot.driveTrain.drive(0.75, 0.75);*/   // Need drive(double a, double b) method in DriveTrain
     }
 
     // Make this return true when this Command no longer needs to run execute()
