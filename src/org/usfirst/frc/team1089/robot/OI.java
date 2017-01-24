@@ -5,8 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
-import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
+import org.usfirst.frc.team1089.robot.commands.*;
 
 
 /**
@@ -39,15 +38,19 @@ public class OI {
 
     public Joystick gamePad;
     public JoystickButton gamePadBtnA;
-
+    public JoystickButton gamePadBtnB;
+    
     public OI() {
     	
         leftStick = new Joystick(RobotMap.DS_USB.LEFT_STICK);
         rightStick = new Joystick(RobotMap.DS_USB.RIGHT_STICK);
         gamePad = new Joystick(RobotMap.DS_USB.GAMEPAD);
         gamePadBtnA = new JoystickButton(gamePad, RobotMap.GamepadButtons.A);
-        gamePadBtnA.whenPressed(new DegreeRotate(45));
-        /*gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);*/
+        gamePadBtnA.whenPressed(new DriveDistance(12));
+        //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
+        //gamePadBtnB.whenPressed(Robot.driveTrain.);
+/*        gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
+        gamePadBtnB.whenPressed(new DegreeRotate(SmartDashboard.getNumber("Angle", 0)));*/
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of
     	// three ways:
