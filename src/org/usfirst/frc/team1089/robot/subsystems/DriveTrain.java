@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1089.robot.subsystems;
 
-import org.usfirst.frc.team1089.robot.OI;
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.RobotMap;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
@@ -8,12 +7,13 @@ import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SerialPort;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -29,6 +29,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     private CANTalon rightFront;
     private RobotDrive robotDrive;
     private AHRS navx;
+    
+    //private Encoder rightEnc, leftEnc;
+    
+    private final double GEAR_RATIO, WHEEL_DIAMETER;
     
 	public DriveTrain() {
 		
@@ -73,7 +77,8 @@ public class DriveTrain extends Subsystem implements PIDOutput{
         LiveWindow.addActuator("DriveTrain", "LeftFront", leftFront);
         LiveWindow.addActuator("DriveTrain", "RightFront", rightFront);
         
-        
+        GEAR_RATIO = 1;
+        WHEEL_DIAMETER = 4;
         /*getPIDController().disable();*/
 	}
 
@@ -116,14 +121,32 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     }
     
     public double getRightEncoder() {
-    	return rightFront.getEncPosition();
+    	return -rightFront.getEncPosition();
     }
+    
+    /*public Encoder rightEncoder() {
+    	return rightFront;
+    }
+    
+    public Encoder leftEncoder() {
+    	return leftFront;
+    }*/
     
 	@Override
 	public void pidWrite(double output) {
 		// TODO Auto-generated method stub
 		robotDrive.tankDrive(output, output);
 	}
-
+	
+	public double encoderTicksToInches(double ticks) {
+		return (Math.PI * WHEEL_DIAMETER) / 1440 * GEAR_RATIO * ticks;
+	}
+	
+	public void setRight(double v) {
+		rightFront.set(v);
+	}
+	public void setLeft(double v) {
+		leftFront.set(v);
+	}
 }
 

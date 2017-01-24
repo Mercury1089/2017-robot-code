@@ -5,6 +5,7 @@ import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1089.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -29,6 +30,9 @@ public class Robot extends IterativeRobot {
 	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
+	
+	private double changeRightEnc;
+	private double changeLeftEnc;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -53,6 +57,16 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData("PID", driveTrain);
 		SmartDashboard.putNumber("Gyro", driveTrain.getGyro().getAngle());
+		SmartDashboard.putNumber("Angle", 0);
+		
+		SmartDashboard.putNumber("Left Enc Inches", 0);
+		SmartDashboard.putNumber("Right Enc Inches", 0);
+		
+		SmartDashboard.putNumber("SetRightChange", 0);
+		SmartDashboard.putNumber("SetLeftChange", 0);
+		
+		changeLeftEnc = 0;
+		changeRightEnc = 0;
 	}
 
 	/**
@@ -128,6 +142,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
+		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
+		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
 	}
 
 	/**
