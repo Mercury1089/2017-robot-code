@@ -139,7 +139,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	}
 	
 	public double encoderTicksToInches(double ticks) {
-		return (Math.PI * WHEEL_DIAMETER) / 1440 * GEAR_RATIO * ticks;
+		return (Math.PI * WHEEL_DIAMETER) / (1440 * GEAR_RATIO) * ticks;
 	}
 	
 	public void setRight(double v) {
