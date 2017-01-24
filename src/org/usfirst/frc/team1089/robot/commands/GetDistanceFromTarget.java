@@ -10,7 +10,7 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.util.GRIPPipeline;
+import org.usfirst.frc.team1089.robot.util.MercPipeline;
 
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.CvSink;
@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class GetDistanceFromTarget extends Command {
 	private Thread vThread;
-	private GRIPPipeline pipeline;
+	private MercPipeline pipeline;
 	private double targetWidth, targetHeight;
 	
 	private final int NUM_TARGETS = 2;
@@ -40,7 +40,7 @@ public class GetDistanceFromTarget extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		pipeline = new GRIPPipeline();
+		pipeline = new MercPipeline();
 		
 		// Set up our vision thread
 		vThread = new Thread(() -> {
@@ -72,6 +72,7 @@ public class GetDistanceFromTarget extends Command {
 						
 				pipeline.process(mat);
 				ArrayList<MatOfPoint> contours = pipeline.filterContoursOutput();
+				
 				if (contours.size() == NUM_TARGETS) {					
 					Rect target1, target2;
 					
@@ -82,21 +83,35 @@ public class GetDistanceFromTarget extends Command {
 						target1 = Imgproc.boundingRect(contours.get(0));
 						target2 = Imgproc.boundingRect(contours.get(1));
 					}
-				
-					targetWidth = target2.x + target2.width - target1.x;
-					targetHeight = target2.y / 2 + target1.y / 2;	
 					
+					// Our targeting rect needs to encapsulate both vision targets
+					Point 
+						topLeft = new Point(target1.x, target1.y < target2.y ? target1.y : target2.y),
+						bottomRight = new Point(target2.x + target2.width, target1.y < target2.y ? target2.y + target2.height : target1.y + target1.height),
+						center;
+					
+					Scalar red = new Scalar(0, 0, 255);
+				
+					targetWidth = bottomRight.x - topLeft.x;
+					targetHeight = bottomRight.y - topLeft.y;
+					
+					center = new Point(topLeft.x + targetWidth / 2, topLeft.y + targetHeight / 2);
+					
+					// Draw target
 					Imgproc.rectangle(
 							mat, 
-							new Point(target1.x, target1.y), 
-							new Point(target2.x + target2.width, target2.y + target2.height), 
-							new Scalar(0, 0, 255), 
-							10
+							topLeft, 
+							bottomRight, 
+							red, 
+							3
 					);
-				
-					// Give the output stream a new image to display
-					outputStream.putFrame(mat);
+					
+					Imgproc.line(mat, new Point(center.x, center.y - 5), new Point(center.x, center.y + 5), red, 3);
+					Imgproc.line(mat, new Point(center.x - 5, center.y), new Point(center.x + 5, center.y), red, 3);
 				}
+				
+				// Give the output stream a new image to display
+				outputStream.putFrame(mat);
 			}
 		});
 		
