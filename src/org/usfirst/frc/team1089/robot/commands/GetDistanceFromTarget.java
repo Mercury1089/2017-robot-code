@@ -93,10 +93,10 @@ public class GetDistanceFromTarget extends Command {
 							new Scalar(0, 0, 255), 
 							10
 					);
-				
-					// Give the output stream a new image to display
-					outputStream.putFrame(mat);
 				}
+				
+				// Give the output stream a new image to display
+				outputStream.putFrame(mat);
 			}
 		});
 		
