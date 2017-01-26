@@ -47,12 +47,12 @@ public class GetDistanceFromTarget extends Command {
 			// Get the Axis camera from CameraServer
 			AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-1089.local");
 			// Set the resolution
-			camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+			camera.setResolution(Robot.visionSystem.IMG_WIDTH, Robot.visionSystem.IMG_HEIGHT);
 
 			// Get a CvSink. This will capture Mats from the camera
 			CvSink cvSink = CameraServer.getInstance().getVideo();
 			// Setup a CvSource. This will send images back to the Dashboard
-			CvSource outputStream = CameraServer.getInstance().putVideo("Vision", IMG_WIDTH, IMG_HEIGHT);
+			CvSource outputStream = CameraServer.getInstance().putVideo("Vision", Robot.visionSystem.IMG_WIDTH, Robot.visionSystem.IMG_HEIGHT);
 
 			// Mats are very memory expensive. Lets reuse this Mat.
 			Mat mat = new Mat();
@@ -123,7 +123,10 @@ public class GetDistanceFromTarget extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		double diagTargetDistance = (TARGET_WIDTH_INCHES / IN_TO_FT) * (Robot.visionSystem.IMG_WIDTH / targetWidth) / 2.0;
+		diagTargetDistance /= Math.tan(Math.toRadians(Robot.visionSystem.HFOV / 2));
 		
+		System.out.println(diagTargetDistance);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
