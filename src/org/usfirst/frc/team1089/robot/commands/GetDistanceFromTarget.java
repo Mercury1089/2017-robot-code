@@ -22,6 +22,7 @@ public class GetDistanceFromTarget extends Command {
 	private Thread vThread;
 	private MercPipeline pipeline;
 	private double targetWidth, targetHeight;
+	private Point center;
 	
 	private final int NUM_TARGETS = 2;
 	private final double 
@@ -87,15 +88,18 @@ public class GetDistanceFromTarget extends Command {
 					// Our targeting rect needs to encapsulate both vision targets
 					Point 
 						topLeft = new Point(target1.x, target1.y < target2.y ? target1.y : target2.y),
-						bottomRight = new Point(target2.x + target2.width, target1.y < target2.y ? target2.y + target2.height : target1.y + target1.height),
-						center;
+						bottomRight = new Point(target2.x + target2.width, target1.y < target2.y ? target2.y + target2.height : target1.y + target1.height);
 					
 					Scalar red = new Scalar(0, 0, 255);
 				
 					targetWidth = bottomRight.x - topLeft.x;
 					targetHeight = bottomRight.y - topLeft.y;
 					
+					// Get the center of the target
+					// and check if we are centered
 					center = new Point(topLeft.x + targetWidth / 2, topLeft.y + targetHeight / 2);
+					boolean isCentered = Math.abs(center.x - Robot.visionSystem.IMG_WIDTH / 2) <= 5;
+					System.out.println("Centered: " + isCentered);
 					
 					// Draw target
 					Imgproc.rectangle(
@@ -123,10 +127,16 @@ public class GetDistanceFromTarget extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		double diagTargetDistance = (TARGET_WIDTH_INCHES / IN_TO_FT) * (Robot.visionSystem.IMG_WIDTH / targetWidth) / 2.0;
-		diagTargetDistance /= Math.tan(Math.toRadians(Robot.visionSystem.HFOV / 2));
 		
-		System.out.println(diagTargetDistance);
+		// Calculate target distance.
+		// This is calculated with knowledge of the target width in feet, 
+		// the HFOV in pixels (the width of the camera's viewport in pixels),
+		// the target width as it appears in the camera feed,
+		// and the physical FOV of the camera.
+		double diagTargetDistance = (TARGET_WIDTH_INCHES / IN_TO_FT) * Robot.visionSystem.IMG_WIDTH 
+				/ ( 2 * targetWidth * Math.tan( Math.toRadians( Robot.visionSystem.HFOV / 2 ) ) );
+		
+		System.out.println("Distance (ft): " + diagTargetDistance);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
