@@ -40,7 +40,7 @@ public class OI {
     public JoystickButton gamePadBtnA;
     public JoystickButton gamePadBtnB;
     
-    public OI() {
+	public OI() {
     	
         leftStick = new Joystick(RobotMap.DS_USB.LEFT_STICK);
         rightStick = new Joystick(RobotMap.DS_USB.RIGHT_STICK);
@@ -49,8 +49,8 @@ public class OI {
         gamePadBtnA.whenPressed(new DriveDistance(12));
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
-/*        gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new DegreeRotate(SmartDashboard.getNumber("Angle", 0)));*/
+        gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
+        gamePadBtnB.whenPressed(new DegreeRotate(45));
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of
     	// three ways:

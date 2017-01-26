@@ -3,9 +3,7 @@ package org.usfirst.frc.team1089.robot.commands;
 //import org.usfirst.frc.team1089.robot.Logger;
 import org.usfirst.frc.team1089.robot.Robot;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 
 /**
  *
@@ -24,10 +22,10 @@ public class DriveDistance extends Command {
     
     private double endPosL, endPosR;
 	
-	public DriveDistance(double distance) {
+	public DriveDistance(double d) {
         super("DriveDistance");
         requires(Robot.driveTrain);
-        this.distance = distance;
+        distance = d;
         /*encoderR = new Encoder(4, 0);
         encoderL = new Encoder(5, 0);*/
         
@@ -37,9 +35,10 @@ public class DriveDistance extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	double changePos = Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) + distance;
-		double startPosL = Robot.driveTrain.getLeftEncoder();
-		double startPosR = Robot.driveTrain.getRightEncoder();
+    	//double changePos = Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) + distance;
+		//double startPosL = Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder());
+		//double startPosR = Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder());
+    	
 		/*leftFrontTalon.setPID(p, i, d);
 		rightFrontTalon.setPID(p, i, d);
 		leftFrontTalon.configPeakOutputVoltage(maxV, -maxV);
@@ -69,9 +68,9 @@ public class DriveDistance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-   		double leftPos = Robot.driveTrain.getLeftEncoder();
-   		double rightPos = Robot.driveTrain.getRightEncoder();/*
-   		double leftVel = leftFrontTalon.getEncVelocity();
+   		double leftPos = Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder());
+   		double rightPos = Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder());
+   		/*double leftVel = leftFrontTalon.getEncVelocity();
    		double rightVel = rightFrontTalon.getEncVelocity();*/
    		//boolean isMoving = false;
    		
@@ -84,13 +83,17 @@ public class DriveDistance extends Command {
    		SmartDashboard.putNumber("left pos", leftPos);
    		SmartDashboard.putNumber("right pos", rightPos);*/
     			
-   		if ((leftPos > endPosL - distance && leftPos < endPosL + distance)
-   				&& (rightPos > endPosR - distance && rightPos < endPosR + distance)
+   		if ((leftPos >= endPosL - distance && leftPos < endPosL)
+   				&& (rightPos >= endPosR - distance && rightPos < endPosR)
    				/*&& Math.abs(leftVel) <= TURN_THRESH_VELOCITY && Math.abs(rightVel) <= TURN_THRESH_VELOCITY*/) {
-   			return true;
+   			
+   			return false;
    		}
    		
-    	return false;
+   		
+   		Robot.driveTrain.setLeft(0);
+   		Robot.driveTrain.setRight(0);
+    	return true;
     	
     }
 
