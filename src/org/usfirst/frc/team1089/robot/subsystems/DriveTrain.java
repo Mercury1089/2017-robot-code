@@ -28,7 +28,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     private CANTalon leftFront;
     private CANTalon rightFront;
     private RobotDrive robotDrive;
-    private AHRS navx;
+    /*leftFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+	rightFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);leftFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+	rightFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);*/
+	private AHRS navx;
     
     //private Encoder rightEnc, leftEnc;
     
@@ -63,10 +66,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		rightBack.changeControlMode(CANTalon.TalonControlMode.Follower);
 		leftBack.set(leftFront.getDeviceID());
 		rightBack.set(rightFront.getDeviceID());
-
-        
+		
+		//robotDrive = new RobotDrive(0,1);
         robotDrive = new RobotDrive(leftFront, rightFront);
-        robotDrive.setSafetyEnabled(true);
+        robotDrive.setSafetyEnabled(true); // TODO: Make sure to change this back to true
         robotDrive.setExpiration(0.1);
         robotDrive.setSensitivity(0.5);
         robotDrive.setMaxOutput(1.0);
@@ -81,6 +84,14 @@ public class DriveTrain extends Subsystem implements PIDOutput{
         WHEEL_DIAMETER = 4;
         /*getPIDController().disable();*/
 	}
+	
+	public void enableRobotDrive() {
+		robotDrive.setSafetyEnabled(true);
+	}
+	
+	public void disableRobotDrive() {
+		robotDrive.setSafetyEnabled(false);
+	}
 
     public void initDefaultCommand() {
         // By default, drive with the joysticks
@@ -92,7 +103,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
      * <pre>
 	 * public void joystickDrive(Joystick leftStick, Joystick rightStick)
 	 * </pre>
-	 * Control the drive train with two joystics. Currently this uses
+	 * Control the drive train with two joysticks. Currently this uses
 	 * two-stick arcade drive with deadzones.
      * @param leftStick  The left joystick
      * @param rightStick The right joystick
@@ -124,6 +135,12 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     	return -rightFront.getEncPosition();
     }
     
+    public void resetEncoders() {
+    	leftFront.setEncPosition(0);
+    	rightFront.setEncPosition(0);
+    }
+    
+    
     /*public Encoder rightEncoder() {
     	return rightFront;
     }
@@ -142,11 +159,26 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		return (Math.PI * WHEEL_DIAMETER) / (1440 * GEAR_RATIO) * ticks;
 	}
 	
-	public void setRight(double v) {
-		rightFront.set(v);
+	public double inchesToEncoderTicks(double inches) {
+		return (1440 * GEAR_RATIO) / (Math.PI * WHEEL_DIAMETER) * inches;
 	}
-	public void setLeft(double v) {
-		leftFront.set(v);
+	
+	public void setToVbus() {
+		leftFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+    	rightFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 	}
+	
+	public void setToPosition() {
+		leftFront.changeControlMode(CANTalon.TalonControlMode.Position);
+    	rightFront.changeControlMode(CANTalon.TalonControlMode.Position);
+	}
+	
+	public CANTalon getRight() {
+		return rightFront;
+	}
+	public CANTalon getLeft() {
+		return leftFront;
+	}
+	
 }
 
