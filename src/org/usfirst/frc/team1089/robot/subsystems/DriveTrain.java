@@ -66,8 +66,8 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		rightBack.changeControlMode(CANTalon.TalonControlMode.Follower);
 		leftBack.set(leftFront.getDeviceID());
 		rightBack.set(rightFront.getDeviceID());
-
-        
+		
+		//robotDrive = new RobotDrive(0,1);
         robotDrive = new RobotDrive(leftFront, rightFront);
         robotDrive.setSafetyEnabled(true); // TODO: Make sure to change this back to true
         robotDrive.setExpiration(0.1);
@@ -83,6 +83,14 @@ public class DriveTrain extends Subsystem implements PIDOutput{
         GEAR_RATIO = 1;
         WHEEL_DIAMETER = 4;
         /*getPIDController().disable();*/
+	}
+	
+	public void enableRobotDrive() {
+		robotDrive.setSafetyEnabled(true);
+	}
+	
+	public void disableRobotDrive() {
+		robotDrive.setSafetyEnabled(false);
 	}
 
     public void initDefaultCommand() {
@@ -155,13 +163,6 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		return (1440 * GEAR_RATIO) / (Math.PI * WHEEL_DIAMETER) * inches;
 	}
 	
-	public void setRight(double v) {
-		rightFront.set(v);
-	}
-	public void setLeft(double v) {
-		leftFront.set(v);
-	}
-	
 	public void setToVbus() {
 		leftFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	rightFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
@@ -178,8 +179,6 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	public CANTalon getLeft() {
 		return leftFront;
 	}
-	
-	
 	
 }
 
