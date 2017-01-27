@@ -18,19 +18,33 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class VisionSystem extends Subsystem {
+	// Targeting types
+	public static enum GOAL_TYPE {GEAR, HIGH};
+	
+	// Vision Objects
+	private final Thread V_THREAD;
+	private final CvSource OUTPUT_STREAM;
+	private final CvSink CV_SINK;
 	private final MercPipeline PIPELINE;
 	
+	// Vision Constants
 	public final double HFOV = 58.0; // The horizontal FOV of the camera. TODO: Calibrate values
 	public final int IMG_WIDTH = 640, IMG_HEIGHT = 480;
 	private final int NUM_TARGETS = 2;
+	private final double 
+		TARGET_WIDTH_INCHES_GEAR = 10.75,
+		TARGET_HEIGHT_INCHES_GEAR = 5,
+		TARGET_ELEVATION_FEET_GEAR = 10.75,
+		TARGET_WIDTH_INCHES_HIGH = 15,
+		TARGET_HEIGHT_INCHES_HIGH = 10,
+		TARGET_ELEVATION_FEET_HIGH = 6.5,
+		IN_TO_FT = 12.0; // Study your freedom units guys
+	private double[] DEF_VALUE = {-1, -1};
 	
-	// Targeting member
+	// Targeting members
 	private double targetWidth, targetHeight;
 	private final Point TARGET_TOP_LEFT, TARGET_BOT_RIGHT, TARGET_CENTER;
 	
-	private final Thread V_THREAD;
-	public final CvSource OUTPUT_STREAM;
-	public final CvSink CV_SINK;
 	
 	public VisionSystem() {
 		// Initialize vision pipeline
@@ -46,7 +60,7 @@ public class VisionSystem extends Subsystem {
 		TARGET_TOP_LEFT = new Point();
 		TARGET_BOT_RIGHT = new Point();
 		
-		// Process everything
+		// Create a separate thread to process vision
 		V_THREAD = new Thread(() -> {
 			// Mats are very memory expensive. Lets reuse this Mat.
 			Mat mat = new Mat();
@@ -57,13 +71,14 @@ public class VisionSystem extends Subsystem {
 			while (!Thread.interrupted()) {
 				// Tell the CvSink to grab a frame from the camera and put it
 				// in the source mat.  If there is an error notify the output.
-				if (Robot.visionSystem.CV_SINK.grabFrame(mat) == 0) {
+				if (CV_SINK.grabFrame(mat) == 0) {
 					// Send the output the error.
-					System.out.println(Robot.visionSystem.CV_SINK.getError());
+					System.out.println(CV_SINK.getError());
 					// skip the rest of the current iteration
 					continue;
-				}		
-						
+				}
+				
+				// Process frame under here		
 				PIPELINE.process(mat);
 				ArrayList<MatOfPoint> contours = PIPELINE.filterContoursOutput();
 				
@@ -94,11 +109,8 @@ public class VisionSystem extends Subsystem {
 					targetWidth = TARGET_BOT_RIGHT.x - TARGET_TOP_LEFT.x;
 					targetHeight = TARGET_BOT_RIGHT.y - TARGET_TOP_LEFT.y;
 					
-					// Get the center of the target
-					// and check if we are centered
+					// Get the center of the target and check if we are centered
 					TARGET_CENTER.set(new double[]{TARGET_TOP_LEFT.x + targetWidth / 2, TARGET_TOP_LEFT.y + targetHeight / 2});
-					boolean isCentered = Math.abs(TARGET_CENTER.x - IMG_WIDTH / 2) <= 5;
-					System.out.println("Centered: " + isCentered);
 					
 					// Draw target
 					Imgproc.rectangle(
@@ -124,6 +136,12 @@ public class VisionSystem extends Subsystem {
 							red, 
 							3
 					);
+				} else { // If we do not see any targets, just set everything to 0.
+					TARGET_CENTER.set(DEF_VALUE);
+					TARGET_TOP_LEFT.set(DEF_VALUE);
+					TARGET_BOT_RIGHT.set(DEF_VALUE);
+					targetWidth = -1;
+					targetHeight = -1;
 				}
 				
 				// Give the output stream a new image to display
@@ -135,8 +153,33 @@ public class VisionSystem extends Subsystem {
 		V_THREAD.start();
 	}
 	
-	public double getDistance() {
+	/**
+	 * <pre>
+	 * public double getDistance()
+	 * </pre>
+	 * Gets the distance between the center of the camera and the center of the target.
+	 * Calculates and returns different distances for the different vision targets
+	 * @return the distance between the center of the camera and the center of the target, in feet. 
+	 *         Accurate to 0.15 ft.
+	 */
+	public double getDistance(GOAL_TYPE type) {
+		if(type.equals(GOAL_TYPE.GEAR))
+			return (TARGET_WIDTH_INCHES_GEAR / IN_TO_FT) * IMG_WIDTH / ( 2 * targetWidth * Math.tan( Math.toRadians( HFOV / 2 ) ) );
+		if(type.equals(GOAL_TYPE.HIGH))
+			return (TARGET_WIDTH_INCHES_HIGH / IN_TO_FT) * IMG_WIDTH / ( 2 * targetWidth * Math.tan( Math.toRadians( HFOV / 2 ) ) );;
 		return 0;
+	}
+	
+	/**
+	 * <pre>
+	 * public double getIsCentered()
+	 * </pre>
+	 * Gets if the camera is facing straight towards the center of the target
+	 * 
+	 * @return if the center of the visible target is within 5 pixels of the center of the target
+	 */
+	public boolean getIsCentered() {
+		return Math.abs(TARGET_CENTER.x - IMG_WIDTH / 2) <= 5;
 	}
 
 	public void initDefaultCommand() {
