@@ -1,9 +1,12 @@
 
 package org.usfirst.frc.team1089.robot;
 
+import org.usfirst.frc.team1089.robot.auton.AutonCommand;
 import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1089.robot.subsystems.*;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
@@ -28,12 +31,14 @@ public class Robot extends IterativeRobot {
 	public static VisionSystem visionSystem;
 	public static OI oi;
 	
-	Command autonomousCommand;
+	AutonCommand autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	
 	private double changeRightEnc;
 	private double changeLeftEnc;
 
+	Alliance allianceColor;
+	int autonStartPos;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -67,6 +72,9 @@ public class Robot extends IterativeRobot {
 		
 		changeLeftEnc = 0;
 		changeRightEnc = 0;
+		
+		allianceColor = DriverStation.getInstance().getAlliance();
+		autonStartPos = 0;											//TODO get from SmartDash
 	}
 
 	/**
@@ -100,8 +108,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-
+		autonomousCommand = new AutonCommand(autonStartPos, allianceColor);
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
