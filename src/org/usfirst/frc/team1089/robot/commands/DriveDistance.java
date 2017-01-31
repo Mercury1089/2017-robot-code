@@ -1,6 +1,9 @@
 package org.usfirst.frc.team1089.robot.commands;
 
-//import org.usfirst.frc.team1089.robot.Logger;
+import org.usfirst.frc.team1089.robot.util.Debug;
+
+import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -49,6 +52,7 @@ public class DriveDistance extends Command {
 		
 		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
+		Debug.logMessage(Level.INFO, "The Drive Distance Command has been initialized.");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -82,6 +86,8 @@ public class DriveDistance extends Command {
     	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()));
     	Robot.driveTrain.resetEncoders();
 		SmartDashboard.putString("DriveDistance: ", "end");
+		Debug.logMessage(Level.INFO, "The Drive Distance Command has ended.");
+
     }
 
     // Called when another command which requires one or more of the same

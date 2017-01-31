@@ -1,6 +1,9 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.Robot;
+import org.usfirst.frc.team1089.robot.util.Debug;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -31,6 +34,8 @@ public class DegreeRotate extends PIDCommand {
     	Robot.driveTrain.getGyro().reset();
     	Robot.driveTrain.getNAVX().reset();
     	getPIDController().setSetpoint(_heading);
+		Debug.logMessage(Level.INFO, "The Degree Rotate Command has been initialized.");
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -44,6 +49,8 @@ public class DegreeRotate extends PIDCommand {
 
     // Called once after isFinished returns true
     protected void end() {
+		Debug.logMessage(Level.INFO, "The Degree Rotate Command has ended.");
+
     	
     }
 
