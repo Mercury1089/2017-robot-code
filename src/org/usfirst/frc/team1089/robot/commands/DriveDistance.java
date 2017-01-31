@@ -20,7 +20,7 @@ public class DriveDistance extends Command {
         distance = d;
         endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
     }
-
+	
     // Called just before this Command runs the first time
     protected void initialize() {
 		Robot.driveTrain.setToPosition();
