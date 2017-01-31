@@ -99,8 +99,8 @@ public class OI {
 	 *           0.0 otherwise
 	 */
     public double applyDeadzone(double val, double dzLimit) {
-    	//return (Math.abs(val) > Math.abs(dzLimit)) ? val : 0.0;
-    	double newVal = (Math.abs(val) - dzLimit * Math.signum(val)) / (1 - dzLimit * Math.signum(val));
-    	return (Math.abs(val) > dzLimit) ? newVal : 0.0; 
+    	return (Math.abs(val) > Math.abs(dzLimit)) ? val : 0.0;
+    	/*double newVal = (Math.abs(val) - dzLimit * Math.signum(val)) / (1 - dzLimit * Math.signum(val));
+    	return (Math.abs(val) > dzLimit) ? newVal : 0.0;*/ 
     }
 }

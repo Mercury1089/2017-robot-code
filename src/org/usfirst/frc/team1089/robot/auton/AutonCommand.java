@@ -19,7 +19,7 @@ public class AutonCommand extends CommandGroup {
 	 * @param StartPos - from 1-9 as determined by AutonKid 
 	 * @param color - Alliance color determined by DriverStation.getInstance.getAlliance()
 	 */
-    public AutonCommand(int startPos, Alliance color/*, AutonEnum choice*/) {
+    public AutonCommand(int startPos, Alliance color, AutonEnum choice) {
     	
     	// Add Commands here:
         // e.g. addSequential(new Command1());
@@ -53,9 +53,12 @@ public class AutonCommand extends CommandGroup {
     		reversalFactor = 0;
     	
     	
+    	
+    	//FIXME A LOT OF THIS COULD BE WRONG. SRI and LUKE are stupid	    	
+    	
     	//Auton Step 1
     	addSequential(new DriveDistance(90));	//TODO Change 0 to a value determined by SmartDashboard value
-    	addSequential(new DegreeRotate(30 * reversalFactor));	
+    	addSequential(new DegreeRotate(60 * reversalFactor));	
     											//TODO Can only be 30 or -30; change to var based on Alliance color
     	//addSequential(new AutoAlign());		//TODO Code AutoAlign 
     	addSequential(new DriveDistance(60));	//TODO Change 0 to a value determined by SmartDashboard value
@@ -65,7 +68,23 @@ public class AutonCommand extends CommandGroup {
     	addSequential(new DriveDistance(-40));	//TODO Change -0 to a negative value determined by SmartDashboard value
     	//addSequential(new AutoAlign());		//to lift
     	
-    	//Auton Step 3    	
-    	
+    	//Auton Step 3    						
+    	switch(choice) {
+    	case FAR_HOPPER_1_2_3:
+    	case NEAR_HOPPER_1_2_3:
+    		addSequential(new DegreeRotate(30));
+    		addSequential(new DriveDistance(10));	//TODO Change 10 to actual distance from Smartdash that is different based on FAR/NEAR				
+    		addSequential(new DegreeRotate(90));
+    		addSequential(new DriveDistance(-10));	//TODO Change -10
+    		break;
+    	case NEAR_HOPPER_7_8_9:
+    		addSequential(new DegreeRotate(-30));	//FIXME Srihari is actually challenged
+    		addSequential(new DriveDistance(-5));	//TODO
+    		//make sure you pick up
+    		//turn and shoot
+    		break;
+    	case TURN_SHOOT:
+    		//addSequential();
+    	}
     }
 }
