@@ -1,6 +1,9 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.Robot;
+import org.usfirst.frc.team1089.robot.util.Debug;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,6 +19,8 @@ public class DriveWithJoysticks extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveTrain.setToVbus();
+		Debug.logMessage(Level.INFO, "The robot has returned to Driving With Joysticks.");
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,6 +36,8 @@ public class DriveWithJoysticks extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.driveTrain.stop();
+		Debug.logMessage(Level.INFO, "The robot is no longer using Drive With Joysticks.");
+
     }
 
     // Called when another command which requires one or more of the same
