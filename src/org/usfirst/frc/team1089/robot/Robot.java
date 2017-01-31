@@ -2,6 +2,7 @@
 package org.usfirst.frc.team1089.robot;
 
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
+import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1089.robot.subsystems.*;
 
@@ -39,6 +40,8 @@ public class Robot extends IterativeRobot {
 
 	Alliance allianceColor;
 	int autonStartPos;
+	
+	AutonEnum autonChoice;					//TODO set equal to value from SmartDash
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -108,7 +111,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new AutonCommand(autonStartPos, allianceColor);
+		DriverStation.getInstance().getAlliance();
+		autonomousCommand = new AutonCommand(autonStartPos, Alliance.Red);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

@@ -19,7 +19,7 @@ public class AutonCommand extends CommandGroup {
 	 * @param StartPos - from 1-9 as determined by AutonKid 
 	 * @param color - Alliance color determined by DriverStation.getInstance.getAlliance()
 	 */
-    public AutonCommand(int startPos, Alliance color) {
+    public AutonCommand(int startPos, Alliance color/*, AutonEnum choice*/) {
     	
     	// Add Commands here:
         // e.g. addSequential(new Command1());
@@ -41,7 +41,7 @@ public class AutonCommand extends CommandGroup {
     	int truePos = startPos;
 		DriverStation.getInstance().getAlliance();
 		//Blue is switched; Red is normal
-		if (color.equals(Alliance.Blue)) 		//TODO idk 
+		if (color.equals(Alliance.Blue)) 		 
 			truePos = 10 - startPos;			//XXX makes 9 to 1 and 1 to 9, etc
 		
     	
@@ -49,7 +49,9 @@ public class AutonCommand extends CommandGroup {
     	
     	if(startPos >= 7 && startPos <= 9) 	
     		reversalFactor = -1;
-   
+    	else if(startPos >= 4 && startPos <= 6)
+    		reversalFactor = 0;
+    	
     	
     	//Auton Step 1
     	addSequential(new DriveDistance(0));	//TODO Change 0 to a value determined by SmartDashboard value
@@ -61,12 +63,9 @@ public class AutonCommand extends CommandGroup {
     	
     	//Auton Step 2
     	addSequential(new DriveDistance(-0));	//TODO Change -0 to a negative value determined by SmartDashboard value
-    	//addSequential(new AutoAlign());
+    	//addSequential(new AutoAlign());		//to lift
     	
-    	//Auton Step 3
-    	
-    	
-    	
+    	//Auton Step 3    	
     	
     }
 }
