@@ -2,6 +2,7 @@ package org.usfirst.frc.team1089.robot.commands;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.logging.Level;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -11,6 +12,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.subsystems.VisionSystem.GOAL_TYPE;
+import org.usfirst.frc.team1089.robot.util.Debug;
 import org.usfirst.frc.team1089.robot.util.MercPipeline;
 
 import edu.wpi.cscore.AxisCamera;
@@ -33,7 +35,7 @@ public class GetDistanceFromTarget extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		System.out.println("Distance (ft): " + Robot.visionSystem.getDistance(GOAL_TYPE.GEAR));
+		Debug.logMessage(Level.INFO, "Distance (ft): " + Robot.visionSystem.getDistance(GOAL_TYPE.GEAR));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

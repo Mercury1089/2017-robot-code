@@ -51,6 +51,9 @@ public class Debug {
      */
     public static synchronized void init(String path) {
     	try {
+    		if (!path.endsWith("/"))
+    			path += "/";
+    		
     		FileHandler fh = new FileHandler(path + "log_" + ISO8601.format(Calendar.getInstance().getTime()) + ".txt");
 			LOGGER.setUseParentHandlers(false);
 	    	fh.setFormatter(FORMATTER);

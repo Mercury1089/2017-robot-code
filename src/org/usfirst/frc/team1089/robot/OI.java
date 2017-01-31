@@ -52,7 +52,7 @@ public class OI {
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         gamePadBtnB.whenPressed(new DegreeRotate(45));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
-        gamePadBtnY.whenPressed(new TestCommandGroup());
+        //gamePadBtnY.whenPressed(new TestCommandGroup());
         
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of

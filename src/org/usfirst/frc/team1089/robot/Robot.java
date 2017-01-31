@@ -3,6 +3,7 @@ package org.usfirst.frc.team1089.robot;
 
 import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1089.robot.subsystems.*;
+import org.usfirst.frc.team1089.robot.util.Debug;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -40,6 +41,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		Debug.init("/home/lvuser/log/");
 		// Flush the NetworkTables
 		NetworkTable.flush();
 		// Instantiate the subsystems
