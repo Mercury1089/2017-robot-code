@@ -72,6 +72,7 @@ public class AutonCommand extends CommandGroup {
     	switch(choice) {
     	case FAR_HOPPER_1_2_3:
     	case NEAR_HOPPER_1_2_3:
+    		
     		addSequential(new DegreeRotate(30));
     		addSequential(new DriveDistance(10));	//TODO Change 10 to actual distance from Smartdash that is different based on FAR/NEAR				
     		addSequential(new DegreeRotate(90));
