@@ -11,17 +11,17 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
  */
 public class NavxDrive extends PIDCommand {
 
-	private double _speed;
+	private double position;
 	private double _heading;
 	
-    public NavxDrive(double speed/*, double heading*/) {
+    public NavxDrive(double pos/*, double heading*/) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super(0,0,0);
     	requires(Robot.driveTrain);
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(.1);
-    	_speed = speed;
+    	position = pos;
     	//_heading = heading;
     }
 
@@ -60,6 +60,6 @@ public class NavxDrive extends PIDCommand {
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		Robot.driveTrain.pidWrite(_speed, output);
+		//Robot.driveTrain.pidWrite(_speed, output);
 	}
 }

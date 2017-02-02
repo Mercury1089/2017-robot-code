@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1089.robot.commands;
+/*package org.usfirst.frc.team1089.robot.commands;
 
 import java.util.logging.Level;
 
@@ -8,9 +8,9 @@ import org.usfirst.frc.team1089.robot.util.Debug;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
-/**
+*//**
  *
- */
+ *//*
 public class RunShooter extends PIDCommand {
 
 	private double _heading;
@@ -65,3 +65,4 @@ public class RunShooter extends PIDCommand {
 		Robot.shooter.pidWrite(output);
 	}
 }
+*/

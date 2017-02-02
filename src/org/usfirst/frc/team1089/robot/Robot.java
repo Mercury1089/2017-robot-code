@@ -30,10 +30,7 @@ public class Robot extends IterativeRobot {
 	// Declare subsystems (public static so there is only ever one instance)
 	public static ExampleSubsystem exampleSubsystem;
 	public static DriveTrain driveTrain;
-
 	public static VisionSystem visionSystem;
-	public static Shooter shooter;
-	public static Sensors sensors;
 	public static OI oi;
 	
 	AutonCommand autonomousCommand;
@@ -45,38 +42,27 @@ public class Robot extends IterativeRobot {
 	Alliance allianceColor;
 	int autonStartPos;
 	
-	AutonEnum autonChoice;					//TODO Set equal to value from SmartDash
+	AutonEnum autonChoice;					//TODO set equal to value from SmartDash
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		// Initialize log file
-		Debug.init("/home/lvuser/log");
-		
+		Debug.init("/home/lvuser/log/");
 		// Flush the NetworkTables
 		NetworkTable.flush();
-		
 		// Instantiate the subsystems
 		exampleSubsystem = new ExampleSubsystem();
-
 		// driveTrain = new DriveTrain();
-		//visionSystem = new VisionSystem();
-
 		visionSystem = new VisionSystem();
-
 		driveTrain = new DriveTrain();
-		sensors = new Sensors();
-		
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
         // pointers. Bad news. Don't move it.
-		
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
-		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData("PID", driveTrain);
@@ -93,7 +79,7 @@ public class Robot extends IterativeRobot {
 		changeRightEnc = 0;
 		
 		allianceColor = DriverStation.getInstance().getAlliance();
-		autonStartPos = 0;											//TODO Get from SmartDash
+		autonStartPos = 0;											//TODO get from SmartDash
 	}
 
 	/**
@@ -128,7 +114,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		DriverStation.getInstance().getAlliance();
-		autonomousCommand = new AutonCommand(4, Alliance.Blue, AutonEnum.NEAR_HOPPER_1_2_3);
+		autonomousCommand = new AutonCommand(4, Alliance.Blue, AutonEnum.FAR_HOPPER_1_2_3);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

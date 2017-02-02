@@ -22,9 +22,6 @@ public class Debug {
     private static final Logger LOGGER = Logger.getLogger("");
     private static final DriverStation DRIVER_STATION = DriverStation.getInstance();
     
-    // If you're wondering, this formatter is used when outputting to the file.
-    // It just adds to the back of each log message a timestamp for documentation.
-    // Git gud scrubs.
     private static final Formatter FORMATTER = new Formatter() {
     	private DateFormat 
     		realTime = new SimpleDateFormat("hh:mm:ss.SS"),
@@ -38,7 +35,7 @@ public class Debug {
             // Format: [<real_time> / <match_time>] <log_level>: <message>
             output += "[" + realTime.format(record.getMillis()) + " / " + matchTime.format(DRIVER_STATION.getMatchTime()) + "] ";
             output += record.getLevel() + ": " + record.getMessage();
-            output += "\n";
+	    output += "\n";
 
             return output;
         }
@@ -62,7 +59,7 @@ public class Debug {
 	    	fh.setFormatter(FORMATTER);
 	    	LOGGER.addHandler(fh);
 		} catch (Exception e) {
-			e.printStackTrace();
+			// He's dead, Jim!
 		}
     }
     
