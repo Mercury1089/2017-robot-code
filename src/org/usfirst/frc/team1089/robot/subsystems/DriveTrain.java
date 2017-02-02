@@ -85,10 +85,23 @@ public class DriveTrain extends Subsystem implements PIDOutput{
         /*getPIDController().disable();*/
 	}
 	
+	
+	/**
+	 * <pre>
+	 * public void enableRobotDrive()
+	 * </pre>
+	 * Enables the safety on the robot drive
+	 */
 	public void enableRobotDrive() {
 		robotDrive.setSafetyEnabled(true);
 	}
 	
+	/**
+	 * <pre>
+	 * public void disableRobotDrive()
+	 * </pre>
+	 * Disables the safety on the robot drive
+	 */
 	public void disableRobotDrive() {
 		robotDrive.setSafetyEnabled(false);
 	}
@@ -115,6 +128,12 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     	robotDrive.arcadeDrive(moveValue, rotateValue);
     }
     
+    /**
+     * <pre>
+     * public void stop()
+     * </pre>
+     * Emergency stops the robot drive motors
+     */
     public void stop() {
     	robotDrive.stopMotor();
     }
@@ -127,14 +146,34 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     	return navx;
     }
 
+    /**
+     * <pre>
+     * public double getLeftEncoder()
+     * </pre>
+     * Gets the value of the left encoder
+     * @return the position of the left front encoder
+     */
     public double getLeftEncoder() {
     	return leftFront.getEncPosition();
     }
     
+    /**
+     * <pre>
+     * public double getRightEncoder()
+     * </pre>
+     * Gets the value of the right encoder
+     * @return the negative position of the right front encoder
+     */
     public double getRightEncoder() {
     	return -rightFront.getEncPosition();
     }
     
+    /**
+     * <pre>
+     * public void resetEncoders()
+     * </pre>
+     * Resets both sides' encoders' position to 0
+     */
     public void resetEncoders() {
     	leftFront.setEncPosition(0);
     	rightFront.setEncPosition(0);
@@ -155,19 +194,51 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		robotDrive.tankDrive(output, output);
 	}
 	
+	/**
+	 * <pre>
+	 * public double encoderTicksToInches(double ticks)
+	 * </pre>
+	 * Converts the specified amount of ticks to inches, 
+	 * based on our specifications of the wheels and gear ratios
+	 * @param ticks the amount of ticks accumulated by an encoder
+	 * @return the amount of inches accumulated from the encoder
+	 */
 	public double encoderTicksToInches(double ticks) {
 		return (Math.PI * WHEEL_DIAMETER) / (1440 * GEAR_RATIO) * ticks;
 	}
 	
+	/**
+	 * <pre>
+	 * public double inchesToEncoderTicks(double inches)
+	 * </pre>
+	 * Converts the specified amount of inches to ticks, 
+	 * based on our specifications of the wheels and gear ratios
+	 * @param inches the amount of inches accumulated by an encoder
+	 * @return the amount of ticks accumulated from the encoder
+	 */
 	public double inchesToEncoderTicks(double inches) {
 		return (1440 * GEAR_RATIO) / (Math.PI * WHEEL_DIAMETER) * inches;
 	}
 	
+	/**
+	 * <pre>
+	 * public void setToVbus()
+	 * </pre>
+	 * Sets both master {@link CANTalon}s' control modes' to 
+	 * {@link CANTalon.TalonControlMode.PercentVbus}
+	 */
 	public void setToVbus() {
 		leftFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	rightFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 	}
 	
+	/**
+	 * <pre>
+	 * public void setToPosition()
+	 * </pre>
+	 * Sets both master {@link CANTalon}s' control modes' to 
+	 * {@link CANTalon.TalonControlMode.Position}
+	 */
 	public void setToPosition() {
 		leftFront.changeControlMode(CANTalon.TalonControlMode.Position);
     	rightFront.changeControlMode(CANTalon.TalonControlMode.Position);

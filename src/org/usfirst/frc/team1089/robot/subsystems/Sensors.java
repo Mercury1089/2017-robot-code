@@ -5,7 +5,8 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * This {@link Subsystem} contains all the hardware for
+ * giving the robot some senses
  */
 public class Sensors extends Subsystem {
 	public final AnalogInput RANGEFINDER;

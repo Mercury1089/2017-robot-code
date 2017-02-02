@@ -16,6 +16,11 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+/**
+ * This {@link Subsystem} contains all the members needed to process camera vision
+ * and control the robot based on data that has been output
+ *
+ */
 public class VisionSystem extends Subsystem {
 	// Targeting types
 	public static enum GOAL_TYPE {GEAR, HIGH};
@@ -27,7 +32,7 @@ public class VisionSystem extends Subsystem {
 	private final MercPipeline PIPELINE;
 	
 	// Vision Constants
-	public final double HFOV = 58.0; // The horizontal FOV of the camera. TODO: Calibrate values
+	public final double HFOV = 58.0; // The horizontal FOV of the camera. TODO Calibrate values
 	public final int IMG_WIDTH = 640, IMG_HEIGHT = 480;
 	private final int NUM_TARGETS = 2;
 	private final double 
