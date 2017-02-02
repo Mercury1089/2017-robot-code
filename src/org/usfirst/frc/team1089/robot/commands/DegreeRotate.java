@@ -12,12 +12,19 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
- *
+ * This {@link Command} uses PID to rotate the robot a specified amount of degrees.
  */
 public class DegreeRotate extends PIDCommand {
 
 	private double _heading;
 	
+	/**
+	 * <pre>
+	 * public DegreeRotate(double heading)
+	 * </pre>
+	 * Creates this {@code DegreeRotate} command to rotate to the specified amount of degrees
+	 * @param heading the target rotation, in degrees
+	 */
     public DegreeRotate(double heading) {
     	super(0.6, 0, 1);
     	requires(Robot.driveTrain);

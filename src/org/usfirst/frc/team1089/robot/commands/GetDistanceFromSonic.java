@@ -5,7 +5,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1089.robot.Robot;
 
 /**
- *
+ * This {@link Command} uses an {@link AnalogInput} ultrasonic
+ * to get the distance between the robot and an object it is directly facing
  */
 public class GetDistanceFromSonic extends Command {
 	public GetDistanceFromSonic() {

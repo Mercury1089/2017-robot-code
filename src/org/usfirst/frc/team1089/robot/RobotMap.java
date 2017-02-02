@@ -21,11 +21,13 @@ public class RobotMap {
 	 */
 	public static class Digital {
 	}
+	
 	/**
 	 * The {@code Relay} subclass contains all the ports for anything in the relay section.
 	 */
 	public static class Relay {
 	}
+	
 	/**
 	 * The {@code CAN} subclass contains all the ports for anything using the CAN interface.
 	 */
@@ -52,9 +54,12 @@ public class RobotMap {
 	 * The {@code PCM} subclass contains all the ports for anything connected to the pneumatics control module (PCM).
 	 */
 	public static class PCM {
-		// Add Pneumatics ports as we decide them
+		// TODO Add pneumatics ports as we decide them
 	}
-
+	
+	/**
+	 * The {@code GamepadButtons} subclass contains all the indices for the gamepad.
+	 */
 	public static class GamepadButtons {
 		public static final int
 			A = 1,
@@ -70,11 +75,11 @@ public class RobotMap {
 	}
 	
 	/**
-	 * The {@code JoystickButtons} class contains all the button bindings for the
-	 * Joysticks.
+	 * The {@code JoystickButtons} subclass contains all the button bindings for the joysticks.
 	 */
 	public static class JoystickButtons {
-		// Well this defeats the purpose of constants, doesn't it?
+		// TODO Rename the identifiers according to the corresponding buttons
+		// I'm willing to bet Dhruv did this -Jared
 		public static final int
 			BTN1 = 1,
 			BTN2 = 2,
@@ -89,6 +94,9 @@ public class RobotMap {
 			BTN11 = 11;
 	}
 	
+	/**
+	 * The {@code JoystickButtons} subclass contains all the port indices for the sensors.
+	 */
 	public static class SENSORS {
 		public static final int
 			RANGEFINDER = 1;

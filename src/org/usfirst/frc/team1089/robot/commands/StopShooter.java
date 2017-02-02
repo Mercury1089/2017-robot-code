@@ -1,18 +1,21 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import org.usfirst.frc.team1089.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * 
- * @author Jared Tulayan
+ * This {@link Command} stops the shooter
  */
 public class StopShooter extends Command {
+	// TODO Finish this entire class
 	public StopShooter(){
-		requires
+		requires(Robot.shooter);
 	}
 	
 	@Override
 	protected void initialize() {
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run

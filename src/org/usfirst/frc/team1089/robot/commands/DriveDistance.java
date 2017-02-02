@@ -21,8 +21,8 @@ public class DriveDistance extends Command {
      * <pre>
      * public DriveDistance(double d)
      * </pre>
-     * Creates this {@link Command}
-     * @param d
+     * Creates this {@code DriveDistance} to drive the specified distance
+     * @param d the distance to drive, in incehs.
      */
 	public DriveDistance(double d) {
         
@@ -33,6 +33,7 @@ public class DriveDistance extends Command {
 	
     // Called just before this Command runs the first time
     protected void initialize() {
+    	// TODO Figure out if we can slave all the CANTalons to only need to listen to one Talon
 		Robot.driveTrain.setToPosition();
 		Robot.driveTrain.resetEncoders();
 		Robot.driveTrain.disableRobotDrive();

@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
 	Alliance allianceColor;
 	int autonStartPos;
 	
-	AutonEnum autonChoice;					//TODO set equal to value from SmartDash
+	AutonEnum autonChoice;					//TODO Set equal to value from SmartDash
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -87,7 +87,7 @@ public class Robot extends IterativeRobot {
 		changeRightEnc = 0;
 		
 		allianceColor = DriverStation.getInstance().getAlliance();
-		autonStartPos = 0;											//TODO get from SmartDash
+		autonStartPos = 0;											//TODO Get from SmartDash
 	}
 
 	/**

@@ -1,16 +1,18 @@
 package org.usfirst.frc.team1089.robot.subsystems;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * 
- * @author Jared Tulayan
+ * This {@link Subsystem} handles the shooting mechanism, 
+ * including controlling the speed of the shooting motors, and more.
  */
 public class Shooter extends Subsystem {
 	private CANTalon motor;
 	
 	public Shooter(){
-		motor = new CANTalon(1); //placeholder till I replace for X4 talon
+		motor = new CANTalon(1); // TODO Replace X4 talon
 	}
 	
 	public void initDefaultCommand() {

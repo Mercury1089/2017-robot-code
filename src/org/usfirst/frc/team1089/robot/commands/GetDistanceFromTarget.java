@@ -21,6 +21,11 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * This {@link Command} uses the {@link VisionSystem} to get the distance
+ * between the robot and the target.
+ * 
+ */
 public class GetDistanceFromTarget extends Command {	
 	public GetDistanceFromTarget() {
 		// Use requires() here to declare subsystem dependencies
