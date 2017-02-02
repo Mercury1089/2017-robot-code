@@ -31,6 +31,8 @@ public class Robot extends IterativeRobot {
 	public static ExampleSubsystem exampleSubsystem;
 	public static DriveTrain driveTrain;
 	public static VisionSystem visionSystem;
+	public static Shooter shooter;
+	public static Sensors sensors;
 	public static OI oi;
 	
 	AutonCommand autonomousCommand;
@@ -59,6 +61,7 @@ public class Robot extends IterativeRobot {
 		exampleSubsystem = new ExampleSubsystem();
 		visionSystem = new VisionSystem();
 		driveTrain = new DriveTrain();
+		sensors = new Sensors();
 		
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
@@ -67,6 +70,7 @@ public class Robot extends IterativeRobot {
 		
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
+		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData("PID", driveTrain);

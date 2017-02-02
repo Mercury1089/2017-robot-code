@@ -10,13 +10,20 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * This {@link Command} drives forward or backward a specified distance
  */
 public class DriveDistance extends Command {
 
     private double distance;
     private double endPosL, endPosR;
 	
+    /**
+     * <pre>
+     * public DriveDistance(double d)
+     * </pre>
+     * Creates this {@link Command}
+     * @param d
+     */
 	public DriveDistance(double d) {
         
         requires(Robot.driveTrain);
