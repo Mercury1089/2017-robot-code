@@ -58,7 +58,7 @@ public class AutonCommand extends CommandGroup {
     	
     	//Auton Step 1
     	addSequential(new DriveDistance(90));	//TODO Change 0 to a value determined by SmartDashboard value
-    	addSequential(new DegreeRotate(60 * reversalFactor));	
+    	addSequential(new DegreeRotate(60/* * reversalFactor*/));	
     											//TODO Can only be 30 or -30; change to var based on Alliance color
     	//addSequential(new AutoAlign());		//TODO Code AutoAlign 
     	addSequential(new DriveDistance(60));	//TODO Change 0 to a value determined by SmartDashboard value

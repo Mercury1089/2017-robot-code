@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GetDistanceFromTarget extends Command {	
 	public GetDistanceFromTarget() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.visionSystem);
+		//requires(Robot.visionSystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -35,7 +35,7 @@ public class GetDistanceFromTarget extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Debug.logMessage(Level.INFO, "Distance (ft): " + Robot.visionSystem.getDistance(GOAL_TYPE.GEAR));
+		//Debug.logMessage(Level.INFO, "Distance (ft): " + Robot.visionSystem.getDistance(GOAL_TYPE.GEAR));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

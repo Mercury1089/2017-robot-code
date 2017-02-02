@@ -52,6 +52,7 @@ public class OI {
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         gamePadBtnB.whenPressed(new DegreeRotate(45));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
+        gamePadBtnY.whenPressed(new NavxDrive(0.5/*, 30*/));
         //gamePadBtnY.whenPressed(new TestCommandGroup());
         
     	//// TRIGGERING COMMANDS WITH BUTTONS

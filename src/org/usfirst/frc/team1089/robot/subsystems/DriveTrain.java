@@ -155,6 +155,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		robotDrive.tankDrive(output, output);
 	}
 	
+	public void pidWrite2(double speed, double output) {
+		robotDrive.arcadeDrive(speed, output);
+	}
+	
 	public double encoderTicksToInches(double ticks) {
 		return (Math.PI * WHEEL_DIAMETER) / (1440 * GEAR_RATIO) * ticks;
 	}
