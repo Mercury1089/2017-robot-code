@@ -182,6 +182,6 @@ public class VisionSystem extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new GetDistanceFromTarget());
+		//setDefaultCommand(new GetDistanceFromTarget());
 	}
 }
