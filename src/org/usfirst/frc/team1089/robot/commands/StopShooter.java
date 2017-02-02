@@ -1,4 +1,4 @@
-/*package org.usfirst.frc.team1089.robot.commands;
+package org.usfirst.frc.team1089.robot.commands;
 
 import java.util.logging.Level;
 
@@ -7,13 +7,13 @@ import org.usfirst.frc.team1089.robot.util.Debug;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-*//**
+/**
  * This {@link Command} stops the shooter
- *//*
+ */
 public class StopShooter extends Command {
 	// TODO Finish this entire class
 	public StopShooter(){
-		requires(Robot.shooter);
+		//requires(Robot.S);
 	}
 	
 	@Override
@@ -45,4 +45,3 @@ public class StopShooter extends Command {
 	protected void interrupted() {
 	}
 }
-*/
