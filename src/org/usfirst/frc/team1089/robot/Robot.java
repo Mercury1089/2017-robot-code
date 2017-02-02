@@ -30,7 +30,10 @@ public class Robot extends IterativeRobot {
 	// Declare subsystems (public static so there is only ever one instance)
 	public static ExampleSubsystem exampleSubsystem;
 	public static DriveTrain driveTrain;
-	//public static VisionSystem visionSystem;
+
+	public static VisionSystem visionSystem;
+	public static Shooter shooter;
+	public static Sensors sensors;
 	public static OI oi;
 	
 	AutonCommand autonomousCommand;
@@ -49,20 +52,31 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		Debug.init("/home/lvuser/log/");
+		// Initialize log file
+		Debug.init("/home/lvuser/log");
+		
 		// Flush the NetworkTables
 		NetworkTable.flush();
+		
 		// Instantiate the subsystems
 		exampleSubsystem = new ExampleSubsystem();
+
 		// driveTrain = new DriveTrain();
 		//visionSystem = new VisionSystem();
+
+		visionSystem = new VisionSystem();
+
 		driveTrain = new DriveTrain();
+		sensors = new Sensors();
+		
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
         // pointers. Bad news. Don't move it.
+		
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
+		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData("PID", driveTrain);

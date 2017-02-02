@@ -88,4 +88,9 @@ public class RobotMap {
 			BTN10 = 10,
 			BTN11 = 11;
 	}
+	
+	public static class SENSORS {
+		public static final int
+			RANGEFINDER = 1;
+	}
 }
