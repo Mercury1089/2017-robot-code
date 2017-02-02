@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1089.robot.commands;
 
-import org.usfirst.frc.team1089.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -15,7 +13,7 @@ public class StopShooter extends Command {
 	
 	@Override
 	protected void initialize() {
-		
+	
 	}
 
 	// Called repeatedly when this Command is scheduled to run

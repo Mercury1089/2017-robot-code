@@ -30,6 +30,7 @@ public class Robot extends IterativeRobot {
 	// Declare subsystems (public static so there is only ever one instance)
 	public static ExampleSubsystem exampleSubsystem;
 	public static DriveTrain driveTrain;
+
 	public static VisionSystem visionSystem;
 	public static Shooter shooter;
 	public static Sensors sensors;
@@ -59,7 +60,12 @@ public class Robot extends IterativeRobot {
 		
 		// Instantiate the subsystems
 		exampleSubsystem = new ExampleSubsystem();
+
+		// driveTrain = new DriveTrain();
+		//visionSystem = new VisionSystem();
+
 		visionSystem = new VisionSystem();
+
 		driveTrain = new DriveTrain();
 		sensors = new Sensors();
 		
@@ -122,7 +128,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		DriverStation.getInstance().getAlliance();
-		autonomousCommand = new AutonCommand(4, Alliance.Blue, AutonEnum.FAR_HOPPER_1_2_3);
+		autonomousCommand = new AutonCommand(4, Alliance.Blue, AutonEnum.NEAR_HOPPER_1_2_3);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
