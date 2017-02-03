@@ -1,13 +1,16 @@
-/*package org.usfirst.frc.team1089.robot.commands;
+package org.usfirst.frc.team1089.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import org.usfirst.frc.team1089.robot.Robot;
+import java.util.logging.Level;
 
-*//**
+import org.usfirst.frc.team1089.robot.Robot;
+import org.usfirst.frc.team1089.robot.util.Debug;
+
+/**
  * This {@link Command} uses an {@link AnalogInput} ultrasonic
  * to get the distance between the robot and an object it is directly facing
- *//*
+ */
 public class GetDistanceFromSonic extends Command {
 	public GetDistanceFromSonic() {
 		// Use requires() here to declare subsystem dependencies
@@ -17,13 +20,12 @@ public class GetDistanceFromSonic extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		System.out.println("Rangefinder Value: " + Robot.sensors.RANGEFINDER.getValue());
+		Debug.logMessage(Level.INFO, "Rangefinder Value: " + Robot.sensors.RANGEFINDER.getVoltage());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -43,4 +45,3 @@ public class GetDistanceFromSonic extends Command {
 	protected void interrupted() {
 	}
 }
-*/
