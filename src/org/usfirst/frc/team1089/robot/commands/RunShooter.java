@@ -5,6 +5,8 @@ import java.util.logging.Level;
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.Debug;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
@@ -15,7 +17,7 @@ public class RunShooter extends PIDCommand {
 	
     public RunShooter(double heading) {
     	super(0, 0, 0); //TODO Test these values
-    	requires(Robot.driveTrain);
+    	requires(Robot.shooter);
     	_heading = heading;
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(0.1);
@@ -27,6 +29,7 @@ public class RunShooter extends PIDCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.shooter.motor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	getPIDController().setSetpoint(_heading);
 		Debug.logMessage(Level.INFO, "The Run Shooter Command has been initialized.");
     }
@@ -54,12 +57,13 @@ public class RunShooter extends PIDCommand {
 
 	@Override
 	protected double returnPIDInput() {
-		// TODO Put in code from vision that gets our distance from goal
-		return 0;
+		// TODO Check if this is the correct input
+		return Robot.shooter.motor.getBusVoltage();
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
 		//Robot.shooter.pidWrite(output);
 	}
+	
 }

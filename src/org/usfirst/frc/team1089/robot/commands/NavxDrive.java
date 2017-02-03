@@ -60,10 +60,6 @@ public class NavxDrive extends PIDCommand {
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-<<<<<<< Updated upstream
 		//Robot.driveTrain.pidWrite(_speed, output);
-=======
-		Robot.driveTrain.pidWrite(_speed);
->>>>>>> Stashed changes
 	}
 }

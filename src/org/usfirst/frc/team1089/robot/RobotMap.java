@@ -21,11 +21,13 @@ public class RobotMap {
 	 */
 	public static class Digital {
 	}
+	
 	/**
 	 * The {@code Relay} subclass contains all the ports for anything in the relay section.
 	 */
 	public static class Relay {
 	}
+	
 	/**
 	 * The {@code CAN} subclass contains all the ports for anything using the CAN interface.
 	 */
@@ -36,6 +38,7 @@ public class RobotMap {
 		public static final int RIGHT_BACK_TALON_ID = 1;
 		public static final int PDP_ID = 5;
 		public static final int PCM_ID = 6;
+		public static final int SHOOTER_TALON_ID = 7; 
 	}
 
 	/**

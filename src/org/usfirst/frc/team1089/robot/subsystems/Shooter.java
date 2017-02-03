@@ -1,5 +1,8 @@
 package org.usfirst.frc.team1089.robot.subsystems;
 
+import org.usfirst.frc.team1089.robot.RobotMap;
+import org.usfirst.frc.team1089.robot.commands.TestShooter;
+
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -10,16 +13,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * including controlling the speed of the shooting motors, and more.
  */
 public class Shooter extends Subsystem implements PIDOutput{
-	private CANTalon motor;
+	public CANTalon motor;
 	
 	public Shooter(){
-		motor = new CANTalon(1); // TODO Replace X4 talon
+		motor = new CANTalon(RobotMap.CAN.SHOOTER_TALON_ID);
 	}
 	
 	public void initDefaultCommand() {
-		//Default Command should be that the wheels are stopped
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new TestShooter());
 	}
 
 	@Override

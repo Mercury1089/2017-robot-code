@@ -1,4 +1,4 @@
-/*package org.usfirst.frc.team1089.robot.commands;
+package org.usfirst.frc.team1089.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -7,10 +7,10 @@ import java.util.logging.Level;
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.Debug;
 
-*//**
+/**
  * This {@link Command} uses an {@link AnalogInput} ultrasonic
  * to get the distance between the robot and an object it is directly facing
- *//*
+ */
 public class GetDistanceFromSonic extends Command {
 	public GetDistanceFromSonic() {
 		// Use requires() here to declare subsystem dependencies
@@ -45,4 +45,3 @@ public class GetDistanceFromSonic extends Command {
 	protected void interrupted() {
 	}
 }
-*/

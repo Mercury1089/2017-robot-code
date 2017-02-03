@@ -31,6 +31,8 @@ public class Robot extends IterativeRobot {
 	public static ExampleSubsystem exampleSubsystem;
 	public static DriveTrain driveTrain;
 	public static VisionSystem visionSystem;
+	public static Sensors sensors;
+	public static Shooter shooter;
 	public static OI oi;
 	
 	AutonCommand autonomousCommand;
@@ -54,7 +56,8 @@ public class Robot extends IterativeRobot {
 		NetworkTable.flush();
 		// Instantiate the subsystems
 		exampleSubsystem = new ExampleSubsystem();
-		// driveTrain = new DriveTrain();
+		sensors = new Sensors();
+		shooter = new Shooter();
 		visionSystem = new VisionSystem();
 		driveTrain = new DriveTrain();
 		// OI must be constructed after subsystems. If the OI creates Commands
