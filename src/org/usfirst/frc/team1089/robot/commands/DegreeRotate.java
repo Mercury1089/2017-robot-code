@@ -19,13 +19,13 @@ public class DegreeRotate extends PIDCommand {
 	private double _heading;
 	
     public DegreeRotate(double heading) {
-    	super(0.1, 0, 0.7);
+    	super(0.1, 0, 1);
     	requires(Robot.driveTrain);
     	_heading = heading;
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(0.1);
     	getPIDController().setInputRange(-180, 180);
-    	getPIDController().setOutputRange(-.45, .45);   //was at -.5,.5
+    	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
     }
 
@@ -62,7 +62,7 @@ public class DegreeRotate extends PIDCommand {
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
 		//return Robot.driveTrain.getGyro().getAngle();
-		return Robot.driveTrain.getNAVX().getAngle();
+		return Robot.driveTrain.getGyro().getAngle();
 	}
 
 	@Override

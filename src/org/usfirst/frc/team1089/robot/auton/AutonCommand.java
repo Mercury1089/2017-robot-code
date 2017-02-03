@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * Collects information from SmartDashboard to change Auton
  */
 public class AutonCommand extends CommandGroup {
-
+	
 	
 	/**
 	 * @param StartPos - from 1-9 as determined by AutonKid 
