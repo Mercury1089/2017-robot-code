@@ -114,7 +114,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		DriverStation.getInstance().getAlliance();
-		autonomousCommand = new AutonCommand(4, Alliance.Blue, AutonEnum.FAR_HOPPER_1_2_3);
+		autonomousCommand = new AutonCommand(7, Alliance.Red, AutonEnum.TURN_SHOOT_7_8_9);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -167,4 +167,5 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+
 }
