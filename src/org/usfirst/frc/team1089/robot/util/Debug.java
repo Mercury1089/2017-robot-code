@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  * 
  */
 public class Debug {
-	private static final DateFormat ISO8601 = new SimpleDateFormat("yyyy-dd-MMThhmmss.SSZ");
+	private static final DateFormat ISO8601 = new SimpleDateFormat("yyyy-dd-MM_hh-mm-ss.SS");
     private static final Logger LOGGER = Logger.getLogger("");
     private static final DriverStation DRIVER_STATION = DriverStation.getInstance();
     

@@ -25,7 +25,7 @@ public class GetDistanceFromSonic extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Debug.logMessage(Level.INFO, "Rangefinder Value: " + Robot.sensors.RANGEFINDER.getVoltage());
+		//Debug.logMessage(Level.INFO, "Rangefinder Value: " + Robot.sensors.RANGEFINDER.getVoltage());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

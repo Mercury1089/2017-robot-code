@@ -6,6 +6,7 @@ import org.usfirst.frc.team1089.robot.commands.DriveDistance;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -56,7 +57,8 @@ public class AutonCommand extends CommandGroup {
     		fieldPos = 3;
     	
     	
-    	//FIXME A LOT OF THIS COULD BE WRONG.    	
+    	//FIXME A LOT OF THIS COULD BE WRONG.    		
+    	
     	
     	//Auton Step 1
     	addSequential(new DriveDistance(90));	//TODO Change 0 to a value determined by SmartDashboard value
@@ -64,11 +66,13 @@ public class AutonCommand extends CommandGroup {
     		addSequential(new DegreeRotate(60 * reversalFactor));
     											//TODO Can only be 30 or -30; change to var based on Alliance color
     	//addSequential(new AutoAlign());		//TODO Code AutoAlign 
-    	addSequential(new DriveDistance(60));	//TODO Change 0 to a value determined by SmartDashboard value
+    	addSequential(new DriveDistance(60, 1.5));	//TODO Change 0 to a value determined by SmartDashboard value
     	//addSequential(new DropGear());		//TODO Code DropGear 
     	
+    	
+    	
     	//Auton Step 2
-    	addSequential(new DriveDistance(-40));	//TODO Change -0 to a negative value determined by SmartDashboard value
+    	addSequential(new DriveDistance(-40, 0.5));	//TODO Change -0 to a negative value determined by SmartDashboard value
     	//addSequential(new AutoAlign());		//to lift
     	
     	//Auton Step 3    						

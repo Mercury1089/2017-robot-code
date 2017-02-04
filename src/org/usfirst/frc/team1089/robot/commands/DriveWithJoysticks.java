@@ -19,7 +19,7 @@ public class DriveWithJoysticks extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveTrain.setToVbus();
-		Debug.logMessage(Level.INFO, "The robot has returned to Driving With Joysticks.");
+		//Debug.logMessage(Level.INFO, "The robot has returned to Driving With Joysticks.");
 
     }
 
@@ -36,7 +36,7 @@ public class DriveWithJoysticks extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.driveTrain.stop();
-		Debug.logMessage(Level.INFO, "The robot is no longer using Drive With Joysticks.");
+		//Debug.logMessage(Level.INFO, "The robot is no longer using Drive With Joysticks.");
 
     }
 

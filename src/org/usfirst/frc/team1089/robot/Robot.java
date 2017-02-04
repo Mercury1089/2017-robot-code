@@ -49,12 +49,12 @@ public class Robot extends IterativeRobot {
 	SendableChooser startPosition, step3Chooser;
 	AutonEnum autonChoice;					//TODO set equal to value from SmartDash
 	/**
-	 * This function is run when the robot is first started up and should be
+	 * This function is ho when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		Debug.init("/home/lvuser/log/");
+		//Debug.init("/home/lvuser/log/");
 		// Flush the NetworkTables
 		NetworkTable.flush();
 		// Instantiate the subsystems
@@ -142,7 +142,7 @@ public class Robot extends IterativeRobot {
 		autonChoice = (AutonEnum) step3Chooser.getSelected();
 		
 		DriverStation.getInstance().getAlliance();
-		autonomousCommand = new AutonCommand(autonStartPos, /*DriverStation.getInstance().getAlliance()*/Alliance.Red, autonChoice);
+		autonomousCommand = new AutonCommand(autonStartPos, DriverStation.getInstance().getAlliance()/*Alliance.Blue*/, autonChoice);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -162,6 +162,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,12 +19,22 @@ public class DriveDistance extends Command {
 
     private double distance;
     private double endPosL, endPosR;
+    private double waitTime;
+    
+    public DriveDistance(double d) {
+        requires(Robot.driveTrain);
+        distance = d;
+        endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
+        waitTime = 0;
+    	
+    }
 	
-	public DriveDistance(double d) {
+	public DriveDistance(double d, double waitTime) {
         
         requires(Robot.driveTrain);
         distance = d;
         endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
+        this.waitTime = waitTime;
     }
 	
     // Called just before this Command runs the first time
@@ -54,7 +65,7 @@ public class DriveDistance extends Command {
 		
 		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
-		Debug.logMessage(Level.INFO, "The Drive Distance Command has been initialized.");
+		//Debug.logMessage(Level.INFO, "The Drive Distance Command has been initialized.");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -81,6 +92,7 @@ public class DriveDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Timer.delay(waitTime);
     	Robot.driveTrain.setToVbus();
     	Robot.driveTrain.stop();
     	Robot.driveTrain.enableRobotDrive();
@@ -88,7 +100,7 @@ public class DriveDistance extends Command {
     	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()));
     	Robot.driveTrain.resetEncoders();
 		SmartDashboard.putString("DriveDistance: ", "end");
-		Debug.logMessage(Level.INFO, "The Drive Distance Command has ended.");
+		//Debug.logMessage(Level.INFO, "The Drive Distance Command has ended.");
 
     }
 

@@ -16,7 +16,7 @@ public class RunShooter extends PIDCommand {
 	private double _heading;
 	
     public RunShooter(double heading) {
-    	super(0, 0, 0); //TODO Test these values
+    	super(0.4, 0, 0); //TODO Test these values
     	requires(Robot.shooter);
     	_heading = heading;
     	getPIDController().setContinuous(true);
@@ -63,7 +63,7 @@ public class RunShooter extends PIDCommand {
 
 	@Override
 	protected void usePIDOutput(double output) {
-		//Robot.shooter.pidWrite(output);
+		Robot.shooter.pidWrite(output);
 	}
 	
 }
