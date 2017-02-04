@@ -39,10 +39,14 @@ public class Robot extends IterativeRobot {
 	
 	private double changeRightEnc;
 	private double changeLeftEnc;
+	
+	private AutonEnum step3;
 
 	Alliance allianceColor;
-	int autonStartPos;
+	private int autonStartPos;
 	
+	
+	SendableChooser startPosition, step3Chooser;
 	AutonEnum autonChoice;					//TODO set equal to value from SmartDash
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -64,7 +68,6 @@ public class Robot extends IterativeRobot {
         // constructed yet. Thus, their requires() statements may grab null
         // pointers. Bad news. Don't move it.
 		oi = new OI();
-		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData("PID", driveTrain);
@@ -80,8 +83,28 @@ public class Robot extends IterativeRobot {
 		changeLeftEnc = 0;
 		changeRightEnc = 0;
 		
-		allianceColor = DriverStation.getInstance().getAlliance();
-		autonStartPos = 0;											//TODO get from SmartDash
+		//allianceColor = DriverStation.getInstance().getAlliance();
+		//autonStartPos = 0;											//TODO get from SmartDash
+		
+		startPosition = new SendableChooser();
+		startPosition.addDefault("1", 1);
+		startPosition.addObject("2", 2);
+		startPosition.addObject("3", 3);
+		startPosition.addObject("4", 4);
+		startPosition.addObject("5", 5);
+		startPosition.addObject("6", 6);
+		startPosition.addObject("7", 7);
+		startPosition.addObject("8", 8);
+		startPosition.addObject("9", 9);
+		SmartDashboard.putData("Starting position: ", startPosition);
+		
+		step3Chooser = new SendableChooser();
+		step3Chooser.addDefault("STOP", AutonEnum.STOP);
+		step3Chooser.addObject("Turn and Shoot", AutonEnum.TURN_SHOOT);
+		step3Chooser.addObject("Far Hopper", AutonEnum.FAR_HOPPER);
+		step3Chooser.addObject("Near Hopper", AutonEnum.NEAR_HOPPER);
+		SmartDashboard.putData("Step 3 choice", step3Chooser);
+		
 	}
 
 	/**
@@ -115,8 +138,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		autonStartPos = (int) startPosition.getSelected();
+		autonChoice = (AutonEnum) step3Chooser.getSelected();
+		
 		DriverStation.getInstance().getAlliance();
-		autonomousCommand = new AutonCommand(1, Alliance.Red, AutonEnum.FAR_HOPPER_1_2_3);
+		autonomousCommand = new AutonCommand(autonStartPos, /*DriverStation.getInstance().getAlliance()*/Alliance.Red, autonChoice);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

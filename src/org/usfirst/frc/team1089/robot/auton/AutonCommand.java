@@ -38,7 +38,7 @@ public class AutonCommand extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	int truePos = startPos;
+    	int truePos = startPos, fieldPos = 2;
 		DriverStation.getInstance().getAlliance();
 		//Blue is switched; Red is normal
 		if (color.equals(Alliance.Blue)) 		 
@@ -50,6 +50,10 @@ public class AutonCommand extends CommandGroup {
     	if(truePos >= 7 && truePos <= 9) 	
     		reversalFactor = -1;
     	
+    	if(truePos < 4)
+    		fieldPos = 1; 					//Loading Station side
+    	else if(truePos > 6)
+    		fieldPos = 3;
     	
     	
     	//FIXME A LOT OF THIS COULD BE WRONG.    	
@@ -69,32 +73,39 @@ public class AutonCommand extends CommandGroup {
     	
     	//Auton Step 3    						
     	switch(choice) {
-    	case FAR_HOPPER_1_2_3:
-    	case NEAR_HOPPER_1_2_3:
+    	case FAR_HOPPER:								//TODO make a far hopper sequence
+    	case NEAR_HOPPER:
+    		if(fieldPos == 1) {
+    			addSequential(new DegreeRotate(-60 * reversalFactor));
+    			addSequential(new DriveDistance(100));	//TODO Change 10 to actual distance from Smartdash that is different based on FAR/NEAR				
+    			addSequential(new DegreeRotate(90 * reversalFactor));
+    			addSequential(new DriveDistance(-30));	//TODO Change -10
+    		}
+    		else if(fieldPos == 3){
+    			addSequential(new DegreeRotate(-30 * reversalFactor));	
+    			addSequential(new DriveDistance(-5));	
+    			//make sure you pick up
+    			//turn and shoot
+    		}
+    		break;
+    	case TURN_SHOOT:
+    		if(fieldPos == 1) {
+    			addSequential(new DegreeRotate(60 * reversalFactor));
+    			//Shoot;;;
+    		}
+    		else if(fieldPos == 2) {
+    			if(color.equals(Alliance.Red))
+    				addSequential(new DegreeRotate(110));
+    			else
+    				addSequential(new DegreeRotate(-110));
+    				//Shoot
+    		}
+    		else if(fieldPos == 3) {
+    			addSequential(new DegreeRotate(180 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
+        		//Shoot (With autoalign lmao ecks dee)
+    		}
+    		break;
     		
-    		addSequential(new DegreeRotate(-60 * reversalFactor));
-    		addSequential(new DriveDistance(100));	//TODO Change 10 to actual distance from Smartdash that is different based on FAR/NEAR				
-    		addSequential(new DegreeRotate(90 * reversalFactor));
-    		addSequential(new DriveDistance(-30));	//TODO Change -10
-    		break;
-    	case NEAR_HOPPER_7_8_9:
-    		addSequential(new DegreeRotate(-30 * reversalFactor));	//FIXME
-    		addSequential(new DriveDistance(-5));	//TODO
-    		//make sure you pick up
-    		//turn and shoot
-    		break;
-    	case TURN_SHOOT_4_5_6:
-    		if(color.equals(Alliance.Red))
-    			addSequential(new DegreeRotate(110));
-    		else
-    			addSequential(new DegreeRotate(-110));
-    		//Shoot (Wit my boy autoaligh)
-    		break;
-    		
-    	case TURN_SHOOT_7_8_9:
-    		addSequential(new DegreeRotate(180 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
-    		//Shoot (With autoalign lmao ecks dee)
-    		break;
     	}
     }
 }
