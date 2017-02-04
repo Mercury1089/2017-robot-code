@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team1089.robot;
 
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
@@ -117,7 +116,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		DriverStation.getInstance().getAlliance();
-		autonomousCommand = new AutonCommand(4, Alliance.Blue, AutonEnum.FAR_HOPPER_1_2_3);
+		autonomousCommand = new AutonCommand(1, Alliance.Red, AutonEnum.FAR_HOPPER_1_2_3);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -128,7 +127,7 @@ public class Robot extends IterativeRobot {
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
-			autonomousCommand.start();
+			autonomousCommand.start(); 
 	}
 
 	/**
@@ -161,6 +160,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
 		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
+		SmartDashboard.putNumber("Mag Enc Val", Robot.shooter.motor.getSpeed());
+		SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
 	}
 
 	/**

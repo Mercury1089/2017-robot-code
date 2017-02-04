@@ -4,5 +4,6 @@ public enum AutonEnum {
 	FAR_HOPPER_1_2_3,
 	NEAR_HOPPER_1_2_3,
 	NEAR_HOPPER_7_8_9,
-	TURN_SHOOT;
+	TURN_SHOOT_4_5_6,
+	TURN_SHOOT_7_8_9;
 }

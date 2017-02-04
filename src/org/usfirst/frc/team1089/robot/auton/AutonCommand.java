@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * Collects information from SmartDashboard to change Auton
  */
 public class AutonCommand extends CommandGroup {
-
+	
 	
 	/**
 	 * @param StartPos - from 1-9 as determined by AutonKid 
@@ -47,18 +47,17 @@ public class AutonCommand extends CommandGroup {
     	
     	int reversalFactor = 1;
     	
-    	if(startPos >= 7 && startPos <= 9) 	
+    	if(truePos >= 7 && truePos <= 9) 	
     		reversalFactor = -1;
-    	else if(startPos >= 4 && startPos <= 6)
-    		reversalFactor = 0;
     	
     	
     	
-    	//FIXME A LOT OF THIS COULD BE WRONG. SRI and LUKE are stupid	    	
+    	//FIXME A LOT OF THIS COULD BE WRONG.    	
     	
     	//Auton Step 1
     	addSequential(new DriveDistance(90));	//TODO Change 0 to a value determined by SmartDashboard value
-    	addSequential(new DegreeRotate(60 * reversalFactor));	
+    	if(!(truePos >= 4 && truePos <= 6))
+    		addSequential(new DegreeRotate(60 * reversalFactor));
     											//TODO Can only be 30 or -30; change to var based on Alliance color
     	//addSequential(new AutoAlign());		//TODO Code AutoAlign 
     	addSequential(new DriveDistance(60));	//TODO Change 0 to a value determined by SmartDashboard value
@@ -73,19 +72,29 @@ public class AutonCommand extends CommandGroup {
     	case FAR_HOPPER_1_2_3:
     	case NEAR_HOPPER_1_2_3:
     		
-    		addSequential(new DegreeRotate(30));
-    		addSequential(new DriveDistance(10));	//TODO Change 10 to actual distance from Smartdash that is different based on FAR/NEAR				
-    		addSequential(new DegreeRotate(90));
-    		addSequential(new DriveDistance(-10));	//TODO Change -10
+    		addSequential(new DegreeRotate(-60 * reversalFactor));
+    		addSequential(new DriveDistance(100));	//TODO Change 10 to actual distance from Smartdash that is different based on FAR/NEAR				
+    		addSequential(new DegreeRotate(90 * reversalFactor));
+    		addSequential(new DriveDistance(-30));	//TODO Change -10
     		break;
     	case NEAR_HOPPER_7_8_9:
-    		addSequential(new DegreeRotate(-30));	//FIXME Srihari is actually challenged
+    		addSequential(new DegreeRotate(-30 * reversalFactor));	//FIXME
     		addSequential(new DriveDistance(-5));	//TODO
     		//make sure you pick up
     		//turn and shoot
     		break;
-    	case TURN_SHOOT:
-    		//addSequential();
+    	case TURN_SHOOT_4_5_6:
+    		if(color.equals(Alliance.Red))
+    			addSequential(new DegreeRotate(110));
+    		else
+    			addSequential(new DegreeRotate(-110));
+    		//Shoot (Wit my boy autoaligh)
+    		break;
+    		
+    	case TURN_SHOOT_7_8_9:
+    		addSequential(new DegreeRotate(180 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
+    		//Shoot (With autoalign lmao ecks dee)
+    		break;
     	}
     }
 }

@@ -2,6 +2,8 @@ package org.usfirst.frc.team1089.robot.commands;
 
 import org.usfirst.frc.team1089.robot.util.Debug;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
@@ -30,8 +32,8 @@ public class DriveDistance extends Command {
 		Robot.driveTrain.resetEncoders();
 		Robot.driveTrain.disableRobotDrive();
     	
-		Robot.driveTrain.getLeft().setPID(0.7, 0, 0.8);
-		Robot.driveTrain.getRight().setPID(0.7, 0, 0.8);
+		Robot.driveTrain.getLeft().setPID(0.7, 0, 0.65);
+		Robot.driveTrain.getRight().setPID(0.7, 0, 0.65);
 		
 		Robot.driveTrain.getLeft().configPeakOutputVoltage(10, -10);
 		Robot.driveTrain.getLeft().configNominalOutputVoltage(0, 0);
