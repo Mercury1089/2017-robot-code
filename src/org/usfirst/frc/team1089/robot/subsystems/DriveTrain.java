@@ -155,6 +155,14 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		robotDrive.tankDrive(output, output);
 	}
 	
+	public double getAutonRotatePidValue(double output) {
+		return output;
+	}
+	
+	public double getAutonDriveDistancePidValue(double output) {
+		return output;
+	}
+	
 	public double encoderTicksToInches(double ticks) {
 		return (Math.PI * WHEEL_DIAMETER) / (1440 * GEAR_RATIO) * ticks;
 	}
@@ -180,5 +188,16 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		return leftFront;
 	}
 	
+	public double getNAVXDisplacementMagnitude() {
+		return Math.sqrt(Math.pow(navx.getDisplacementX(),  2) + Math.pow(navx.getDisplacementY(),  2));
+	}
+	
+	public double getRightStickVal() {
+		return Robot.oi.rightStick.getX();
+	}
+	
+	public double getLeftStickVal() {
+		return Robot.oi.leftStick.getY();
+	}
 }
 
