@@ -9,6 +9,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -191,6 +192,12 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	public double getNAVXDisplacementMagnitude() {
 		return Math.sqrt(Math.pow(navx.getDisplacementX(),  2) + Math.pow(navx.getDisplacementY(),  2));
 	}
+	
+	public double getNAVXAccelerationMagnitude() {
+		return Math.sqrt(Math.pow(navx.getRawAccelX(),  2) + Math.pow(navx.getRawAccelY(),  2));
+	}
+	
+	
 	
 	public double getRightStickVal() {
 		return Robot.oi.rightStick.getX();
