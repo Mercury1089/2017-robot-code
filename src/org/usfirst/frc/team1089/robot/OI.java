@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1089.robot.commands.*;
+import org.usfirst.frc.team1089.robot.util.MotionProfileExample;
 
 
 /**
@@ -14,7 +15,7 @@ import org.usfirst.frc.team1089.robot.commands.*;
  */
 public class OI {
 
-	public static final double JS_DEADZONE_LIMIT = 0.3; // Deadzone limit for the sticks
+	public static final double JS_DEADZONE_LIMIT = 0.3; // Deadzone limit for the stick	
 
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a
@@ -40,6 +41,7 @@ public class OI {
     public JoystickButton gamePadBtnA;
     public JoystickButton gamePadBtnB;
     public JoystickButton gamePadBtnY;
+    public JoystickButton gamePadBtnX;
 	public OI() {
     	
         leftStick = new Joystick(RobotMap.DS_USB.LEFT_STICK);
@@ -52,7 +54,11 @@ public class OI {
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         gamePadBtnB.whenPressed(new DegreeRotate(45));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
-        //gamePadBtnY.whenPressed(new TestCommandGroup());
+        
+        
+        gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
+        gamePadBtnX.whenPressed(new MotionProfile(Robot.driveTrain.getLeft()));
+        
         
         
     	//// TRIGGERING COMMANDS WITH BUTTONS

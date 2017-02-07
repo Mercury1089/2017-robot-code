@@ -14,7 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TestShooter extends Command {
 
-    public TestShooter() {
+	//Testing Purposes Only
+	double highest, lowest;
+
+	public TestShooter() {
     	
     	requires(Robot.shooter);
     	
@@ -22,7 +25,7 @@ public class TestShooter extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.motor.setPID(0.3, 0, 0);
+    	Robot.shooter.motor.setPID(0.3, 0, 0.7);
 		Robot.shooter.motor.configPeakOutputVoltage(12, -12);
 		Robot.shooter.motor.configNominalOutputVoltage(0,0);
     	Robot.shooter.motor.enableControl();
@@ -32,6 +35,7 @@ public class TestShooter extends Command {
 		SmartDashboard.putNumber("shooterVolts", 0.0);
     	SmartDashboard.putBoolean("shooterIsRunning", false);
 
+    	highest = lowest = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -40,6 +44,27 @@ public class TestShooter extends Command {
     	
     	double volts = SmartDashboard.getBoolean("shooterIsRunning", false) ? SmartDashboard.getNumber("shooterVolts", 0) : 0.0;
     	
+    	
+    	double magVal = SmartDashboard.getNumber("Mag Enc Val", 2900);
+    	
+    	
+    	if (magVal < lowest) {
+    		lowest = magVal;
+    	}
+    	if (magVal > highest) {
+    		highest = magVal;
+    	}
+    	
+    	boolean highLow = SmartDashboard.getBoolean("Enable High/Low", false);
+    	
+    	if (!highLow) {
+    		resetHighLow();
+    	}
+    	else {
+    		SmartDashboard.putNumber("LOWEST", lowest);
+    		SmartDashboard.putNumber("HIGHEST", highest);
+    	}	
+    		
     	Robot.shooter.motor.set(volts);
     }
 
@@ -56,4 +81,9 @@ public class TestShooter extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
+    
+    public void resetHighLow() {
+		highest = 0;
+		lowest = 10000;
+	}
 }
