@@ -1,9 +1,9 @@
 package org.usfirst.frc.team1089.robot.util;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
@@ -17,25 +17,27 @@ import edu.wpi.first.wpilibj.DriverStation;
  * at {@code "home/lvuser/logs/"} on the roboRIO.
  * 
  */
-public class Debug {
-	private static final DateFormat ISO8601 = new SimpleDateFormat("yyyy-dd-MM_hh-mm-ss.SS");
+public class MercLogger {
+	private static final DateFormat 
+		DATE = new SimpleDateFormat("yyyy-dd-MM"),
+		TIME = new SimpleDateFormat("hhmmss.SS"),
+		TIME_EXTENDED = new SimpleDateFormat("hh:mm:ss.SS");
+	
     private static final Logger LOGGER = Logger.getLogger("");
     private static final DriverStation DRIVER_STATION = DriverStation.getInstance();
     
+    private static boolean exists = false;
+    
     private static final Formatter FORMATTER = new Formatter() {
-    	private DateFormat 
-    		realTime = new SimpleDateFormat("hh:mm:ss.SS"),
-    		matchTime = new SimpleDateFormat("mm:ss.SS");
-
         @Override
         public String format(LogRecord record) {
         	
             String output = "";
             
             // Format: [<real_time> / <match_time>] <log_level>: <message>
-            output += "[" + realTime.format(record.getMillis()) + " / " + matchTime.format(DRIVER_STATION.getMatchTime()) + "] ";
+            output += "[" + TIME_EXTENDED.format(record.getMillis()) + " / " + TIME_EXTENDED.format(DRIVER_STATION.getMatchTime()) + "] ";
             output += record.getLevel() + ": " + record.getMessage();
-	    output += "\n";
+            output += "\n";
 
             return output;
         }
@@ -50,17 +52,22 @@ public class Debug {
      * @param path the directory that you want the log to be stored in
      */
     public static synchronized void init(String path) {
-    	try {
-    		if (!path.endsWith("/"))
-    			path += "/";
-    		
-    		FileHandler fh = new FileHandler(path + "log_" + ISO8601.format(Calendar.getInstance().getTime()) + ".txt");
-			LOGGER.setUseParentHandlers(false);
-	    	fh.setFormatter(FORMATTER);
-	    	LOGGER.addHandler(fh);
-		} catch (Exception e) {
-			// He's dead, Jim!
-		}
+    	if (!exists) { // If we have never initialized the Logger
+    		Date d = Calendar.getInstance().getTime();
+    		String date = DATE.format(d), time = TIME.format(d);
+    		try {
+	    		if (!path.endsWith("/"))
+	    			path += "/";
+	    		
+	    		FileHandler fh = new FileHandler(path + "log_" + date + "T" + time + "Z" + ".txt");
+				LOGGER.setUseParentHandlers(false);
+		    	fh.setFormatter(FORMATTER);
+		    	LOGGER.addHandler(fh);
+		    	exists = true;
+			} catch (Exception e) {
+				// He's dead, Jim!
+			}
+    	}
     }
     
     /**

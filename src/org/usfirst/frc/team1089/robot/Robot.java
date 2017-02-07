@@ -4,7 +4,7 @@ import org.usfirst.frc.team1089.robot.auton.AutonCommand;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1089.robot.subsystems.*;
-import org.usfirst.frc.team1089.robot.util.Debug;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
