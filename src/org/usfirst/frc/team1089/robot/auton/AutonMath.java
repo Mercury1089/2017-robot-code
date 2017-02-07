@@ -11,27 +11,35 @@ public class AutonMath {
 		
 		switch(position) {
 		case 1:
-			midlineDist = 12;
+			midlineDist = 144;
+			break;
 		case 2:
-			midlineDist = 9;
+			midlineDist = 108;
+			break;
 		case 3:
-			midlineDist = 6;
+			midlineDist = 84;
+			break;
 		case 4:
 		case 5:
 		case 6:
 			midlineDist = 0;
+			break;
 		case 7:
-			midlineDist = 3;
+			midlineDist = 36;
+			break;
 		case 8:
-			midlineDist = 5;
+			midlineDist = 60;
+			break;
 		case 9:
-			midlineDist = 11;
+			midlineDist = 132;
+			break;
 		default:
 			midlineDist = 0;
+			break;
 		}
 		
-		double distFromMid = (AIRSHIP_DISTANCE / Math.tan(30) - midlineDist);
-		d[0] = distFromMid * 1.173 - 1 / 2 * Config.ROBOT_LENGTH_PROTO;
+		double distFromMid = AIRSHIP_DISTANCE / Math.tan(30) - midlineDist;
+		d[0] = -(distFromMid / 1.173)/* - (1 / 2 * Config.ROBOT_LENGTH_PROTO))*/;
 		d[1] = (150.05 / Math.sin(30)) - (distFromMid / Math.cos(30)) - AIRSHIP_RADIUS;
 		return d;
 	}

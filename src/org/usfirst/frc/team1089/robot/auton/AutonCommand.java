@@ -39,14 +39,13 @@ public class AutonCommand extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	double[] distances = AutonMath.autonDistances(startPos);
-    	
     	int truePos = startPos, fieldPos = 2;
 		DriverStation.getInstance().getAlliance();
 		//Blue is switched; Red is normal
 		if (color.equals(Alliance.Blue)) 		 
 			truePos = 10 - startPos;			//XXX makes 9 to 1 and 1 to 9, etc
 		
+		double[] distances = AutonMath.autonDistances(truePos);
     	
     	int reversalFactor = 1;
     	
@@ -61,16 +60,14 @@ public class AutonCommand extends CommandGroup {
     	
     	//FIXME A LOT OF THIS COULD BE WRONG.    		
     	
-    	
     	//Auton Step 1
-    	addSequential(new DriveDistance(distances[0]));	//TODO Change 0 to a value determined by SmartDashboard value
+    	addSequential(new DriveDistance(distances[0], 0.5));	//TODO Change 0 to a value determined by SmartDashboard value
     	if(!(truePos >= 4 && truePos <= 6))
     		addSequential(new DegreeRotate(60 * reversalFactor));
     											//TODO Can only be 30 or -30; change to var based on Alliance color
     	//addSequential(new AutoAlign());		//TODO Code AutoAlign 
     	addSequential(new DriveDistance(distances[1], 1.5));	//TODO Change 0 to a value determined by SmartDashboard value
     	//addSequential(new DropGear());		//TODO Code DropGear 
-    	
     	
     	
     	//Auton Step 2
