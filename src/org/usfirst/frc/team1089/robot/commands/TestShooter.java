@@ -25,7 +25,7 @@ public class TestShooter extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.motor.setPID(0.3, 0, 0.7);
+    	Robot.shooter.motor.setPID(0.5, 0.0, 0.5);
 		Robot.shooter.motor.configPeakOutputVoltage(12, -12);
 		Robot.shooter.motor.configNominalOutputVoltage(0,0);
     	Robot.shooter.motor.enableControl();
@@ -34,8 +34,9 @@ public class TestShooter extends Command {
     	Robot.shooter.motor.reverseSensor(false);
 		SmartDashboard.putNumber("shooterVolts", 0.0);
     	SmartDashboard.putBoolean("shooterIsRunning", false);
+    	SmartDashboard.putBoolean("enableHighLow", false);
 
-    	highest = lowest = 0;
+    	resetHighLow();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -55,15 +56,12 @@ public class TestShooter extends Command {
     		highest = magVal;
     	}
     	
-    	boolean highLow = SmartDashboard.getBoolean("Enable High/Low", false);
-    	
-    	if (!highLow) {
+    	if (!SmartDashboard.getBoolean("enableHighLow", false)) {
     		resetHighLow();
     	}
-    	else {
-    		SmartDashboard.putNumber("LOWEST", lowest);
-    		SmartDashboard.putNumber("HIGHEST", highest);
-    	}	
+
+    	SmartDashboard.putNumber("LOWEST", lowest);
+		SmartDashboard.putNumber("HIGHEST", highest);
     		
     	Robot.shooter.motor.set(volts);
     }
