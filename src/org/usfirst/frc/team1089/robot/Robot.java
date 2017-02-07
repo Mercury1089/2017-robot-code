@@ -48,6 +48,8 @@ public class Robot extends IterativeRobot {
 	
 	SendableChooser startPosition, step3Chooser;
 	AutonEnum autonChoice;					//TODO set equal to value from SmartDash
+	
+	
 	/**
 	 * This function is ho when the robot is first started up and should be
 	 * used for any initialization code.

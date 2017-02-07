@@ -9,14 +9,17 @@ import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class RunShooter extends PIDCommand {
 
 	private double _heading;
+	double highest = 0;
+	double lowest = 0;
 	
     public RunShooter(double heading) {
-    	super(0.4, 0, 0); //TODO Test these values
+    	super(0.3, 0, 0.7); //TODO Test these values
     	requires(Robot.shooter);
     	_heading = heading;
     	getPIDController().setContinuous(true);
@@ -36,6 +39,26 @@ public class RunShooter extends PIDCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+
+    	double magVal = SmartDashboard.getNumber("Mag Enc Val", 2900);
+    	
+    	
+    	if (magVal < lowest) {
+    		lowest = magVal;
+    	}
+    	if (magVal > highest) {
+    		highest = magVal;
+    	}
+    	
+    	boolean highLow = SmartDashboard.getBoolean("Enable High/Low", false);
+    	
+    	if (!highLow) {
+    		resetHighLow();
+    	}
+    	else {
+    		SmartDashboard.putNumber("LOWEST", lowest);
+    		SmartDashboard.putNumber("HIGHEST", highest);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -66,4 +89,8 @@ public class RunShooter extends PIDCommand {
 		Robot.shooter.pidWrite(output);
 	}
 	
+	public void resetHighLow() {
+		highest = 0;
+		lowest = 10000;
+	}
 }
