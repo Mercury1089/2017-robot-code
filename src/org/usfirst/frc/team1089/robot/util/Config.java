@@ -39,7 +39,7 @@ public class Config {
 				reader.close();
 			}
 		} catch (Exception e) {
-			Debug.logException(e);
+			MercLogger.logException(e);
 		}
 		
 	}

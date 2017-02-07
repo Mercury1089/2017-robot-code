@@ -3,7 +3,7 @@ package org.usfirst.frc.team1089.robot.auton;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.util.Debug;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -44,7 +44,7 @@ public class AutonDriveOnCurve extends Command {
     	Robot.driveTrain.getNAVX().reset();
     	pid1.setSetpoint(_headingAngle);
     	pid2.setSetpoint(_headingDisplacement);
-		Debug.logMessage(Level.INFO, "The Auton Drive On Curve Command has been initialized.");
+		MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has been initialized.");
 
     }
 
@@ -59,7 +59,7 @@ public class AutonDriveOnCurve extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-		Debug.logMessage(Level.INFO, "The Auton Drive On Curve Command has ended.");
+		MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has ended.");
     }
 
     // Called when another command which requires one or more of the same

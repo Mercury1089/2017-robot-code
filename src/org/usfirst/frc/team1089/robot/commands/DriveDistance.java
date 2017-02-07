@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1089.robot.commands;
 
-import org.usfirst.frc.team1089.robot.util.Debug;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon.TalonControlMode;
 

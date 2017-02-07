@@ -3,7 +3,7 @@ package org.usfirst.frc.team1089.robot.commands;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.util.Debug;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -18,7 +18,7 @@ public class StopShooter extends Command {
 	
 	@Override
 	protected void initialize() {
-		Debug.logMessage(Level.INFO, "The Stop Shooter Command has been initialized.");
+		MercLogger.logMessage(Level.INFO, "The Stop Shooter Command has been initialized.");
 		
 	}
 
@@ -36,7 +36,7 @@ public class StopShooter extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Debug.logMessage(Level.INFO, "The Stop Shooter Command has ended.");
+		MercLogger.logMessage(Level.INFO, "The Stop Shooter Command has ended.");
 	}
 
 	// Called when another command which requires one or more of the same

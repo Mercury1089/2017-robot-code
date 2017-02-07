@@ -3,7 +3,7 @@ package org.usfirst.frc.team1089.robot.commands;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.util.Debug;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -49,7 +49,7 @@ public class DegreeRotate extends PIDCommand {
 
     // Called once after isFinished returns true
     protected void end() {
-		Debug.logMessage(Level.INFO, "The Degree Rotate Command has ended.");
+		MercLogger.logMessage(Level.INFO, "The Degree Rotate Command has ended.");
     }
 
     // Called when another command which requires one or more of the same

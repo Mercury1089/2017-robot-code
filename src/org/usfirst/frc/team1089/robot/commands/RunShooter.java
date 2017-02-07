@@ -3,7 +3,7 @@ package org.usfirst.frc.team1089.robot.commands;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.util.Debug;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon;
 
@@ -34,7 +34,7 @@ public class RunShooter extends PIDCommand {
     protected void initialize() {
     	Robot.shooter.motor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	getPIDController().setSetpoint(_heading);
-		Debug.logMessage(Level.INFO, "The Run Shooter Command has been initialized.");
+		MercLogger.logMessage(Level.INFO, "The Run Shooter Command has been initialized.");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -69,7 +69,7 @@ public class RunShooter extends PIDCommand {
 
     // Called once after isFinished returns true
     protected void end() {
-		Debug.logMessage(Level.INFO, "The Run Shooter Command has ended.");
+		MercLogger.logMessage(Level.INFO, "The Run Shooter Command has ended.");
     }
 
     // Called when another command which requires one or more of the same

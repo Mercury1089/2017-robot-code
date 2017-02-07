@@ -12,7 +12,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.subsystems.VisionSystem.GOAL_TYPE;
-import org.usfirst.frc.team1089.robot.util.Debug;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.MercPipeline;
 
 import edu.wpi.cscore.AxisCamera;
@@ -35,7 +35,7 @@ public class GetDistanceFromTarget extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Debug.logMessage(Level.INFO, "Distance (ft): " + Robot.visionSystem.getDistance(GOAL_TYPE.GEAR));
+		MercLogger.logMessage(Level.INFO, "Distance (ft): " + Robot.visionSystem.getDistance(GOAL_TYPE.GEAR));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.util.Debug;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 /**
  * This {@link Command} uses an {@link AnalogInput} ultrasonic
