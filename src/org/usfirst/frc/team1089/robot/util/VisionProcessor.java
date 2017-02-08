@@ -54,36 +54,22 @@ public class VisionProcessor {
 		switch (type) {
 			case GEAR_VISION:
 				targetWidth = NetworkTable.getTable(VISION_ROOT + "gearVision").getNumber("targetWidth", 0);
-<<<<<<< HEAD
 				hfov = HFOV_PI;
 				break;
 			case HIGH_GOAL:
 				targetWidth = NetworkTable.getTable(VISION_ROOT + "highGoal").getNumber("targetWidth", 0);
 				hfov = HFOV_LIFECAM;
-=======
-				break;
-			case HIGH_GOAL:
-				targetWidth = NetworkTable.getTable(VISION_ROOT + "highGoal").getNumber("targetWidth", 0);
->>>>>>> 5b92a2327f65d2f00a3bf255f39ba7bcc3e18e6d
 				break;
 			default: 
 				return Double.NEGATIVE_INFINITY;
 		}
 		
-<<<<<<< HEAD
 		return (TARGET_WIDTH_INCHES_GEAR / IN_TO_FT) * IMG_WIDTH / ( 2 * targetWidth * Math.tan( Math.toRadians( hfov / 2 ) ) );
-=======
-		return (TARGET_WIDTH_INCHES_GEAR / IN_TO_FT) * IMG_WIDTH / ( 2 * targetWidth * Math.tan( Math.toRadians( HFOV / 2 ) ) );
->>>>>>> 5b92a2327f65d2f00a3bf255f39ba7bcc3e18e6d
 	}
 	
 	/**
 	 * <pre>
-<<<<<<< HEAD
 	 * public double getDistanceFromCenter(TargetType type)
-=======
-	 * public double getIsCentered(TargetType type)
->>>>>>> 5b92a2327f65d2f00a3bf255f39ba7bcc3e18e6d
 	 * </pre>
 	 * Gets the distance that the center of the robot is from the center of the target.
 	 * 
