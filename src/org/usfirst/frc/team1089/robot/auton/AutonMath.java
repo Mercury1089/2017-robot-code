@@ -10,37 +10,46 @@ public class AutonMath {
 		double midlineDist;
 		
 		switch(position) {
-		case 1:
-			midlineDist = 144;
-			break;
-		case 2:
-			midlineDist = 108;
-			break;
-		case 3:
-			midlineDist = 84;
-			break;
-		case 4:
-		case 5:
-		case 6:
-			midlineDist = 0;
-			break;
-		case 7:
-			midlineDist = 36;
-			break;
-		case 8:
-			midlineDist = 60;
-			break;
-		case 9:
-			midlineDist = 132;
-			break;
-		default:
-			midlineDist = 0;
-			break;
+			case 1:
+				midlineDist = 144;
+				break;
+			case 2:
+				midlineDist = 108;
+				break;
+			case 3:
+				midlineDist = 84;
+				break;
+			case 4:
+			case 5:
+			case 6:
+				midlineDist = 0;
+				break;
+			case 7:
+				midlineDist = 36;
+				break;
+			case 8:
+				midlineDist = 60;
+				break;
+			case 9:
+				midlineDist = 132;
+				break;
+			default:
+				midlineDist = 0;
+				break;
 		}
 		
-		double distFromMid = AIRSHIP_DISTANCE / Math.tan(30) - midlineDist;
-		d[0] = -(distFromMid / 1.173)/* - (1 / 2 * Config.ROBOT_LENGTH_PROTO))*/;
-		d[1] = (150.05 / Math.sin(30)) - (distFromMid / Math.cos(30)) - AIRSHIP_RADIUS;
+		double degTheta = 30;
+		double radTheta = Math.toRadians(degTheta);
+		double tanTheta = Math.tan(radTheta);
+		double distanceFromTheta = (AIRSHIP_DISTANCE / tanTheta) - midlineDist; //Distance from the corner of the 30 degree angle
+		
+		d[0] = distanceFromTheta * tanTheta; // - (1 / 2 * Config.ROBOT_LENGTH_PROTO)); //Distance to drive forward off wall
+		d[1] = (AIRSHIP_DISTANCE / Math.sin(radTheta)) - (d[0] / Math.sin(30)) - AIRSHIP_RADIUS; //Distance to drive to gear; Will use auto align so may become deprecated 
 		return d;
+	}
+	
+	public static double alignToGear(double angleOff)
+	{
+		return -angleOff;
 	}
 }
