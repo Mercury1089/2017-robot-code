@@ -113,6 +113,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     	// Apply the joystick deadzones to the move and rotate values
     	double moveValue = Robot.oi.applyDeadzone(rightStick.getX(), Robot.oi.JS_DEADZONE_LIMIT);
     	double rotateValue = Robot.oi.applyDeadzone(leftStick.getY(), Robot.oi.JS_DEADZONE_LIMIT);
+    	arcadeDrive(moveValue, rotateValue);
+    }
+    
+    public void arcadeDrive(double moveValue, double rotateValue) {
     	robotDrive.arcadeDrive(moveValue, rotateValue);
     }
     
