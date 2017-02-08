@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1089.robot.util;
 
 import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -18,7 +20,7 @@ public class MotionProfileExample {
 	 * or call set(), just get motion profile status and make decisions based on
 	 * motion profile.
 	 */
-	private CANTalon _talon;
+	private CANTalon talonL, talonR;
 	/**
 	 * State machine to make sure we let enough of the motion profile stream to
 	 * talon before we fire it.
@@ -66,7 +68,8 @@ public class MotionProfileExample {
 	 * every 10ms.
 	 */
 	class PeriodicRunnable implements java.lang.Runnable {
-	    public void run() {  _talon.processMotionProfileBuffer();    }
+	    public void run() {  talonL.processMotionProfileBuffer();
+	    					 talonR.processMotionProfileBuffer(); }
 	}
 	Notifier _notifer = new Notifier(new PeriodicRunnable());
 	
@@ -77,13 +80,15 @@ public class MotionProfileExample {
 	 * @param talon
 	 *            reference to Talon object to fetch motion profile status from.
 	 */
-	public MotionProfileExample(CANTalon talon) {
-		_talon = talon;
+	public MotionProfileExample(CANTalon talon, CANTalon talon2) {
+		talonL = talon;
+		talonR = talon2;
 		/*
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
 		 */
-		_talon.changeMotionControlFramePeriod(5);
+		talonL.changeMotionControlFramePeriod(5);
+		talonR.changeMotionControlFramePeriod(5);
 		_notifer.startPeriodic(0.005);
 	}
 
@@ -97,7 +102,9 @@ public class MotionProfileExample {
 		 * middle of an MP, and now we have the second half of a profile just
 		 * sitting in memory.
 		 */
-		_talon.clearMotionProfileTrajectories();
+		talonL.clearMotionProfileTrajectories();
+		talonR.clearMotionProfileTrajectories();
+		
 		/* When we do re-enter motionProfile control mode, stay disabled. */
 		_setValue = CANTalon.SetValueMotionProfile.Disable;
 		/* When we do start running our state machine start at the beginning. */
@@ -115,8 +122,8 @@ public class MotionProfileExample {
 	 */
 	public void control() {
 		/* Get the motion profile status every loop */
-		_talon.getMotionProfileStatus(_status);
-
+		talonL.getMotionProfileStatus(_status);
+		talonR.getMotionProfileStatus(_status);
 		/*
 		 * track time, this is rudimentary but that's okay, we just want to make
 		 * sure things never get stuck.
@@ -137,7 +144,7 @@ public class MotionProfileExample {
 		}
 
 		/* first check if we are in MP mode */
-		if (_talon.getControlMode() != TalonControlMode.MotionProfile) {
+		if (talonL.getControlMode() != TalonControlMode.MotionProfile) {
 			/*
 			 * we are not in MP mode. We are probably driving the robot around
 			 * using gamepads or some other mode.
@@ -210,6 +217,8 @@ public class MotionProfileExample {
 	/** Start filling the MPs to all of the involved Talons. */
 	private void startFilling() {
 		/* since this example only has one talon, just update that one */
+		DriverStation.reportError("Started Filling", true);
+		
 		startFilling(MotionProfileValues.Points, MotionProfileValues.kNumPoints);
 	}
 
@@ -226,13 +235,15 @@ public class MotionProfileExample {
 			 * clear the error. This flag does not auto clear, this way 
 			 * we never miss logging it.
 			 */
-			_talon.clearMotionProfileHasUnderrun();
+			talonL.clearMotionProfileHasUnderrun();
+			talonR.clearMotionProfileHasUnderrun();
 		}
 		/*
 		 * just in case we are interrupting another MP and there is still buffer
 		 * points in memory, clear it.
 		 */
-		_talon.clearMotionProfileTrajectories();
+		talonL.clearMotionProfileTrajectories();
+		talonR.clearMotionProfileTrajectories();
 
 		/* This is fast since it's just into our TOP buffer */
 		for (int i = 0; i < totalCnt; ++i) {
@@ -252,7 +263,8 @@ public class MotionProfileExample {
 			if ((i + 1) == totalCnt)
 				point.isLastPoint = true; /* set this to true on the last point  */
 
-			_talon.pushMotionProfileTrajectory(point);
+			talonL.pushMotionProfileTrajectory(point);
+			talonR.pushMotionProfileTrajectory(point);
 		}
 	}
 

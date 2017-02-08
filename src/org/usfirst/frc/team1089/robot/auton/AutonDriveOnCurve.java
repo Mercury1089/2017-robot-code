@@ -53,8 +53,8 @@ public class AutonDriveOnCurve extends Command {
     protected void initialize() {
     	Robot.driveTrain.getGyro().reset();
     	Robot.driveTrain.getNAVX().reset();
-    	//anglePID.setSetpoint(_headingAngle);
-    	//displacementPID.setSetpoint(_headingDisplacement);
+    	anglePID.setSetpoint(0);
+    	displacementPID.setSetpoint(0);
 		MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has been initialized.");
 
     }
@@ -92,8 +92,8 @@ public class AutonDriveOnCurve extends Command {
 
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-//		Robot.driveTrain.getAutonRotatePidValue();
-//		Robot.driveTrain.getAutonDriveDistancePidValue(output);
+		//Robot.driveTrain.arcadeDrive(moveValue, rotateValue);
+		//Robot.driveTrain.getAutonDriveDistancePidValue(output);
 	}
 	
 	public double getInitialAngleError() {

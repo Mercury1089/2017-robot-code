@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.commands.*;
 import org.usfirst.frc.team1089.robot.util.MotionProfileExample;
 
@@ -57,7 +58,7 @@ public class OI {
         
         
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
-        gamePadBtnX.whenPressed(new MotionProfile(Robot.driveTrain.getLeft()));
+        gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
         
         
         
