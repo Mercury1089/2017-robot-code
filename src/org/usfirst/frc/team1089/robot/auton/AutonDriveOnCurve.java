@@ -51,7 +51,6 @@ public class AutonDriveOnCurve extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.getGyro().reset();
     	Robot.driveTrain.getNAVX().reset();
     	anglePID.setSetpoint(0);
     	displacementPID.setSetpoint(0);
