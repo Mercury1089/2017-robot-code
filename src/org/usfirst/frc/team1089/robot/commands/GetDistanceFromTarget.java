@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GetDistanceFromTarget extends Command {	
 	public GetDistanceFromTarget() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.visionSystem);
+		//requires(Robot.visionSystem);
 	}
 
 	// Called just before this Command runs the first time
