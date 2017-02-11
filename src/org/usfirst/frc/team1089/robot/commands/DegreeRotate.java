@@ -28,6 +28,7 @@ public class DegreeRotate extends PIDCommand {
     	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
     }
+    
 
     // Called just before this Command runs the first time
     protected void initialize() {

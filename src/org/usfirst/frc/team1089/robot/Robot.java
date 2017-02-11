@@ -5,6 +5,7 @@ import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1089.robot.subsystems.*;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
+import org.usfirst.frc.team1089.robot.util.VisionProcessor;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -29,7 +30,7 @@ public class Robot extends IterativeRobot {
 	// Declare subsystems (public static so there is only ever one instance)
 	public static ExampleSubsystem exampleSubsystem;
 	public static DriveTrain driveTrain;
-	public static VisionSystem visionSystem;
+	public static VisionProcessor visionSystem;
 	public static Sensors sensors;
 	public static Shooter shooter;
 	public static OI oi;
@@ -56,20 +57,26 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		//Debug.init("/home/lvuser/log/");
+		MercLogger.init("/home/lvuser/log/");
+		
 		// Flush the NetworkTables
 		NetworkTable.flush();
+		
 		// Instantiate the subsystems
 		exampleSubsystem = new ExampleSubsystem();
 		sensors = new Sensors();
 		shooter = new Shooter();
-		visionSystem = new VisionSystem();
+		visionSystem = new VisionProcessor();
 		driveTrain = new DriveTrain();
+		
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
         // pointers. Bad news. Don't move it.
+		
 		oi = new OI();
+		
+		// Put some good data onto the SmartDashboard
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData("PID", driveTrain);

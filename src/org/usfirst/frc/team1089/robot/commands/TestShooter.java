@@ -45,6 +45,7 @@ public class TestShooter extends Command {
     	
     	double volts = SmartDashboard.getBoolean("shooterIsRunning", false) ? SmartDashboard.getNumber("shooterVolts", 0) : 0.0;
     	
+    	System.out.println(volts);
     	
     	double magVal = SmartDashboard.getNumber("Mag Enc Val", 2900);
     	
@@ -64,6 +65,7 @@ public class TestShooter extends Command {
 		SmartDashboard.putNumber("HIGHEST", highest);
     		
     	Robot.shooter.motor.set(volts);
+    	System.out.println(Robot.shooter.motor.get());
     }
 
     // Make this return true when this Command no longer needs to run execute()

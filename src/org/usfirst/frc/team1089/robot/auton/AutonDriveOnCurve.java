@@ -42,8 +42,8 @@ public class AutonDriveOnCurve extends Command {
     	anglePID.setAbsoluteTolerance(0.1);
     	displacementPID.setAbsoluteTolerance(0.1);
     	anglePID.setInputRange(-180, 180);
-    	displacementPID.setInputRange(-200, 200);
-    	anglePID.setOutputRange(-.4, .4);
+    	displacementPID.setInputRange(-18, 18);
+    	anglePID.setOutputRange(-1, 1);
     	displacementPID.setOutputRange(-.4, .4);
     	LiveWindow.addActuator("Robot.driveTrain", "AutonDegreeRotate", anglePID);
     	LiveWindow.addActuator("Robot.driveTrain", "AutonDriveDistance", displacementPID);
@@ -54,6 +54,8 @@ public class AutonDriveOnCurve extends Command {
     	Robot.driveTrain.getNAVX().reset();
     	anglePID.setSetpoint(0);
     	displacementPID.setSetpoint(0);
+    	anglePID.enable();
+    	displacementPID.enable();
 		MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has been initialized.");
 
     }
