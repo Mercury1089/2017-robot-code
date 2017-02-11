@@ -1,21 +1,32 @@
 package org.usfirst.frc.team1089.robot.util;
 
 public class MotionProfileValues {			
-	public static final int kNumPoints = 6;		
-	// Position (rotations)	Velocity (RPM)	Duration (ms)
-	public static double [][]Points = new double[][]{		
+
+	public static final int kNumPoints = 7;		
+
+	
+	public static double [][]PointsL = new double[][]{
 		
-	{50, 60, 50},
-	{1000, 120, 50},
-	{2000, 240, 50},
-	{3000, 120, 50},
-	{4000, 60, 50},
-	{5000, 0, 50}};
-	//{6000, 240, 50},
-	//{8000, 240, 50},
-	//{9000, 240, 50},
-	//{10000, 240, 50}}; 
+	{2009, 250, 1000},
+	{5454, 250, 1000},
+	{7965, 250, 1000},
+	{13342, 250, 1000},
+	{18114, 75, 1000},
+	{22165, 75, 1000},
+	{25749, 75, 1000}};
+	
+	public static double [][]PointsR = new double[][]{		
+	
+	{1481, 75, 1000},
+	{3570, 75, 1000},
+	{5181, 75, 1000},
+	{8508, 250, 1000},
+	{11370, 250, 1000},
+	{13779, 250, 1000},
+	{16216, 250, 1000}};	
+
 }		
+
 		/*public static final int kNumPoints =126;		
 		// Position (rotations)	Velocity (RPM)	Duration (ms)
 		public static double [][]Points = new double[][]{		

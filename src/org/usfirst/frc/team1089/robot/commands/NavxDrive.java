@@ -17,7 +17,7 @@ public class NavxDrive extends PIDCommand {
     public NavxDrive(double pos, double heading) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	super(.5,0,.6);
+    	super(.1,0,.6);
     	requires(Robot.driveTrain);
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(.1);

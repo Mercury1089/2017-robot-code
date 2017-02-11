@@ -11,7 +11,6 @@ import com.ctre.CanTalonJNI;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -36,7 +35,7 @@ public class MotionProfile extends Command {
     	requires(Robot.driveTrain);
     	l = Robot.driveTrain.getLeft();
     	r = Robot.driveTrain.getRight();
-    
+    	
     	lStatus = new CANTalon.MotionProfileStatus();
     	rStatus = new CANTalon.MotionProfileStatus();
     	
@@ -47,6 +46,7 @@ public class MotionProfile extends Command {
     protected void initialize() {
 		Robot.driveTrain.resetEncoders();
 		Robot.driveTrain.disableRobotDrive();
+	
 		
     	l.changeControlMode(TalonControlMode.MotionProfile);
     	r.changeControlMode(TalonControlMode.MotionProfile);
@@ -54,25 +54,23 @@ public class MotionProfile extends Command {
     	l.setF(F_VAL);
     	r.setF(F_VAL);
     	
-    	l.setPID(0.1,0,1);
-    	r.setPID(0.1,0,1);
+    	l.setPID(0.4,0,0);
+    	r.setPID(0.4,0,0);
     	
     	l.configPeakOutputVoltage(10, -10);
 		l.configNominalOutputVoltage(0, 0);
 		r.configPeakOutputVoltage(10, -10);
 		r.configNominalOutputVoltage(0, 0);
 		
-		
-		l.enableControl();
-    	r.enableControl();
-    	
-    	
-    	startFilling(MotionProfileValues.Points, MotionProfileValues.kNumPoints);
-    	
+
+    	startFilling(MotionProfileValues.PointsL, MotionProfileValues.PointsR, MotionProfileValues.kNumPoints);
     	
     	DriverStation.reportError("Starting code after startFilling()", true);
     	l.processMotionProfileBuffer();
     	r.processMotionProfileBuffer();
+    	
+		l.enableControl();
+    	r.enableControl();
     	
     	l.set(CANTalon.SetValueMotionProfile.Enable.value);
     	r.set(CANTalon.SetValueMotionProfile.Enable.value);
@@ -97,6 +95,7 @@ public class MotionProfile extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	DriverStation.reportError("end() has started", true);
     	l.changeControlMode(TalonControlMode.PercentVbus);
     	r.changeControlMode(TalonControlMode.PercentVbus);
     }
@@ -107,26 +106,25 @@ public class MotionProfile extends Command {
     	end();
     }
     
-    private void startFilling(double[][] profile, int totalCnt) {
-
-		/* create an empty point */
-		CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
-		CANTalon.TrajectoryPoint pointR = new CANTalon.TrajectoryPoint();
+    private void startFilling(double[][] profileL, double[][] profileR,  int totalCnt) {
 
 		/*
 		 * just in case we are interrupting another MP and there is still buffer
 		 * points in memory, clear it.
 		 */
-		l.clearMotionProfileTrajectories();
-		r.clearMotionProfileTrajectories();
+		//l.clearMotionProfileTrajectories();
+		//r.clearMotionProfileTrajectories();
 
 		DriverStation.reportError("About to enter loop", true);
 		/* This is fast since it's just into our TOP buffer */
 		for (int i = 0; i < totalCnt; ++i) {
+			CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
+			
+			
 			/* for each point, fill our structure and pass it to API */
-			pointL.position = 1024 * profile[i][0];
-			pointL.velocity = profile[i][1];
-			pointL.timeDurMs = (int) profile[i][2];
+			pointL.position = profileL[i][0];
+			pointL.velocity = profileL[i][1];
+			pointL.timeDurMs = (int) profileL[i][2];
 			pointL.profileSlotSelect = 0; /* which set of gains would you like to use? */
 			pointL.velocityOnly = false; /* set true to not do any position
 										 * servo, just velocity feedforward
@@ -138,37 +136,34 @@ public class MotionProfile extends Command {
 
 			pointL.isLastPoint = false;
 			if ((i + 1) == totalCnt)
-				pointL.isLastPoint = true; /* set this to true on the last point  */
-
+				pointL.isLastPoint = true;  //set this to true on the last point  
+			l.clearMotionProfileTrajectories();
 			l.pushMotionProfileTrajectory(pointL);
-			//r.pushMotionProfileTrajectory(point);
-			
+	
 			DriverStation.reportError("Loop iteration completed", true);
 		}
 		
 		for (int j = 0; j < totalCnt; ++j) {
 			/* for each point, fill our structure and pass it to API */
-			pointR.position = 1024 * -profile[j][0];
-			pointR.velocity = profile[j][1];
-			pointR.timeDurMs = (int) profile[j][2];
+			CANTalon.TrajectoryPoint pointR = new CANTalon.TrajectoryPoint();
+			
+			pointR.position = -profileR[j][0];
+			pointR.velocity = profileR[j][1];
+			pointR.timeDurMs = (int) profileR[j][2];
 			pointR.profileSlotSelect = 0; /* which set of gains would you like to use? */
 			pointR.velocityOnly = false; /* set true to not do any position
 										 * servo, just velocity feedforward
 										 */		
-			
 			pointR.zeroPos = false;
 			if (j == 0)
 				pointR.zeroPos = true; /* set this to true on the first point */
 
 			pointR.isLastPoint = false;
 			if ((j + 1) == totalCnt)
-				pointR.isLastPoint = true; /* set this to true on the last point  */
-
+				pointR.isLastPoint = true;  //set this to true on the last point  
+			//r.clearMotionProfileTrajectories();
 			r.pushMotionProfileTrajectory(pointR);
-			//r.pushMotionProfileTrajectory(point);
-			
-		
-		
+	
 		DriverStation.reportError("startFilling() has ended", true);
 	}
 
