@@ -73,6 +73,8 @@ public class AutonDriveOnCurve extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	anglePID.disable();
+    	displacementPID.disable();
 		MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has ended.");
     }
 
