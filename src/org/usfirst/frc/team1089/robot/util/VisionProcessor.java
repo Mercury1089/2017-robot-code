@@ -2,6 +2,10 @@ package org.usfirst.frc.team1089.robot.util;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
+/**
+ * This class encapsulates some methods and fields to properly
+ * access data from the Pi vision processing.
+ */
 public class VisionProcessor {
 	// Types of targets
 	public static enum TargetType {
@@ -15,7 +19,7 @@ public class VisionProcessor {
 	// Vision constants
 	public final double 
 		HFOV_PI = 53.50,   // The horizontal FOV of the pi camera.
-		HFOV_LIFECAM = 60; // The horizontal FOV of the pi camera.
+		HFOV_LIFECAM = 60; // The horizontal FOV of the LifeCam.
 	
 	public final int 
 		IMG_WIDTH = 320,   // Resolution-x of the camera feed (from both cameras)
@@ -49,22 +53,24 @@ public class VisionProcessor {
 	 *         Accurate to 0.15 ft.
 	 */
 	public double getDistance(TargetType type) {
-		double targetWidth, hfov;
+		double percievedWidth, hfov, targetWidth;
 		
 		switch (type) {
 			case GEAR_VISION:
-				targetWidth = NetworkTable.getTable(VISION_ROOT + "gearVision").getNumber("targetWidth", 0);
+				percievedWidth = NetworkTable.getTable(VISION_ROOT + "gearVision").getNumber("targetWidth", 0);
 				hfov = HFOV_PI;
+				targetWidth = TARGET_WIDTH_INCHES_GEAR;
 				break;
 			case HIGH_GOAL:
-				targetWidth = NetworkTable.getTable(VISION_ROOT + "highGoal").getNumber("targetWidth", 0);
+				percievedWidth = NetworkTable.getTable(VISION_ROOT + "highGoal").getNumber("targetWidth", 0);
 				hfov = HFOV_LIFECAM;
+				targetWidth = TARGET_WIDTH_INCHES_HIGH;
 				break;
 			default: 
 				return Double.NEGATIVE_INFINITY;
 		}
 		
-		return (TARGET_WIDTH_INCHES_GEAR / IN_TO_FT) * IMG_WIDTH / ( 2 * targetWidth * Math.tan( Math.toRadians( hfov / 2 ) ) );
+		return (targetWidth / IN_TO_FT) * IMG_WIDTH / ( 2 * percievedWidth * Math.tan( Math.toRadians( hfov / 2 ) ) );
 	}
 	
 	/**
