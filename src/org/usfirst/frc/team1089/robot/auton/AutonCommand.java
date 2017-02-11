@@ -62,11 +62,13 @@ public class AutonCommand extends CommandGroup {
     	
     	//Auton Step 1
     	addSequential(new DriveDistance(distances[0], 0.5));	//TODO Change 0 to a value determined by SmartDashboard value
-    	if(!(truePos >= 4 && truePos <= 6))
+    	if(!(truePos >= 4 && truePos <= 6)) {
     		addSequential(new DegreeRotate(60 * reversalFactor));
+    		addSequential(new DriveDistance(distances[1], 1.5));
+    	}
     											//TODO Can only be 30 or -30; change to var based on Alliance color
     	//addSequential(new AutoAlign());		//TODO Code AutoAlign 
-    	addSequential(new DriveDistance(distances[1], 1.5));	//TODO Change 0 to a value determined by SmartDashboard value
+    											//TODO Change 0 to a value determined by SmartDashboard value
     	//addSequential(new DropGear());		//TODO Code DropGear 
     	
     	

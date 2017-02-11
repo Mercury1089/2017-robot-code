@@ -49,17 +49,17 @@ public class OI {
         rightStick = new Joystick(RobotMap.DS_USB.RIGHT_STICK);
         gamePad = new Joystick(RobotMap.DS_USB.GAMEPAD);
         gamePadBtnA = new JoystickButton(gamePad, RobotMap.GamepadButtons.A);
-        gamePadBtnA.whenPressed(new DriveDistance(105));
+        gamePadBtnA.whenPressed(new DegreeRotate(30));
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new DegreeRotate(45));
+        gamePadBtnB.whenPressed(new DegreeRotate(90));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         
         
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
-        gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
-        
+//        gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
+        gamePadBtnX.whenPressed(new MotionProfile());
         
         
     	//// TRIGGERING COMMANDS WITH BUTTONS

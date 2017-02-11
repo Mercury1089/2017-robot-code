@@ -41,7 +41,7 @@ public class AutonMath {
 		double degTheta = 30;
 		double radTheta = Math.toRadians(degTheta);
 		double tanTheta = Math.tan(radTheta);
-		double distanceFromTheta = (AIRSHIP_DISTANCE / tanTheta) - midlineDist; //Distance from the corner of the 30 degree angle
+		double distanceFromTheta = AIRSHIP_DISTANCE / tanTheta - midlineDist; //Distance from the corner of the 30 degree angle
 		
 		d[0] = distanceFromTheta * tanTheta; // - (1 / 2 * Config.ROBOT_LENGTH_PROTO)); //Distance to drive forward off wall
 		d[1] = (AIRSHIP_DISTANCE / Math.sin(radTheta)) - (d[0] / Math.sin(30)) - AIRSHIP_RADIUS; //Distance to drive to gear; Will use auto align so may become deprecated 
