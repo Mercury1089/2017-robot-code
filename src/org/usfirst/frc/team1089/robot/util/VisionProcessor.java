@@ -21,8 +21,8 @@ public class VisionProcessor {
 	
 	// Vision constants
 	public final double 
-		HFOV_PI = 53.50,   // The horizontal FOV of the pi camera.
-		HFOV_LIFECAM = 60; // The horizontal FOV of the LifeCam.
+		HFOV_PI = 53.50,   // The horizontal FOV of the pi camera (for gear vision).
+		HFOV_LIFECAM = 60; // The horizontal FOV of the LifeCam (for high goal).
 	
 	public final int 
 		IMG_WIDTH = 320,   // Resolution-x of the camera feed (from both cameras)
@@ -81,29 +81,36 @@ public class VisionProcessor {
 	
 	/**
 	 * <pre>
-	 * public double getDistanceFromCenter(TargetType type)
+	 * public double getAngleFromCenter(TargetType type)
 	 * </pre>
-	 * Gets the distance that the center of the robot is from the center of the target.
+	 * Gets the angle needed to center the robot to the target
 	 * 
 	 * @param type the type of target that is being targeted
-	 * @return the distance in pixels that the center of the camera is from the center of the visible target,
-	 *         or 0 if the distance from the center is at most 5 pixels
+	 * @return the angle needed to turn to rotate towards the target
 	 */
-	public double getDistanceFromCenter(TargetType type) {
-		double centerX;
+	public double getAngleFromCenter(TargetType type) {
+		double centerX, dist, ratio, hfov;
 		
+		// Define our varibles
 		switch (type) {
 			case GEAR_VISION:
 				centerX = GEAR_VISION_TABLE.getNumberArray("center", DEF_VALUE)[0];
+				hfov = HFOV_PI;
 				break;
 			case HIGH_GOAL:
 				centerX = HIGH_GOAL_TABLE.getNumberArray("center", DEF_VALUE)[0];
+				hfov = HFOV_LIFECAM;
 				break;
 			default: 
 				return Double.NEGATIVE_INFINITY;
 		}
 		
-		return Math.abs(centerX - IMG_WIDTH / 2) <= 5 ? centerX - IMG_WIDTH / 2 : 0;
+		// Get the ratio of the distance from the center to the entire image width
+		dist = Math.abs(centerX - IMG_WIDTH / 2) <= 5 ? centerX - IMG_WIDTH / 2 : 0;
+		ratio = dist / IMG_WIDTH;
+		
+		// Multiply the ratio by the HFOV
+		return ratio * hfov;
 	}
 
 	public void initDefaultCommand() {
