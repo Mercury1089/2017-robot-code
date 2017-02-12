@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1089.robot.util;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.tables.ITable;
+import edu.wpi.first.wpilibj.tables.ITableListener;
 
 /**
  * This class encapsulates some methods and fields to properly
@@ -15,6 +17,7 @@ public class VisionProcessor {
 
 	// Network Table stuff
 	private final String VISION_ROOT = "Vision/";
+	private final NetworkTable GEAR_VISION_TABLE, HIGH_GOAL_TABLE;
 	
 	// Vision constants
 	public final double 
@@ -39,7 +42,10 @@ public class VisionProcessor {
 	// so we can avoid recreating this space-consuming line
 	private double[] DEF_VALUE = {-1, -1};
 	
-	public VisionProcessor() { }
+	public VisionProcessor() {
+		GEAR_VISION_TABLE = NetworkTable.getTable(VISION_ROOT + "gearVision");
+		HIGH_GOAL_TABLE = NetworkTable.getTable(VISION_ROOT + "highGoal");
+	}
 	
 	/**
 	 * <pre>
@@ -57,12 +63,12 @@ public class VisionProcessor {
 		
 		switch (type) {
 			case GEAR_VISION:
-				percievedWidth = NetworkTable.getTable(VISION_ROOT + "gearVision").getNumber("targetWidth", 0);
+				percievedWidth = GEAR_VISION_TABLE.getNumber("targetWidth", 0);
 				hfov = HFOV_PI;
 				targetWidth = TARGET_WIDTH_INCHES_GEAR;
 				break;
 			case HIGH_GOAL:
-				percievedWidth = NetworkTable.getTable(VISION_ROOT + "highGoal").getNumber("targetWidth", 0);
+				percievedWidth = HIGH_GOAL_TABLE.getNumber("targetWidth", 0);
 				hfov = HFOV_LIFECAM;
 				targetWidth = TARGET_WIDTH_INCHES_HIGH;
 				break;
@@ -88,10 +94,10 @@ public class VisionProcessor {
 		
 		switch (type) {
 			case GEAR_VISION:
-				centerX = NetworkTable.getTable(VISION_ROOT + "gearVision").getNumberArray("center", DEF_VALUE)[0];
+				centerX = GEAR_VISION_TABLE.getNumberArray("center", DEF_VALUE)[0];
 				break;
 			case HIGH_GOAL:
-				centerX = NetworkTable.getTable(VISION_ROOT + "highGoal").getNumberArray("center", DEF_VALUE)[0];
+				centerX = HIGH_GOAL_TABLE.getNumberArray("center", DEF_VALUE)[0];
 				break;
 			default: 
 				return Double.NEGATIVE_INFINITY;
