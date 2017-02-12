@@ -15,7 +15,8 @@ import java.util.Properties;
  *
  */
 public class Config {
-	public static final int ROBOT_LENGTH_COMPETITION = 36, ROBOT_LENGTH_PROTO = 32;             // in inches
+	public static final int ROBOT_LENGTH_COMPETITION = 40, ROBOT_LENGTH_PROTO = 33;             // in inches
+	public static final int ROBOT_WIDTH_COMPETITION = 36, ROBOT_WIDTH_PROTO = 32;
 	
 	private static final Properties PROP = new Properties();
 	private static final String FILE = "config.properties";

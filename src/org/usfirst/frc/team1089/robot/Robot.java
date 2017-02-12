@@ -130,6 +130,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		driveTrain.resetEncoders();
 		SmartDashboard.putNumber("Gyro", driveTrain.getGyro().getAngle());
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 	}

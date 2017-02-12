@@ -29,14 +29,14 @@ public class AutonDriveOnCurve extends Command {
 	private double rotateValue = 0;
 	
     public AutonDriveOnCurve(double headingXFeet, double headingYFeet) {
-    	PIDProxy angleProxy = new PIDProxy(this, PIDType.ANGLE);
+    	PIDProxy angleProxy = new PIDProxy(this, PIDType.ANGLE);	 	
     	PIDProxy distanceProxy = new PIDProxy(this, PIDType.DISTANCE);
-    	double headingXMeters = headingXFeet / 3.28084;
+    	double headingXMeters = headingXFeet / 3.28084;			     //NavX takes values in meters, but they are given to the method in feet
     	double headingYMeters = headingYFeet / 3.28084;
     	_headingXDirection = headingXMeters;
     	_headingYDirection = headingYMeters;
-    	anglePID = new PIDController(.1, 0.0, 1.0, angleProxy, angleProxy);    	
-    	displacementPID = new PIDController(.1, 0, 1, distanceProxy, distanceProxy);
+    	anglePID = new PIDController(.1, 0.0, 0, angleProxy, angleProxy); 	//How much is left to turn(right stick on arcadeDrive)   	
+    	displacementPID = new PIDController(.1, 0, 0, distanceProxy, distanceProxy);	//How much is left to move(left stick on arcadeDrive)
     	anglePID.setContinuous(true);
     	displacementPID.setContinuous(false);
     	anglePID.setAbsoluteTolerance(0.1);
@@ -52,7 +52,7 @@ public class AutonDriveOnCurve extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveTrain.getNAVX().reset();
-    	anglePID.setSetpoint(0);
+    	anglePID.setSetpoint(0);		//Setpoints have to be 0 so that the error that is calculated is always the total error from setpoint
     	displacementPID.setSetpoint(0);
     	anglePID.enable();
     	displacementPID.enable();
@@ -62,6 +62,8 @@ public class AutonDriveOnCurve extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	anglePID.setSetpoint(0);
+    	displacementPID.setSetpoint(0);    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -71,6 +73,8 @@ public class AutonDriveOnCurve extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	anglePID.disable();
+    	displacementPID.disable();
 		MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has ended.");
     }
 
@@ -80,17 +84,6 @@ public class AutonDriveOnCurve extends Command {
     	end();
     }
 
-	
-	protected double returnanglePIDInput() {
-		return Robot.driveTrain.getNAVX().getAngle();
-	}
-
-	protected double returndisplacementPIDInput() {
-		return Robot.driveTrain.getNAVXDisplacementMagnitude();
-	}
-	
-	
-
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
 		//Robot.driveTrain.arcadeDrive(moveValue, rotateValue);
@@ -98,7 +91,7 @@ public class AutonDriveOnCurve extends Command {
 	}
 	
 	public double getInitialAngleError() {
-		return Math.toDegrees(Math.atan(_headingYDirection / _headingXDirection));	
+		return Math.toDegrees(Math.atan(_headingYDirection / _headingXDirection));	//Total angle error when we start
 	}
 	
 	public double getNewAngleError() {
@@ -111,7 +104,7 @@ public class AutonDriveOnCurve extends Command {
 		return 90 - heading - complementMinusHeading;
 	}
 	
-	public double getNewDisplacementValue() {
+	public double getNewDisplacementValue() {		//New displacement needed after a move
 		xDisplacement += Robot.driveTrain.getNAVX().getDisplacementX();
 		yDisplacement += Robot.driveTrain.getNAVX().getDisplacementY();
 		Robot.driveTrain.getNAVX().resetDisplacement();

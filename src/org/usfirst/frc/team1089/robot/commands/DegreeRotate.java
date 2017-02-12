@@ -19,7 +19,7 @@ public class DegreeRotate extends PIDCommand {
 	private double _heading;
 	
     public DegreeRotate(double heading) {
-    	super(0.1, 0.03, 1);
+    	super(0.4, 0, 0.2);
     	requires(Robot.driveTrain);
     	_heading = heading;
     	getPIDController().setContinuous(true);

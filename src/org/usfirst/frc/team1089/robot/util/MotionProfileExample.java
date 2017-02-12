@@ -179,7 +179,7 @@ public class MotionProfileExample {
 					if (_status.btmBufferCnt > kMinPointsInTalon) {
 						/* start (once) the motion profile */
 						_setValue = CANTalon.SetValueMotionProfile.Enable;
-						/* MP will start once the control frame gets scheduled */
+						/* MP will start once the control sframe gets scheduled */
 						_state = 2;
 						_loopTimeout = kNumLoopsTimeout;
 					}
@@ -219,7 +219,7 @@ public class MotionProfileExample {
 		/* since this example only has one talon, just update that one */
 		DriverStation.reportError("Started Filling", true);
 		
-		startFilling(MotionProfileValues.Points, MotionProfileValues.kNumPoints);
+		startFilling(MotionProfileValues.PointsL, MotionProfileValues.kNumPoints);
 	}
 
 	private void startFilling(double[][] profile, int totalCnt) {
