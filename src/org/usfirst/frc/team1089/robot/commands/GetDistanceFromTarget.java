@@ -35,7 +35,7 @@ public class GetDistanceFromTarget extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		MercLogger.logMessage(Level.INFO, "Distance (ft): " + Robot.visionSystem.getDistance(TargetType.GEAR_VISION));
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

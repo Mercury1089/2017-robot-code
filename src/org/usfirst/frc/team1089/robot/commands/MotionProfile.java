@@ -22,7 +22,7 @@ public class MotionProfile extends Command {
 	
 	CANTalon.MotionProfileStatus lStatus, rStatus;
 	
-	MotionProfileExample example;
+	//MotionProfileExample example;
 	
 	private final double F_VAL;
 	private final double RPM = 999;
@@ -66,9 +66,7 @@ public class MotionProfile extends Command {
     	startFilling(MotionProfileValues.PointsL, MotionProfileValues.PointsR, MotionProfileValues.kNumPoints);
     	
     	DriverStation.reportError("Starting code after startFilling()", true);
-    	l.processMotionProfileBuffer();
-    	r.processMotionProfileBuffer();
-    	
+
 		l.enableControl();
     	r.enableControl();
     	
@@ -80,10 +78,10 @@ public class MotionProfile extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//DriverStation.reportError("Execute", true);
-/*    	l.set(CANTalon.SetValueMotionProfile.Enable.value);
-    	r.set(CANTalon.SetValueMotionProfile.Enable.value);
-    	*/
+    	l.processMotionProfileBuffer();
+    	r.processMotionProfileBuffer();
+    	
+    	DriverStation.reportWarning("MotionProfile.execute()", true);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -96,6 +94,13 @@ public class MotionProfile extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	DriverStation.reportError("end() has started", true);
+    	
+    	// Disable both talons
+    	l.set(CANTalon.SetValueMotionProfile.Disable.value);
+    	r.set(CANTalon.SetValueMotionProfile.Disable.value);
+    	
+    	// Go back to driving in arcade
+    	Robot.driveTrain.enableRobotDrive();
     	l.changeControlMode(TalonControlMode.PercentVbus);
     	r.changeControlMode(TalonControlMode.PercentVbus);
     }
@@ -119,53 +124,48 @@ public class MotionProfile extends Command {
 		/* This is fast since it's just into our TOP buffer */
 		for (int i = 0; i < totalCnt; ++i) {
 			CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
-			
+			CANTalon.TrajectoryPoint pointR = new CANTalon.TrajectoryPoint();
 			
 			/* for each point, fill our structure and pass it to API */
 			pointL.position = profileL[i][0];
 			pointL.velocity = profileL[i][1];
 			pointL.timeDurMs = (int) profileL[i][2];
-			pointL.profileSlotSelect = 0; /* which set of gains would you like to use? */
+			pointL.profileSlotSelect = 0; 
 			pointL.velocityOnly = false; /* set true to not do any position
 										 * servo, just velocity feedforward
 										 */		
 			
 			pointL.zeroPos = false;
-			if (i == 0)
-				pointL.zeroPos = true; /* set this to true on the first point */
-
-			pointL.isLastPoint = false;
-			if ((i + 1) == totalCnt)
-				pointL.isLastPoint = true;  //set this to true on the last point  
-			l.clearMotionProfileTrajectories();
-			l.pushMotionProfileTrajectory(pointL);
-	
-			DriverStation.reportError("Loop iteration completed", true);
-		}
-		
-		for (int j = 0; j < totalCnt; ++j) {
-			/* for each point, fill our structure and pass it to API */
-			CANTalon.TrajectoryPoint pointR = new CANTalon.TrajectoryPoint();
 			
-			pointR.position = -profileR[j][0];
-			pointR.velocity = profileR[j][1];
-			pointR.timeDurMs = (int) profileR[j][2];
+			pointR.position = -profileR[i][0];
+			pointR.velocity = profileR[i][1];
+			pointR.timeDurMs = (int) profileR[i][2];
 			pointR.profileSlotSelect = 0; /* which set of gains would you like to use? */
 			pointR.velocityOnly = false; /* set true to not do any position
 										 * servo, just velocity feedforward
 										 */		
 			pointR.zeroPos = false;
-			if (j == 0)
-				pointR.zeroPos = true; /* set this to true on the first point */
-
+			
+			
+			if (i == 0) {
+				pointL.zeroPos = true; /* set this to true on the first point */
+				pointR.zeroPos = true;
+			}
+			pointL.isLastPoint = false;
 			pointR.isLastPoint = false;
-			if ((j + 1) == totalCnt)
-				pointR.isLastPoint = true;  //set this to true on the last point  
-			//r.clearMotionProfileTrajectories();
+			if ((i + 1) == totalCnt) {
+				pointL.isLastPoint = true;  //set this to true on the last point  
+				pointR.isLastPoint = true;
+			}
+			
+			l.pushMotionProfileTrajectory(pointL);
 			r.pushMotionProfileTrajectory(pointR);
-	
-		DriverStation.reportError("startFilling() has ended", true);
-	}
-
+/*			l.processMotionProfileBuffer();
+*/
+			//DriverStation.reportError("Trajectory point status: ", true);
+			DriverStation.reportError("Loop iteration completed", true);
+		}
+		
+		
     }
 }
