@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1089.robot.util;
 
+import com.ctre.CANTalon;
+
 public class MotionProfileValues {			
 
 	public static final int kNumPoints = 4;		
@@ -8,28 +10,16 @@ public class MotionProfileValues {
 	public static double [][]PointsL = new double[][]{
 	
 	{0, 0, 500},
-	{2000, 25, 1000},
 	{2000, 100, 1000},
-	{2000, 150, 1000},
-	/*{3000, 250, 1000},
-	{4000, 250, 1000},
-	{5000, 250, 1000},
-	{6000, 250, 1000},
-	{7000, 250, 1000},
-	{8000, 250, 1000}*/};
+	{3000, 100, 1000},
+	{4000, 50, 1000}};
 	
 	public static double [][]PointsR = new double[][]{		
 	
 	{0, 0, 500},
-	{2000, 25, 1000},
 	{2000, 100, 1000},
-	{2000, 150, 1000},
-	/*{3000, 250, 1000},
-	{4000, 250, 1000},
-	{5000, 250, 1000},
-	{6000, 250, 1000},
-	{7000, 250, 1000},
-	{8000, 250, 1000}*/};
+	{3000, 100, 1000},
+	{4000, 50, 1000}};	
 	
 	/*{1481, 75, 1000},
 	{3570, 75, 1000},
@@ -39,6 +29,16 @@ public class MotionProfileValues {
 	{13779, 250, 1000},
 	{16216, 250, 1000}};	*/
 
+	
+	private final CANTalon.TrajectoryPoint createTrajectoryPoint(int pos, int vel, int dur) {
+		CANTalon.TrajectoryPoint tp = new CANTalon.TrajectoryPoint();
+		
+		tp.position = pos;
+		tp.velocity = vel;
+		tp.timeDurMs = dur;
+		
+		return tp;
+	}
 }		
 
 		/*public static final int kNumPoints =126;		

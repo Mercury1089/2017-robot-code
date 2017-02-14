@@ -1,8 +1,10 @@
 package org.usfirst.frc.team1089.robot.commands;
 
 import java.awt.Point;
+import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.MotionProfileExample;
 import org.usfirst.frc.team1089.robot.util.MotionProfileValues;
 
@@ -46,7 +48,13 @@ public class MotionProfile extends Command {
     protected void initialize() {
 		Robot.driveTrain.resetEncoders();
 		Robot.driveTrain.disableRobotDrive();
-	
+		l.clearMotionProfileHasUnderrun();
+		r.clearMotionProfileHasUnderrun();
+		
+		MercLogger.logMessage(Level.INFO, "Motion Profile: Reset Encoders and Disabled Robot Drive");
+		
+		l.clearMotionProfileTrajectories();
+		r.clearMotionProfileTrajectories();
 		
     	l.changeControlMode(TalonControlMode.MotionProfile);
     	r.changeControlMode(TalonControlMode.MotionProfile);
@@ -65,10 +73,18 @@ public class MotionProfile extends Command {
 
     	startFilling(MotionProfileValues.PointsL, MotionProfileValues.PointsR, MotionProfileValues.kNumPoints);
     	
-    	DriverStation.reportError("Starting code after startFilling()", true);
+    	while(lStatus.btmBufferCnt < MotionProfileValues.kNumPoints || rStatus.btmBufferCnt < MotionProfileValues.kNumPoints) {
+    		MercLogger.logMessage(Level.INFO, "Filling...");
+        	l.processMotionProfileBuffer();
+        	r.processMotionProfileBuffer();
+        	l.getMotionProfileStatus(lStatus);
+        	r.getMotionProfileStatus(rStatus);
+    	}
 
 		l.enableControl();
     	r.enableControl();
+    	
+    	MercLogger.logMessage(Level.INFO, "Motion Profile: Enabled Contol");
     	
     	l.set(CANTalon.SetValueMotionProfile.Enable.value);
     	r.set(CANTalon.SetValueMotionProfile.Enable.value);
@@ -81,19 +97,30 @@ public class MotionProfile extends Command {
     	l.processMotionProfileBuffer();
     	r.processMotionProfileBuffer();
     	
-    	DriverStation.reportWarning("MotionProfile.execute()", true);
+		MercLogger.logMessage(Level.INFO, "Motion Profile: Processed Motion Profile Buffer");
+    	
+		//MercLogger.logMessage(Level.INFO, "execute()");
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         l.getMotionProfileStatus(lStatus);
         r.getMotionProfileStatus(rStatus);
-    	return lStatus.activePoint.isLastPoint && rStatus.activePoint.isLastPoint;
+        
+        if (lStatus.isUnderrun)
+            MercLogger.logMessage(Level.INFO, "Motion Profile: Left Buffer Is Underrunning");
+
+        if (rStatus.isUnderrun)
+            MercLogger.logMessage(Level.INFO, "Motion Profile: Right Buffer Is Underrunning");
+        
+        return lStatus.activePointValid && rStatus.activePointValid && lStatus.activePoint.isLastPoint && rStatus.activePoint.isLastPoint;
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	DriverStation.reportError("end() has started", true);
+
+		MercLogger.logMessage(Level.INFO, "Motion Profile: ENDED");
     	
     	// Disable both talons
     	l.set(CANTalon.SetValueMotionProfile.Disable.value);
@@ -103,24 +130,21 @@ public class MotionProfile extends Command {
     	Robot.driveTrain.enableRobotDrive();
     	l.changeControlMode(TalonControlMode.PercentVbus);
     	r.changeControlMode(TalonControlMode.PercentVbus);
+    	
+		MercLogger.logMessage(Level.INFO, "Motion Profile: Control Mode Changed Back to Percent VBus");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+		MercLogger.logMessage(Level.INFO, "Motion Profile: Interupted");
     	end();
     }
     
     private void startFilling(double[][] profileL, double[][] profileR,  int totalCnt) {
 
-		/*
-		 * just in case we are interrupting another MP and there is still buffer
-		 * points in memory, clear it.
-		 */
-		//l.clearMotionProfileTrajectories();
-		//r.clearMotionProfileTrajectories();
-
-		DriverStation.reportError("About to enter loop", true);
+		MercLogger.logMessage(Level.INFO, "Motion Profile: Started Filling");
+		
 		/* This is fast since it's just into our TOP buffer */
 		for (int i = 0; i < totalCnt; ++i) {
 			CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
@@ -157,9 +181,12 @@ public class MotionProfile extends Command {
 				pointL.isLastPoint = true;  //set this to true on the last point  
 				pointR.isLastPoint = true;
 			}
-			
-			l.pushMotionProfileTrajectory(pointL);
+
 			r.pushMotionProfileTrajectory(pointR);
+			l.pushMotionProfileTrajectory(pointL);
+
+			MercLogger.logMessage(Level.INFO, "Motion Profile: Pushed Point");
+			
 /*			l.processMotionProfileBuffer();
 */
 			//DriverStation.reportError("Trajectory point status: ", true);
