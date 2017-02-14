@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1089.robot.subsystems;
 
-import org.usfirst.frc.team1089.robot.commands.GetDistanceFromSonic;
-
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -20,6 +18,5 @@ public class Sensors extends Subsystem {
 	
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		setDefaultCommand(new GetDistanceFromSonic());
 	}
 }

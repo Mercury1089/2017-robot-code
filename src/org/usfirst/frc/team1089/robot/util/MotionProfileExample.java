@@ -219,7 +219,7 @@ public class MotionProfileExample {
 		/* since this example only has one talon, just update that one */
 		DriverStation.reportError("Started Filling", true);
 		
-		startFilling(MotionProfileValues.PointsL, MotionProfileValues.kNumPoints);
+		startFilling(MotionProfileValues.PointsL, MotionProfileValues.NUM_POINTS);
 	}
 
 	private void startFilling(double[][] profile, int totalCnt) {

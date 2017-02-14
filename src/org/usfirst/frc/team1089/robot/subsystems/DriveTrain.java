@@ -145,14 +145,12 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     	rightFront.setEncPosition(0);
     }
     
-    
-    /*public Encoder rightEncoder() {
-    	return rightFront;
+    public void resetMotionProfiling() {
+    	leftFront.clearMotionProfileHasUnderrun();
+    	leftFront.clearMotionProfileTrajectories();
+    	rightFront.clearMotionProfileHasUnderrun();
+    	rightFront.clearMotionProfileTrajectories();
     }
-    
-    public Encoder leftEncoder() {
-    	return leftFront;
-    }*/
     
 	@Override
 	public void pidWrite(double output) {

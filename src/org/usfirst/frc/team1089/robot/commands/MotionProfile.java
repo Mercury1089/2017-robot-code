@@ -11,6 +11,7 @@ import org.usfirst.frc.team1089.robot.util.MotionProfileValues;
 import com.ctre.CANTalon;
 import com.ctre.CanTalonJNI;
 import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.CANTalon.TrajectoryPoint;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -48,13 +49,9 @@ public class MotionProfile extends Command {
     protected void initialize() {
 		Robot.driveTrain.resetEncoders();
 		Robot.driveTrain.disableRobotDrive();
-		l.clearMotionProfileHasUnderrun();
-		r.clearMotionProfileHasUnderrun();
+		Robot.driveTrain.resetMotionProfiling();
 		
 		MercLogger.logMessage(Level.INFO, "Motion Profile: Reset Encoders and Disabled Robot Drive");
-		
-		l.clearMotionProfileTrajectories();
-		r.clearMotionProfileTrajectories();
 		
     	l.changeControlMode(TalonControlMode.MotionProfile);
     	r.changeControlMode(TalonControlMode.MotionProfile);
@@ -70,21 +67,27 @@ public class MotionProfile extends Command {
 		r.configPeakOutputVoltage(10, -10);
 		r.configNominalOutputVoltage(0, 0);
 		
-
-    	startFilling(MotionProfileValues.PointsL, MotionProfileValues.PointsR, MotionProfileValues.kNumPoints);
+		// Fill top buffer with trajectory points
+    	startFilling(MotionProfileValues.POINTS_L, MotionProfileValues.POINTS_R, MotionProfileValues.NUM_POINTS);
     	
-    	while(lStatus.btmBufferCnt < MotionProfileValues.kNumPoints || rStatus.btmBufferCnt < MotionProfileValues.kNumPoints) {
-    		MercLogger.logMessage(Level.INFO, "Filling...");
+    	// As long as the bottom buffer has not yet been filled, continue processing the top buffer.
+    	while(lStatus.btmBufferCnt < MotionProfileValues.NUM_POINTS || rStatus.btmBufferCnt < MotionProfileValues.NUM_POINTS) {
+    		MercLogger.logMessage(Level.INFO, "Filling bottom buffer...");
+    		
         	l.processMotionProfileBuffer();
         	r.processMotionProfileBuffer();
+        	
         	l.getMotionProfileStatus(lStatus);
         	r.getMotionProfileStatus(rStatus);
     	}
+    	
+    	MercLogger.logMessage(Level.INFO, "Bottom buffer filled!");
 
+    	// Enables PID control on both talons
 		l.enableControl();
     	r.enableControl();
     	
-    	MercLogger.logMessage(Level.INFO, "Motion Profile: Enabled Contol");
+    	MercLogger.logMessage(Level.INFO, "Motion Profile: Enabled PID Contol");
     	
     	l.set(CANTalon.SetValueMotionProfile.Enable.value);
     	r.set(CANTalon.SetValueMotionProfile.Enable.value);
@@ -94,9 +97,14 @@ public class MotionProfile extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	// Continue processing top buffer points to lower buffer points
     	l.processMotionProfileBuffer();
     	r.processMotionProfileBuffer();
     	
+    	// Get the profile status for testing
+    	l.getMotionProfileStatus(lStatus);
+    	r.getMotionProfileStatus(rStatus);
+
 		MercLogger.logMessage(Level.INFO, "Motion Profile: Processed Motion Profile Buffer");
     	
 		//MercLogger.logMessage(Level.INFO, "execute()");
@@ -107,6 +115,9 @@ public class MotionProfile extends Command {
         l.getMotionProfileStatus(lStatus);
         r.getMotionProfileStatus(rStatus);
         
+        // If either of these blocks ran, this means that
+        // there are points in the top buffer that have not yet been put into the bottom buffer
+        // and therefore we are processing points faster than we are putting in.
         if (lStatus.isUnderrun)
             MercLogger.logMessage(Level.INFO, "Motion Profile: Left Buffer Is Underrunning");
 
@@ -118,8 +129,6 @@ public class MotionProfile extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	DriverStation.reportError("end() has started", true);
-
 		MercLogger.logMessage(Level.INFO, "Motion Profile: ENDED");
     	
     	// Disable both talons
@@ -141,58 +150,66 @@ public class MotionProfile extends Command {
     	end();
     }
     
-    private void startFilling(double[][] profileL, double[][] profileR,  int totalCnt) {
+    private void startFilling(TrajectoryPoint[] pointsL, TrajectoryPoint[] pointsR,  int totalCnt) {
 
 		MercLogger.logMessage(Level.INFO, "Motion Profile: Started Filling");
 		
 		/* This is fast since it's just into our TOP buffer */
 		for (int i = 0; i < totalCnt; ++i) {
-			CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
+/*			CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
 			CANTalon.TrajectoryPoint pointR = new CANTalon.TrajectoryPoint();
 			
-			/* for each point, fill our structure and pass it to API */
-			pointL.position = profileL[i][0];
-			pointL.velocity = profileL[i][1];
-			pointL.timeDurMs = (int) profileL[i][2];
+			 for each point, fill our structure and pass it to API 
+			pointL.position = pointsL[i][0];
+			pointL.velocity = pointsL[i][1];
+			pointL.timeDurMs = (int) pointsL[i][2];
 			pointL.profileSlotSelect = 0; 
-			pointL.velocityOnly = false; /* set true to not do any position
+			pointL.velocityOnly = false;  set true to not do any position
 										 * servo, just velocity feedforward
-										 */		
+										 		
 			
 			pointL.zeroPos = false;
 			
-			pointR.position = -profileR[i][0];
-			pointR.velocity = profileR[i][1];
-			pointR.timeDurMs = (int) profileR[i][2];
-			pointR.profileSlotSelect = 0; /* which set of gains would you like to use? */
-			pointR.velocityOnly = false; /* set true to not do any position
+			pointR.position = -pointsR[i][0];
+			pointR.velocity = pointsR[i][1];
+			pointR.timeDurMs = (int) pointsR[i][2];
+			pointR.profileSlotSelect = 0;  which set of gains would you like to use? 
+			pointR.velocityOnly = false;  set true to not do any position
 										 * servo, just velocity feedforward
-										 */		
-			pointR.zeroPos = false;
+										 		
+			pointR.zeroPos = false;*/
 			
-			
+			// Zero position on first point only
 			if (i == 0) {
-				pointL.zeroPos = true; /* set this to true on the first point */
-				pointR.zeroPos = true;
+				pointsL[i].zeroPos = true;
+				pointsR[i].zeroPos = true;
 			}
-			pointL.isLastPoint = false;
-			pointR.isLastPoint = false;
+			
+			/*pointsL.isLastPoint = false;
+			pointR.isLastPoint = false;*/
+			
+			// Check flag isLastPoint on the last point
 			if ((i + 1) == totalCnt) {
-				pointL.isLastPoint = true;  //set this to true on the last point  
-				pointR.isLastPoint = true;
+				pointsL[i].isLastPoint = true;
+				pointsR[i].isLastPoint = true;
 			}
 
-			r.pushMotionProfileTrajectory(pointR);
-			l.pushMotionProfileTrajectory(pointL);
-
+			// Push the trajectory point to the top buffer
+			l.pushMotionProfileTrajectory(pointsL[i]);
+			r.pushMotionProfileTrajectory(pointsR[i]);
+			
 			MercLogger.logMessage(Level.INFO, "Motion Profile: Pushed Point");
+			
+			l.getMotionProfileStatus(lStatus);
+        	r.getMotionProfileStatus(rStatus);
+        	
+        	MercLogger.logMessage(Level.INFO, "Motion Profile: Left Talon Bottom Buffer Count = " + lStatus.topBufferCnt);
+        	MercLogger.logMessage(Level.INFO, "Motion Profile: Right Talon Bottom Buffer Count = " + rStatus.topBufferCnt);
 			
 /*			l.processMotionProfileBuffer();
 */
 			//DriverStation.reportError("Trajectory point status: ", true);
 			DriverStation.reportError("Loop iteration completed", true);
 		}
-		
-		
     }
 }
