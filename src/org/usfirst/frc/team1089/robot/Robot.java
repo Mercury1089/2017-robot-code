@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
 	// Declare subsystems (public static so there is only ever one instance)
 	public static ExampleSubsystem exampleSubsystem;
 	public static DriveTrain driveTrain;
-	public static VisionProcessor visionSystem;
+	public static VisionProcessor visionProcessor;
 	public static Sensors sensors;
 	public static Shooter shooter;
 	public static OI oi;
@@ -46,10 +46,8 @@ public class Robot extends IterativeRobot {
 	Alliance allianceColor;
 	private int autonStartPos;
 	
-	
 	SendableChooser startPosition, step3Chooser;
 	AutonEnum autonChoice;					//TODO set equal to value from SmartDash
-	
 	
 	/**
 	 * This function is ho when the robot is first started up and should be
@@ -66,7 +64,7 @@ public class Robot extends IterativeRobot {
 		exampleSubsystem = new ExampleSubsystem();
 		sensors = new Sensors();
 		shooter = new Shooter();
-		visionSystem = new VisionProcessor();
+		visionProcessor = new VisionProcessor();
 		driveTrain = new DriveTrain();
 		
 		// OI must be constructed after subsystems. If the OI creates Commands
@@ -199,6 +197,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
 		SmartDashboard.putNumber("Mag Enc Val", Robot.shooter.motor.getSpeed());
 		SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
+		
+		System.out.println("GetDistance: " + visionProcessor.getDistance(VisionProcessor.TargetType.GEAR_VISION));
 	}
 
 	/**

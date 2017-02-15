@@ -69,6 +69,9 @@ public class UpdateMotionProfile extends Command {
     	
     	MercLogger.logMessage(Level.INFO, "Motion Profile: Enabled PID Contol");
     	
+    	leftTalon.changeMotionControlFramePeriod(20);
+    	rightTalon.changeMotionControlFramePeriod(20);
+    	
     	leftTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
     	rightTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
     	
