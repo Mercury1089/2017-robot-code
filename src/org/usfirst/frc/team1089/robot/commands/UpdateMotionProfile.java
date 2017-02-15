@@ -125,13 +125,13 @@ public class UpdateMotionProfile extends Command {
     	end();
     }
     
-    private void startFilling(TrajectoryPoint[] pointsL, TrajectoryPoint[] pointsR,  int totalCnt) {
+    /*private void startFilling(TrajectoryPoint[] pointsL, TrajectoryPoint[] pointsR,  int totalCnt) {
 
 		MercLogger.logMessage(Level.INFO, "Motion Profile: Started Filling");
 		
-		/* This is fast since it's just into our TOP buffer */
+		 This is fast since it's just into our TOP buffer 
 		for (int i = 0; i < totalCnt; ++i) {
-/*			CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
+			CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
 			CANTalon.TrajectoryPoint pointR = new CANTalon.TrajectoryPoint();
 			
 			 for each point, fill our structure and pass it to API 
@@ -152,7 +152,7 @@ public class UpdateMotionProfile extends Command {
 			pointR.velocityOnly = false;  set true to not do any position
 										 * servo, just velocity feedforward
 										 		
-			pointR.zeroPos = false;*/
+			pointR.zeroPos = false;
 			
 			// Zero position on first point only
 			if (i == 0) {
@@ -161,7 +161,7 @@ public class UpdateMotionProfile extends Command {
 			}
 			
 			/*pointsL.isLastPoint = false;
-			pointR.isLastPoint = false;*/
+			pointR.isLastPoint = false;
 			
 			// Check flag isLastPoint on the last point
 			if ((i + 1) == totalCnt) {
@@ -181,10 +181,9 @@ public class UpdateMotionProfile extends Command {
         	MercLogger.logMessage(Level.INFO, "Motion Profile: Left Talon Bottom Buffer Count = " + statusLeft.topBufferCnt);
         	MercLogger.logMessage(Level.INFO, "Motion Profile: Right Talon Bottom Buffer Count = " + statusRight.topBufferCnt);
 			
-/*			l.processMotionProfileBuffer();
-*/
+			l.processMotionProfileBuffer();
+
 			//DriverStation.reportError("Trajectory point status: ", true);
 			DriverStation.reportError("Loop iteration completed", true);
-		}
-    }
+		} */
 }

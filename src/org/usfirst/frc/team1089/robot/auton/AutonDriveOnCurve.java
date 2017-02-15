@@ -41,15 +41,7 @@ public class AutonDriveOnCurve extends Command {
     	_headingYDirection = headingYMeters;
     	
     	anglePID = new PIDController(.1, 0.0, 0, angleProxy, angleProxy); 	//How much is left to turn(right stick on arcadeDrive)   	
-    	displacementPID = new PIDController(.1, 0, 0, distanceProxy, distanceProxy);	//How much is left to move(left stick on arcadeDrive)
-    	anglePID.setContinuous(true);
-    	displacementPID.setContinuous(false);
-    	anglePID.setAbsoluteTolerance(0.1);
-    	displacementPID.setAbsoluteTolerance(0.1);
-    	anglePID.setInputRange(-180, 180);
-    	displacementPID.setInputRange(-18, 18);
-    	anglePID.setOutputRange(-1, 1);
-    	displacementPID.setOutputRange(-.4, .4);
+    	displacementPID = new PIDController(.1, 0.0, 0, distanceProxy, distanceProxy);	//How much is left to move(left stick on arcadeDrive)
 
     	LiveWindow.addActuator("Robot.driveTrain", "AutonDegreeRotate", anglePID);
     	LiveWindow.addActuator("Robot.driveTrain", "AutonDriveDistance", displacementPID);
@@ -62,6 +54,14 @@ public class AutonDriveOnCurve extends Command {
     	Robot.driveTrain.setToVbus();
     	Robot.driveTrain.disableRobotDrive();
     	
+    	anglePID.setContinuous(true);
+    	displacementPID.setContinuous(false);
+    	anglePID.setAbsoluteTolerance(1);
+    	displacementPID.setAbsoluteTolerance(1);
+    	anglePID.setInputRange(-180, 180);
+    	displacementPID.setInputRange(-18, 18);
+    	anglePID.setOutputRange(-1, 1);
+    	displacementPID.setOutputRange(-.4, .4);    	
     	
     	anglePID.setSetpoint(0);		//Setpoints have to be 0 so that the error that is calculated is always the total error from setpoint
     	displacementPID.setSetpoint(0);
@@ -79,7 +79,12 @@ public class AutonDriveOnCurve extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return anglePID.onTarget() && displacementPID.onTarget();
+    	/*return anglePID.get() == _headingXDirection && displacementPID.get() == _headingYDirection;
+    	*/
+    	if (Robot.driveTrain.getNAVX().getDisplacementX() >= _headingXDirection && Robot.driveTrain.getNAVX().getDisplacementY() >= _headingYDirection)
+    		return true;
+    	
+    	return false;
     }
 
     // Called once after isFinished returns true
