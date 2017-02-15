@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -37,6 +39,25 @@ public class AutonDriveOnCurve extends Command {
     	_headingYDirection = headingYMeters;
     	anglePID = new PIDController(.1, 0.0, 0, angleProxy, angleProxy); 	//How much is left to turn(right stick on arcadeDrive)   	
     	displacementPID = new PIDController(.1, 0, 0, distanceProxy, distanceProxy);	//How much is left to move(left stick on arcadeDrive)
+    	/*anglePID.setContinuous(true);
+    	displacementPID.setContinuous(false);
+    	anglePID.setAbsoluteTolerance(0.1);
+    	displacementPID.setAbsoluteTolerance(0.1);
+    	anglePID.setInputRange(-180, 180);
+    	displacementPID.setInputRange(-18, 18);
+    	anglePID.setOutputRange(-1, 1);
+    	displacementPID.setOutputRange(-.4, .4);*/
+    	LiveWindow.addActuator("Robot.driveTrain", "AutonDegreeRotate", anglePID);
+    	LiveWindow.addActuator("Robot.driveTrain", "AutonDriveDistance", displacementPID);
+    	MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has been constructed.");
+    }
+
+    // Called just before this Command runs the first time
+    protected void initialize() {
+    	Robot.driveTrain.getNAVX().reset();
+    	Robot.driveTrain.setToVbus();
+    	Robot.driveTrain.disableRobotDrive();
+    	
     	anglePID.setContinuous(true);
     	displacementPID.setContinuous(false);
     	anglePID.setAbsoluteTolerance(0.1);
@@ -45,25 +66,30 @@ public class AutonDriveOnCurve extends Command {
     	displacementPID.setInputRange(-18, 18);
     	anglePID.setOutputRange(-1, 1);
     	displacementPID.setOutputRange(-.4, .4);
-    	LiveWindow.addActuator("Robot.driveTrain", "AutonDegreeRotate", anglePID);
-    	LiveWindow.addActuator("Robot.driveTrain", "AutonDriveDistance", displacementPID);
-    }
-
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	Robot.driveTrain.getNAVX().reset();
+    	
     	anglePID.setSetpoint(0);		//Setpoints have to be 0 so that the error that is calculated is always the total error from setpoint
     	displacementPID.setSetpoint(0);
     	anglePID.enable();
     	displacementPID.enable();
+    	
+    	Robot.driveTrain.getLeft().configNominalOutputVoltage(0, 0);
+    	Robot.driveTrain.getRight().configNominalOutputVoltage(0, 0);
+    	
+    	Robot.driveTrain.getLeft().configPeakOutputVoltage(7, -7);
+    	Robot.driveTrain.getRight().configPeakOutputVoltage(7, -7);
+    	
+    	Robot.driveTrain.getLeft().enableControl();
+    	Robot.driveTrain.getRight().enableControl();
+    	
 		MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has been initialized.");
 
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	anglePID.setSetpoint(0);
-    	displacementPID.setSetpoint(0);    	
+    	//anglePID.setSetpoint(0);
+    	//displacementPID.setSetpoint(0);    
+    	SmartDashboard.putData(Scheduler.getInstance());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -75,12 +101,17 @@ public class AutonDriveOnCurve extends Command {
     protected void end() {
     	anglePID.disable();
     	displacementPID.disable();
+    	Robot.driveTrain.stop();
+    	Robot.driveTrain.getNAVX().reset();
+    	Robot.driveTrain.enableRobotDrive();
+    	Robot.driveTrain.setToPosition();
 		MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has ended.");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has entered interrupted.");
     	end();
     }
 
