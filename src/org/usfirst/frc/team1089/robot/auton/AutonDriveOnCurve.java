@@ -31,22 +31,26 @@ public class AutonDriveOnCurve extends Command {
 	private double rotateValue = 0;
 	
     public AutonDriveOnCurve(double headingXFeet, double headingYFeet) {
+        requires(Robot.driveTrain);
+
     	PIDProxy angleProxy = new PIDProxy(this, PIDType.ANGLE);	 	
     	PIDProxy distanceProxy = new PIDProxy(this, PIDType.DISTANCE);
     	double headingXMeters = headingXFeet / 3.28084;			     //NavX takes values in meters, but they are given to the method in feet
     	double headingYMeters = headingYFeet / 3.28084;
     	_headingXDirection = headingXMeters;
     	_headingYDirection = headingYMeters;
+    	
     	anglePID = new PIDController(.1, 0.0, 0, angleProxy, angleProxy); 	//How much is left to turn(right stick on arcadeDrive)   	
     	displacementPID = new PIDController(.1, 0, 0, distanceProxy, distanceProxy);	//How much is left to move(left stick on arcadeDrive)
-    	/*anglePID.setContinuous(true);
+    	anglePID.setContinuous(true);
     	displacementPID.setContinuous(false);
     	anglePID.setAbsoluteTolerance(0.1);
     	displacementPID.setAbsoluteTolerance(0.1);
     	anglePID.setInputRange(-180, 180);
     	displacementPID.setInputRange(-18, 18);
     	anglePID.setOutputRange(-1, 1);
-    	displacementPID.setOutputRange(-.4, .4);*/
+    	displacementPID.setOutputRange(-.4, .4);
+
     	LiveWindow.addActuator("Robot.driveTrain", "AutonDegreeRotate", anglePID);
     	LiveWindow.addActuator("Robot.driveTrain", "AutonDriveDistance", displacementPID);
     	MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has been constructed.");
@@ -58,28 +62,11 @@ public class AutonDriveOnCurve extends Command {
     	Robot.driveTrain.setToVbus();
     	Robot.driveTrain.disableRobotDrive();
     	
-    	anglePID.setContinuous(true);
-    	displacementPID.setContinuous(false);
-    	anglePID.setAbsoluteTolerance(0.1);
-    	displacementPID.setAbsoluteTolerance(0.1);
-    	anglePID.setInputRange(-180, 180);
-    	displacementPID.setInputRange(-18, 18);
-    	anglePID.setOutputRange(-1, 1);
-    	displacementPID.setOutputRange(-.4, .4);
     	
     	anglePID.setSetpoint(0);		//Setpoints have to be 0 so that the error that is calculated is always the total error from setpoint
     	displacementPID.setSetpoint(0);
     	anglePID.enable();
     	displacementPID.enable();
-    	
-    	Robot.driveTrain.getLeft().configNominalOutputVoltage(0, 0);
-    	Robot.driveTrain.getRight().configNominalOutputVoltage(0, 0);
-    	
-    	Robot.driveTrain.getLeft().configPeakOutputVoltage(7, -7);
-    	Robot.driveTrain.getRight().configPeakOutputVoltage(7, -7);
-    	
-    	Robot.driveTrain.getLeft().enableControl();
-    	Robot.driveTrain.getRight().enableControl();
     	
 		MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has been initialized.");
 
@@ -87,8 +74,6 @@ public class AutonDriveOnCurve extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//anglePID.setSetpoint(0);
-    	//displacementPID.setSetpoint(0);    
     	SmartDashboard.putData(Scheduler.getInstance());
     }
 
@@ -104,8 +89,8 @@ public class AutonDriveOnCurve extends Command {
     	Robot.driveTrain.stop();
     	Robot.driveTrain.getNAVX().reset();
     	Robot.driveTrain.enableRobotDrive();
-    	Robot.driveTrain.setToPosition();
-		MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has ended.");
+
+    	MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has ended.");
     }
 
     // Called when another command which requires one or more of the same
@@ -114,12 +99,6 @@ public class AutonDriveOnCurve extends Command {
     	MercLogger.logMessage(Level.INFO, "The Auton Drive On Curve Command has entered interrupted.");
     	end();
     }
-
-	protected void usePIDOutput(double output) {
-		// TODO Auto-generated method stub
-		//Robot.driveTrain.arcadeDrive(moveValue, rotateValue);
-		//Robot.driveTrain.getAutonDriveDistancePidValue(output);
-	}
 	
 	public double getInitialAngleError() {
 		return Math.toDegrees(Math.atan(_headingYDirection / _headingXDirection));	//Total angle error when we start
