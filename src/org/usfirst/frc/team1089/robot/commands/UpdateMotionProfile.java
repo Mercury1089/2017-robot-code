@@ -1,15 +1,11 @@
 package org.usfirst.frc.team1089.robot.commands;
 
-import java.awt.Point;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
-import org.usfirst.frc.team1089.robot.util.MotionProfileExample;
-import org.usfirst.frc.team1089.robot.util.MotionProfile;
 
 import com.ctre.CANTalon;
-import com.ctre.CanTalonJNI;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 

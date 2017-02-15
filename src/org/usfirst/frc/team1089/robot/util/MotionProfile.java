@@ -2,7 +2,7 @@ package org.usfirst.frc.team1089.robot.util;
 
 import com.ctre.CANTalon;
 
-public class MotionProfileValues {			
+public class MotionProfile {			
 
 	public static final int NUM_POINTS = 4; // Number of points to fill
 	public static final int MIN_POINTS = 4; // Minimum number of points needed before we start processing

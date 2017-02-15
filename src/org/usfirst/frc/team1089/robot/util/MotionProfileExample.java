@@ -1,10 +1,10 @@
 package org.usfirst.frc.team1089.robot.util;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
-import com.ctre.CANTalon.TalonControlMode;
 
 public class MotionProfileExample {
 
@@ -219,7 +219,7 @@ public class MotionProfileExample {
 		/* since this example only has one talon, just update that one */
 		DriverStation.reportError("Started Filling", true);
 		
-		startFilling(MotionProfileValues.PointsL, MotionProfileValues.NUM_POINTS);
+		startFilling(MotionProfile.PointsL, MotionProfile.NUM_POINTS);
 	}
 
 	private void startFilling(double[][] profile, int totalCnt) {
