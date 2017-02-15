@@ -65,9 +65,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		// Configure back talons as followers.
 		leftBack.changeControlMode(CANTalon.TalonControlMode.Follower);
 		rightBack.changeControlMode(CANTalon.TalonControlMode.Follower);
+		
 		leftBack.set(leftFront.getDeviceID());
 		rightBack.set(rightFront.getDeviceID());
-		
+
 		//robotDrive = new RobotDrive(0,1);
         robotDrive = new RobotDrive(leftFront, rightFront);
         robotDrive.setSafetyEnabled(true); // TODO: Make sure to change this back to true
