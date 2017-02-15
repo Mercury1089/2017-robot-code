@@ -81,7 +81,7 @@ public class AutonDriveOnCurve extends Command {
     protected boolean isFinished() {
     	/*return anglePID.get() == _headingXDirection && displacementPID.get() == _headingYDirection;
     	*/
-    	if (Robot.driveTrain.getNAVX().getDisplacementX() >= _headingXDirection && Robot.driveTrain.getNAVX().getDisplacementY() >= _headingYDirection)
+    	if (xDisplacement >= _headingXDirection && yDisplacement >= _headingYDirection)
     		return true;
     	
     	return false;
