@@ -34,6 +34,9 @@ public class PushTrajectoryPoints extends Command {
     	
     	Robot.driveTrain.resetMotionProfiling();
     	
+    	leftTalon.changeMotionControlFramePeriod(20);
+    	rightTalon.changeMotionControlFramePeriod(20);
+    	
     	CANTalon.TrajectoryPoint[] pointsLeft = MotionProfile.POINTS_L;
     	CANTalon.TrajectoryPoint[] pointsRight = MotionProfile.POINTS_R;
     	
