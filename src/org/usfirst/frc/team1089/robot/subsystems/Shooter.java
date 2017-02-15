@@ -22,7 +22,7 @@ public class Shooter extends Subsystem implements PIDOutput{
 	}
 	
 	public void initDefaultCommand() {
-		setDefaultCommand(new TestShooter());
+		//setDefaultCommand(new TestShooter());
 		//setDefaultCommand(new TestShooter());
 	}
 

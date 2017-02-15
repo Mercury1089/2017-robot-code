@@ -94,6 +94,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	public void disableRobotDrive() {
 		robotDrive.setSafetyEnabled(false);
 	}
+	
+	public boolean isSafetyEnabled() {
+		return robotDrive.isSafetyEnabled();
+	}
 
     public void initDefaultCommand() {
         // By default, drive with the joysticks

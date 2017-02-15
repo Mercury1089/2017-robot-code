@@ -45,7 +45,9 @@ public class TestShooter extends Command {
     	
     	double volts = SmartDashboard.getBoolean("shooterIsRunning", false) ? SmartDashboard.getNumber("shooterVolts", 0) : 0.0;
     	
-    	System.out.println(volts);
+    	if (SmartDashboard.getBoolean("shooterIsRunning", false)) {
+    		System.out.println(volts);
+    	}
     	
     	double magVal = SmartDashboard.getNumber("Mag Enc Val", 2900);
     	

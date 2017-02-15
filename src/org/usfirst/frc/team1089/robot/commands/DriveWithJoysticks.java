@@ -20,6 +20,7 @@ public class DriveWithJoysticks extends Command {
     protected void initialize() {
     	Robot.driveTrain.setToVbus();
 		//Debug.logMessage(Level.INFO, "The robot has returned to Driving With Joysticks.");
+    	MercLogger.logMessage(Level.INFO, "The robot has returned to Driving With Joysticks.");
 
     }
 
@@ -37,6 +38,7 @@ public class DriveWithJoysticks extends Command {
     protected void end() {
     	Robot.driveTrain.stop();
 		//Debug.logMessage(Level.INFO, "The robot is no longer using Drive With Joysticks.");
+    	MercLogger.logMessage(Level.INFO, "The robot is no longer using Drive With Joysticks.");
 
     }
 

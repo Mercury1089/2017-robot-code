@@ -42,7 +42,7 @@ public class AutonCommand extends CommandGroup {
     	int truePos = startPos, fieldPos = 2;
 		DriverStation.getInstance().getAlliance();
 		//Blue is switched; Red is normal
-		if (color.equals(Alliance.Blue)) 		 
+		if (color.equals(Alliance.Red)) 		 
 			truePos = 10 - startPos;			//XXX makes 9 to 1 and 1 to 9, etc
 		
 		double[] distances = AutonMath.autonDistances(truePos);

@@ -18,6 +18,8 @@ public class NavxDrive extends PIDCommand {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super(.1,0,.6);
+    	Robot.driveTrain.setToVbus();
+    	Robot.driveTrain.disableRobotDrive();
     	requires(Robot.driveTrain);
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(.1);
@@ -44,6 +46,8 @@ public class NavxDrive extends PIDCommand {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveTrain.enableRobotDrive();
+    	Robot.driveTrain.setToPosition();
     }
 
     // Called when another command which requires one or more of the same
