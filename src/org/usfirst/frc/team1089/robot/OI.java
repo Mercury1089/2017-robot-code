@@ -61,6 +61,8 @@ public class OI {
         gamePadBtnX.whenPressed(new AutonDriveOnCurve(2, 3));
         /*gamePadBtnX.whenPressed(new MotionProfile());*/
         
+        //gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
+        gamePadBtnX.whenPressed(new RunMotionProfile());     
         
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of

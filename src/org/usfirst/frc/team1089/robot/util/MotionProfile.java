@@ -2,10 +2,25 @@ package org.usfirst.frc.team1089.robot.util;
 
 import com.ctre.CANTalon;
 
-public class MotionProfileValues {			
+public class MotionProfile {			
 
-	public static final int kNumPoints = 4;		
+	public static final int NUM_POINTS = 4; // Number of points to fill
+	public static final int MIN_POINTS = 4; // Minimum number of points needed before we start processing
 
+	
+	public static final CANTalon.TrajectoryPoint[] POINTS_L = {
+		createTrajectoryPoint(0, 0, 500),
+		createTrajectoryPoint(2000, 100, 1000),
+		createTrajectoryPoint(3000, 100, 1000),
+		createTrajectoryPoint(4000, 50, 1000)
+	};
+	
+	public static final CANTalon.TrajectoryPoint[] POINTS_R = {
+		createTrajectoryPoint(0, 0, 500),
+		createTrajectoryPoint(-2000, 100, 1000),
+		createTrajectoryPoint(-3000, 100, 1000),
+		createTrajectoryPoint(-4000, 50, 1000)
+	};
 	
 	public static double [][]PointsL = new double[][]{
 	
@@ -29,13 +44,35 @@ public class MotionProfileValues {
 	{13779, 250, 1000},
 	{16216, 250, 1000}};	*/
 
-	
-	private final CANTalon.TrajectoryPoint createTrajectoryPoint(int pos, int vel, int dur) {
+
+	/**
+	 * <pre>
+	 * private static final CANTalon.TrajectoryPoint createTrajectoryPoint(double pos, 
+	 *                                                                     double vel, 
+	 *                                                                     int dur)
+	 * </pre>
+	 * Creates a new {@link CANTalon.TrajectoryPoint}
+	 * given the specified encoder position, rpm, and duration
+	 * @param rot amount of rotations this point should be at
+	 * @param rpm the velocity that the {@code CANTalon} should be at
+	 * @param ms  the duration of this point, in milliseconds
+	 * @return the constructed trajectory point
+	 */
+	private static final CANTalon.TrajectoryPoint createTrajectoryPoint(double rot, double rpm, int ms) {
 		CANTalon.TrajectoryPoint tp = new CANTalon.TrajectoryPoint();
 		
-		tp.position = pos;
-		tp.velocity = vel;
-		tp.timeDurMs = dur;
+		// Set the position, velocity, and duration
+		tp.position = rot;
+		tp.velocity = rpm;
+		tp.timeDurMs = ms;
+		
+		// TODO explain this
+		tp.profileSlotSelect = 0;
+		
+		// Assume that this is neither the first or last point or that it is velocity only
+		tp.isLastPoint = false;
+		tp.zeroPos = false;
+		tp.velocityOnly = false;
 		
 		return tp;
 	}
