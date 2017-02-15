@@ -59,13 +59,13 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		rightFront.enableBrakeMode(true);
 		leftBack.enableBrakeMode(true);
 		rightBack.enableBrakeMode(true);
-		leftFront.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		rightFront.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		leftFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		rightFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 
 		// Configure back talons as followers.
-		leftBack.changeControlMode(CANTalon.TalonControlMode.Follower);
+		leftFront.changeControlMode(CANTalon.TalonControlMode.Follower);
 		rightBack.changeControlMode(CANTalon.TalonControlMode.Follower);
-		leftBack.set(leftFront.getDeviceID());
+		leftFront.set(leftBack.getDeviceID());
 		rightBack.set(rightFront.getDeviceID());
 		
 		//robotDrive = new RobotDrive(0,1);
