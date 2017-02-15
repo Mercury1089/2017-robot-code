@@ -29,6 +29,13 @@ public class RobotMap {
 	}
 	
 	/**
+	 * The {@code Servo} subclass contains all the ports for anything in the servo section.
+	 */
+	public static class Servo {
+		public static final int SERVO_ID = 8;
+	}
+	
+	/**
 	 * The {@code CAN} subclass contains all the ports for anything using the CAN interface.
 	 */
 	public static class CAN {

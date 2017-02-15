@@ -33,6 +33,7 @@ public class Robot extends IterativeRobot {
 	public static VisionProcessor visionSystem;
 	public static Sensors sensors;
 	public static Shooter shooter;
+	public static Gear gear;
 	public static OI oi;
 	
 	AutonCommand autonomousCommand;
@@ -68,6 +69,7 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		visionSystem = new VisionProcessor();
 		driveTrain = new DriveTrain();
+		gear = new Gear();
 		
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be

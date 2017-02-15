@@ -58,8 +58,8 @@ public class OI {
         
         
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
-        //gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
-        gamePadBtnX.whenPressed(new RunMotionProfile());     
+        gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
+        /*gamePadBtnX.whenPressed(new RunMotionProfile());     */
         
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of
