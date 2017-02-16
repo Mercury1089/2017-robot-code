@@ -1,15 +1,19 @@
 package org.usfirst.frc.team1089.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team1089.robot.auton.AutonCommand;
 import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.commands.*;
 import org.usfirst.frc.team1089.robot.util.MotionProfileExample;
 
-
+import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -17,6 +21,12 @@ import org.usfirst.frc.team1089.robot.util.MotionProfileExample;
 public class OI {
 
 	public static final double JS_DEADZONE_LIMIT = 0.3; // Deadzone limit for the stick	
+	
+	public AutonEnum step3;
+	
+	SendableChooser startPosition, step3Chooser;
+	
+	Alliance allianceColor;
 
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a
@@ -80,6 +90,25 @@ public class OI {
     	// Start the command when the button is released and let it run the command
     	// until it is finished as determined by it's isFinished method.
     	// button.whenReleased(new ExampleCommand());
+        
+        startPosition = new SendableChooser();
+		startPosition.addDefault("Left Corner: 1", 1);
+		startPosition.addObject("Left, Left Line: 2", 2);
+		startPosition.addObject("Right, Left Line: 3", 3);
+		startPosition.addObject("Left, Midline: 4", 4);
+		startPosition.addObject("Mid, Midline: 5", 5);
+		startPosition.addObject("Right, Midline: 6", 6);
+		startPosition.addObject("Left, Right Line: 7", 7);
+		startPosition.addObject("Right, Right Line: 8", 8);
+		startPosition.addObject("Right Corner: 9", 9);
+		SmartDashboard.putData("Starting position: ", startPosition);
+		
+		step3Chooser = new SendableChooser();
+		step3Chooser.addDefault("STOP", AutonEnum.STOP);
+		step3Chooser.addObject("Turn and Shoot", AutonEnum.TURN_SHOOT);
+		step3Chooser.addObject("Far Hopper", AutonEnum.FAR_HOPPER);
+		step3Chooser.addObject("Near Hopper", AutonEnum.NEAR_HOPPER);
+		SmartDashboard.putData("Step 3 (After delivering gear)", step3Chooser);
     }
 
 
@@ -113,5 +142,12 @@ public class OI {
     	return (Math.abs(val) > Math.abs(dzLimit)) ? val : 0.0;
     	/*double newVal = (Math.abs(val) - dzLimit * Math.signum(val)) / (1 - dzLimit * Math.signum(val));
     	return (Math.abs(val) > dzLimit) ? newVal : 0.0;*/ 
+    }
+    
+    public AutonEnum getStep3() {
+    	return (AutonEnum) step3Chooser.getSelected();
+    }
+    public int getStartPos() {
+    	return (int) startPosition.getSelected();
     }
 }
