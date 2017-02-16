@@ -61,7 +61,7 @@ public class AutonDriveOnCurve extends Command {
     	anglePID.setInputRange(-180, 180);
     	displacementPID.setInputRange(-18, 18);
     	anglePID.setOutputRange(-1, 1);
-    	displacementPID.setOutputRange(-.4, .4);    	
+    	displacementPID.setOutputRange(-.1, .1);    	
     	
     	anglePID.setSetpoint(0);		//Setpoints have to be 0 so that the error that is calculated is always the total error from setpoint
     	displacementPID.setSetpoint(0);
@@ -81,7 +81,7 @@ public class AutonDriveOnCurve extends Command {
     protected boolean isFinished() {
     	/*return anglePID.get() == _headingXDirection && displacementPID.get() == _headingYDirection;
     	*/
-    	if (xDisplacement >= _headingXDirection && yDisplacement >= _headingYDirection)
+    	if (xDisplacement >= _headingXDirection || yDisplacement >= _headingYDirection)
     		return true;
     	
     	return false;

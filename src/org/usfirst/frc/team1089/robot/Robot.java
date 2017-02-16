@@ -160,6 +160,7 @@ public class Robot extends IterativeRobot {
 		oi.updateOI();
 		
 		System.out.println("GetDistance: " + visionProcessor.getDistance(VisionProcessor.TargetType.GEAR_VISION));
+		System.out.println(visionProcessor.getAngleFromCenter(VisionProcessor.TargetType.GEAR_VISION));
 	}
 
 	/**
