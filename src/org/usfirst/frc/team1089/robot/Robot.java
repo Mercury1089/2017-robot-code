@@ -28,7 +28,7 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain driveTrain;
 	public static VisionProcessor visionProcessor;
 	public static Sensors sensors;
-	public static Shooter shooter;
+	//public static Shooter shooter;
 	public static Gear gear;
 	public static OI oi;
 	

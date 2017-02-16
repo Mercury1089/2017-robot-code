@@ -17,12 +17,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem implements PIDOutput{
 	public CANTalon motor;
 	
-	public Shooter() {
-		motor = new CANTalon(RobotMap.CAN.SHOOTER_TALON_ID);
+	public Shooter(int ID) {
+		motor = new CANTalon(ID);
+		
 	}
 	
 	public void initDefaultCommand() {
-		//setDefaultCommand(new TestShooter());
+		setDefaultCommand(new RunShooter(this));
 		//setDefaultCommand(new TestShooter());
 	}
 
