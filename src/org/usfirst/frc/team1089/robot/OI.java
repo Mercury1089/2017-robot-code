@@ -1,19 +1,15 @@
 package org.usfirst.frc.team1089.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
+import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
+import org.usfirst.frc.team1089.robot.auton.AutonEnum;
+import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
+
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team1089.robot.auton.AutonCommand;
-import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
-import org.usfirst.frc.team1089.robot.commands.*;
-import org.usfirst.frc.team1089.robot.util.MotionProfileExample;
-
-import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -109,7 +105,29 @@ public class OI {
 		step3Chooser.addObject("Far Hopper", AutonEnum.FAR_HOPPER);
 		step3Chooser.addObject("Near Hopper", AutonEnum.NEAR_HOPPER);
 		SmartDashboard.putData("Step 3 (After delivering gear)", step3Chooser);
+		
+		// Update the network tables with a notifier.
+		// This will update the table every 5 milliseconds, during every stage of the game.
+		new Notifier(() -> updateOI()).startPeriodic(0.005);
     }
+	
+	/**
+	 * <pre>
+	 * public void updateOI()
+	 * </pre>
+	 * 
+	 * Update block for the OI
+	 */
+	public void updateOI() {
+		SmartDashboard.putNumber("Gyro", Robot.driveTrain.getGyro().getAngle());
+		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
+		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
+		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
+		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
+		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
+		SmartDashboard.putNumber("Mag Enc Val", Robot.shooter.motor.getSpeed());
+		SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
+	}
 
 
     public Joystick getLeftStick() {

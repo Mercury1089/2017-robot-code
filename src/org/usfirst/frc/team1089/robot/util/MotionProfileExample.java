@@ -72,7 +72,6 @@ public class MotionProfileExample {
 	    					 talonR.processMotionProfileBuffer(); }
 	}
 	Notifier _notifer = new Notifier(new PeriodicRunnable());
-	
 
 	/**
 	 * C'tor
