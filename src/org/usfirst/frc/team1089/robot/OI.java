@@ -5,6 +5,7 @@ import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1089.robot.commands.TestShooter;
+import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -62,7 +63,7 @@ public class OI {
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
+        gamePadBtnB.whenPressed(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL)));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         
         
@@ -110,10 +111,11 @@ public class OI {
 		SmartDashboard.putData("Step 3 (After delivering gear)", step3Chooser);
 		
 		shooterType = new SendableChooser();
-		shooterType.addDefault("None", 0);
-		shooterType.addObject("Left", 1);
-		shooterType.addObject("Right", 2);
-		shooterType.addObject("Dual", 3);
+		shooterType.addDefault("None", ShooterEnum.NO_SHOOTER);
+		shooterType.addObject("Left", ShooterEnum.LEFT_SHOOTER);
+		shooterType.addObject("Right", ShooterEnum.RIGHT_SHOOTER);
+		shooterType.addObject("Dual", ShooterEnum.DUAL_SHOOTER);
+		shooterType.addObject("Dual Staggered", ShooterEnum.DUAL_STAGGERED_SHOOTER);
 		SmartDashboard.putData("Shot Selection", shooterType);
 		// Update the network tables with a notifier.
 		// This will update the table every 5 milliseconds, during every stage of the game.
@@ -177,7 +179,7 @@ public class OI {
     public int getStartPos() {
     	return (int) startPosition.getSelected();
     }
-    public int getShot() {
-    	return (int) shooterType.getSelected();
+    public ShooterEnum getShot() {
+    	return (ShooterEnum) shooterType.getSelected();
     }
 }

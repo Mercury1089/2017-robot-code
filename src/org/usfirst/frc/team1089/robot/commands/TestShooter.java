@@ -28,10 +28,13 @@ public class TestShooter extends Command {
     protected void initialize() {
     	shooter.motor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	shooter.motor.set(pctVBus);
+        SmartDashboard.putNumber("shooterVolts", 0.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	double volts = SmartDashboard.getNumber("shooterVolts", 0.0);
+    	shooter.motor.set(volts);
    	}
 
     // Make this return true when this Command no longer needs to run execute()

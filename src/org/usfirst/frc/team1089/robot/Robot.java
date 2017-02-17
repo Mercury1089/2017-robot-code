@@ -5,6 +5,7 @@ import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.RunShooter;
 import org.usfirst.frc.team1089.robot.commands.StopShooter;
 import org.usfirst.frc.team1089.robot.subsystems.*;
+import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor;
 
@@ -40,7 +41,7 @@ public class Robot extends IterativeRobot {
 	private double changeLeftEnc;
 	
 	private AutonEnum step3;
-	
+	private ShooterEnum choice;
 	Alliance allianceColor;
 	/**
 	 * This function is ho when the robot is first started up and should be
@@ -163,28 +164,31 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		
 		oi.updateOI();
-		
-		/*if(oi.getShot() == 1) {					//TODO Make Shot Enum
-			new RunShooter(leftShooter);
-			new StopShooter(rightShooter);
-		}
-		else if(oi.getShot() == 2) {
-			new RunShooter(rightShooter);
-			new StopShooter(leftShooter);
-		}
-		else if (oi.getShot() == 3) {
-			new RunShooter(leftShooter);
-			new RunShooter(rightShooter);
-		}
-		else {
+		choice = oi.getShot();
+		switch(choice){
+		case NO_SHOOTER:
 			new StopShooter(leftShooter);
 			new StopShooter(rightShooter);
-		}*/
+			break;
+		case LEFT_SHOOTER:
+			new RunShooter(leftShooter);
+			new StopShooter(rightShooter);
+			break;
+		case RIGHT_SHOOTER:
+			new RunShooter(rightShooter);
+			new StopShooter(leftShooter);
+			break;
+		case DUAL_STAGGERED_SHOOTER:
+		case DUAL_SHOOTER:
+			new RunShooter(leftShooter);
+			new RunShooter(rightShooter);
+			break;
+		}
 		
 		
 		
-		System.out.println("GetDistance: " + visionProcessor.getDistance(VisionProcessor.TargetType.GEAR_VISION));
-		System.out.println("GetAngle: " + visionProcessor.getAngleFromCenter(VisionProcessor.TargetType.GEAR_VISION));
+		System.out.println("GetDistance: " + visionProcessor.getDistance(VisionProcessor.TargetType.HIGH_GOAL));
+		System.out.println("GetAngle: " + visionProcessor.getAngleFromCenter(VisionProcessor.TargetType.HIGH_GOAL));
 	}
 
 	/**

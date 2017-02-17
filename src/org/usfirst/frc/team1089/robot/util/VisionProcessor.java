@@ -108,12 +108,12 @@ public class VisionProcessor {
 				hfov = HFOV_LIFECAM;
 				break;
 			default: 
-				return Double.NEGATIVE_INFINITY;
+				return 0;
 		}
 		
 		// Don't return anything if it can't be seen
 		if (centerX == -1)
-			return Double.NEGATIVE_INFINITY;
+			return 0;
 		
 		// Get the ratio of the distance from the center to the entire image width
 		dist = centerX - IMG_WIDTH / 2.0;
