@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot {
 		// Instantiate the subsystems
 		exampleSubsystem = new ExampleSubsystem();
 		sensors = new Sensors();
-		shooter = new Shooter();
+		//shooter = new Shooter();
 		visionProcessor = new VisionProcessor();
 		driveTrain = new DriveTrain();
 		gear = new Gear();

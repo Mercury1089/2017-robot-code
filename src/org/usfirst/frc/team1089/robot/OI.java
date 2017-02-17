@@ -3,6 +3,7 @@ package org.usfirst.frc.team1089.robot;
 import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Joystick;
@@ -106,6 +107,10 @@ public class OI {
 		step3Chooser.addObject("Near Hopper", AutonEnum.NEAR_HOPPER);
 		SmartDashboard.putData("Step 3 (After delivering gear)", step3Chooser);
 		
+		SmartDashboard.putData("Open Gear Release", new ToggleGearDelivery(true));
+		SmartDashboard.putData("Close Gear Release", new ToggleGearDelivery(false));
+		SmartDashboard.putData("Gear position", Robot.gear.getServo());
+		
 		// Update the network tables with a notifier.
 		// This will update the table every 5 milliseconds, during every stage of the game.
 		new Notifier(() -> updateOI()).startPeriodic(0.005);
@@ -125,8 +130,8 @@ public class OI {
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
 		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
-		SmartDashboard.putNumber("Mag Enc Val", Robot.shooter.motor.getSpeed());
-		SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
+		//SmartDashboard.putNumber("Mag Enc Val", Robot.shooter.motor.getSpeed());
+		//SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
 	}
 
 
