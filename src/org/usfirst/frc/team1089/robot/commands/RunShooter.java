@@ -15,17 +15,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RunShooter extends Command {
 
-	//Testing Purposes Only
-	double highest, lowest;
-	Shooter shooter;
-	public RunShooter(Shooter sh) {
-    	
-    	requires(sh);
-    	shooter = sh;
+	private double highest, lowest;
+	private Shooter shooter;
+	private final double LOWEST_RPM = 3500;		//TODO Change this
+	private final double HIGHEST_RPM  = 5000;   //TODO CHange this
+	
+	public RunShooter(Shooter s) {
+    	requires(s);
+    	shooter = s;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
+    	shooter.motor.changeControlMode(CANTalon.TalonControlMode.Speed);
     	shooter.motor.setPID(0.5, 0.0, 0.5);
 		shooter.motor.configPeakOutputVoltage(12, -12);
 		shooter.motor.configNominalOutputVoltage(0,0);
@@ -36,18 +39,16 @@ public class RunShooter extends Command {
 		SmartDashboard.putNumber("shooterVolts", 0.0);
     	SmartDashboard.putBoolean("shooterIsRunning", false);
     	SmartDashboard.putBoolean("enableHighLow", false);
-
+    	//Selectable
     	resetHighLow();
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	shooter.motor.changeControlMode(CANTalon.TalonControlMode.Speed);
-    	
-    	double volts = SmartDashboard.getBoolean("shooterIsRunning", false) ? SmartDashboard.getNumber("shooterVolts", 0) : 0.0;
+    protected void execute() {    	
+    	double speed = SmartDashboard.getBoolean("shooterIsRunning", false) ? SmartDashboard.getNumber("shooterVolts", 0) : 0.0;
     	
     	if (SmartDashboard.getBoolean("shooterIsRunning", false)) {
-    		System.out.println(volts);
+    		System.out.println(speed);
     	}
     	
     	double magVal = SmartDashboard.getNumber("Mag Enc Val", 2900);
@@ -67,7 +68,10 @@ public class RunShooter extends Command {
     	SmartDashboard.putNumber("LOWEST", lowest);
 		SmartDashboard.putNumber("HIGHEST", highest);
     		
-    	shooter.motor.set(volts);
+    	shooter.motor.set(speed);
+    	if (!inRange(speed))
+    		end();
+    	
     	System.out.println(shooter.motor.get());
     }
 
@@ -89,4 +93,9 @@ public class RunShooter extends Command {
 		highest = 0;
 		lowest = 10000;
 	}
+    
+    public boolean inRange(double speed) {
+    	return (speed > LOWEST_RPM && speed < HIGHEST_RPM);
+    }
+    
 }

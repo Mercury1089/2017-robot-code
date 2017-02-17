@@ -2,6 +2,8 @@ package org.usfirst.frc.team1089.robot;
 
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
+import org.usfirst.frc.team1089.robot.commands.RunShooter;
+import org.usfirst.frc.team1089.robot.commands.StopShooter;
 import org.usfirst.frc.team1089.robot.subsystems.*;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor;
@@ -28,7 +30,7 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain driveTrain;
 	public static VisionProcessor visionProcessor;
 	public static Sensors sensors;
-	//public static Shooter shooter;
+	public static Shooter leftShooter, rightShooter;
 	public static Gear gear;
 	public static OI oi;
 	
@@ -82,6 +84,8 @@ public class Robot extends IterativeRobot {
 		changeLeftEnc = 0;
 		changeRightEnc = 0;
 			
+		leftShooter = new Shooter(0);			//TODO Change Talon Value
+		rightShooter = new Shooter(1);			//TODO Change Talon Value
 	}
 
 	/**
@@ -159,8 +163,26 @@ public class Robot extends IterativeRobot {
 		
 		oi.updateOI();
 		
+		if(oi.getShot() == 1) {					//TODO Make Shot Enum
+			new RunShooter(leftShooter);
+			new StopShooter(rightShooter);
+		}
+		else if(oi.getShot() == 2) {
+			new RunShooter(rightShooter);
+			new StopShooter(leftShooter);
+		}
+		else if (oi.getShot() == 3) {
+			new RunShooter(leftShooter);
+			new RunShooter(rightShooter);
+		}
+		else {
+			new StopShooter(leftShooter);
+			new StopShooter(rightShooter);
+		}
+			
+		
 		System.out.println("GetDistance: " + visionProcessor.getDistance(VisionProcessor.TargetType.GEAR_VISION));
-		System.out.println(visionProcessor.getAngleFromCenter(VisionProcessor.TargetType.GEAR_VISION));
+		System.out.println("GetAngle: " + visionProcessor.getAngleFromCenter(VisionProcessor.TargetType.GEAR_VISION));
 	}
 
 	/**

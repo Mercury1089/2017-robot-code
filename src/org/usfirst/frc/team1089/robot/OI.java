@@ -3,7 +3,6 @@ package org.usfirst.frc.team1089.robot;
 import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
-import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Joystick;
@@ -21,7 +20,7 @@ public class OI {
 	
 	public AutonEnum step3;
 	
-	SendableChooser startPosition, step3Chooser;
+	SendableChooser startPosition, step3Chooser, shooterType;
 	
 	Alliance allianceColor;
 
@@ -107,10 +106,12 @@ public class OI {
 		step3Chooser.addObject("Near Hopper", AutonEnum.NEAR_HOPPER);
 		SmartDashboard.putData("Step 3 (After delivering gear)", step3Chooser);
 		
-		SmartDashboard.putData("Open Gear Release", new ToggleGearDelivery(true));
-		SmartDashboard.putData("Close Gear Release", new ToggleGearDelivery(false));
-		SmartDashboard.putData("Gear position", Robot.gear.getServo());
-		
+		shooterType = new SendableChooser();
+		shooterType.addDefault("None", 0);
+		shooterType.addObject("Left", 1);
+		shooterType.addObject("Right", 2);
+		shooterType.addObject("Dual", 3);
+		SmartDashboard.putData("Shot Selection", shooterType);
 		// Update the network tables with a notifier.
 		// This will update the table every 5 milliseconds, during every stage of the game.
 		new Notifier(() -> updateOI()).startPeriodic(0.005);
@@ -172,5 +173,8 @@ public class OI {
     }
     public int getStartPos() {
     	return (int) startPosition.getSelected();
+    }
+    public int getShot() {
+    	return (int) shooterType.getSelected();
     }
 }
