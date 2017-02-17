@@ -29,7 +29,7 @@ public class VisionProcessor {
 		IMG_HEIGHT = 240;  // Resolution-y of the camera feed (from both cameras) 
 	
 	// Targeting constants
-	private final double 
+	private final double
 		TARGET_WIDTH_INCHES_GEAR = 10.75,
 		TARGET_HEIGHT_INCHES_GEAR = 5,
 		TARGET_ELEVATION_FEET_GEAR = 10.75,
@@ -55,8 +55,8 @@ public class VisionProcessor {
 	 * Calculates and returns different distances for the different vision targets
 	 * 
 	 * @param type the type of target that is being targeted
-	 * @return the distance between the center of the camera and the center of the target, in feet. 
-	 *         Accurate to 0.15 ft.
+	 * @return the distance between the center of the camera and the center of the target, in feet, 
+	 *         or negative infinity if the target cannot be seen
 	 */
 	public double getDistance(TargetType type) {
 		double percievedWidth, hfov, targetWidth;
@@ -76,6 +76,11 @@ public class VisionProcessor {
 				return Double.NEGATIVE_INFINITY;
 		}
 		
+		// Don't return anything if it can't be seen
+		if (percievedWidth == -1)
+			return Double.NEGATIVE_INFINITY;
+		
+		// Magic equation derived from a few things we know about the target
 		return (targetWidth / IN_TO_FT) * IMG_WIDTH / ( 2 * percievedWidth * Math.tan( Math.toRadians( hfov / 2 ) ) );
 	}
 	
@@ -86,7 +91,8 @@ public class VisionProcessor {
 	 * Gets the angle needed to center the robot to the target
 	 * 
 	 * @param type the type of target that is being targeted
-	 * @return the angle needed to turn to rotate towards the target
+	 * @return the angle needed to turn to rotate towards the target,
+	 *         or negative infinity if the target cannot be seen
 	 */
 	public double getAngleFromCenter(TargetType type) {
 		double centerX, dist, ratio, hfov;
@@ -104,6 +110,10 @@ public class VisionProcessor {
 			default: 
 				return Double.NEGATIVE_INFINITY;
 		}
+		
+		// Don't return anything if it can't be seen
+		if (centerX == -1)
+			return Double.NEGATIVE_INFINITY;
 		
 		// Get the ratio of the distance from the center to the entire image width
 		dist = Math.abs(centerX - IMG_WIDTH / 2) <= 5 ? centerX - IMG_WIDTH / 2 : 0;
