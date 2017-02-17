@@ -60,7 +60,7 @@ public class OI {
         rightStick = new Joystick(RobotMap.DS_USB.RIGHT_STICK);
         gamePad = new Joystick(RobotMap.DS_USB.GAMEPAD);
         gamePadBtnA = new JoystickButton(gamePad, RobotMap.GamepadButtons.A);
-        gamePadBtnA.whenPressed(new ToggleGearDelivery(false));
+        gamePadBtnA.whenPressed(new DriveWithJoysticks());
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
@@ -70,8 +70,7 @@ public class OI {
         
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
         /*gamePadBtnX.whenPressed(new RunMotionProfile());     */
-        //gamePadBtnX.whenPressed(new AutonDriveOnCurve(2, 3));
-        gamePadBtnX.whenPressed(new ToggleGearDelivery(true));
+        gamePadBtnX.whenPressed(new AutonDriveOnCurve(2, 3));
         
         /*gamePadBtnX.whenPressed(new MotionProfile());*/
         
