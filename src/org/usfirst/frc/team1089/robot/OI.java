@@ -2,7 +2,9 @@ package org.usfirst.frc.team1089.robot;
 
 import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
+import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Joystick;
@@ -59,7 +61,7 @@ public class OI {
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        /*gamePadBtnB.whenPressed(new AutonDriveOnCurve(5, 7))*/;
+        gamePadBtnB.whenPressed(new DegreeRotate(/*Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION))*/90));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         
         
@@ -97,7 +99,7 @@ public class OI {
 		startPosition.addObject("Left, Right Line: 7", 7);
 		startPosition.addObject("Right, Right Line: 8", 8);
 		startPosition.addObject("Right Corner: 9", 9);
-		SmartDashboard.putData("Starting position: ", startPosition);
+		SmartDashboard.putData("Starting Pos", startPosition);
 		
 		step3Chooser = new SendableChooser();
 		step3Chooser.addDefault("STOP", AutonEnum.STOP);

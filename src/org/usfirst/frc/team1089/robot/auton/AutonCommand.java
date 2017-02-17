@@ -3,6 +3,7 @@ package org.usfirst.frc.team1089.robot.auton;
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DriveDistance;
+import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -64,17 +65,17 @@ public class AutonCommand extends CommandGroup {
     	addSequential(new DriveDistance(distances[0], 0.5));	//TODO Change 0 to a value determined by SmartDashboard value
     	if(!(truePos >= 4 && truePos <= 6)) {
     		addSequential(new DegreeRotate(60 * reversalFactor));
-    		addSequential(new DriveDistance(distances[1], 1.5));
+    		addSequential(new DriveDistance(distances[1] - 2, 1.5)); //-2 to be away from Gear Lift by 2 ft
     	}
     											//TODO Can only be 30 or -30; change to var based on Alliance color
-    	//addSequential(new AutoAlign());		//TODO Code AutoAlign 
+    	addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));		 
     											//TODO Change 0 to a value determined by SmartDashboard value
     	//addSequential(new DropGear());		//TODO Code DropGear 
     	
     	
     	//Auton Step 2
     	addSequential(new DriveDistance(-40, 0.5));	//TODO Change -0 to a negative value determined by SmartDashboard value
-    	//addSequential(new AutoAlign());		//to lift
+    	addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
     	
     	//Auton Step 3    						
     	switch(choice) {
@@ -108,8 +109,8 @@ public class AutonCommand extends CommandGroup {
     		}
     		else if(fieldPos == 3) {
     			addSequential(new DegreeRotate(180 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
-        		//Shoot (With autoalign lmao ecks dee)
     		}
+    		addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL)));
     		break;
     		
     	}
