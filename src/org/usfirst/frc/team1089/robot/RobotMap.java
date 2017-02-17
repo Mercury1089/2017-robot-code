@@ -15,6 +15,14 @@ public class RobotMap {
 	public static class Analog {
 		public static final int GYRO = 0;
 	}
+	
+	/**
+	 * The {@code PWM} subclass contains all the ports for anything giving an analog output.
+	 * The only thing in this class is the gyro's port.
+	 */
+	public static class PWM {
+		public static final int SERVO_ID = 0;
+	}
 
 	/**
 	 * The {@code Digital} subclass contains all the ports for anything giving an digital output.
@@ -26,13 +34,6 @@ public class RobotMap {
 	 * The {@code Relay} subclass contains all the ports for anything in the relay section.
 	 */
 	public static class Relay {
-	}
-	
-	/**
-	 * The {@code Servo} subclass contains all the ports for anything in the servo section.
-	 */
-	public static class Servo {
-		public static final int SERVO_ID = 8;
 	}
 	
 	/**
