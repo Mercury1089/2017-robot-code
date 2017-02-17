@@ -97,7 +97,7 @@ public class VisionProcessor {
 	public double getAngleFromCenter(TargetType type) {
 		double centerX, dist, ratio, hfov;
 		
-		// Define our varibles
+		// Define our variables
 		switch (type) {
 			case GEAR_VISION:
 				centerX = GEAR_VISION_TABLE.getNumberArray("center", DEF_VALUE)[0];
@@ -116,8 +116,8 @@ public class VisionProcessor {
 			return Double.NEGATIVE_INFINITY;
 		
 		// Get the ratio of the distance from the center to the entire image width
-		dist = Math.abs(centerX - IMG_WIDTH / 2) <= 5 ? centerX - IMG_WIDTH / 2 : 0;
-		ratio = dist / IMG_WIDTH;
+		dist = centerX - IMG_WIDTH / 2.0;
+		ratio = dist / (double)IMG_WIDTH;
 		
 		// Multiply the ratio by the HFOV
 		return ratio * hfov;

@@ -24,20 +24,23 @@ public class Gear extends Subsystem {
 	private final double CLOSED_POSITION, OPEN_POSITION;
 	
 	public Gear() {
-		servo = new Servo(RobotMap.Servo.SERVO_ID);
+		servo = new Servo(RobotMap.PWM.SERVO_ID);
 		CLOSED_POSITION = 0; //TODO Edit these values
 		OPEN_POSITION = 1;  //TODO Edit these values
 	}
 
     public void initDefaultCommand() {
-        setDefaultCommand(new ToggleGearDelivery(false));
     }
     
-    public Servo getServo(){
+    public Servo getServo() {
     	return servo;
     }
     
-    public void setServo(double position) {
+    public double getServoPosition(){
+    	return servo.get();
+    }
+    
+    public void setServoPosition(double position) {
     	servo.set(position);
     }
     

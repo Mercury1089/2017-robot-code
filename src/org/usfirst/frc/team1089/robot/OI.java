@@ -2,7 +2,10 @@ package org.usfirst.frc.team1089.robot;
 
 import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
+import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1089.robot.commands.TestShooter;
+import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Joystick;
@@ -20,7 +23,7 @@ public class OI {
 	
 	public AutonEnum step3;
 	
-	SendableChooser startPosition, step3Chooser;
+	SendableChooser startPosition, step3Chooser, shooterType;
 	
 	Alliance allianceColor;
 
@@ -59,7 +62,7 @@ public class OI {
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        /*gamePadBtnB.whenPressed(new AutonDriveOnCurve(5, 7))*/;
+        gamePadBtnB.whenPressed(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         
         
@@ -97,7 +100,7 @@ public class OI {
 		startPosition.addObject("Left, Right Line: 7", 7);
 		startPosition.addObject("Right, Right Line: 8", 8);
 		startPosition.addObject("Right Corner: 9", 9);
-		SmartDashboard.putData("Starting position: ", startPosition);
+		SmartDashboard.putData("Starting Pos", startPosition);
 		
 		step3Chooser = new SendableChooser();
 		step3Chooser.addDefault("STOP", AutonEnum.STOP);
@@ -106,6 +109,12 @@ public class OI {
 		step3Chooser.addObject("Near Hopper", AutonEnum.NEAR_HOPPER);
 		SmartDashboard.putData("Step 3 (After delivering gear)", step3Chooser);
 		
+		shooterType = new SendableChooser();
+		shooterType.addDefault("None", 0);
+		shooterType.addObject("Left", 1);
+		shooterType.addObject("Right", 2);
+		shooterType.addObject("Dual", 3);
+		SmartDashboard.putData("Shot Selection", shooterType);
 		// Update the network tables with a notifier.
 		// This will update the table every 5 milliseconds, during every stage of the game.
 		new Notifier(() -> updateOI()).startPeriodic(0.005);
@@ -125,8 +134,8 @@ public class OI {
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
 		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
-		SmartDashboard.putNumber("Mag Enc Val", Robot.shooter.motor.getSpeed());
-		SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
+		//SmartDashboard.putNumber("Mag Enc Val", Robot.shooter.motor.getSpeed());
+		//SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
 	}
 
 
@@ -167,5 +176,8 @@ public class OI {
     }
     public int getStartPos() {
     	return (int) startPosition.getSelected();
+    }
+    public int getShot() {
+    	return (int) shooterType.getSelected();
     }
 }
