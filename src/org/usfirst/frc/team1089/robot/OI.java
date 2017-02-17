@@ -3,6 +3,7 @@ package org.usfirst.frc.team1089.robot;
 import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1089.robot.commands.TestShooter;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Joystick;
@@ -61,7 +62,7 @@ public class OI {
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         /*gamePadBtnB.whenPressed(new AutonDriveOnCurve(5, 7))*/;
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
-        
+        //gamePadBtnY.whenPressed(new TestShooter(Robot.shooter, 0.75));
         
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
         /*gamePadBtnX.whenPressed(new RunMotionProfile());     */

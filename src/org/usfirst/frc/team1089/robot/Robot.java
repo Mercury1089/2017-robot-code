@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain driveTrain;
 	public static VisionProcessor visionProcessor;
 	public static Sensors sensors;
-	public static Shooter leftShooter, rightShooter;
+	public static Shooter leftShooter, rightShooter, shooter;
 	public static Gear gear;
 	public static OI oi;
 	
@@ -86,6 +86,7 @@ public class Robot extends IterativeRobot {
 			
 		leftShooter = new Shooter(0);			//TODO Change Talon Value
 		rightShooter = new Shooter(1);			//TODO Change Talon Value
+		shooter = new Shooter(7);
 	}
 
 	/**
@@ -163,7 +164,7 @@ public class Robot extends IterativeRobot {
 		
 		oi.updateOI();
 		
-		if(oi.getShot() == 1) {					//TODO Make Shot Enum
+		/*if(oi.getShot() == 1) {					//TODO Make Shot Enum
 			new RunShooter(leftShooter);
 			new StopShooter(rightShooter);
 		}
@@ -178,8 +179,9 @@ public class Robot extends IterativeRobot {
 		else {
 			new StopShooter(leftShooter);
 			new StopShooter(rightShooter);
-		}
-			
+		}*/
+		
+		
 		
 		System.out.println("GetDistance: " + visionProcessor.getDistance(VisionProcessor.TargetType.GEAR_VISION));
 		System.out.println("GetAngle: " + visionProcessor.getAngleFromCenter(VisionProcessor.TargetType.GEAR_VISION));
