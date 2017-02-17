@@ -5,6 +5,7 @@ import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1089.robot.commands.TestShooter;
+import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
@@ -59,7 +60,7 @@ public class OI {
         rightStick = new Joystick(RobotMap.DS_USB.RIGHT_STICK);
         gamePad = new Joystick(RobotMap.DS_USB.GAMEPAD);
         gamePadBtnA = new JoystickButton(gamePad, RobotMap.GamepadButtons.A);
-        gamePadBtnA.whenPressed(new DriveWithJoysticks());
+        gamePadBtnA.whenPressed(new ToggleGearDelivery(false));
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
@@ -69,7 +70,9 @@ public class OI {
         
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
         /*gamePadBtnX.whenPressed(new RunMotionProfile());     */
-        gamePadBtnX.whenPressed(new AutonDriveOnCurve(2, 3));
+        //gamePadBtnX.whenPressed(new AutonDriveOnCurve(2, 3));
+        gamePadBtnX.whenPressed(new ToggleGearDelivery(true));
+        
         /*gamePadBtnX.whenPressed(new MotionProfile());*/
         
         //gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
@@ -117,6 +120,9 @@ public class OI {
 		shooterType.addObject("Dual", ShooterEnum.DUAL_SHOOTER);
 		shooterType.addObject("Dual Staggered", ShooterEnum.DUAL_STAGGERED_SHOOTER);
 		SmartDashboard.putData("Shot Selection", shooterType);
+		
+		SmartDashboard.putData("Open gear", new ToggleGearDelivery(true));
+		SmartDashboard.putData("Close gear", new ToggleGearDelivery(false));
 		// Update the network tables with a notifier.
 		// This will update the table every 5 milliseconds, during every stage of the game.
 		new Notifier(() -> updateOI()).startPeriodic(0.005);
