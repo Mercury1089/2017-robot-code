@@ -33,7 +33,7 @@ public class RunShooter extends Command {
 		shooter.motor.configPeakOutputVoltage(12, -12);
 		shooter.motor.configNominalOutputVoltage(0,0);
     	shooter.motor.enableControl();
-		shooter.motor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		shooter.motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
     	shooter.motor.setProfile(0);
     	shooter.motor.reverseSensor(false);
 		SmartDashboard.putNumber("shooterVolts", 0.0);
@@ -51,7 +51,7 @@ public class RunShooter extends Command {
     		System.out.println(speed);
     	}
     	
-    	double magVal = SmartDashboard.getNumber("Mag Enc Val", 2900);
+    	double magVal = SmartDashboard.getNumber("Encoder Value", 2900);
     	
     	
     	if (magVal < lowest) {
