@@ -45,6 +45,7 @@ public class DriveWithJoysticks extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	MercLogger.logMessage(Level.INFO, "Drive With Joysticks was interrupted");
     	end();
     }
 }

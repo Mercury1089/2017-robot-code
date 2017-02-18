@@ -19,6 +19,7 @@ public class DriveToWall extends PIDCommand {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super(0.7, 0, 0.65);
+    	Robot.driveTrain.disableRobotDrive();
     	requires(Robot.driveTrain);
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(0.1);
