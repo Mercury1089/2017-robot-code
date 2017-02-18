@@ -97,6 +97,7 @@ public class VisionProcessor {
 	 */
 	public double getDistanceUsingHorizontalInformation(TargetType type) {
 		double percievedWidth, hfov, targetWidth, hres;
+		System.out.println("Getting distance to " + type.toString() + " using horizontal information");
 		
 		switch (type) {
 			case GEAR_VISION:
@@ -129,6 +130,7 @@ public class VisionProcessor {
 	
 	public double getDistanceUsingVerticalInformation(TargetType type) {
 		double perceivedHeight, vfov, targetHeight, vres;
+		System.out.println("Getting distance to " + type.toString() + " using vertical information");
 		
 		switch (type) {
 			case GEAR_VISION:
