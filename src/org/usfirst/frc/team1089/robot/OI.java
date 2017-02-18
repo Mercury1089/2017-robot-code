@@ -109,10 +109,11 @@ public class OI {
 		SmartDashboard.putData("Step 3 (After delivering gear)", step3Chooser);
 		
 		shooterType = new SendableChooser();
-		shooterType.addDefault("None", 0);
-		shooterType.addObject("Left", 1);
-		shooterType.addObject("Right", 2);
-		shooterType.addObject("Dual", 3);
+		shooterType.addDefault("None", ShooterEnum.NO_SHOOTER);
+		shooterType.addObject("Left", ShooterEnum.LEFT_SHOOTER);
+		shooterType.addObject("Right", ShooterEnum.RIGHT_SHOOTER);
+		shooterType.addObject("Dual", ShooterEnum.DUAL_SHOOTER);
+		shooterType.addObject("Dual Staggered", ShooterEnum.DUAL_STAGGERED_SHOOTER);
 		SmartDashboard.putData("Shot Selection", shooterType);
 		// Update the network tables with a notifier.
 		// This will update the table every 5 milliseconds, during every stage of the game.
@@ -173,8 +174,8 @@ public class OI {
     public AutonEnum getStep3() {
     	return (AutonEnum) step3Chooser.getSelected();
     }
-    public ShooterEnum getStartPos() {
-    	return (ShooterEnum) startPosition.getSelected();
+    public int getStartPos() {
+    	return (int) startPosition.getSelected();
     }
     public ShooterEnum getShot() {
     	return (ShooterEnum) shooterType.getSelected();
