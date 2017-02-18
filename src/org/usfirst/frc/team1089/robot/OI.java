@@ -2,10 +2,12 @@ package org.usfirst.frc.team1089.robot;
 
 import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
+import org.usfirst.frc.team1089.robot.commands.AutoAlign;
 import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1089.robot.commands.TestShooter;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
+import org.usfirst.frc.team1089.robot.util.VisionProcessor;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -53,6 +55,7 @@ public class OI {
     public JoystickButton gamePadBtnB;
     public JoystickButton gamePadBtnY;
     public JoystickButton gamePadBtnX;
+    
 	public OI() {
     	
         leftStick = new Joystick(RobotMap.DS_USB.LEFT_STICK);
@@ -60,10 +63,9 @@ public class OI {
         gamePad = new Joystick(RobotMap.DS_USB.GAMEPAD);
         gamePadBtnA = new JoystickButton(gamePad, RobotMap.GamepadButtons.A);
         gamePadBtnA.whenPressed(new DriveWithJoysticks());
-        //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL)));
+        //gamePadBtnB.whenPressed(new AutoAlign(autoAngle, TargetType.HIGH_GOAL));
+        gamePadBtnB.whenPressed(new AutoAlign(VisionProcessor.TargetType.HIGH_GOAL));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         
         
@@ -71,9 +73,6 @@ public class OI {
         /*gamePadBtnX.whenPressed(new RunMotionProfile());     */
         gamePadBtnX.whenPressed(new AutonDriveOnCurve(2, 3));
         /*gamePadBtnX.whenPressed(new MotionProfile());*/
-        
-        //gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
-        //gamePadBtnX.whenPressed(new RunMotionProfile());     
         
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of

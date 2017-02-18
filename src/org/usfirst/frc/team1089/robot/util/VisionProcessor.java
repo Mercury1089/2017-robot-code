@@ -19,6 +19,18 @@ public class VisionProcessor {
 	private final String VISION_ROOT = "Vision/";
 	private final NetworkTable GEAR_VISION_TABLE, HIGH_GOAL_TABLE;
 	
+	// Timestamps for each of the vision threads
+	private double
+		timeGear = 0,
+		timeHigh = 0;
+	
+	// Useful public fields for easy access from other objects
+	public double
+		angleGear = 0,
+		angleHigh = 0,
+		distGear = 0,
+		distHigh = 0;
+	
 	// Vision constants
 	public final double 
 		HFOV_PI = 53.50,   // The horizontal FOV of the pi camera (for gear vision).
@@ -45,6 +57,21 @@ public class VisionProcessor {
 	public VisionProcessor() {
 		GEAR_VISION_TABLE = NetworkTable.getTable(VISION_ROOT + "gearVision");
 		HIGH_GOAL_TABLE = NetworkTable.getTable(VISION_ROOT + "highGoal");
+		
+		GEAR_VISION_TABLE.addTableListener((ITable table, String key, Object value, boolean isNew) -> {
+			timeGear = System.currentTimeMillis() - table.getNumber("deltaTime", 0.0);
+
+			angleGear = getAngleFromCenter(TargetType.GEAR_VISION);
+			distGear = getDistance(TargetType.GEAR_VISION);
+		});
+		
+		HIGH_GOAL_TABLE.addTableListener((ITable table, String key, Object value, boolean isNew) -> {
+			timeHigh = System.currentTimeMillis() - table.getNumber("deltaTime", 0.0);
+
+			angleHigh = getAngleFromCenter(TargetType.HIGH_GOAL);
+			distHigh = getDistance(TargetType.HIGH_GOAL);
+		});
+		
 	}
 	
 	/**
@@ -96,7 +123,7 @@ public class VisionProcessor {
 	 */
 	public double getAngleFromCenter(TargetType type) {
 		double centerX, dist, ratio, hfov;
-		
+	
 		// Define our variables
 		switch (type) {
 			case GEAR_VISION:
@@ -120,10 +147,10 @@ public class VisionProcessor {
 		ratio = dist / (double)IMG_WIDTH;
 		
 		// Multiply the ratio by the HFOV
-		return ratio * hfov;
+		return Math.abs(ratio * hfov) > 1.0 ? ratio * hfov : 0.0;
 	}
 
 	public void initDefaultCommand() {
 		//setDefaultCommand(new GetDistanceFromTarget());
-	}
+	} 
 }

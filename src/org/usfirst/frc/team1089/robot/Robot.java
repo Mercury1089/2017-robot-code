@@ -187,8 +187,8 @@ public class Robot extends IterativeRobot {
 		
 		
 		
-		System.out.println("GetDistance: " + visionProcessor.getDistance(VisionProcessor.TargetType.HIGH_GOAL));
-		System.out.println("GetAngle: " + visionProcessor.getAngleFromCenter(VisionProcessor.TargetType.HIGH_GOAL));
+		System.out.println("GetDistance: " + visionProcessor.distHigh);
+		System.out.println("GetAngle: " + visionProcessor.angleHigh);
 	}
 
 	/**
