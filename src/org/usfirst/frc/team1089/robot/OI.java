@@ -6,6 +6,7 @@ import org.usfirst.frc.team1089.robot.commands.AutoAlign;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
+
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Notifier;
@@ -136,6 +137,10 @@ public class OI {
 		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
 		//SmartDashboard.putNumber("Mag Enc Val", Robot.shooter.motor.getSpeed());
 		//SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
+		SmartDashboard.putNumber("Distance to gear lift using vertical values", Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.GEAR_VISION));
+		SmartDashboard.putNumber("Distance to gear lift using horizontal values", Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.GEAR_VISION));
+		SmartDashboard.putNumber("Distance to high goal using vertical values", Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL));
+		SmartDashboard.putNumber("Distance to high goal using horizontal values", Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.HIGH_GOAL));
 	}
 
 

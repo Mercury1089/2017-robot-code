@@ -61,16 +61,16 @@ public class AutonCommand extends CommandGroup {
     	//Auton Step 1
     	addSequential(new DriveDistance(distances[0], 0.5));
     	if(!(truePos >= 4 && truePos <= 6)) {
-    		addSequential(new DegreeRotate(-120/*60*/ * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
-    		addSequential(new DriveDistance(-(distances[1] - 2), 0.2));     	//-2 to be away from Gear Lift by 2 ft
+    		addSequential(new DegreeRotate(60 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
+    		addSequential(new DriveDistance((distances[1] - 2), 0.2));     	//-2 to be away from Gear Lift by 2 ft
     	}
     	addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
-    	addSequential(new DriveDistance(-2, 0.3));					   	    //After auto aligning, drive forward to deliver gear
+    	addSequential(new DriveDistance(2, 0.3));					   	    //After auto aligning, drive forward to deliver gear
     	addSequential(new ToggleGearDelivery(true));
     	
     	
     	//Auton Step 2
-    	addSequential(new DriveDistance(40, 0.5));
+    	addSequential(new DriveDistance(-40, 0.5));
     	addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
     	
     	//Auton Step 3
