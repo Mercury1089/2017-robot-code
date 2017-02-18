@@ -16,17 +16,21 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class DegreeRotate extends PIDCommand {
 
-	private double _heading;
+	protected double _heading = 0;
 	
-    public DegreeRotate(double heading) {
+    protected DegreeRotate() {
     	super(0.4, 0, 0.2);
     	requires(Robot.driveTrain);
-    	_heading = heading;
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(0.15);
     	getPIDController().setInputRange(-180, 180);
     	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
+    }
+    
+    public DegreeRotate (double heading) {
+    	this();
+    	_heading = heading;
     }
     
 

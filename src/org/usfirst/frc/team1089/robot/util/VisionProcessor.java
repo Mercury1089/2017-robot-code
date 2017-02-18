@@ -19,12 +19,12 @@ public class VisionProcessor {
 	private final String VISION_ROOT = "Vision/";
 	private final NetworkTable GEAR_VISION_TABLE, HIGH_GOAL_TABLE;
 	
-	// Update times
-	private long
+	// Timestamps for each of the vision threads
+	private double
 		timeGear = 0,
 		timeHigh = 0;
 	
-	// Some nice local variable that other objects can access
+	// Useful public fields for easy access from other objects
 	public double
 		angleGear = 0,
 		angleHigh = 0,
@@ -58,9 +58,20 @@ public class VisionProcessor {
 		GEAR_VISION_TABLE = NetworkTable.getTable(VISION_ROOT + "gearVision");
 		HIGH_GOAL_TABLE = NetworkTable.getTable(VISION_ROOT + "highGoal");
 		
-		GEAR_VISION_TABLE.addTableListener((ITable table, String key, Object value, boolean isPersistent) -> {
-			timeGear = System.currentTimeMillis() - (long)table.getNumber("deltaTime", 0.0);
+		GEAR_VISION_TABLE.addTableListener((ITable table, String key, Object value, boolean isNew) -> {
+			timeGear = System.currentTimeMillis() - table.getNumber("deltaTime", 0.0);
+
+			angleGear = getAngleFromCenter(TargetType.GEAR_VISION);
+			distGear = getDistance(TargetType.GEAR_VISION);
 		});
+		
+		HIGH_GOAL_TABLE.addTableListener((ITable table, String key, Object value, boolean isNew) -> {
+			timeHigh = System.currentTimeMillis() - table.getNumber("deltaTime", 0.0);
+
+			angleHigh = getAngleFromCenter(TargetType.HIGH_GOAL);
+			distHigh = getDistance(TargetType.HIGH_GOAL);
+		});
+		
 	}
 	
 	/**
@@ -112,7 +123,7 @@ public class VisionProcessor {
 	 */
 	public double getAngleFromCenter(TargetType type) {
 		double centerX, dist, ratio, hfov;
-		
+	
 		// Define our variables
 		switch (type) {
 			case GEAR_VISION:
@@ -124,19 +135,19 @@ public class VisionProcessor {
 				hfov = HFOV_LIFECAM;
 				break;
 			default: 
-				return Double.NEGATIVE_INFINITY;
+				return 0;
 		}
 		
 		// Don't return anything if it can't be seen
 		if (centerX == -1)
-			return Double.NEGATIVE_INFINITY;
+			return 0;
 		
 		// Get the ratio of the distance from the center to the entire image width
 		dist = centerX - IMG_WIDTH / 2.0;
 		ratio = dist / (double)IMG_WIDTH;
 		
 		// Multiply the ratio by the HFOV
-		return ratio * hfov;
+		return Math.abs(ratio * hfov) > 1.0 ? ratio * hfov : 0.0;
 	}
 
 	public void initDefaultCommand() {
