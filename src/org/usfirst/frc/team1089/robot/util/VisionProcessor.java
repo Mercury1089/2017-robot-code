@@ -19,6 +19,18 @@ public class VisionProcessor {
 	private final String VISION_ROOT = "Vision/";
 	private final NetworkTable GEAR_VISION_TABLE, HIGH_GOAL_TABLE;
 	
+	// Update times
+	private long
+		timeGear = 0,
+		timeHigh = 0;
+	
+	// Some nice local variable that other objects can access
+	public double
+		angleGear = 0,
+		angleHigh = 0,
+		distGear = 0,
+		distHigh = 0;
+	
 	// Vision constants
 	public final double 
 		HFOV_PI = 53.50,   // The horizontal FOV of the pi camera (for gear vision).
@@ -45,6 +57,10 @@ public class VisionProcessor {
 	public VisionProcessor() {
 		GEAR_VISION_TABLE = NetworkTable.getTable(VISION_ROOT + "gearVision");
 		HIGH_GOAL_TABLE = NetworkTable.getTable(VISION_ROOT + "highGoal");
+		
+		GEAR_VISION_TABLE.addTableListener((ITable table, String key, Object value, boolean isPersistent) -> {
+			timeGear = System.currentTimeMillis() - (long)table.getNumber("deltaTime", 0.0);
+		});
 	}
 	
 	/**
@@ -52,7 +68,7 @@ public class VisionProcessor {
 	 * public double getDistance(TargetType type)
 	 * </pre>
 	 * Gets the distance between the center of the camera and the center of the target.
-	 * Calculates and returns different distances for the different vision targets
+	 * Calculates and returns different distances for the different vision targetshighGoalTable
 	 * 
 	 * @param type the type of target that is being targeted
 	 * @return the distance between the center of the camera and the center of the target, in feet, 

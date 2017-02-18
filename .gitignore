@@ -4,3 +4,4 @@ build/
 dist/
 sysProps.xml
 workbench.xmi
+/.classpath
