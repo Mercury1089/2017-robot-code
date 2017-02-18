@@ -2,9 +2,9 @@ package org.usfirst.frc.team1089.robot;
 
 import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
-import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
+import org.usfirst.frc.team1089.robot.commands.AutoAlign;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
-import org.usfirst.frc.team1089.robot.commands.TestShooter;
+import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -62,7 +62,7 @@ public class OI {
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
+        gamePadBtnB.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         
         
@@ -174,10 +174,10 @@ public class OI {
     public AutonEnum getStep3() {
     	return (AutonEnum) step3Chooser.getSelected();
     }
-    public int getStartPos() {
-    	return (int) startPosition.getSelected();
+    public ShooterEnum getStartPos() {
+    	return (ShooterEnum) startPosition.getSelected();
     }
-    public int getShot() {
-    	return (int) shooterType.getSelected();
+    public ShooterEnum getShot() {
+    	return (ShooterEnum) shooterType.getSelected();
     }
 }
