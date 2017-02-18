@@ -83,6 +83,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putNumber("SetRightChange", 0);
 		SmartDashboard.putNumber("SetLeftChange", 0);
+		SmartDashboard.putNumber("Ultrasonic", ultrasonic.getRange());
 		
 		changeLeftEnc = 0;
 		changeRightEnc = 0;

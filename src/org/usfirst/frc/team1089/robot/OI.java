@@ -117,8 +117,9 @@ public class OI {
 		shooterType.addObject("Dual Staggered", ShooterEnum.DUAL_STAGGERED_SHOOTER);
 		SmartDashboard.putData("Shot Selection", shooterType);
 		// Update the network tables with a notifier.
-		// This will update the table every 5 milliseconds, during every stage of the game.
-		new Notifier(() -> updateOI()).startPeriodic(0.005);
+		// This will update the table every 50 milliseconds, during every stage of the game. OISlow() updates every 500 milliseconds
+		new Notifier(() -> updateOI()).startPeriodic(0.050);
+		new Notifier(() -> updateOISlow()).startPeriodic(0.500);
     }
 	
 	/**
@@ -137,6 +138,9 @@ public class OI {
 		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
 		SmartDashboard.putNumber("Encoder Value", Robot.shooter.motor.getSpeed());
 		//SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
+	}
+	
+	public void updateOISlow() {
 		SmartDashboard.putNumber("Distance to gear lift using vertical values", Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.GEAR_VISION));
 		SmartDashboard.putNumber("Distance to gear lift using horizontal values", Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.GEAR_VISION));
 		SmartDashboard.putNumber("Distance to high goal using vertical values", Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL));
