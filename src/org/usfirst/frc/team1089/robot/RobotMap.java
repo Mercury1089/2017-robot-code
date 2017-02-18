@@ -14,6 +14,7 @@ public class RobotMap {
 	 */
 	public static class Analog {
 		public static final int GYRO = 0;
+		public static final int ULTRASONIC = 1;
 	}
 	
 	/**
