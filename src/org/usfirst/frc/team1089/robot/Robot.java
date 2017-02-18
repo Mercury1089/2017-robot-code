@@ -1,5 +1,4 @@
 package org.usfirst.frc.team1089.robot;
-
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.RunShooter;
