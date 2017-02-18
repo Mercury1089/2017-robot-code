@@ -6,9 +6,9 @@ import org.usfirst.frc.team1089.robot.commands.StopShooter;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1089.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team1089.robot.subsystems.Gear;
-import org.usfirst.frc.team1089.robot.subsystems.Sensors;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
+import org.usfirst.frc.team1089.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor;
 
@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 	public static ExampleSubsystem exampleSubsystem;
 	public static DriveTrain driveTrain;
 	public static VisionProcessor visionProcessor;
-	public static Sensors sensors;
+	public static Ultrasonic ultrasonic;
 	public static Shooter leftShooter, rightShooter, shooter;
 	public static Gear gear;
 	public static OI oi;
@@ -59,12 +59,11 @@ public class Robot extends IterativeRobot {
 		
 		// Instantiate the subsystems
 		exampleSubsystem = new ExampleSubsystem();
-		sensors = new Sensors();
 		//shooter = new Shooter();
 		visionProcessor = new VisionProcessor();
 		driveTrain = new DriveTrain();
 		gear = new Gear();
-		
+		ultrasonic = new Ultrasonic();
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
