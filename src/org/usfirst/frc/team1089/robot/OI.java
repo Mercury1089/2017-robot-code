@@ -136,7 +136,7 @@ public class OI {
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
 		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
-		SmartDashboard.putNumber("Encoder Value", Robot.shooter.motor.getSpeed());
+		//SmartDashboard.putNumber("Encoder Value", Robot.shooter.motor.getSpeed());
 		//SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
 	}
 	
@@ -145,6 +145,8 @@ public class OI {
 		SmartDashboard.putNumber("Distance to gear lift using horizontal values", Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.GEAR_VISION));
 		SmartDashboard.putNumber("Distance to high goal using vertical values", Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL));
 		SmartDashboard.putNumber("Distance to high goal using horizontal values", Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.HIGH_GOAL));
+		SmartDashboard.putNumber("Distance to target1", Robot.visionProcessor.getDistancesToGearTargets()[0]);
+		SmartDashboard.putNumber("Distance to target2", Robot.visionProcessor.getDistancesToGearTargets()[1]);
 	}
 
 
