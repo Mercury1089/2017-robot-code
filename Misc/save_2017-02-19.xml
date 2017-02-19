@@ -1,5 +1,20 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Right Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="319" y="139"/>
+	</widget>
+	<widget field="Left Enc Inches" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="319" y="118"/>
+	</widget>
+	<widget field="Gyro" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="319" y="97"/>
+	</widget>
+	<widget field="Right Enc Inches" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="457"/>
+	</widget>
+	<widget field="Left Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="436"/>
+	</widget>
 	<widget field="Distance to gear lift using horizontal and vertical average" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="320" y="267"/>
 	</widget>

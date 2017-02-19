@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1089.robot.util;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
@@ -35,8 +36,9 @@ public class VisionProcessor {
 	public static class PICam {
 		public static final double 
 		                    HFOV_PI = 53.50,      //Horizontal field of view for the PI Cam
-		                    VFOV_PI = 36.5;
+		                    //VFOV_PI = SmartDashboard.getNumber("PI_VFOV", 40);
 				            //VFOV_PI = 41.41;      //Vertical field of view for the PI Cam
+		                    VFOV_PI = 37.5;
 		public static final int
 							HRES_PI = 320,        //Resolution-x of the PI feed
 							VRES_PI = 240;		  //Resolution-y of the PI feed
@@ -131,6 +133,7 @@ public class VisionProcessor {
 	
 	public double getDistanceUsingVerticalInformation(TargetType type) {
 		double perceivedHeight, vfov, targetHeight, vres;
+		//PICam.VFOV_PI = SmartDashboard.getNumber("PI_VFOV", 40);
 		System.out.println("Getting distance to " + type.toString() + " using vertical information");
 		
 		switch (type) {
