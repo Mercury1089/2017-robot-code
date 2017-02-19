@@ -1,11 +1,16 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import org.usfirst.frc.team1089.robot.Robot;
+import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
 public class DeliverGear extends CommandGroup {
+	
+	private double tapeWidthFeetByTwo = 5.125 / 12;
 
     public DeliverGear() {
         // Add Commands here:
@@ -27,5 +32,29 @@ public class DeliverGear extends CommandGroup {
     	addSequential(new DriveDistance(60));
     	addSequential(new DegreeRotate(60));
     	addSequential(new DriveDistance(60));
+    }
+    
+    public double[] getAlignMovements() {			//Where getAlignMovements()[0] is the Move distance 
+    												//and getAlignMovements()[1] is the turn angle
+    	
+    	int targetTape = Robot.visionProcessor.getDistancesToGearTargets()[0] 
+    					 <= Robot.visionProcessor.getDistancesToGearTargets()[1] ? 0 : 1;//Coming in from right
+    	
+    	double liftDistance = Robot.visionProcessor.getAverageDistanceToGearTargets(),
+    		   angleFromTargetTape = Robot.visionProcessor.getAnglesFromGearTargets()[targetTape],
+    		   liftAngle = Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION),
+    		   targetTapeDistance = Robot.visionProcessor.getDistancesToGearTargets()[targetTape];
+    	
+    	double delta = Math.toDegrees(Math.asin(liftDistance 
+    			* (Math.sin(Math.toRadians(angleFromTargetTape - liftAngle))
+    			/ (tapeWidthFeetByTwo))));
+    	
+    	double epsilon = 180 - delta;
+    	double distanceFromRetro = targetTapeDistance / Math.cos(Math.toRadians(epsilon));
+    	double beta = 90 - epsilon;
+    	double theta = angleFromTargetTape + beta;
+    	double distToMove = (tapeWidthFeetByTwo + distanceFromRetro) / Math.sin(Math.toRadians(theta));
+    	
+    	return new double[] {distToMove, theta};
     }
 }
