@@ -222,6 +222,35 @@ public class VisionProcessor {
 		// Multiply the ratio by the HFOV
 		return Math.abs(ratio * hfov) > 1.0 ? ratio * hfov : 0.0;
 	}
+	
+	public double[] getAnglesFromGearTargets() {
+		double centerX1, centerX2, dist1, dist2,  ratio1, ratio2, hfov, hres;
+		double[] output = new double[2];
+	
+		// Define our variables
+		centerX1 = GEAR_VISION_TABLE.getNumberArray("centerTarget1", DEF_VALUE)[0];
+		centerX2 = GEAR_VISION_TABLE.getNumberArray("centerTarget2", DEF_VALUE)[0];
+		hfov = PICam.HFOV_PI;
+		hres = PICam.VRES_PI;
+		
+		// Don't return anything if it can't be seen
+		if (centerX1 == -1 || centerX2 == -1) {
+			output[0] = 0;
+			output[1] = 0;
+			return output;
+		}
+		
+		// Get the ratio of the distance from the center to the entire image width
+		dist1 = centerX1 - hres / 2.0;
+		dist2 = centerX2 - hres / 2.0;
+		ratio1 = dist1 / (double)hres;
+		ratio2 = dist2 / (double)hres;
+		
+		// Multiply the ratio by the HFOV
+		output[0] = Math.abs(ratio1 * hfov) > 1.0 ? ratio1 * hfov : 0.0;
+		output[1] = Math.abs(ratio2 * hfov) > 1.0 ? ratio2 * hfov : 0.0;
+		return output;
+	}
 
 	public void initDefaultCommand() {
 		//setDefaultCommand(new GetDistanceFromTarget());
