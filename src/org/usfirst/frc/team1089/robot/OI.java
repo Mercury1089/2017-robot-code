@@ -144,6 +144,7 @@ public class OI {
 		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Value", Robot.rightShooter.motor.getSpeed());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Value", Robot.leftShooter.motor.getSpeed());
+		//SmartDashboard.putNumber("Encoder Value", Robot.shooter.motor.getSpeed());
 		//SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
 		SmartDashboard.putNumber("Ultrasonic", Robot.ultrasonic.getRange());
 	}
@@ -153,6 +154,14 @@ public class OI {
 		SmartDashboard.putNumber("Distance to gear lift using horizontal values", Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.GEAR_VISION));
 		SmartDashboard.putNumber("Distance to high goal using vertical values", Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL));
 		SmartDashboard.putNumber("Distance to high goal using horizontal values", Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.HIGH_GOAL));
+		SmartDashboard.putNumber("Distance to target1", Robot.visionProcessor.getDistancesToGearTargets()[0]);
+		SmartDashboard.putNumber("Distance to target2", Robot.visionProcessor.getDistancesToGearTargets()[1]);
+		SmartDashboard.putNumber("Angle Distance to gear lift using vertical values", Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION));
+		SmartDashboard.putNumber("Angle to gear lift using horizontal values", Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION));
+		SmartDashboard.putNumber("Angle to high goal using vertical values", Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL));
+		SmartDashboard.putNumber("Angle to high goal using horizontal values", Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL));
+		SmartDashboard.putNumber("Angle to target1", Robot.visionProcessor.getAnglesFromGearTargets()[0]);
+		SmartDashboard.putNumber("Angle to target2", Robot.visionProcessor.getAnglesFromGearTargets()[1]);
 	}
 
 
