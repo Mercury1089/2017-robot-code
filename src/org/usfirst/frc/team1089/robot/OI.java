@@ -6,6 +6,7 @@ import org.usfirst.frc.team1089.robot.commands.AutoAlign;
 import org.usfirst.frc.team1089.robot.commands.DriveToWall;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
+import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -150,16 +151,16 @@ public class OI {
 	}
 	
 	public void updateOISlow() {
-		SmartDashboard.putNumber("Distance to gear lift using vertical values", Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.GEAR_VISION));
-		SmartDashboard.putNumber("Distance to gear lift using horizontal values", Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.GEAR_VISION));
-		SmartDashboard.putNumber("Distance to high goal using vertical values", Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL));
-		SmartDashboard.putNumber("Distance to high goal using horizontal values", Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.HIGH_GOAL));
-		SmartDashboard.putNumber("Distance to target1", Robot.visionProcessor.getDistancesToGearTargets()[0]);
-		SmartDashboard.putNumber("Distance to target2", Robot.visionProcessor.getDistancesToGearTargets()[1]);
-		SmartDashboard.putNumber("Angle to gear lift using horizontal values", Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION));
-		SmartDashboard.putNumber("Angle to high goal using horizontal values", Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL));
-		SmartDashboard.putNumber("Angle to target1", Robot.visionProcessor.getAnglesFromGearTargets()[0]);
-		SmartDashboard.putNumber("Angle to target2", Robot.visionProcessor.getAnglesFromGearTargets()[1]);
+		SmartDashboard.putNumber("Distance to gear lift using vertical values", Utilities.round(Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.GEAR_VISION), 3));
+		SmartDashboard.putNumber("Distance to gear lift using horizontal values", Utilities.round(Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.GEAR_VISION), 3));
+		SmartDashboard.putNumber("Distance to high goal using vertical values", Utilities.round(Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL), 3));
+		SmartDashboard.putNumber("Distance to high goal using horizontal values", Utilities.round(Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.HIGH_GOAL), 3));
+		SmartDashboard.putNumber("Distance to target1", Utilities.round(Robot.visionProcessor.getDistancesToGearTargets()[0], 3));
+		SmartDashboard.putNumber("Distance to target2", Utilities.round(Robot.visionProcessor.getDistancesToGearTargets()[1], 3));
+		SmartDashboard.putNumber("Angle to gear lift using horizontal values", Utilities.round(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION), 3));
+		SmartDashboard.putNumber("Angle to high goal using horizontal values", Utilities.round(Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL), 3));
+		SmartDashboard.putNumber("Angle to target1", Utilities.round(Robot.visionProcessor.getAnglesFromGearTargets()[0], 3));
+		SmartDashboard.putNumber("Angle to target2", Utilities.round(Robot.visionProcessor.getAnglesFromGearTargets()[1], 3));
 	}
 
 
