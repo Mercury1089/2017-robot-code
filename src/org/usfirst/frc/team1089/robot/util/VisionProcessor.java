@@ -157,6 +157,31 @@ public class VisionProcessor {
 		return (targetHeight / IN_TO_FT) * vres / ( 2 * perceivedHeight * Math.tan( Math.toRadians( vfov / 2 ) ) );
 	}
 	
+	public double[] getDistancesToGearTargets() {
+		double target1Height, target2Height, vfov, targetHeight, vres;
+		double[] output = new double[2];
+		System.out.println("Getting distance to each target using vertical information");
+		
+		target1Height = GEAR_VISION_TABLE.getNumberArray("boundsTarget1", new double[]{-1, -1})[1];
+		target2Height = GEAR_VISION_TABLE.getNumberArray("boundsTarget2", new double[]{-1, -1})[1];
+		vfov = PICam.VFOV_PI;
+		vres = PICam.VRES_PI;
+		targetHeight = TARGET_HEIGHT_INCHES_GEAR;		
+		
+		// Don't return anything if either can't be seen
+		if (target1Height == -1 || target2Height == -1) {
+			output[0] = Double.NEGATIVE_INFINITY;
+			output[1] = Double.NEGATIVE_INFINITY;
+			return output;
+		}
+			
+		
+		// Magic equation derived from a few things we know about the target
+		output[0] = (targetHeight / IN_TO_FT) * vres / ( 2 * target1Height * Math.tan( Math.toRadians( vfov / 2 ) ) );
+		output[1] = (targetHeight / IN_TO_FT) * vres / ( 2 * target2Height * Math.tan( Math.toRadians( vfov / 2 ) ) );
+		return output;
+	}
+	
 	/**
 	 * <pre>
 	 * public double getAngleFromCenter(TargetType type)
