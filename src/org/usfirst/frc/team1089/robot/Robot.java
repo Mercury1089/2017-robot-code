@@ -88,9 +88,10 @@ public class Robot extends IterativeRobot {
 		changeLeftEnc = 0;
 		changeRightEnc = 0;
 			
-		leftShooter = new Shooter(0);			//TODO Change Talon Value
-		rightShooter = new Shooter(1);			//TODO Change Talon Value
-		shooter = new Shooter(7);
+		leftShooter = new Shooter(RobotMap.CAN.LEFT_SHOOTER_TALON_ID);			//TODO Change Talon Value
+		rightShooter = new Shooter(RobotMap.CAN.RIGHT_SHOOTER_TALON_ID);			//TODO Change Talon Value
+		//shooter = new Shooter(7);
+		leftShooter.motor.setInverted(true);
 	}
 
 	/**
@@ -102,6 +103,8 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		driveTrain.getGyro().reset();
 		driveTrain.getNAVX().reset();
+		leftShooter.motor.setEncPosition(0);
+		rightShooter.motor.setEncPosition(0);
 	}
 
 	@Override
@@ -110,6 +113,9 @@ public class Robot extends IterativeRobot {
 		driveTrain.resetEncoders();
 		SmartDashboard.putNumber("Gyro", driveTrain.getGyro().getAngle());
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
+		SmartDashboard.putNumber("Ultrasonic", ultrasonic.getRange());
+		SmartDashboard.putNumber("Right Shooter " , rightShooter.motor.getEncPosition());
+		SmartDashboard.putNumber("Left Shooter", leftShooter.motor.getEncPosition());
 	}
 
 	/**
@@ -190,6 +196,8 @@ public class Robot extends IterativeRobot {
 		
 		System.out.println("GetDistance: " + visionProcessor.getDistance(VisionProcessor.TargetType.HIGH_GOAL));
 		System.out.println("GetAngle: " + visionProcessor.getAngleFromCenter(VisionProcessor.TargetType.HIGH_GOAL));
+		SmartDashboard.putNumber("Right Shooter " , rightShooter.motor.getEncPosition());
+		SmartDashboard.putNumber("Left Shooter", leftShooter.motor.getEncPosition());
 	}
 
 	/**

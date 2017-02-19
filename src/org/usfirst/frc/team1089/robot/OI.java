@@ -3,6 +3,7 @@ package org.usfirst.frc.team1089.robot;
 import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.AutoAlign;
+import org.usfirst.frc.team1089.robot.commands.DriveToWall;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
@@ -52,7 +53,9 @@ public class OI {
     public JoystickButton gamePadBtnB;
     public JoystickButton gamePadBtnY;
     public JoystickButton gamePadBtnX;
-	public OI() {
+	public JoystickButton rightStickBtn1;
+    
+    public OI() {
     	
         leftStick = new Joystick(RobotMap.DS_USB.LEFT_STICK);
         rightStick = new Joystick(RobotMap.DS_USB.RIGHT_STICK);
@@ -73,6 +76,9 @@ public class OI {
         
         //gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
         //gamePadBtnX.whenPressed(new RunMotionProfile());     
+        
+        rightStickBtn1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
+        rightStickBtn1.whenPressed(new DriveToWall(2));
         
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of
@@ -136,8 +142,10 @@ public class OI {
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
 		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
-		SmartDashboard.putNumber("Encoder Value", Robot.shooter.motor.getSpeed());
+		SmartDashboard.putNumber("Shooter ID 7: Encoder Value", Robot.rightShooter.motor.getSpeed());
+		SmartDashboard.putNumber("Shooter ID 8: Encoder Value", Robot.leftShooter.motor.getSpeed());
 		//SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
+		SmartDashboard.putNumber("Ultrasonic", Robot.ultrasonic.getRange());
 	}
 	
 	public void updateOISlow() {

@@ -29,15 +29,15 @@ public class RunShooter extends Command {
     protected void initialize() {
     	
     	shooter.motor.changeControlMode(CANTalon.TalonControlMode.Speed);
-    	shooter.motor.setPID(0.5, 0.0, 0.5);
+    	shooter.motor.enableBrakeMode(false);
+    	shooter.motor.setPID(0.7, 0.0, 0);
 		shooter.motor.configPeakOutputVoltage(12, -12);
 		shooter.motor.configNominalOutputVoltage(0,0);
-    	shooter.motor.enableControl();
 		shooter.motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-    	shooter.motor.setProfile(0);
+		shooter.motor.enableControl();
     	shooter.motor.reverseSensor(false);
-		SmartDashboard.putNumber("shooterVolts", 0.0);
-    	SmartDashboard.putBoolean("shooterIsRunning", false);
+		SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterVolts", 0.0);
+    	SmartDashboard.putBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false);
     	SmartDashboard.putBoolean("enableHighLow", false);
     	//Selectable
     	resetHighLow();
@@ -45,13 +45,13 @@ public class RunShooter extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
-    	double speed = SmartDashboard.getBoolean("shooterIsRunning", false) ? SmartDashboard.getNumber("shooterVolts", 0) : 0.0;
+    	double speed = SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterVolts", 0) : 0.0;
     	
-    	if (SmartDashboard.getBoolean("shooterIsRunning", false)) {
+    	if (SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false)) {
     		System.out.println(speed);
     	}
     	
-    	double magVal = SmartDashboard.getNumber("Encoder Value", 2900);
+    	double magVal = SmartDashboard.getNumber("Shooter ID " + shooter.motor.getDeviceID() + ": Encoder Value", 2900);
     	
     	
     	if (magVal < lowest) {

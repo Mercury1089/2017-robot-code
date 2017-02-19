@@ -28,10 +28,11 @@ public class Ultrasonic extends Subsystem {
     /**
      * Multiplies Analog Voltage on the sensor by the scaling factor in inches/V
      * Scaling Factor = 9.8 V/inches
+     * Converts to Feet
      * @return Distance
      */
     public double getRange() {
-    	return ultrasonic.getVoltage() * SCALING_FACTOR;
+    	return ultrasonic.getVoltage() * SCALING_FACTOR / 12;
     }
     
     public void initDefaultCommand() {

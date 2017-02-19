@@ -35,7 +35,8 @@ public class VisionProcessor {
 	public static class PICam {
 		public static final double 
 		                    HFOV_PI = 53.50,      //Horizontal field of view for the PI Cam
-				            VFOV_PI = 41.41;      //Vertical field of view for the PI Cam
+		                    VFOV_PI = 36.5;
+				            //VFOV_PI = 41.41;      //Vertical field of view for the PI Cam
 		public static final int
 							HRES_PI = 320,        //Resolution-x of the PI feed
 							VRES_PI = 240;		  //Resolution-y of the PI feed
