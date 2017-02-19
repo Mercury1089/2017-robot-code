@@ -252,6 +252,15 @@ public class VisionProcessor {
 		output[1] = Math.abs(ratio2 * hfov) > 1.0 ? ratio2 * hfov : 0.0;
 		return output;
 	}
+	
+	public double getAverageDistanceUsingHorAndVerDistances(TargetType type) {
+		return (getDistanceUsingHorizontalInformation(type) + getDistanceUsingVerticalInformation(type)) / 2; 
+	}
+	
+	public double getAverageDistanceToGearTargets() {
+		double[] input = getDistancesToGearTargets();
+		return (input[0] + input[1]) / 2; 
+	}
 
 	public void initDefaultCommand() {
 		//setDefaultCommand(new GetDistanceFromTarget());

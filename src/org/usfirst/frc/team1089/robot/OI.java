@@ -161,6 +161,9 @@ public class OI {
 		SmartDashboard.putNumber("Angle to high goal using horizontal values", Utilities.round(Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL), 3));
 		SmartDashboard.putNumber("Angle to target1", Utilities.round(Robot.visionProcessor.getAnglesFromGearTargets()[0], 3));
 		SmartDashboard.putNumber("Angle to target2", Utilities.round(Robot.visionProcessor.getAnglesFromGearTargets()[1], 3));
+		SmartDashboard.putNumber("Distance to gear lift using horizontal and vertical average", Utilities.round(Robot.visionProcessor.getAverageDistanceUsingHorAndVerDistances(TargetType.GEAR_VISION), 3));
+		SmartDashboard.putNumber("Distance to high goal using horizontal and vertical average", Utilities.round(Robot.visionProcessor.getAverageDistanceUsingHorAndVerDistances(TargetType.HIGH_GOAL), 3));
+		SmartDashboard.putNumber("Distance to gear lift using average of both targets", Utilities.round(Robot.visionProcessor.getAverageDistanceToGearTargets(), 3));
 	}
 
 
