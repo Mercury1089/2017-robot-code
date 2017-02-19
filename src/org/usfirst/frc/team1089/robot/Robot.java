@@ -75,14 +75,10 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData("PID", driveTrain);
-		SmartDashboard.putNumber("Gyro", driveTrain.getGyro().getAngle());
 		SmartDashboard.putNumber("Angle", 0);
 		
 		SmartDashboard.putNumber("Left Enc Inches", 0);
 		SmartDashboard.putNumber("Right Enc Inches", 0);
-		
-		SmartDashboard.putNumber("SetRightChange", 0);
-		SmartDashboard.putNumber("SetLeftChange", 0);
 		SmartDashboard.putNumber("Ultrasonic", ultrasonic.getRange());
 		
 		changeLeftEnc = 0;
@@ -111,7 +107,6 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		driveTrain.resetEncoders();
-		SmartDashboard.putNumber("Gyro", driveTrain.getGyro().getAngle());
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 		SmartDashboard.putNumber("Ultrasonic", ultrasonic.getRange());
 		SmartDashboard.putNumber("Right Shooter " , rightShooter.motor.getEncPosition());
