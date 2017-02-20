@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1089.robot.util;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
@@ -35,8 +36,9 @@ public class VisionProcessor {
 	public static class PICam {
 		public static final double 
 		                    HFOV_PI = 53.50,      //Horizontal field of view for the PI Cam
-		                    VFOV_PI = 36.5;
+		                    //VFOV_PI = SmartDashboard.getNumber("PI_VFOV", 40);
 				            //VFOV_PI = 41.41;      //Vertical field of view for the PI Cam
+		                    VFOV_PI = 37.5;
 		public static final int
 							HRES_PI = 320,        //Resolution-x of the PI feed
 							VRES_PI = 240;		  //Resolution-y of the PI feed
@@ -131,6 +133,7 @@ public class VisionProcessor {
 	
 	public double getDistanceUsingVerticalInformation(TargetType type) {
 		double perceivedHeight, vfov, targetHeight, vres;
+		//PICam.VFOV_PI = SmartDashboard.getNumber("PI_VFOV", 40);
 		System.out.println("Getting distance to " + type.toString() + " using vertical information");
 		
 		switch (type) {
@@ -224,6 +227,17 @@ public class VisionProcessor {
 		return Math.abs(ratio * hfov) > 1.0 ? ratio * hfov : 0.0;
 	}
 	
+	/**
+	 * <pre>
+	 * public double[] getAnglesFromGearTargets()
+	 * </pre>
+	 * 
+	 * Gets the angles that the robot needs 
+	 * to turn to center itself to the left and right target
+	 * 
+	 * @return array of angles that the robot can turn to to face the left or right target;
+	 *         left target is element 1, right target is element 2
+	 */
 	public double[] getAnglesFromGearTargets() {
 		double centerX1, centerX2, dist1, dist2,  ratio1, ratio2, hfov, hres;
 		double[] output = new double[2];
@@ -251,6 +265,15 @@ public class VisionProcessor {
 		output[0] = Math.abs(ratio1 * hfov) > 1.0 ? ratio1 * hfov : 0.0;
 		output[1] = Math.abs(ratio2 * hfov) > 1.0 ? ratio2 * hfov : 0.0;
 		return output;
+	}
+	
+	public double getAverageDistanceUsingHorAndVerDistances(TargetType type) {
+		return (getDistanceUsingHorizontalInformation(type) + getDistanceUsingVerticalInformation(type)) / 2; 
+	}
+	
+	public double getAverageDistanceToGearTargets() {
+		double[] input = getDistancesToGearTargets();
+		return (input[0] + input[1]) / 2; 
 	}
 
 	public void initDefaultCommand() {

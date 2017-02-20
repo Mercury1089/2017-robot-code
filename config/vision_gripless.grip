@@ -1,7 +1,7 @@
 <edu.wpi.grip.core.Pipeline>
   <sources>
     <edu.wpi.grip.core.sources.CameraSource>
-      <property name="address" value="http://10.10.89.20:1188/stream.mjpg"/>
+      <property name="address" value="http://10.10.89.20:1187/stream.mjpg"/>
     </edu.wpi.grip.core.sources.CameraSource>
   </sources>
   <steps>
@@ -9,8 +9,8 @@
       <edu.wpi.grip.core.sockets.InputSocketImpl step="0" socket="0"/>
       <edu.wpi.grip.core.sockets.InputSocketImpl step="0" socket="1">
         <value>
-          <double>69.60429759580393</double>
-          <double>94.94890927847149</double>
+          <double>45.32372205623558</double>
+          <double>70.90230375426623</double>
         </value>
       </edu.wpi.grip.core.sockets.InputSocketImpl>
       <edu.wpi.grip.core.sockets.InputSocketImpl step="0" socket="2">
@@ -21,8 +21,8 @@
       </edu.wpi.grip.core.sockets.InputSocketImpl>
       <edu.wpi.grip.core.sockets.InputSocketImpl step="0" socket="3">
         <value>
-          <double>32.692307692307686</double>
-          <double>255.0</double>
+          <double>80.84878251245158</double>
+          <double>133.1569965870307</double>
         </value>
       </edu.wpi.grip.core.sockets.InputSocketImpl>
       <edu.wpi.grip.core.sockets.OutputSocketImpl step="0" socket="0" previewed="true"/>
@@ -37,7 +37,7 @@
     <edu.wpi.grip.core.Step name="Filter Contours">
       <edu.wpi.grip.core.sockets.InputSocketImpl step="2" socket="0"/>
       <edu.wpi.grip.core.sockets.InputSocketImpl step="2" socket="1">
-        <value>20.0</value>
+        <value>100.0</value>
       </edu.wpi.grip.core.sockets.InputSocketImpl>
       <edu.wpi.grip.core.sockets.InputSocketImpl step="2" socket="2">
         <value>0.0</value>
