@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class MercLogger {
 	private static final DateFormat 
 		DATE = new SimpleDateFormat("yyyy-dd-MM"),
-		TIME = new SimpleDateFormat("hhmmss.SS"),
-		TIME_EXTENDED = new SimpleDateFormat("hh:mm:ss.SS");
+		TIME = new SimpleDateFormat("hhmmss.SSS"),
+		TIME_EXTENDED = new SimpleDateFormat("hh:mm:ss.SSS");
 	
     private static final Logger LOGGER = Logger.getLogger("");
     private static final DriverStation DRIVER_STATION = DriverStation.getInstance();
