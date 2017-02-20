@@ -18,22 +18,27 @@ public class TestShooter extends Command {
 	Shooter shooter;
 	double pctVBus;
 	
-    public TestShooter(Shooter s, double pct) {
+    public TestShooter(Shooter s) {
     	requires(s);
         shooter = s;
-        pctVBus = pct;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	shooter.motor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-    	shooter.motor.set(pctVBus);
-        SmartDashboard.putNumber("shooterVolts", 0.0);
+    	shooter.motor.enableBrakeMode(false);
+    	shooter.motor.configPeakOutputVoltage(12, -12);
+		shooter.motor.configNominalOutputVoltage(0,0);
+		shooter.motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		shooter.motor.enableControl();
+        SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterVolts", 0.0);
+        SmartDashboard.putBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double volts = SmartDashboard.getNumber("shooterVolts", 0.0);
+    	double volts = SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterVolts", 0) : 0.0;
+    	
     	shooter.motor.set(volts);
    	}
 

@@ -3,8 +3,10 @@ package org.usfirst.frc.team1089.robot;
 import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.AutoAlign;
+import org.usfirst.frc.team1089.robot.commands.DeliverGear;
 import org.usfirst.frc.team1089.robot.commands.DriveToWall;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
@@ -67,11 +69,12 @@ public class OI {
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         gamePadBtnB.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
-        
+        gamePadBtnY.whenPressed(new  ToggleGearDelivery(true));
         
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
         /*gamePadBtnX.whenPressed(new RunMotionProfile());     */
-        gamePadBtnX.whenPressed(new AutonDriveOnCurve(2, 3));
+        gamePadBtnX.whenPressed(new  ToggleGearDelivery(false));
+        //gamePadBtnX.whenPressed(new AutonDriveOnCurve(2, 3));
         /*gamePadBtnX.whenPressed(new MotionProfile());*/
         
         //gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
@@ -121,7 +124,11 @@ public class OI {
 		shooterType.addObject("Right", ShooterEnum.RIGHT_SHOOTER);
 		shooterType.addObject("Dual", ShooterEnum.DUAL_SHOOTER);
 		shooterType.addObject("Dual Staggered", ShooterEnum.DUAL_STAGGERED_SHOOTER);
-		SmartDashboard.putData("Shot Selection", shooterType);
+		/*SmartDashboard.putData("Shot Selection : None", ShooterEnum.NO_SHOOTER);
+		SmartDashboard.putData("Shot Selection : Left", ShooterEnum.LEFT_SHOOTER);
+		SmartDashboard.putData("Shot Selection : Right", ShooterEnum.RIGHT_SHOOTER);
+		SmartDashboard.putData("Shot Selection : Dual", ShooterEnum.DUAL_SHOOTER);
+		SmartDashboard.putData("Shot Selection : Dual Staggered", ShooterEnum.DUAL_STAGGERED_SHOOTER);*/
 		// Update the network tables with a notifier.
 		// This will update the table every 50 milliseconds, during every stage of the game. OISlow() updates every 500 milliseconds
 		new Notifier(() -> updateOI()).startPeriodic(0.050);
@@ -144,6 +151,12 @@ public class OI {
 		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Value", Robot.rightShooter.motor.getSpeed());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Value", Robot.leftShooter.motor.getSpeed());
+		SmartDashboard.putNumber("Shooter ID 8: Encoder Velocity", Robot.leftShooter.motor.getEncVelocity());
+		SmartDashboard.putNumber("Shooter ID 7: Encoder Velocity", Robot.rightShooter.motor.getEncVelocity());
+		SmartDashboard.putNumber("Shooter ID 7: Voltage", Robot.rightShooter.motor.getOutputVoltage());
+		SmartDashboard.putNumber("Shooter ID 8: Voltage", Robot.leftShooter.motor.getOutputVoltage());
+		SmartDashboard.putNumber("Shooter ID 7: Current", Robot.rightShooter.motor.getOutputCurrent());
+		SmartDashboard.putNumber("Shooter ID 8: Current", Robot.leftShooter.motor.getOutputCurrent());
 		//SmartDashboard.putNumber("Encoder Value", Robot.shooter.motor.getSpeed());
 		//SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
 		SmartDashboard.putNumber("Ultrasonic", Robot.ultrasonic.getRange());

@@ -114,8 +114,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Gyro", driveTrain.getGyro().getAngle());
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 		SmartDashboard.putNumber("Ultrasonic", ultrasonic.getRange());
-		SmartDashboard.putNumber("Right Shooter " , rightShooter.motor.getEncPosition());
-		SmartDashboard.putNumber("Left Shooter", leftShooter.motor.getEncPosition());
+		SmartDashboard.putNumber("Right Shooter Encoder" , rightShooter.motor.getEncPosition());
+		SmartDashboard.putNumber("Left Shooter Encoder", leftShooter.motor.getEncPosition());
 	}
 
 	/**
@@ -173,8 +173,8 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		
 		oi.updateOI();
-		choice = oi.getShot();
-		switch(choice){
+		//choice = oi.getShot();
+		/*switch(choice){
 		case NO_SHOOTER:
 			new StopShooter(leftShooter);
 			new StopShooter(rightShooter);
@@ -191,8 +191,8 @@ public class Robot extends IterativeRobot {
 		case DUAL_SHOOTER:
 			new RunShooter(leftShooter);
 			new RunShooter(rightShooter);
-			break;
-		}
+			break;*/
+		
 		
 		System.out.println("GetDistance: " + visionProcessor.getDistance(VisionProcessor.TargetType.HIGH_GOAL));
 		System.out.println("GetAngle: " + visionProcessor.getAngleFromCenter(VisionProcessor.TargetType.HIGH_GOAL));
