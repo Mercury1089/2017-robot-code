@@ -1,12 +1,7 @@
 package org.usfirst.frc.team1089.robot;
 
-import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
-import org.usfirst.frc.team1089.robot.commands.AutoAlign;
-import org.usfirst.frc.team1089.robot.commands.DeliverGear;
-import org.usfirst.frc.team1089.robot.commands.DriveToWall;
-import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
-import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
+import org.usfirst.frc.team1089.robot.commands.*;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
@@ -69,7 +64,7 @@ public class OI {
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
+        gamePadBtnB.whenPressed(new DegreeRotate(60));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         gamePadBtnY.whenPressed(new  ToggleGearDelivery(true));
         

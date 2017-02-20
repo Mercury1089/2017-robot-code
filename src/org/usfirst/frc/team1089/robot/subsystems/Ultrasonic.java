@@ -43,8 +43,10 @@ public class Ultrasonic extends Subsystem {
      * @return range between the board and the object across from it in inches
      */
     public double getRange() {
+
     	return ultrasonic.getVoltage() * SCALING_FACTOR;
     	/*double range = ultrasonic.getVoltage();
+>>>>>>> branch 'master' of https://github.com/Mercury1089/2017-robot-code.git
     	//first, normalize the voltage
     	range = (range - min_voltage) / voltage_range;
     	//next, denormalize to the unit range
