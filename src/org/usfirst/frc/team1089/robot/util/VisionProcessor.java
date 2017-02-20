@@ -227,6 +227,17 @@ public class VisionProcessor {
 		return Math.abs(ratio * hfov) > 1.0 ? ratio * hfov : 0.0;
 	}
 	
+	/**
+	 * <pre>
+	 * public double[] getAnglesFromGearTargets()
+	 * </pre>
+	 * 
+	 * Gets the angles that the robot needs 
+	 * to turn to center itself to the left and right target
+	 * 
+	 * @return array of angles that the robot can turn to to face the left or right target;
+	 *         left target is element 1, right target is element 2
+	 */
 	public double[] getAnglesFromGearTargets() {
 		double centerX1, centerX2, dist1, dist2,  ratio1, ratio2, hfov, hres;
 		double[] output = new double[2];
