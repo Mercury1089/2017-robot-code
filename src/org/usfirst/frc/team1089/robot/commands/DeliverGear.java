@@ -33,10 +33,8 @@ public class DeliverGear extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	double d[] = getAlignMovements();
-    	/*addSequential(new DriveDistance(d[0] * 12 + Config.ROBOT_LENGTH_PROTO / 2.0));	//FIXME Should be able to pass in feet
-    	addSequential(new DegreeRotate(d[1]));*/
-    	addSequential(new DriveDistance(12));
-    	addSequential(new DegreeRotate(60));
+    	addSequential(new DriveDistance(d[0] * 12 + Config.ROBOT_LENGTH_PROTO / 2.0));	//FIXME Should be able to pass in feet
+    	addSequential(new DegreeRotate(d[1]));
     }
     
     public static double[] getAlignMovements() {			//Where getAlignMovements()[0] is the Move distance 

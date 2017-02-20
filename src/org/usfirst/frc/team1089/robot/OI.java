@@ -51,7 +51,7 @@ public class OI {
     public JoystickButton gamePadBtnB;
     public JoystickButton gamePadBtnY;
     public JoystickButton gamePadBtnX;
-	public JoystickButton rightStickBtn1;
+	public JoystickButton rightBack;
 	public JoystickButton leftBack;
     
     public OI() {
@@ -77,8 +77,8 @@ public class OI {
         //gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
         //gamePadBtnX.whenPressed(new RunMotionProfile());     
         
-        rightStickBtn1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
-        rightStickBtn1.whenPressed(new DriveToWall(2));
+        rightBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.RB);
+        rightBack.whenPressed(new DriveToWall(2));
         
         leftBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
         leftBack.whenPressed(new DeliverGear());

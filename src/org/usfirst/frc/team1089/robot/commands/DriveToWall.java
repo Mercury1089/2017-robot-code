@@ -30,7 +30,7 @@ public class DriveToWall extends PIDCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.ultrasonic.getUltrasonic().resetAccumulator();
+    	//Robot.ultrasonic.getUltrasonic().resetAccumulator();
     }
 
     // Called repeatedly when this Command is scheduled to run
