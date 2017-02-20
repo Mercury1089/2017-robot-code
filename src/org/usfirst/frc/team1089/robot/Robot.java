@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1089.robot;
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
+import org.usfirst.frc.team1089.robot.commands.DeliverGear;
 import org.usfirst.frc.team1089.robot.commands.RunShooter;
 import org.usfirst.frc.team1089.robot.commands.StopShooter;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
@@ -10,6 +11,7 @@ import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
+import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -193,6 +195,9 @@ public class Robot extends IterativeRobot {
 		System.out.println("GetAngle: " + visionProcessor.getAngleFromCenter(VisionProcessor.TargetType.HIGH_GOAL));
 		SmartDashboard.putNumber("Right Shooter " , rightShooter.motor.getEncPosition());
 		SmartDashboard.putNumber("Left Shooter", leftShooter.motor.getEncPosition());
+		
+		SmartDashboard.putNumber("Gear Delivery Movements: distance", Utilities.round(DeliverGear.getAlignMovements()[0], 3));
+		SmartDashboard.putNumber("Gear Delivery Movements: angle", Utilities.round(DeliverGear.getAlignMovements()[1], 3));
 	}
 
 	/**

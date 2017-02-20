@@ -1,19 +1,16 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="Right Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="319" y="139"/>
+	<widget field="Scheduler" type="Scheduler" class="edu.wpi.first.smartdashboard.gui.elements.Scheduler">
+		<location x="1088" y="384"/>
 	</widget>
-	<widget field="Left Enc Inches" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="319" y="118"/>
+	<widget field="Gear Delivery Movements: angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="523" y="387"/>
 	</widget>
-	<widget field="Gyro" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="319" y="97"/>
+	<widget field="Gear Delivery Movements: distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="524" y="362"/>
 	</widget>
-	<widget field="Right Enc Inches" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="457"/>
-	</widget>
-	<widget field="Left Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="436"/>
+	<widget field="PI_VFOV" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="428" y="134"/>
 	</widget>
 	<widget field="Distance to gear lift using horizontal and vertical average" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="320" y="267"/>
@@ -49,7 +46,7 @@
 		<location x="900" y="8"/>
 	</widget>
 	<widget field="Step 3 (After delivering gear)" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="796" y="231"/>
+		<location x="801" y="280"/>
 	</widget>
 	<widget field="NAV-X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="773" y="221"/>
@@ -126,4 +123,16 @@
 </dashboard>
 <live-window>
 </live-window>
+	<hidden field="leftPos, rightPos"/>
+	<hidden field="DriveDistance: "/>
+	<hidden field="Right Enc Inches"/>
+	<hidden field="Gear Delivery Movements : distance"/>
+	<hidden field="Gear Delivery Movements : angle"/>
+	<hidden field="Right Encoder"/>
+	<hidden field="EndPosVals"/>
+	<hidden field="EncRFinal"/>
+	<hidden field="Left Enc Inches"/>
+	<hidden field="EncLFinal"/>
+	<hidden field="Gyro"/>
+	<hidden field="Left Encoder"/>
 </xml>
