@@ -1,5 +1,8 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="theta" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="235" y="530"/>
+	</widget>
 	<widget field="phi" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="234" y="460"/>
 	</widget>
@@ -156,7 +159,6 @@
 	<hidden field="EndPosVals"/>
 	<hidden field="EncRFinal"/>
 	<hidden field="Gyro"/>
-	<hidden field="theta"/>
 	<hidden field="Left Encoder"/>
 	<hidden field="epsilon"/>
 	<hidden field="leftPos, rightPos"/>

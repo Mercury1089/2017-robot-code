@@ -82,6 +82,6 @@ public class DeliverGear extends CommandGroup {
     	SmartDashboard.putNumber("distToMove", Utilities.round(distToMove, 3));
     	
     	//Return. Congratulations! You have made it.
-    	return new double[] {distToMove, theta * reversalFactor};
+    	return new double[] {distToMove, theta};
     }
 }
