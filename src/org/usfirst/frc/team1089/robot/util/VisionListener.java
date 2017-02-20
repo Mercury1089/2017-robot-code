@@ -11,13 +11,15 @@ import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
 /**
+ * The {@code VisionListener} class is an {@link ITableListener} that handles getting updates for contour values
+ * for use with targeting
  * 
- *
+ * @deprecated The variables have been integrated with the {@link VisionProcessor} class and the listeners are already created
+ *             in that class as well.
  */
 public class VisionListener implements ITableListener {
 
 	private final NetworkTable GEAR_TABLE, HIGH_TABLE;
-	private boolean isListening = false;
 	
 	private final Dimension DIM_GEAR, DIM_HIGH;
 	private final Point CENTER_GEAR, CENTER_HIGH;
