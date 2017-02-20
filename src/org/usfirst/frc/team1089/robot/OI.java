@@ -3,6 +3,7 @@ package org.usfirst.frc.team1089.robot;
 import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.AutoAlign;
+import org.usfirst.frc.team1089.robot.commands.DeliverGear;
 import org.usfirst.frc.team1089.robot.commands.DriveToWall;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
@@ -55,6 +56,7 @@ public class OI {
     public JoystickButton gamePadBtnY;
     public JoystickButton gamePadBtnX;
 	public JoystickButton rightStickBtn1;
+	public JoystickButton leftBack;
     
     public OI() {
     	
@@ -80,6 +82,9 @@ public class OI {
         
         rightStickBtn1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
         rightStickBtn1.whenPressed(new DriveToWall(2));
+        
+        leftBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
+        leftBack.whenPressed(new DeliverGear());
         
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of

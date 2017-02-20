@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1089.robot.commands;
 
 import org.usfirst.frc.team1089.robot.Robot;
+import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -30,9 +31,10 @@ public class DeliverGear extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new DriveDistance(60));
-    	addSequential(new DegreeRotate(60));
-    	addSequential(new DriveDistance(60));
+    	double d[] = getAlignMovements();
+    	addSequential(new DriveDistance(d[0] * 12));	//FIXME Should be able to pass in feet
+    	addSequential(new DegreeRotate(d[1]));
+    	//addSequential(new DriveDistance(60));
     	
     }
     
@@ -42,6 +44,7 @@ public class DeliverGear extends CommandGroup {
     	//Getting the closer tape
     	int targetTape = Robot.visionProcessor.getDistancesToGearTargets()[0] 
     					 <= Robot.visionProcessor.getDistancesToGearTargets()[1] ? 0 : 1;//Coming in from right
+    	int reversalFactor = targetTape == 0 ? -1 : 1;
     	SmartDashboard.putNumber("TargetTape", targetTape);
     	
     	double liftDistance = Robot.visionProcessor.getAverageDistanceToGearTargets(),				//Gets distance to center of lift
@@ -57,21 +60,24 @@ public class DeliverGear extends CommandGroup {
     	double distanceFromRetroHorizontal = 
     			(Math.pow(targetTapeDistance, 2) - Math.pow(liftDistance, 2)) / (centerToCenterDistanceByTwo * 2) - 
     			(centerToCenterDistanceByTwo * 2) / 4;
-    	SmartDashboard.putNumber("distanceFromRetroHorizontal", distanceFromRetroHorizontal);
+    	SmartDashboard.putNumber("distanceFromRetroHorizontal", Utilities.round(distanceFromRetroHorizontal, 3));
     	
     	//
     	double distanceFromLiftFace =
     			Math.sqrt(Math.pow(targetTapeDistance,  2) - Math.pow(distanceFromRetroHorizontal, 2));
+    	SmartDashboard.putNumber("distanceFromLiftFace", Utilities.round(distanceFromLiftFace, 3));
     	
     	//
     	double phi = 
     			Math.toDegrees(Math.atan(distanceFromRetroHorizontal / distanceFromLiftFace));
+    	SmartDashboard.putNumber("phi", Utilities.round(phi, 3));
     	
     	//Getting the distance to move
     	double distToMove = 
     			(distanceFromRetroHorizontal + centerToCenterDistanceByTwo) / Math.sin(Math.toRadians(phi + angleFromTargetTape));
+    	SmartDashboard.putNumber("distToMove", Utilities.round(distToMove, 3));
     	
     	//Return. Congratulations! You have made it.
-    	return new double[] {distToMove, phi};
+    	return new double[] {distToMove, phi * reversalFactor};
     }
 }

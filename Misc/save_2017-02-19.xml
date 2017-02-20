@@ -1,13 +1,40 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="phi" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="234" y="460"/>
+	</widget>
+	<widget field="distanceFromLiftFace" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="235" y="483"/>
+	</widget>
+	<widget field="distToMove" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="235" y="506"/>
+	</widget>
+	<widget field="distanceFromRetroHorizontal" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="234" y="441"/>
+	</widget>
+	<widget field="targetTapeDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="-1" y="518"/>
+	</widget>
+	<widget field="liftAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="499"/>
+	</widget>
+	<widget field="angleFromTargetTape" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1" y="477"/>
+	</widget>
+	<widget field="liftDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="457"/>
+	</widget>
+	<widget field="TargetTape" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="436"/>
+	</widget>
 	<widget field="Scheduler" type="Scheduler" class="edu.wpi.first.smartdashboard.gui.elements.Scheduler">
 		<location x="1088" y="384"/>
 	</widget>
 	<widget field="Gear Delivery Movements: angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="523" y="387"/>
+		<location x="440" y="466"/>
 	</widget>
 	<widget field="Gear Delivery Movements: distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="524" y="362"/>
+		<location x="438" y="491"/>
 	</widget>
 	<widget field="PI_VFOV" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="428" y="134"/>
@@ -123,16 +150,20 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="leftPos, rightPos"/>
-	<hidden field="DriveDistance: "/>
 	<hidden field="Right Enc Inches"/>
 	<hidden field="Gear Delivery Movements : distance"/>
-	<hidden field="Gear Delivery Movements : angle"/>
-	<hidden field="Right Encoder"/>
+	<hidden field="delta"/>
 	<hidden field="EndPosVals"/>
 	<hidden field="EncRFinal"/>
+	<hidden field="Gyro"/>
+	<hidden field="theta"/>
+	<hidden field="Left Encoder"/>
+	<hidden field="epsilon"/>
+	<hidden field="leftPos, rightPos"/>
+	<hidden field="DriveDistance: "/>
+	<hidden field="Gear Delivery Movements : angle"/>
+	<hidden field="Right Encoder"/>
 	<hidden field="Left Enc Inches"/>
 	<hidden field="EncLFinal"/>
-	<hidden field="Gyro"/>
-	<hidden field="Left Encoder"/>
+	<hidden field="beta"/>
 </xml>
