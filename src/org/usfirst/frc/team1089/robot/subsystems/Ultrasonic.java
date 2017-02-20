@@ -21,7 +21,7 @@ public class Ultrasonic extends Subsystem {
 	private double distance_range;//The range of the distances returned by this class in ft
 	
 	/** Scaling factor - inches / volts */
-	private final double SCALING_FACTOR = 1/9.8; 
+	private final double SCALING_FACTOR = /*1/*/9.8; 
 	
     public Ultrasonic() {
     	ultrasonic = new AnalogInput(RobotMap.Analog.ULTRASONIC);
@@ -43,13 +43,13 @@ public class Ultrasonic extends Subsystem {
      * @return range between the board and the object across from it in inches
      */
     public double getRange() {
-//    	return ultrasonic.getVoltage() * SCALING_FACTOR;
-    	double range = ultrasonic.getVoltage();
+    	return ultrasonic.getVoltage() * SCALING_FACTOR;
+    	/*double range = ultrasonic.getVoltage();
     	//first, normalize the voltage
     	range = (range - min_voltage) / voltage_range;
     	//next, denormalize to the unit range
     	range = (range * distance_range) + min_distance;
-    	return range;
+    	return range;*/
     }
     
     public void initDefaultCommand() {
@@ -57,4 +57,3 @@ public class Ultrasonic extends Subsystem {
     }
     
 }
-
