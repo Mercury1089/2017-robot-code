@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DeliverGear extends CommandGroup {
 	
 	private static double centerToCenterDistanceByTwo = 5.125 / 12 - 1;
+	public static final double INCH_OFFSET_FROM_TARGET = 36; //TODO Maybe move this to a better place. Also, edit this value
 
     public DeliverGear() {
         // Add Commands here:
@@ -82,5 +83,36 @@ public class DeliverGear extends CommandGroup {
     	
     	//Return. Congratulations! You have made it.
     	return new double[] {distToMove, theta * reversalFactor};
+    }
+    
+    public static double[] getAlignMovementsOnAPoint() {
+    	double distToMove, angleToTurn, theta;
+    	
+    	int targetTape = Robot.visionProcessor.getDistancesToGearTargets()[0] <= Robot.visionProcessor.getDistancesToGearTargets()[1] ? 0 : 1;//Coming in from right
+    	int reversalFactor = targetTape == 0 ? -1 : 1;
+    	double liftDistance = Robot.visionProcessor.getAverageDistanceToGearTargets(),				//Gets distance to center of lift
+     		   angleFromTargetTape = Robot.visionProcessor.getAnglesFromGearTargets()[targetTape],	//Angle from closer tape
+     		   liftAngle = Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION),		//Angle from center of lift
+     		   targetTapeDistance = Robot.visionProcessor.getDistancesToGearTargets()[targetTape];	//Distance from target tape
+    	
+    	//
+    	double distanceFromRetroHorizontal = 
+    			(Math.pow(targetTapeDistance, 2) - Math.pow(liftDistance, 2)) / (centerToCenterDistanceByTwo * 2) - 
+    			(centerToCenterDistanceByTwo * 2) / 4;
+    	SmartDashboard.putNumber("distanceFromRetroHorizontal", Utilities.round(distanceFromRetroHorizontal, 3));
+    	
+    	//
+    	double distanceFromLiftFace =
+    			Math.sqrt(Math.pow(targetTapeDistance,  2) - Math.pow(distanceFromRetroHorizontal, 2));
+    	SmartDashboard.putNumber("distanceFromLiftFace", Utilities.round(distanceFromLiftFace, 3));
+    	
+    	theta = Math.atan(Math.abs(distanceFromRetroHorizontal) / Math.abs(distanceFromLiftFace)); //In radians
+    	
+    	distToMove = Math.sqrt(Math.pow(liftDistance, 2) + Math.pow(INCH_OFFSET_FROM_TARGET, 2) 
+    	- 2 * liftDistance * INCH_OFFSET_FROM_TARGET * Math.toDegrees(Math.cos(theta))); //Law of cosines
+    
+    	angleToTurn = Math.toDegrees(Math.atan((INCH_OFFSET_FROM_TARGET * Math.sin(theta) / distToMove)));
+    	
+    	return new double[] {distToMove, angleToTurn};
     }
 }
