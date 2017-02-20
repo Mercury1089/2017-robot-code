@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1089.robot.commands;
 
 import org.usfirst.frc.team1089.robot.Robot;
+import org.usfirst.frc.team1089.robot.util.Config;
 import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
@@ -32,7 +33,7 @@ public class DeliverGear extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	double d[] = getAlignMovements();
-    	addSequential(new DriveDistance(d[0] * 12));	//FIXME Should be able to pass in feet
+    	addSequential(new DriveDistance(d[0] * 12 + Config.ROBOT_LENGTH_PROTO / 2.0));	//FIXME Should be able to pass in feet
     	addSequential(new DegreeRotate(d[1]));
     	//addSequential(new DriveDistance(60));
     	
@@ -72,12 +73,15 @@ public class DeliverGear extends CommandGroup {
     			Math.toDegrees(Math.atan(distanceFromRetroHorizontal / distanceFromLiftFace));
     	SmartDashboard.putNumber("phi", Utilities.round(phi, 3));
     	
+    	double theta = Math.abs(phi) + Math.abs(angleFromTargetTape);
+    	SmartDashboard.putNumber("theta", theta);
+    	
     	//Getting the distance to move
     	double distToMove = 
-    			(distanceFromRetroHorizontal + centerToCenterDistanceByTwo) / Math.sin(Math.toRadians(phi + angleFromTargetTape));
+    			(distanceFromRetroHorizontal + centerToCenterDistanceByTwo) / Math.sin(Math.toRadians(theta));
     	SmartDashboard.putNumber("distToMove", Utilities.round(distToMove, 3));
     	
     	//Return. Congratulations! You have made it.
-    	return new double[] {distToMove, phi * reversalFactor};
+    	return new double[] {distToMove, theta * reversalFactor};
     }
 }
