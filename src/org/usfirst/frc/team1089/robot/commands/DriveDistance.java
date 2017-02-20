@@ -43,8 +43,8 @@ public class DriveDistance extends Command {
 		Robot.driveTrain.resetEncoders();
 		Robot.driveTrain.disableRobotDrive();
     	
-		Robot.driveTrain.getLeft().setPID(0.7, 0, 0.65);
-		Robot.driveTrain.getRight().setPID(0.7, 0, 0.65);
+		Robot.driveTrain.getLeft().setPID(1, 0, 0);
+		Robot.driveTrain.getRight().setPID(1, 0, 0);
 		
 		Robot.driveTrain.getLeft().configPeakOutputVoltage(10, -10);
 		Robot.driveTrain.getLeft().configNominalOutputVoltage(0, 0);

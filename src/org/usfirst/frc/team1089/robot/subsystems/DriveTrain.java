@@ -165,6 +165,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		robotDrive.tankDrive(output, output);
 	}
 	
+	public void writePID(double output) {
+		robotDrive.tankDrive(output, -output);
+	}
+	
 	public double getAutonRotatePidValue(double output) {
 		return output;
 	}

@@ -21,7 +21,7 @@ public class DegreeRotate extends PIDCommand {
     protected DegreeRotate() {
     	super(0.4, 0, 0.2);
     	requires(Robot.driveTrain);
-    	getPIDController().setContinuous(true);
+    	getPIDController().setContinuous(false);
     	getPIDController().setAbsoluteTolerance(0.15);
     	getPIDController().setInputRange(-180, 180);
     	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5

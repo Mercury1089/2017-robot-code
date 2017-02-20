@@ -1,5 +1,71 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Shooter ID 7: HIGHEST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="22" y="25"/>
+	</widget>
+	<widget field="EncLFinal" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="619" y="21"/>
+	</widget>
+	<widget field="SetLeftChange" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="607" y="199"/>
+	</widget>
+	<widget field="Left Enc Inches" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="607" y="82"/>
+	</widget>
+	<widget field="Shooter ID 7: shooterRPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="9" y="28"/>
+	</widget>
+	<widget field="Shooter ID 8: Voltage" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="30" y="9"/>
+	</widget>
+	<widget field="EncRFinal" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="335" y="638"/>
+	</widget>
+	<widget field="Shooter ID 8: Encoder Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="335" y="617"/>
+	</widget>
+	<widget field="Left Shooter Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="335" y="596"/>
+	</widget>
+	<widget field="Right Enc Inches" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="322" y="160"/>
+	</widget>
+	<widget field="Left Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="322" y="139"/>
+	</widget>
+	<widget field="leftPos, rightPos" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="322" y="118"/>
+	</widget>
+	<widget field="Shooter ID 7: Voltage" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="335" y="575"/>
+	</widget>
+	<widget field="Shooter ID 7: LOWEST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="335" y="554"/>
+	</widget>
+	<widget field="DriveDistance: " type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="322" y="97"/>
+	</widget>
+	<widget field="Shooter ID 8: LOWEST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="322" y="197"/>
+	</widget>
+	<widget field="Shooter ID 7: Encoder Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="644"/>
+	</widget>
+	<widget field="Angle to high goal using vertical values" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="623"/>
+	</widget>
+	<widget field="SetRightChange" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="602"/>
+	</widget>
+	<widget field="Gyro" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="581"/>
+	</widget>
+	<widget field="Angle Distance to gear lift using vertical values" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="560"/>
+	</widget>
+	<widget field="EndPosVals" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="539"/>
+	</widget>
 	<widget field="Servo Pos" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="607" y="0"/>
 	</widget>
@@ -179,27 +245,4 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="Shooter ID 7: HIGHEST"/>
-	<hidden field="Shooter ID 8: Voltage"/>
-	<hidden field="SetRightChange"/>
-	<hidden field="Right Enc Inches"/>
-	<hidden field="Angle to high goal using vertical values"/>
-	<hidden field="EndPosVals"/>
-	<hidden field="Shooter ID 7: Encoder Velocity"/>
-	<hidden field="EncRFinal"/>
-	<hidden field="Shooter ID 7: shooterRPM"/>
-	<hidden field="Shooter ID 8: LOWEST"/>
-	<hidden field="Gyro"/>
-	<hidden field="Left Encoder"/>
-	<hidden field="leftPos, rightPos"/>
-	<hidden field="Shooter ID 7: LOWEST"/>
-	<hidden field="DriveDistance: "/>
-	<hidden field="Shooter ID 7: Voltage"/>
-	<hidden field="PI_VFOV"/>
-	<hidden field="Left Enc Inches"/>
-	<hidden field="EncLFinal"/>
-	<hidden field="Angle Distance to gear lift using vertical values"/>
-	<hidden field="Left Shooter Encoder"/>
-	<hidden field="Shooter ID 8: Encoder Velocity"/>
-	<hidden field="SetLeftChange"/>
 </xml>

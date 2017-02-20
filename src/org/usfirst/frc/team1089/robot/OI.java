@@ -64,7 +64,7 @@ public class OI {
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new DegreeRotate(60));
+        gamePadBtnB.whenPressed(new DriveDistance(24));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         gamePadBtnY.whenPressed(new  ToggleGearDelivery(true));
         

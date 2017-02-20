@@ -18,10 +18,10 @@ public class DriveToWall extends PIDCommand {
     public DriveToWall(double distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	super(0.7, 0, 0.65);
+    	super(1, 0, 0);
     	Robot.driveTrain.disableRobotDrive();
     	requires(Robot.driveTrain);
-    	getPIDController().setContinuous(true);
+    	getPIDController().setContinuous(false);
     	getPIDController().setAbsoluteTolerance(0.1);
     	getPIDController().setInputRange(0, 10);
     	getPIDController().setOutputRange(-.4, .4);
@@ -46,6 +46,7 @@ public class DriveToWall extends PIDCommand {
     // Called once after isFinished returns true
     protected void end() {
     	MercLogger.logMessage(Level.INFO, "We have driven to the wall");
+    	System.out.println("Driven to wall!");
     }
 
     // Called when another command which requires one or more of the same
@@ -57,12 +58,12 @@ public class DriveToWall extends PIDCommand {
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		return Robot.ultrasonic.getRange() - distanceFromWall;
+		return Robot.ultrasonic.getRange() - 0.83 - distanceFromWall;
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		Robot.driveTrain.pidWrite(output);
+		Robot.driveTrain.writePID(output);
 	}
 }
