@@ -73,7 +73,8 @@ public class DeliverGear extends CommandGroup {
     			Math.toDegrees(Math.atan(distanceFromRetroHorizontal / distanceFromLiftFace));
     	SmartDashboard.putNumber("phi", Utilities.round(phi, 3));
     	
-    	double theta = Math.abs(phi) + Math.abs(angleFromTargetTape);
+    	double theta = 
+    			Math.abs(phi) + Math.abs(angleFromTargetTape);
     	SmartDashboard.putNumber("theta", theta);
     	
     	//Getting the distance to move
@@ -82,6 +83,6 @@ public class DeliverGear extends CommandGroup {
     	SmartDashboard.putNumber("distToMove", Utilities.round(distToMove, 3));
     	
     	//Return. Congratulations! You have made it.
-    	return new double[] {distToMove, theta};
+    	return new double[] {distToMove, theta * reversalFactor};
     }
 }

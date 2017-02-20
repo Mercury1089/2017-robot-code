@@ -38,6 +38,7 @@ public class DegreeRotate extends PIDCommand {
     protected void initialize() {
     	Robot.driveTrain.getGyro().reset();
     	Robot.driveTrain.getNAVX().reset();
+    	Robot.driveTrain.disableRobotDrive();
     	getPIDController().setSetpoint(_heading);
     	MercLogger.logMessage(Level.INFO, "Rotating to " + _heading + " degrees.");
 		//Debug.logMessage(Level.INFO, "The Degree Rotate Command has been initialized.");
@@ -56,6 +57,7 @@ public class DegreeRotate extends PIDCommand {
     // Called once after isFinished returns true
     protected void end() {
 		MercLogger.logMessage(Level.INFO, "The Degree Rotate Command has ended.");
+		Robot.driveTrain.enableRobotDrive();
     }
 
     // Called when another command which requires one or more of the same

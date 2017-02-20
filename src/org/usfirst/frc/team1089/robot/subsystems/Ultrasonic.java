@@ -34,7 +34,7 @@ public class Ultrasonic extends Subsystem {
      * @return range between the board and the object across from it in inches
      */
     public double getRange() {
-    	return ultrasonic.getVoltage() * SCALING_FACTOR;
+    	return ultrasonic.getVoltage()/* * SCALING_FACTOR*/;
     }
     
     public void initDefaultCommand() {
