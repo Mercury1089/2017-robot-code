@@ -7,12 +7,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The Gear Delivery Mechanism
- * 
- * @author Luke Letourneau
- * @version 1
- * 
- * {@link}
+ *
  */
 public class Gear extends Subsystem {
 
