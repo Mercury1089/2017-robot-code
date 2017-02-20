@@ -1,7 +1,10 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.Config;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
@@ -13,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DeliverGear extends CommandGroup {
 	
+	private double[] alignMovements;
 	private static double centerToCenterDistanceByTwo = 5.125 / 12 - 1;
 	public static final double INCH_OFFSET_FROM_TARGET = 36; //TODO Maybe move this to a better place. Also, edit this value
 
@@ -33,9 +37,21 @@ public class DeliverGear extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	double d[] = getAlignMovements();
-    	addSequential(new DriveDistance(d[0] * 12 + Config.ROBOT_LENGTH_PROTO / 2.0));	//FIXME Should be able to pass in feet
-    	addSequential(new DegreeRotate(d[1]));
+    	addSequential(new DriveDistance(this));	//FIXME Should be able to pass in feet
+    	addSequential(new DegreeRotate(this));
+    }
+    
+    @Override
+    public void initialize() {
+    	this.alignMovements = getAlignMovements();
+    }
+    
+    public double getDistance() {
+    	return alignMovements[0] * 12 + Config.ROBOT_LENGTH_PROTO / 2.0;
+    }
+    
+    public double getAngle() {
+    	return alignMovements[1];
     }
     
     public static double[] getAlignMovements() {			//Where getAlignMovements()[0] is the Move distance 
@@ -82,7 +98,8 @@ public class DeliverGear extends CommandGroup {
     	SmartDashboard.putNumber("distToMove", Utilities.round(distToMove, 3));
     	
     	//Return. Congratulations! You have made it.
-    	return new double[] {distToMove, theta * reversalFactor};
+    	MercLogger.logMessage(Level.INFO, "Moving " + distToMove + " inches for gear delivery.");
+    	return new double[] {-distToMove, -theta};
     }
     
     public static double[] getAlignMovementsOnAPoint() {
@@ -113,6 +130,6 @@ public class DeliverGear extends CommandGroup {
     
     	angleToTurn = Math.toDegrees(Math.atan((INCH_OFFSET_FROM_TARGET * Math.sin(theta) / distToMove)));
     	
-    	return new double[] {distToMove, angleToTurn};
+    	return new double[] {-distToMove, angleToTurn};
     }
 }

@@ -20,6 +20,7 @@ public class DriveDistance extends Command {
     private double distance;
     private double endPosL, endPosR;
     private double waitTime;
+    private DeliverGear deliverGear = null;
     
     public DriveDistance(double d) {
         requires(Robot.driveTrain);
@@ -37,8 +38,18 @@ public class DriveDistance extends Command {
         this.waitTime = waitTime;
     }
 	
+	public DriveDistance(DeliverGear dg) {
+		this(0, 0);
+		deliverGear = dg;
+		
+	}
+	
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if (deliverGear != null) {
+    		distance = deliverGear.getDistance();
+    	}
+    	
 		Robot.driveTrain.setToPosition();
 		Robot.driveTrain.resetEncoders();
 		Robot.driveTrain.disableRobotDrive();
@@ -65,7 +76,7 @@ public class DriveDistance extends Command {
 		
 		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
-		//Debug.logMessage(Level.INFO, "The Drive Distance Command has been initialized.");
+		MercLogger.logMessage(Level.INFO, "The Drive Distance Command has been initialized. Moving " + distance + " inches.");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -100,7 +111,7 @@ public class DriveDistance extends Command {
     	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()));
     	Robot.driveTrain.resetEncoders();
 		SmartDashboard.putString("DriveDistance: ", "end");
-		//Debug.logMessage(Level.INFO, "The Drive Distance Command has ended.");
+		MercLogger.logMessage(Level.INFO, "The Drive Distance Command has ended.");
 
     }
 
@@ -108,6 +119,6 @@ public class DriveDistance extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     	end();
-		SmartDashboard.putString("DriveDistance: ", "interrupted");
+		MercLogger.logMessage(Level.INFO, "The DriveDistance Command has been interrupted.");
     }
 }

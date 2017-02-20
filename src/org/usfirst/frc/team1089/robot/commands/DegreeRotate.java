@@ -16,17 +16,25 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class DegreeRotate extends PIDCommand {
 
-	protected double _heading = 0.0;
+	protected double _heading;
+	private DeliverGear deliverGear;
 	
     protected DegreeRotate() {
     	super(0.4, 0, 0.2);
+    	_heading = 0.0;
     	requires(Robot.driveTrain);
-    	getPIDController().setContinuous(false);
+    	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(0.15);
     	getPIDController().setInputRange(-180, 180);
     	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
     }
+    
+    public DegreeRotate(DeliverGear dg) {
+    	this();
+		deliverGear = dg;
+		
+	}
     
     public DegreeRotate (double heading) {
     	this();
@@ -36,6 +44,9 @@ public class DegreeRotate extends PIDCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if (deliverGear != null) {
+    		_heading = deliverGear.getAngle();
+    	}
     	Robot.driveTrain.getNAVX().reset();
     	Robot.driveTrain.disableRobotDrive();
     	getPIDController().setSetpoint(_heading);
@@ -56,7 +67,6 @@ public class DegreeRotate extends PIDCommand {
     // Called once after isFinished returns true
     protected void end() {
 		MercLogger.logMessage(Level.INFO, "The Degree Rotate Command has ended.");
-		_heading = 0;
 		Robot.driveTrain.getNAVX().reset();
 		Robot.driveTrain.enableRobotDrive();
     }
