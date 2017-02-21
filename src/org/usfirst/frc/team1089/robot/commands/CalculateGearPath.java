@@ -5,7 +5,7 @@ import java.util.function.Function;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.util.Config;
+import org.usfirst.frc.team1089.robot.util.Preferences;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
