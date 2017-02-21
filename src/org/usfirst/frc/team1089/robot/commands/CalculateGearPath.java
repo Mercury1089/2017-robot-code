@@ -129,7 +129,6 @@ public class CalculateGearPath extends InstantCommand {
     	- 2 * liftDistance * INCH_OFFSET_FROM_TARGET * Math.toDegrees(Math.cos(theta))); //Law of cosines
     
     	angleToTurn = Math.toDegrees(Math.atan((INCH_OFFSET_FROM_TARGET * Math.sin(theta) / distToMove)));
-    	
-    	return new double[] {-distToMove, angleToTurn};
+    
     }
 }
