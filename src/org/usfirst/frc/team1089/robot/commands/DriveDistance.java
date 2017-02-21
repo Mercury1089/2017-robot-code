@@ -4,6 +4,7 @@ import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon.TalonControlMode;
 
+import java.util.function.DoubleSupplier;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
@@ -20,36 +21,31 @@ public class DriveDistance extends Command {
     private double distance;
     private double endPosL, endPosR;
     private double waitTime;
-    private DeliverGear deliverGear = null;
+    private DoubleSupplier distanceSupplier = null;
     
-    public DriveDistance(double d) {
+	public DriveDistance(double distance, double waitTime) {
         requires(Robot.driveTrain);
-        distance = d;
-        endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
-        waitTime = 0;
-    	
-    }
-	
-	public DriveDistance(double d, double waitTime) {
-        
-        requires(Robot.driveTrain);
-        distance = d;
-        endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
+        this.distance = distance;
         this.waitTime = waitTime;
+        endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
+    }
+
+	public DriveDistance(double distance) {
+		this(distance, 0);
     }
 	
-	public DriveDistance(DeliverGear dg) {
+	public DriveDistance(DoubleSupplier distanceSupplier) {
 		this(0, 0);
-		deliverGear = dg;
-		
+		this.distanceSupplier = distanceSupplier;	
 	}
+
 	
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (deliverGear != null) {
-    		distance = deliverGear.getDistance();
+    	if (distanceSupplier != null) {
+    		distance = distanceSupplier.getAsDouble();
     	}
-    	
+
 		Robot.driveTrain.setToPosition();
 		Robot.driveTrain.resetEncoders();
 		Robot.driveTrain.disableRobotDrive();
