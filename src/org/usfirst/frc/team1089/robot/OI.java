@@ -214,9 +214,11 @@ public class OI {
     public AutonEnum getStep3() {
     	return (AutonEnum) step3Chooser.getSelected();
     }
+    
     public int getStartPos() {
     	return (int) startPosition.getSelected();
     }
+    
     public ShooterEnum getShot() {
     	return (ShooterEnum) shooterType.getSelected();
     }
