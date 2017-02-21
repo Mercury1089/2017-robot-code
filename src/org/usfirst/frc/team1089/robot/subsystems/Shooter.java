@@ -2,6 +2,7 @@ package org.usfirst.frc.team1089.robot.subsystems;
 
 import org.usfirst.frc.team1089.robot.RobotMap;
 import org.usfirst.frc.team1089.robot.commands.RunShooter;
+import org.usfirst.frc.team1089.robot.commands.ShootWithDistance;
 import org.usfirst.frc.team1089.robot.commands.TestShooter;
 
 import com.ctre.CANTalon;
@@ -26,12 +27,12 @@ public class Shooter extends Subsystem implements PIDOutput{
 		
 	}
 	public Shooter(int ID) {
-		motor = new CANTalon(ID);
-		
+		motor = new CANTalon(ID);	
 	}
 	
 	public void initDefaultCommand() {
-		setDefaultCommand(new RunShooter(this));
+		//setDefaultCommand(new RunShooter(this));
+		setDefaultCommand(new ShootWithDistance(this));
 		//setDefaultCommand(new TestShooter(this));
 	}
 

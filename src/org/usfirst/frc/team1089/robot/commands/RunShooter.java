@@ -24,7 +24,7 @@ public class RunShooter extends Command {
     	requires(s);
     	shooter = s;
     }
-
+	
     // Called just before this Command runs the first time
     protected void initialize() {
     	
@@ -39,6 +39,7 @@ public class RunShooter extends Command {
 		SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterRPM", 0.0);
     	SmartDashboard.putBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false);
     	SmartDashboard.putBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": enableHighLow", false);
+    	SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": distance", 0.0);
     	//Selectable
     	resetHighLow();
     }
