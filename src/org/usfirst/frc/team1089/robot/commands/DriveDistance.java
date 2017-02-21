@@ -14,7 +14,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * This {@link Command} uses the combination of PID and the CANTalon's
+ * mag encoders to drive a specified set of inches.
  */
 public class DriveDistance extends Command {
 
@@ -23,6 +24,18 @@ public class DriveDistance extends Command {
     private double waitTime;
     private DoubleSupplier distanceSupplier = null;
     
+    /**
+     * <pre>
+     * public DriveDistance(double distance,
+     *                      double waitTime)
+     * </pre>
+     * Creates this {@code Command} to drive the specified distance
+     * and to wait the specified amount of milliseconds after the distance has been traveled.
+     * 
+     * @param distance the distance in inches to travel
+     * @param waitTime the amount of time to wait in milliseconds
+     *                 after the distance has been driven
+     */
 	public DriveDistance(double distance, double waitTime) {
         requires(Robot.driveTrain);
         this.distance = distance;
@@ -30,15 +43,32 @@ public class DriveDistance extends Command {
         endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
     }
 
+	/**
+     * <pre>
+     * public DriveDistance(double distance)
+     * </pre>
+     * Creates this {@code Command} to drive the specified distance
+     * and wait 0 milliseconds after travelling the specified distance.
+     * 
+     * @param distance the distance in inches to travel
+     */
 	public DriveDistance(double distance) {
 		this(distance, 0);
     }
 	
+	/**
+	 * <pre>
+	 * public DriveDistance(DoubleSupplier distanceSupplier)
+	 * </pre>
+	 * Creates this {@code DriveDistance} with a {@link DoubleSupplier} that supplies
+	 * the distance, and sets the wait time to 0 milliseconds.
+	 * 
+	 * @param distanceSupplier the {@code DoubleSupplier} to use to get the distance to travel
+	 */
 	public DriveDistance(DoubleSupplier distanceSupplier) {
 		this(0, 0);
 		this.distanceSupplier = distanceSupplier;	
 	}
-
 	
     // Called just before this Command runs the first time
     protected void initialize() {
