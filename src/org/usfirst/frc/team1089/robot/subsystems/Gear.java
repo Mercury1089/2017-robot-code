@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * This {@link Subsystem} encapsulates the gear delivery mechanism
+ * to deliver gears to the pole.
  */
 public class Gear extends Subsystem {
 

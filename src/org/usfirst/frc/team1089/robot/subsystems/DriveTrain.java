@@ -9,19 +9,21 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-
 /**
- *
+ * This {@link Subsystem} encapsulates everything we need to drive:
+ * motor controllers, gyros, and the {@link RobotDrive} class we need to interface
+ * with the system.
+ * 
+ * @see PIDOutput
+ * @see AnalogGyro
+ * @see CANTalon
  */
 public class DriveTrain extends Subsystem implements PIDOutput{
 

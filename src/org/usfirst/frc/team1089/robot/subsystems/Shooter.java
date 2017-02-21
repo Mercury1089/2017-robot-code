@@ -11,12 +11,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This {@link Subsystem} handles the shooting mechanism, 
- * including controlling the speed of the shooting motors, and more.
+ * This {@link Subsystem} handles the shooting mechanism,
+ * specifically controlling the speed of the motor of the shooter.
  */
 public class Shooter extends Subsystem implements PIDOutput{
 	public CANTalon motor;
 	private boolean isVbus;
+	
 	public enum ShooterEnum {
 		NO_SHOOTER,
 		LEFT_SHOOTER,
@@ -25,6 +26,7 @@ public class Shooter extends Subsystem implements PIDOutput{
 		DUAL_STAGGERED_SHOOTER
 		
 	}
+	
 	public Shooter(int ID) {
 		motor = new CANTalon(ID);
 		
