@@ -4,6 +4,7 @@ import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon.TalonControlMode;
 
+import java.util.function.DoubleSupplier;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
@@ -20,25 +21,31 @@ public class DriveDistance extends Command {
     private double distance;
     private double endPosL, endPosR;
     private double waitTime;
+    private DoubleSupplier distanceSupplier = null;
     
-    public DriveDistance(double d) {
+	public DriveDistance(double distance, double waitTime) {
         requires(Robot.driveTrain);
-        distance = d;
+        this.distance = distance;
+        this.waitTime = waitTime;
         endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
-        waitTime = 0;
-    	
+    }
+
+	public DriveDistance(double distance) {
+		this(distance, 0);
     }
 	
-	public DriveDistance(double d, double waitTime) {
-        
-        requires(Robot.driveTrain);
-        distance = d;
-        endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
-        this.waitTime = waitTime;
-    }
+	public DriveDistance(DoubleSupplier distanceSupplier) {
+		this(0, 0);
+		this.distanceSupplier = distanceSupplier;	
+	}
+
 	
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if (distanceSupplier != null) {
+    		distance = distanceSupplier.getAsDouble();
+    	}
+
 		Robot.driveTrain.setToPosition();
 		Robot.driveTrain.resetEncoders();
 		Robot.driveTrain.disableRobotDrive();
@@ -65,7 +72,7 @@ public class DriveDistance extends Command {
 		
 		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
-		//Debug.logMessage(Level.INFO, "The Drive Distance Command has been initialized.");
+		MercLogger.logMessage(Level.INFO, "The Drive Distance Command has been initialized. Moving " + distance + " inches.");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -100,7 +107,7 @@ public class DriveDistance extends Command {
     	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()));
     	Robot.driveTrain.resetEncoders();
 		SmartDashboard.putString("DriveDistance: ", "end");
-		//Debug.logMessage(Level.INFO, "The Drive Distance Command has ended.");
+		MercLogger.logMessage(Level.INFO, "The Drive Distance Command has ended.");
 
     }
 
@@ -108,6 +115,6 @@ public class DriveDistance extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     	end();
-		SmartDashboard.putString("DriveDistance: ", "interrupted");
+		MercLogger.logMessage(Level.INFO, "The DriveDistance Command has been interrupted.");
     }
 }
