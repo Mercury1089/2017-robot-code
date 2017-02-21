@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1089.robot.util;
 
-import java.awt.Dimension;
-import java.awt.Point;
+import org.opencv.core.Point;
+import org.opencv.core.Size;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -34,7 +34,7 @@ public class VisionProcessor {
 		distHigh = 0;
 	
 	// Classes to encapsulate the dimensions and coordinates of the centers of each target
-	private final Dimension
+	private final Size
 		BOUNDS_TARGET1_GEAR,
 		BOUNDS_TARGET2_GEAR,
 		BOUNDS_TOTAL_GEAR,
@@ -98,40 +98,34 @@ public class VisionProcessor {
 		CENTER_TARGET2_HIGH = new Point(-1, -1);
 		CENTER_TOTAL_HIGH = new Point(-1, -1);
 		
-		BOUNDS_TARGET1_GEAR = new Dimension(-1, -1);
-		BOUNDS_TARGET2_GEAR = new Dimension(-1, -1);
-		BOUNDS_TOTAL_GEAR = new Dimension(-1, -1);
-		BOUNDS_TARGET1_HIGH = new Dimension(-1, -1);
-		BOUNDS_TARGET2_HIGH = new Dimension(-1, -1);
-		BOUNDS_TOTAL_HIGH = new Dimension(-1, -1);
+		BOUNDS_TARGET1_GEAR = new Size(-1, -1);
+		BOUNDS_TARGET2_GEAR = new Size(-1, -1);
+		BOUNDS_TOTAL_GEAR = new Size(-1, -1);
+		BOUNDS_TARGET1_HIGH = new Size(-1, -1);
+		BOUNDS_TARGET2_HIGH = new Size(-1, -1);
+		BOUNDS_TOTAL_HIGH = new Size(-1, -1);
 		
 		// Implement them table listeners
 		GEAR_VISION_TABLE.addTableListener((ITable table, String key, Object value, boolean isNew) -> {
 			synchronized(this) {
 				switch (key) {
 					case "centerTarget1":
-						double[] pt = (double[])value;
-						CENTER_TARGET1_GEAR.setLocation((int)pt[0], (int)pt[1]);
+						CENTER_TARGET1_GEAR.set((double[])value);
 						break;
 					case "centerTarget2":
-						double[] pt2 = (double[])value;
-						CENTER_TARGET2_GEAR.setLocation((int)pt2[0], (int)pt2[1]);
+						CENTER_TARGET2_GEAR.set((double[])value);
 						break;
 					case "centerTotal":
-						double[] pt3 = (double[])value;
-						CENTER_TOTAL_GEAR.setLocation((int)pt3[0], (int)pt3[1]);
+						CENTER_TOTAL_GEAR.set((double[])value);
 						break;
 					case "boundsTarget1":
-						double[] b = (double[])value;
-						BOUNDS_TARGET1_GEAR.setSize((int)b[0], (int)b[1]);
+						BOUNDS_TARGET1_GEAR.set((double[])value);
 						break;
 					case "boundsTarget2":
-						double[] b2 = (double[])value;
-						BOUNDS_TARGET2_GEAR.setSize((int)b2[0], (int)b2[1]);
+						BOUNDS_TARGET2_GEAR.set((double[])value);
 						break;
 					case "boundsTotal":
-						double[] b3 = (double[])value;
-						BOUNDS_TOTAL_GEAR.setSize((int)b3[0], (int)b3[1]);
+						BOUNDS_TOTAL_GEAR.set((double[])value);
 						break;
 					case "deltaTime":
 						long systm = System.currentTimeMillis();
@@ -151,28 +145,22 @@ public class VisionProcessor {
 			synchronized(this) {
 				switch (key) {
 					case "centerTarget1":
-						double[] pt = (double[])value;
-						CENTER_TARGET1_HIGH.setLocation((int)pt[0], (int)pt[1]);
+						CENTER_TARGET1_HIGH.set((double[])value);
 						break;
 					case "centerTarget2":
-						double[] pt2 = (double[])value;
-						CENTER_TARGET2_HIGH.setLocation((int)pt2[0], (int)pt2[1]);
+						CENTER_TARGET2_HIGH.set((double[])value);
 						break;
 					case "centerTotal":
-						double[] pt3 = (double[])value;
-						CENTER_TOTAL_HIGH.setLocation((int)pt3[0], (int)pt3[1]);
+						CENTER_TOTAL_HIGH.set((double[])value);
 						break;
 					case "boundsTarget1":
-						double[] b = (double[])value;
-						BOUNDS_TARGET1_HIGH.setSize((int)b[0], (int)b[1]);
+						BOUNDS_TARGET1_HIGH.set((double[])value);
 						break;
 					case "boundsTarget2":
-						double[] b2 = (double[])value;
-						BOUNDS_TARGET2_HIGH.setSize((int)b2[0], (int)b2[1]);
+						BOUNDS_TARGET2_HIGH.set((double[])value);
 						break;
 					case "boundsTotal":
-						double[] b3 = (double[])value;
-						BOUNDS_TOTAL_HIGH.setSize((int)b3[0], (int)b3[1]);
+						BOUNDS_TOTAL_HIGH.set((double[])value);
 						break;
 					case "deltaTime":
 						long systm = System.currentTimeMillis();

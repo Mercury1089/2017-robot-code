@@ -1,21 +1,18 @@
 package org.usfirst.frc.team1089.robot.commands;
 
-import java.util.function.DoubleSupplier;
-import java.util.function.Function;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.util.Preferences;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * 
+ * This {@link InstantCommand} calculates the path needed for the robot
+ * to take in the {@link DeliveryGear} command group.
  */
 public class CalculateGearPath extends InstantCommand {
 
@@ -27,10 +24,14 @@ public class CalculateGearPath extends InstantCommand {
 	public enum Direction { FORWARD, REVERSE }
 	
 	/**
-	 * Construct an instant command to generate the gear path. This is an InstantCommand that will run once and complete.
+	 * <pre>
+	 * public CalculateGearPath(Direction direction)
+	 * </pre>
+	 * Creates an {@code InstantCommand} to generate the gear path. This is an InstantCommand that will run once and complete.
 	 * The command will calculate the distance and angles for optimal gear delivery. After this command runs, the values
 	 * can be accessed via getDistance(), getAngle(), getTheta() 
-	 * @param reverseMovement - Indicates whether the approach is forward or reverse (e.g. front/back of robot)
+	 *
+	 * @param reverseMovement whether the approach is forward or reverse (e.g. front/back of robot)
 	 */
 	public CalculateGearPath(Direction direction) {
 		signedDirection = direction == Direction.FORWARD ? 1.0 : -1.0;
