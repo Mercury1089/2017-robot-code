@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1089.robot.commands;
 
 import java.util.logging.Level;
+import java.util.function.DoubleSupplier;
 
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.Config;
@@ -21,12 +22,12 @@ public class DeliverGear extends CommandGroup {
     	
     	// Instantiate CalculateGearPath before adding it to the sequence so we have a reference to the
     	// distance and angle methods, so we can pass them to DriveDistance and DegreeRotate.
-    	CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE)
+    	CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE);
     	addSequential(calculateGearPath);
     	
     	//addSequential(new DegreeRotate(calculateGearPath:getTheta)); 
-    	addSequential(new DriveDistance(calculateGearPath:getDistance));
-    	addSequential(new DegreeRotate(calculateGearPath:getAngle));
+    	addSequential(new DriveDistance(calculateGearPath::getDistance));
+    	addSequential(new DegreeRotate(calculateGearPath::getTheta));
     }
     
 }

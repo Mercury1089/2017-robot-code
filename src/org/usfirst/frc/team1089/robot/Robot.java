@@ -196,8 +196,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Shooter " , rightShooter.motor.getEncPosition());
 		SmartDashboard.putNumber("Left Shooter", leftShooter.motor.getEncPosition());
 		
-		SmartDashboard.putNumber("Gear Delivery Movements: distance", Utilities.round(DeliverGear.getAlignMovements()[0], 3));
-		SmartDashboard.putNumber("Gear Delivery Movements: angle", Utilities.round(DeliverGear.getAlignMovements()[1], 3));
+		//SmartDashboard.putNumber("Gear Delivery Movements: distance", Utilities.round(DeliverGear.getAlignMovements()[0], 3));
+		//SmartDashboard.putNumber("Gear Delivery Movements: angle", Utilities.round(DeliverGear.getAlignMovements()[1], 3));
 	}
 
 	/**
