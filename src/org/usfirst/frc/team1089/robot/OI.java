@@ -1,12 +1,7 @@
 package org.usfirst.frc.team1089.robot;
 
-import org.usfirst.frc.team1089.robot.auton.AutonDriveOnCurve;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
-import org.usfirst.frc.team1089.robot.commands.AutoAlign;
-import org.usfirst.frc.team1089.robot.commands.DeliverGear;
-import org.usfirst.frc.team1089.robot.commands.DriveToWall;
-import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
-import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
+import org.usfirst.frc.team1089.robot.commands.*;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
@@ -56,7 +51,7 @@ public class OI {
     public JoystickButton gamePadBtnB;
     public JoystickButton gamePadBtnY;
     public JoystickButton gamePadBtnX;
-	public JoystickButton rightStickBtn1;
+	public JoystickButton rightBack;
 	public JoystickButton leftBack;
     
     public OI() {
@@ -69,7 +64,7 @@ public class OI {
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
+        gamePadBtnB.whenPressed(new DriveDistance(24));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         gamePadBtnY.whenPressed(new  ToggleGearDelivery(true));
         
@@ -82,8 +77,8 @@ public class OI {
         //gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
         //gamePadBtnX.whenPressed(new RunMotionProfile());     
         
-        rightStickBtn1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
-        rightStickBtn1.whenPressed(new DriveToWall(2));
+        rightBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.RB);
+        rightBack.whenPressed(new DegreeRotate(60));
         
         leftBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
         leftBack.whenPressed(new DeliverGear());

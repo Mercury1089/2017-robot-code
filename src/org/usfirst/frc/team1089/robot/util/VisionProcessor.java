@@ -75,7 +75,7 @@ public class VisionProcessor {
 	private final double
 		TARGET_WIDTH_INCHES_GEAR = 10.75,
 		TARGET_HEIGHT_INCHES_GEAR = 5,
-		TARGET_ELEVATION_FEET_GEAR = 10.75,
+		TARGET_ELEVATION_FEET_GEAR = 10.75 / 12,
 		TARGET_WIDTH_INCHES_HIGH = 15,
 		TARGET_HEIGHT_INCHES_HIGH = 10,
 		TARGET_ELEVATION_FEET_HIGH = 6.5,
@@ -202,7 +202,7 @@ public class VisionProcessor {
 	 */
 	public double getDistanceUsingHorizontalInformation(TargetType type) {
 		double percievedWidth, hfov, targetWidth, hres;
-		System.out.println("Getting distance to " + type.toString() + " using horizontal information");
+		//System.out.println("Getting distance to " + type.toString() + " using horizontal information");
 		
 		switch (type) {
 			case GEAR_VISION:
@@ -236,7 +236,7 @@ public class VisionProcessor {
 	public double getDistanceUsingVerticalInformation(TargetType type) {
 		double perceivedHeight, vfov, targetHeight, vres;
 		//PICam.VFOV_PI = SmartDashboard.getNumber("PI_VFOV", 40);
-		System.out.println("Getting distance to " + type.toString() + " using vertical information");
+		//System.out.println("Getting distance to " + type.toString() + " using vertical information");
 		
 		switch (type) {
 			case GEAR_VISION:
@@ -266,7 +266,7 @@ public class VisionProcessor {
 	public double[] getDistancesToGearTargets() {
 		double target1Height, target2Height, vfov, targetHeight, vres;
 		double[] output = new double[2];
-		System.out.println("Getting distance to each target using vertical information");
+		//System.out.println("Getting distance to each target using vertical information");
 		
 		target1Height = GEAR_VISION_TABLE.getNumberArray("boundsTarget1", new double[]{-1, -1})[1];
 		target2Height = GEAR_VISION_TABLE.getNumberArray("boundsTarget2", new double[]{-1, -1})[1];
