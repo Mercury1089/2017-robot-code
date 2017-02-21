@@ -9,12 +9,21 @@ import org.usfirst.frc.team1089.robot.util.MercLogger;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This {@link Command} stops the shooter
+ * This {@link Command} stops the shooter.
  */
 public class StopShooter extends Command {
 	
 	private Shooter shooter;
 	
+	/**
+	 * <pre>
+	 * public StopShooter(Shooter s)
+	 * </pre>
+	 * Creates this {@code StopShooter} command to stop the specified
+	 * {@Link Shooter}
+	 * 
+	 * @param s the {@code Shooter} to stop
+	 */
 	public StopShooter(Shooter s){
 		requires(s);
 		shooter = s;

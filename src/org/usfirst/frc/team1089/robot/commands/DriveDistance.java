@@ -4,6 +4,7 @@ import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon.TalonControlMode;
 
+import java.util.function.DoubleSupplier;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
@@ -13,43 +14,68 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * This {@link Command} uses the combination of PID and the CANTalon's
+ * mag encoders to drive a specified set of inches.
  */
 public class DriveDistance extends Command {
 
     private double distance;
     private double endPosL, endPosR;
     private double waitTime;
-    private DeliverGear deliverGear = null;
+    private DoubleSupplier distanceSupplier = null;
     
-    public DriveDistance(double d) {
+    /**
+     * <pre>
+     * public DriveDistance(double distance,
+     *                      double waitTime)
+     * </pre>
+     * Creates this {@code Command} to drive the specified distance
+     * and to wait the specified amount of milliseconds after the distance has been traveled.
+     * 
+     * @param distance the distance in inches to travel
+     * @param waitTime the amount of time to wait in milliseconds
+     *                 after the distance has been driven
+     */
+	public DriveDistance(double distance, double waitTime) {
         requires(Robot.driveTrain);
-        distance = d;
-        endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
-        waitTime = 0;
-    	
-    }
-	
-	public DriveDistance(double d, double waitTime) {
-        
-        requires(Robot.driveTrain);
-        distance = d;
-        endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
+        this.distance = distance;
         this.waitTime = waitTime;
+        endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
+    }
+
+	/**
+     * <pre>
+     * public DriveDistance(double distance)
+     * </pre>
+     * Creates this {@code Command} to drive the specified distance
+     * and wait 0 milliseconds after travelling the specified distance.
+     * 
+     * @param distance the distance in inches to travel
+     */
+	public DriveDistance(double distance) {
+		this(distance, 0);
     }
 	
-	public DriveDistance(DeliverGear dg) {
+	/**
+	 * <pre>
+	 * public DriveDistance(DoubleSupplier distanceSupplier)
+	 * </pre>
+	 * Creates this {@code DriveDistance} with a {@link DoubleSupplier} that supplies
+	 * the distance, and sets the wait time to 0 milliseconds.
+	 * 
+	 * @param distanceSupplier the {@code DoubleSupplier} to use to get the distance to travel
+	 */
+	public DriveDistance(DoubleSupplier distanceSupplier) {
 		this(0, 0);
-		deliverGear = dg;
-		
+		this.distanceSupplier = distanceSupplier;	
 	}
 	
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (deliverGear != null) {
-    		distance = deliverGear.getDistance();
+    	if (distanceSupplier != null) {
+    		distance = distanceSupplier.getAsDouble();
     	}
-    	
+
 		Robot.driveTrain.setToPosition();
 		Robot.driveTrain.resetEncoders();
 		Robot.driveTrain.disableRobotDrive();

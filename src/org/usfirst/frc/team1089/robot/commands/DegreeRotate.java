@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import java.util.function.DoubleSupplier;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
@@ -17,7 +18,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class DegreeRotate extends PIDCommand {
 
 	protected double _heading;
-	private DeliverGear deliverGear;
+	private DoubleSupplier _angleSupplier = null;
 	
     protected DegreeRotate() {
     	super(0.4, 0, 0.2);
@@ -30,10 +31,14 @@ public class DegreeRotate extends PIDCommand {
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
     }
     
-    public DegreeRotate(DeliverGear dg) {
+    /**
+     * Construct a DegreeRotate command that gets it angle during initialize by calling
+     * the provided DoubleSupplier method
+     * @param angleSupplier The DoubleSupplier method to output the angle
+     */
+    public DegreeRotate(DoubleSupplier angleSupplier) {
     	this();
-		deliverGear = dg;
-		
+    	_angleSupplier = angleSupplier;
 	}
     
     public DegreeRotate (double heading) {
@@ -44,8 +49,8 @@ public class DegreeRotate extends PIDCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (deliverGear != null) {
-    		_heading = deliverGear.getAngle();
+    	if (_angleSupplier != null) {
+    		_heading = _angleSupplier.getAsDouble();
     	}
     	Robot.driveTrain.getNAVX().reset();
     	Robot.driveTrain.disableRobotDrive();

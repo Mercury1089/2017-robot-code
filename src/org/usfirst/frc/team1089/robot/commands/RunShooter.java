@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * This {@link Command} runs a {@link Shooter} using SmartDashboard input.
  */
 public class RunShooter extends Command {
 
@@ -20,6 +20,15 @@ public class RunShooter extends Command {
 	private final double LOWEST_RPM = 3500;		//TODO Change this
 	private final double HIGHEST_RPM  = 5000;   //TODO CHange this
 	
+	/**
+	 * <pre>
+	 * public RunShooter(Shooter s)
+	 * </pre>
+	 * Creates this {@code RunShooter} command with the specifie
+	 * {@code Shooter} to control
+	 * 
+	 * @param s the {@code Shooter} that this command will control 
+	 */
 	public RunShooter(Shooter s) {
     	requires(s);
     	shooter = s;
