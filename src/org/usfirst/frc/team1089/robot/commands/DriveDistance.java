@@ -23,6 +23,7 @@ public class DriveDistance extends Command {
     private double endPosL, endPosR;
     private double waitTime;
     private DoubleSupplier distanceSupplier = null;
+    private double maxV = 10.0;
     
     /**
      * <pre>
@@ -65,15 +66,19 @@ public class DriveDistance extends Command {
 	 * 
 	 * @param distanceSupplier the {@code DoubleSupplier} to use to get the distance to travel
 	 */
-	public DriveDistance(DoubleSupplier distanceSupplier) {
-		this(0, 0);
-		this.distanceSupplier = distanceSupplier;	
+	public DriveDistance(DoubleSupplier distanceSupplier, double maxV) {
+		this(0, 0.4);
+    	MercLogger.logMessage(Level.INFO, "Entering DriveDistance.DriveDistance()");
+    	this.distanceSupplier = distanceSupplier;	
+		this.maxV = maxV;
 	}
 	
     // Called just before this Command runs the first time
     protected void initialize() {
+    	MercLogger.logMessage(Level.INFO, "Entering DriveDistance.initialize()");
     	if (distanceSupplier != null) {
     		distance = distanceSupplier.getAsDouble();
+    		endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
     	}
 
 		Robot.driveTrain.setToPosition();
@@ -83,9 +88,9 @@ public class DriveDistance extends Command {
 		Robot.driveTrain.getLeft().setPID(1, 0, 0);
 		Robot.driveTrain.getRight().setPID(1, 0, 0);
 		
-		Robot.driveTrain.getLeft().configPeakOutputVoltage(10, -10);
+		Robot.driveTrain.getLeft().configPeakOutputVoltage(maxV, -maxV);
 		Robot.driveTrain.getLeft().configNominalOutputVoltage(0, 0);
-		Robot.driveTrain.getRight().configPeakOutputVoltage(10, -10);
+		Robot.driveTrain.getRight().configPeakOutputVoltage(maxV, -maxV);
 		Robot.driveTrain.getRight().configNominalOutputVoltage(0, 0);
 		
 
@@ -123,12 +128,15 @@ public class DriveDistance extends Command {
    				|| (distance < 0 && leftPos > endPosL && rightPos > endPosR)) {
    			return false;
    		}
+
+		MercLogger.logMessage(Level.INFO, "DriveDistance.isFinished() will return true.");
    		
     	return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	MercLogger.logMessage(Level.INFO, "Entering DriveDistance.end()");
     	Timer.delay(waitTime);
     	Robot.driveTrain.setToVbus();
     	Robot.driveTrain.stop();

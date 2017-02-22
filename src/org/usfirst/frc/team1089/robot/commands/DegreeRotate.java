@@ -22,12 +22,9 @@ public class DegreeRotate extends PIDCommand {
 	
     protected DegreeRotate() {
     	super(0.4, 0, 0.2);
+    	MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.DegreeRotate()");
     	_heading = 0.0;
     	requires(Robot.driveTrain);
-    	getPIDController().setContinuous(true);
-    	getPIDController().setAbsoluteTolerance(0.15);
-    	getPIDController().setInputRange(-180, 180);
-    	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
     }
     
@@ -38,20 +35,27 @@ public class DegreeRotate extends PIDCommand {
      */
     public DegreeRotate(DoubleSupplier angleSupplier) {
     	this();
+    	MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.DegreeRotate(DoubleSupplier angleSupplier)");
     	_angleSupplier = angleSupplier;
 	}
     
     public DegreeRotate (double heading) {
     	this();
+    	MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.DegreeRotate(double heading)");
     	_heading = heading;
     }
     
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.initialize()");
     	if (_angleSupplier != null) {
     		_heading = _angleSupplier.getAsDouble();
     	}
+    	getPIDController().setContinuous(true);
+    	getPIDController().setAbsoluteTolerance(0.15);
+    	getPIDController().setInputRange(-180, 180);
+    	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5
     	Robot.driveTrain.getNAVX().reset();
     	Robot.driveTrain.disableRobotDrive();
     	getPIDController().setSetpoint(_heading);
@@ -71,9 +75,10 @@ public class DegreeRotate extends PIDCommand {
 
     // Called once after isFinished returns true
     protected void end() {
-		MercLogger.logMessage(Level.INFO, "The Degree Rotate Command has ended.");
+    	MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.end()");
 		Robot.driveTrain.getNAVX().reset();
 		Robot.driveTrain.enableRobotDrive();
+		MercLogger.logMessage(Level.INFO, "The Degree Rotate Command has ended.");
     }
 
     // Called when another command which requires one or more of the same
