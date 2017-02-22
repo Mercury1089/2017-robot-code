@@ -1,16 +1,6 @@
 package org.usfirst.frc.team1089.robot.commands;
 
-import java.util.logging.Level;
-import java.util.function.DoubleSupplier;
-
-import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.util.Config;
-import org.usfirst.frc.team1089.robot.util.MercLogger;
-import org.usfirst.frc.team1089.robot.util.Utilities;
-import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -26,7 +16,7 @@ public class DeliverGear extends CommandGroup {
     	addSequential(calculateGearPath);
     	
     	//addSequential(new DegreeRotate(calculateGearPath:getTheta)); 
-    	addSequential(new DriveDistance(calculateGearPath::getDistance));
+    	addSequential(new DriveDistance(calculateGearPath::getDistance, 5.0));
     	addSequential(new DegreeRotate(calculateGearPath::getTheta));
     }
     
