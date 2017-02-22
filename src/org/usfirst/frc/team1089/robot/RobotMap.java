@@ -49,6 +49,7 @@ public class RobotMap {
 		public static final int PCM_ID = 6;
 		public static final int RIGHT_SHOOTER_TALON_ID = 7; 
 		public static final int LEFT_SHOOTER_TALON_ID = 8; 
+		public static final int INTAKE_TALON_ID = 9;
 	}
 
 	/**

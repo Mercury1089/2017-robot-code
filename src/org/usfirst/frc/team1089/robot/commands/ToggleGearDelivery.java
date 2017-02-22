@@ -10,20 +10,23 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * A command used to either open or close the gear delivery mechanism
+ * This {@link InstantCommand} opens or closes the gear delivery gate on command.
  * 
- * @author Luke Letourneau
- * @version 1
- * 
- * {@link}
  */
 public class ToggleGearDelivery extends InstantCommand {
 
 	private static final long MOVE_DURATION_MILLISECONDS = 1000;
 	private double position;
 	private long startTimeMillis;
+	
 	/**
-	 * @param open Whether or not to open the gear deliveryS
+	 * <pre>
+	 * public ToggleGearDelivery(boolean open)
+	 * </pre>
+	 * Creates this {@code ToggleGearDelivery} command to open or close the
+	 * delivery gate based on what the user specifies
+	 * 
+	 * @param open whether or not to open the gear delivery gate
 	 */
     public ToggleGearDelivery(boolean open) {
         // Use requires() here to declare subsystem dependencies

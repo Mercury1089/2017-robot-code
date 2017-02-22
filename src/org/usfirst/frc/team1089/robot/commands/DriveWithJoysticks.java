@@ -8,7 +8,8 @@ import org.usfirst.frc.team1089.robot.util.MercLogger;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * This {@link Command} simply enables the ability to drive with the joysticks
+ * with arcade drive.
  */
 public class DriveWithJoysticks extends Command {
 

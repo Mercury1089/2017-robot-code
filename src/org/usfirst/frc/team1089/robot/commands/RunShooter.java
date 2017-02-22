@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * This {@link Command} runs a {@link Shooter} using SmartDashboard input.
  */
 public class RunShooter extends Command {
 
@@ -20,11 +20,20 @@ public class RunShooter extends Command {
 	private final double LOWEST_RPM = 3500;		//TODO Change this
 	private final double HIGHEST_RPM  = 5000;   //TODO CHange this
 	
+	/**
+	 * <pre>
+	 * public RunShooter(Shooter s)
+	 * </pre>
+	 * Creates this {@code RunShooter} command with the specifie
+	 * {@code Shooter} to control
+	 * 
+	 * @param s the {@code Shooter} that this command will control 
+	 */
 	public RunShooter(Shooter s) {
     	requires(s);
     	shooter = s;
     }
-
+	
     // Called just before this Command runs the first time
     protected void initialize() {
     	
@@ -39,6 +48,7 @@ public class RunShooter extends Command {
 		SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterRPM", 0.0);
     	SmartDashboard.putBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false);
     	SmartDashboard.putBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": enableHighLow", false);
+    	SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": distance", 0.0);
     	//Selectable
     	resetHighLow();
     }

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
 /**
- *
+ * @deprecated "Does nothing right now" -Dhruv
  */
 public class NavxDrive extends PIDCommand {
 

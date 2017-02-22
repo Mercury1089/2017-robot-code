@@ -7,6 +7,7 @@ import org.usfirst.frc.team1089.robot.commands.StopShooter;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1089.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team1089.robot.subsystems.Gear;
+import org.usfirst.frc.team1089.robot.subsystems.Intake;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.subsystems.Ultrasonic;
@@ -37,6 +38,7 @@ public class Robot extends IterativeRobot {
 	public static VisionProcessor visionProcessor;
 	public static Ultrasonic ultrasonic;
 	public static Shooter leftShooter, rightShooter, shooter;
+	public static Intake intake;
 	public static Gear gear;
 	public static OI oi;
 	
@@ -90,6 +92,7 @@ public class Robot extends IterativeRobot {
 		rightShooter = new Shooter(RobotMap.CAN.RIGHT_SHOOTER_TALON_ID);			//TODO Change Talon Value
 		//shooter = new Shooter(7);
 		leftShooter.motor.setInverted(true);
+		intake = new Intake(RobotMap.CAN.INTAKE_TALON_ID);
 	}
 
 	/**

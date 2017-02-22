@@ -1,9 +1,10 @@
 package org.usfirst.frc.team1089.robot.util;
 
+import org.opencv.core.Point;
+import org.opencv.core.Size;
+
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
-import edu.wpi.first.wpilibj.tables.ITableListener;
 
 /**
  * This class encapsulates some methods and fields to properly
@@ -32,25 +33,42 @@ public class VisionProcessor {
 		distGear = 0,
 		distHigh = 0;
 	
+	// Classes to encapsulate the dimensions and coordinates of the centers of each target
+	private final Size
+		BOUNDS_TARGET1_GEAR,
+		BOUNDS_TARGET2_GEAR,
+		BOUNDS_TOTAL_GEAR,
+		BOUNDS_TARGET1_HIGH,
+		BOUNDS_TARGET2_HIGH,
+		BOUNDS_TOTAL_HIGH;
+	
+	private final Point
+		CENTER_TARGET1_GEAR,
+		CENTER_TARGET2_GEAR,
+		CENTER_TOTAL_GEAR,
+		CENTER_TARGET1_HIGH,
+		CENTER_TARGET2_HIGH,
+		CENTER_TOTAL_HIGH;
+	
 	// Vision constants
 	public static class PICam {
 		public static final double 
-		                    HFOV_PI = 53.50,      //Horizontal field of view for the PI Cam
-		                    //VFOV_PI = SmartDashboard.getNumber("PI_VFOV", 40);
-				            //VFOV_PI = 41.41;      //Vertical field of view for the PI Cam
-		                    VFOV_PI = 37.5;
+            HFOV_PI = 53.50,      //Horizontal field of view for the PI Cam
+            //VFOV_PI = SmartDashboard.getNumber("PI_VFOV", 40);
+            //VFOV_PI = 41.41;      //Vertical field of view for the PI Cam
+            VFOV_PI = 37.5;
 		public static final int
-							HRES_PI = 320,        //Resolution-x of the PI feed
-							VRES_PI = 240;		  //Resolution-y of the PI feed
+			HRES_PI = 320,        //Resolution-x of the PI feed
+			VRES_PI = 240;		  //Resolution-y of the PI feed
 	}
 	
 	public static class LifeCam {
 		public static final double 
-							HFOV_LIFECAM = 60.00, //Horizontal Field of View for the Life Cam
-				            VFOV_LIFECAM = 33.05; //Vertical field of view for the Life Cam
+			HFOV_LIFECAM = 60.00, //Horizontal Field of View for the Life Cam
+            VFOV_LIFECAM = 33.05; //Vertical field of view for the Life Cam
 		public static final int
-				            HRES_LIFECAM = 320,   //Resolution-x of the Life Cam feed
-							VRES_LIFECAM = 240;   //Resolution-y of the Life Cam feed
+	        HRES_LIFECAM = 320,   //Resolution-x of the Life Cam feed
+			VRES_LIFECAM = 240;   //Resolution-y of the Life Cam feed
 	} 
 	
 	// Targeting constants
@@ -68,23 +86,95 @@ public class VisionProcessor {
 	private double[] DEF_VALUE = {-1, -1};
 	
 	public VisionProcessor() {
+		// Get the tables
 		GEAR_VISION_TABLE = NetworkTable.getTable(VISION_ROOT + "gearVision");
 		HIGH_GOAL_TABLE = NetworkTable.getTable(VISION_ROOT + "highGoal");
 		
+		// Initialize our target objects
+		CENTER_TARGET1_GEAR = new Point(-1, -1);
+		CENTER_TARGET2_GEAR = new Point(-1, -1);
+		CENTER_TOTAL_GEAR = new Point(-1, -1);
+		CENTER_TARGET1_HIGH = new Point(-1, -1);
+		CENTER_TARGET2_HIGH = new Point(-1, -1);
+		CENTER_TOTAL_HIGH = new Point(-1, -1);
+		
+		BOUNDS_TARGET1_GEAR = new Size(-1, -1);
+		BOUNDS_TARGET2_GEAR = new Size(-1, -1);
+		BOUNDS_TOTAL_GEAR = new Size(-1, -1);
+		BOUNDS_TARGET1_HIGH = new Size(-1, -1);
+		BOUNDS_TARGET2_HIGH = new Size(-1, -1);
+		BOUNDS_TOTAL_HIGH = new Size(-1, -1);
+		
+		// Implement them table listeners
 		GEAR_VISION_TABLE.addTableListener((ITable table, String key, Object value, boolean isNew) -> {
-			timeGear = System.currentTimeMillis() - table.getNumber("deltaTime", 0.0);
+			synchronized(this) {
+				switch (key) {
+					case "centerTarget1":
+						CENTER_TARGET1_GEAR.set((double[])value);
+						break;
+					case "centerTarget2":
+						CENTER_TARGET2_GEAR.set((double[])value);
+						break;
+					case "centerTotal":
+						CENTER_TOTAL_GEAR.set((double[])value);
+						break;
+					case "boundsTarget1":
+						BOUNDS_TARGET1_GEAR.set((double[])value);
+						break;
+					case "boundsTarget2":
+						BOUNDS_TARGET2_GEAR.set((double[])value);
+						break;
+					case "boundsTotal":
+						BOUNDS_TOTAL_GEAR.set((double[])value);
+						break;
+					case "deltaTime":
+						long systm = System.currentTimeMillis();
+						timeGear = (double)systm - (double)value; 
+				}
+				
+				distGear = getDistanceUsingVerticalInformation(TargetType.GEAR_VISION);
+				angleGear = getAngleFromCenter(TargetType.GEAR_VISION);
+			}
+			/*			timeGear = System.currentTimeMillis() - table.getNumber("deltaTime", 0.0);
 
 			angleGear = getAngleFromCenter(TargetType.GEAR_VISION);
-			distGear = getDistance(TargetType.GEAR_VISION);
+			distGear = getDistance(TargetType.GEAR_VISION);*/
 		});
 		
 		HIGH_GOAL_TABLE.addTableListener((ITable table, String key, Object value, boolean isNew) -> {
-			timeHigh = System.currentTimeMillis() - table.getNumber("deltaTime", 0.0);
+			synchronized(this) {
+				switch (key) {
+					case "centerTarget1":
+						CENTER_TARGET1_HIGH.set((double[])value);
+						break;
+					case "centerTarget2":
+						CENTER_TARGET2_HIGH.set((double[])value);
+						break;
+					case "centerTotal":
+						CENTER_TOTAL_HIGH.set((double[])value);
+						break;
+					case "boundsTarget1":
+						BOUNDS_TARGET1_HIGH.set((double[])value);
+						break;
+					case "boundsTarget2":
+						BOUNDS_TARGET2_HIGH.set((double[])value);
+						break;
+					case "boundsTotal":
+						BOUNDS_TOTAL_HIGH.set((double[])value);
+						break;
+					case "deltaTime":
+						long systm = System.currentTimeMillis();
+						timeHigh = (double)systm - (double)value; 
+				}
+				
+				distHigh = getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL);
+				angleHigh = getAngleFromCenter(TargetType.HIGH_GOAL);
+			}
+			/*			timeGear = System.currentTimeMillis() - table.getNumber("deltaTime", 0.0);
 
-			angleHigh = getAngleFromCenter(TargetType.HIGH_GOAL);
-			distHigh = getDistance(TargetType.HIGH_GOAL);
+			angleGear = getAngleFromCenter(TargetType.GEAR_VISION);
+			distGear = getDistance(TargetType.GEAR_VISION);*/
 		});
-		
 	}
 	
 	/**
@@ -232,8 +322,8 @@ public class VisionProcessor {
 	 * public double[] getAnglesFromGearTargets()
 	 * </pre>
 	 * 
-	 * Gets the angles that the robot needs 
-	 * to turn to center itself to the left and right target
+	 * Gets the angles that the robot needs to turn 
+	 * to center itself to the left and right target
 	 * 
 	 * @return array of angles that the robot can turn to to face the left or right target;
 	 *         left target is element 1, right target is element 2

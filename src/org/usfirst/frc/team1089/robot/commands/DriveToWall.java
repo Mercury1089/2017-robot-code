@@ -9,12 +9,22 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
 /**
- *
+ * This {@link PIDCommand} uses an {@link Ultrasonic} to drive towards a wall
  */
 public class DriveToWall extends PIDCommand {
 
 	private double distanceFromWall;
 	
+	/**
+	 * <pre>
+	 * public DriveToWall(double distance)
+	 * </pre>
+	 * Creates this {@code DriveToWall} command, 
+	 * and sets the buffer between the robot and the wall to the specified distance
+	 * 
+	 * @param distance the distance in feet from the wall 
+	 *        that the robot needs to be at
+	 */
     public DriveToWall(double distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

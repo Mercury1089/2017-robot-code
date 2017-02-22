@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1089.robot.auton;
 
-import org.usfirst.frc.team1089.robot.util.Config;
+import org.usfirst.frc.team1089.robot.util.Preferences;
 
 public class AutonMath {
 	private static final double AIRSHIP_DISTANCE = 150.05, AIRSHIP_RADIUS = 35.75;		//inches

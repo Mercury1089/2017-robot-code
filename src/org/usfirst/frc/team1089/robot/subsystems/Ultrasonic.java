@@ -7,7 +7,10 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * This {@link Subsystem} encapsulates the analog ultrasonic, as well as some
+ * constants that need to be used with the ultrasonic.
+ * 
+ * @see AnalogInput
  */
 public class Ultrasonic extends Subsystem {
 	
@@ -15,20 +18,21 @@ public class Ultrasonic extends Subsystem {
     // here. Call these from Commands.
 
 	private AnalogInput ultrasonic;
-	private double min_voltage;	//Minimum voltage the ultrasonic sensor can return
-	private double voltage_range; //The range of the voltages returned by the sensor
-	private double min_distance; //Minimum distance the ultrasonic sensor can return in ft
-	private double distance_range;//The range of the distances returned by this class in ft
+	private final double 
+		VOLTAGE_MIN,    // The range of the distances returned by this class in ft
+		VOLTAGE_RANGE,  // The range of the voltages returned by the sensor
+		DISTANCE_MIN,   // Minimum distance the ultrasonic sensor can return in ft
+		DISTANCE_RANGE;	// Minimum voltage the ultrasonic sensor can return
 	
 	/** Scaling factor - inches / volts */
 	private final double SCALING_FACTOR = /*1/*/9.8; 
 	
     public Ultrasonic() {
     	ultrasonic = new AnalogInput(RobotMap.Analog.ULTRASONIC);
-    	min_voltage = .5;
-    	voltage_range = 5.0 - min_voltage;
-    	min_distance = 0.25;
-    	distance_range = 5 - min_distance;
+    	VOLTAGE_MIN = .5;
+    	VOLTAGE_RANGE = 5.0 - VOLTAGE_MIN;
+    	DISTANCE_MIN = 0.25;
+    	DISTANCE_RANGE = 5 - DISTANCE_MIN;
     }
     
     public AnalogInput getUltrasonic() {
@@ -36,17 +40,18 @@ public class Ultrasonic extends Subsystem {
     }
     
     /**
+     * <pre>
+     * public double getRange()
+     * </pre>
      * Gets the range between the rangefinder board and the object across from it
      * as perceived by the rangefinder by getting the voltage and multiplying it by the scaling factor
      * 
-     * 
-     * @return range between the board and the object across from it in inches
+     * @return the range between the board and the object across from it in inches
      */
     public double getRange() {
 
     	return ultrasonic.getVoltage() * SCALING_FACTOR;
     	/*double range = ultrasonic.getVoltage();
->>>>>>> branch 'master' of https://github.com/Mercury1089/2017-robot-code.git
     	//first, normalize the voltage
     	range = (range - min_voltage) / voltage_range;
     	//next, denormalize to the unit range

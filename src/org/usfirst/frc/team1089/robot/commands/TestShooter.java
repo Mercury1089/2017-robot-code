@@ -1,17 +1,15 @@
 package org.usfirst.frc.team1089.robot.commands;
 
-import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * @deprecated {@link RunShooter} does the same thing?
  */
 public class TestShooter extends Command {
 
