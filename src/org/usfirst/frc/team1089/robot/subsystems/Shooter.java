@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Shooter extends Subsystem implements PIDOutput{
 	public CANTalon motor;
-	private boolean isVbus;
 	
 	public enum ShooterEnum {
 		NO_SHOOTER,

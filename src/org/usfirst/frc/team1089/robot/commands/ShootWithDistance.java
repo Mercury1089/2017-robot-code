@@ -36,8 +36,12 @@ public class ShootWithDistance extends RunShooter {
     	//distance -= 0.2;
     	offset = (14 - distance) / 28;
     	distance -= offset;
+    	
     	speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;
     	speed = speed/29.1585*10051;
+    	if(distance < 6)
+    		speed = 0;
+    	
     	shooter.motor.set(speed);
     }
 
