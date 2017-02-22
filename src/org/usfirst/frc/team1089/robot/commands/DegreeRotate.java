@@ -5,10 +5,8 @@ import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
-import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -26,6 +24,7 @@ public class DegreeRotate extends PIDCommand {
     	_heading = 0.0;
     	requires(Robot.driveTrain);
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
+    	
     }
     
     /**
@@ -52,14 +51,21 @@ public class DegreeRotate extends PIDCommand {
     	if (_angleSupplier != null) {
     		_heading = _angleSupplier.getAsDouble();
     	}
+    	Robot.driveTrain.disableRobotDrive();
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(0.15);
     	getPIDController().setInputRange(-180, 180);
     	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5
-    	Robot.driveTrain.getNAVX().reset();
-    	Robot.driveTrain.disableRobotDrive();
+    	
+    	MercLogger.logMessage(Level.INFO, "Before reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
+    	Robot.driveTrain.getGyro().reset();
+    	MercLogger.logMessage(Level.INFO, "After reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
+    	//Timer.delay(10);
+    	
+    	MercLogger.logMessage(Level.INFO, "Previous Set Point" + getPIDController().getSetpoint() + " degrees.");
+    	
     	getPIDController().setSetpoint(_heading);
-    	MercLogger.logMessage(Level.INFO, "Rotating to " + getPIDController().getSetpoint() + " degrees.");
+    	MercLogger.logMessage(Level.INFO, "New Set Point " + getPIDController().getSetpoint() + " degrees.");
 		//Debug.logMessage(Level.INFO, "The Degree Rotate Command has been initialized.");
 
     }
@@ -76,7 +82,9 @@ public class DegreeRotate extends PIDCommand {
     // Called once after isFinished returns true
     protected void end() {
     	MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.end()");
-		Robot.driveTrain.getNAVX().reset();
+    	MercLogger.logMessage(Level.INFO, "Current setpoint: " + getPIDController().getSetpoint());
+    	Robot.driveTrain.stop();
+    	MercLogger.logMessage(Level.INFO, "Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
 		Robot.driveTrain.enableRobotDrive();
 		MercLogger.logMessage(Level.INFO, "The Degree Rotate Command has ended.");
     }
@@ -89,14 +97,11 @@ public class DegreeRotate extends PIDCommand {
 
 	@Override
 	protected double returnPIDInput() {
-		// TODO Auto-generated method stub
-		//return Robot.driveTrain.getGyro().getAngle();
-		return Robot.driveTrain.getNAVX().getAngle();
+		return Robot.driveTrain.getGyro().getAngle();
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
-		// TODO Auto-generated method stub
 		Robot.driveTrain.pidWrite(output);
 	}
 }

@@ -103,6 +103,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		driveTrain.getGyro().reset();
+		driveTrain.getGyro().calibrate();
 		driveTrain.getNAVX().reset();
 		leftShooter.motor.setEncPosition(0);
 		rightShooter.motor.setEncPosition(0);

@@ -137,7 +137,6 @@ public class DriveDistance extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	MercLogger.logMessage(Level.INFO, "Entering DriveDistance.end()");
-    	Timer.delay(waitTime);
     	Robot.driveTrain.setToVbus();
     	Robot.driveTrain.stop();
     	Robot.driveTrain.enableRobotDrive();
