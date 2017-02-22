@@ -53,7 +53,9 @@ public class OI {
     public JoystickButton gamePadBtnX;
 	public JoystickButton rightBack;
 	public JoystickButton leftBack;
-    
+	public JoystickButton rightStick4;
+	public JoystickButton rightStick5;
+    public JoystickButton rightStick2;
     public OI() {
     	
         leftStick = new Joystick(RobotMap.DS_USB.LEFT_STICK);
@@ -83,6 +85,14 @@ public class OI {
         leftBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
         leftBack.whenPressed(new DeliverGear());
         
+        rightStick4 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN4);
+        rightStick4.whenPressed(new SetRoller(Robot.intake, 1));
+
+        rightStick5 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN5);
+        rightStick5.whenPressed(new SetRoller(Robot.intake, -1));
+        
+        rightStick2 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN2);
+        rightStick2.whenPressed(new SetRoller(Robot.intake, 0));
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of
     	// three ways:
