@@ -135,10 +135,6 @@ public class VisionProcessor {
 				distGear = getDistanceUsingVerticalInformation(TargetType.GEAR_VISION);
 				angleGear = getAngleFromCenter(TargetType.GEAR_VISION);
 			}
-			/*			timeGear = System.currentTimeMillis() - table.getNumber("deltaTime", 0.0);
-
-			angleGear = getAngleFromCenter(TargetType.GEAR_VISION);
-			distGear = getDistance(TargetType.GEAR_VISION);*/
 		});
 		
 		HIGH_GOAL_TABLE.addTableListener((ITable table, String key, Object value, boolean isNew) -> {
@@ -170,10 +166,6 @@ public class VisionProcessor {
 				distHigh = getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL);
 				angleHigh = getAngleFromCenter(TargetType.HIGH_GOAL);
 			}
-			/*			timeGear = System.currentTimeMillis() - table.getNumber("deltaTime", 0.0);
-
-			angleGear = getAngleFromCenter(TargetType.GEAR_VISION);
-			distGear = getDistance(TargetType.GEAR_VISION);*/
 		});
 	}
 	
