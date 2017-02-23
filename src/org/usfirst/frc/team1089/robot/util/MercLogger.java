@@ -103,6 +103,7 @@ public class MercLogger {
      * Closes the Logger's current {@link FileHandler}
      */
     public static synchronized void close() {
-    	handler.close();
+    	if (handler != null)
+    		handler.close();
     }
 }
