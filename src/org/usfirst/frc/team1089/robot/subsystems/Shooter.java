@@ -17,7 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Shooter extends Subsystem implements PIDOutput{
 	public CANTalon motor;
-	
+	private double magVal;
+	private double highest, lowest;
 	public enum ShooterEnum {
 		NO_SHOOTER,
 		LEFT_SHOOTER,
@@ -28,7 +29,8 @@ public class Shooter extends Subsystem implements PIDOutput{
 	}
 	
 	public Shooter(int ID) {
-		motor = new CANTalon(ID);	
+		motor = new CANTalon(ID);
+		resetHighLow();
 	}
 	
 	public void initDefaultCommand() {
@@ -36,6 +38,31 @@ public class Shooter extends Subsystem implements PIDOutput{
 		setDefaultCommand(new ShootWithDistance(this));
 		//setDefaultCommand(new TestShooter(this));
 	}
+	
+	//For testing PID of the shooter
+	public double getHighest(){
+		magVal = SmartDashboard.getNumber("Shooter ID " + motor.getDeviceID() + ": Encoder Value", 2900) * -1;
+		if (magVal > highest) {
+    		highest = magVal;
+    	}
+    	return highest;
+		
+	}
+	//For testing PID of the shooter
+	public double getLowest(){
+		magVal = SmartDashboard.getNumber("Shooter ID " + motor.getDeviceID() + ": Encoder Value", 2900) * -1;
+		if (magVal < lowest) {
+    		lowest = magVal;
+    	}
+		return lowest;
+	}
+	
+    public void resetHighLow() {
+		highest = 0;
+		lowest = 20000;
+	}
+	
+	
 
 	@Override
 	public void pidWrite(double output) {

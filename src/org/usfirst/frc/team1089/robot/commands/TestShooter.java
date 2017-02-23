@@ -29,8 +29,7 @@ public class TestShooter extends Command {
 		shooter.motor.configNominalOutputVoltage(0,0);
 		shooter.motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooter.motor.enableControl();
-        SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterVolts", 0.0);
-        SmartDashboard.putBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false);
+
     }
 
     // Called repeatedly when this Command is scheduled to run

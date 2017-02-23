@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RunShooter extends Command {
 
-	private double highest, lowest;
 	private Shooter shooter;
 	private final double LOWEST_RPM = 3500;		//TODO Change this
 	private final double HIGHEST_RPM  = 5000;   //TODO CHange this
@@ -45,44 +44,22 @@ public class RunShooter extends Command {
 		shooter.motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooter.motor.enableControl();
     	shooter.motor.reverseSensor(false);
-		SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterRPM", 0.0);
-    	SmartDashboard.putBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false);
-    	SmartDashboard.putBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": enableHighLow", false);
-    	SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": distance", 0.0);
     	//Selectable
-    	resetHighLow();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
     	double speed = SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterRPM", 0) : 0.0;
-    	
-    	if (SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false)) {
-    		System.out.println(speed);
-    	}
-    	
-    	double magVal = SmartDashboard.getNumber("Shooter ID " + shooter.motor.getDeviceID() + ": Encoder Value", 2900) * -1; // temp inverse
-    	
-    	
-    	if (magVal < lowest) {
-    		lowest = magVal;
-    	}
-    	if (magVal > highest) {
-    		highest = magVal;
-    	}
-    	
-    	if (!SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": enableHighLow", false)) {
-    		resetHighLow();
-    	}
-
-    	SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": LOWEST", lowest);
-		SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": HIGHEST", highest);
     		
+
+    	if (!SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": enableHighLow", false)) {
+    		shooter.resetHighLow();
+    	}
+ 		
     	shooter.motor.set(speed);
     	if (!inRange(speed))
     		end();
     	
-    	System.out.println(shooter.motor.get());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -99,10 +76,7 @@ public class RunShooter extends Command {
     protected void interrupted() {
     }
     
-    public void resetHighLow() {
-		highest = 0;
-		lowest = 20000;
-	}
+
     
     public boolean inRange(double speed) {
     	return (speed > LOWEST_RPM && speed < HIGHEST_RPM);

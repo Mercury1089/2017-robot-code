@@ -167,27 +167,25 @@ public class OI {
 		SmartDashboard.putNumber("Shooter ID 8: Voltage", Robot.leftShooter.motor.getOutputVoltage());
 		SmartDashboard.putNumber("Shooter ID 7: Current", Robot.rightShooter.motor.getOutputCurrent());
 		SmartDashboard.putNumber("Shooter ID 8: Current", Robot.leftShooter.motor.getOutputCurrent());
+		SmartDashboard.putNumber("Shooter ID 7: shooterRPM", 0.0);
+    	SmartDashboard.putBoolean("Shooter ID 7: shooterIsRunning", false);
+    	SmartDashboard.putBoolean("Shooter ID 7: enableHighLow", false);
+    	SmartDashboard.putNumber("Shooter ID 7: distance", 0.0);
+    	SmartDashboard.putNumber("Shooter ID 7: shooterVolts", 0.0);
+    	SmartDashboard.putNumber("Shooter ID 7: LOWEST", Robot.rightShooter.getLowest());
+		SmartDashboard.putNumber("Shooter ID 7: HIGHEST", Robot.rightShooter.getHighest());
+    	SmartDashboard.putNumber("Shooter ID 8: shooterRPM", 0.0);
+    	SmartDashboard.putBoolean("Shooter ID 8: shooterIsRunning", false);
+    	SmartDashboard.putBoolean("Shooter ID 8: enableHighLow", false);
+    	SmartDashboard.putNumber("Shooter ID 8: distance", 0.0);
+    	SmartDashboard.putNumber("Shooter ID 8: shooterVolts", 0.0);
+    	SmartDashboard.putNumber("Shooter ID 8: LOWEST", Robot.leftShooter.getLowest());
+		SmartDashboard.putNumber("Shooter ID 8: HIGHEST", Robot.leftShooter.getHighest());
 		//SmartDashboard.putNumber("Encoder Value", Robot.shooter.motor.getSpeed());
 		//SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
 		SmartDashboard.putNumber("Ultrasonic", Robot.ultrasonic.getRange());
 	}
 	
-	public void updateOISlow() {
-		SmartDashboard.putNumber("Distance to gear lift using vertical values", Utilities.round(Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.GEAR_VISION), 3));
-		SmartDashboard.putNumber("Distance to gear lift using horizontal values", Utilities.round(Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.GEAR_VISION), 3));
-		SmartDashboard.putNumber("Distance to high goal using vertical values", Utilities.round(Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL), 3));
-		SmartDashboard.putNumber("Distance to high goal using horizontal values", Utilities.round(Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.HIGH_GOAL), 3));
-		SmartDashboard.putNumber("Distance to target1", Utilities.round(Robot.visionProcessor.getDistancesToGearTargets()[0], 3));
-		SmartDashboard.putNumber("Distance to target2", Utilities.round(Robot.visionProcessor.getDistancesToGearTargets()[1], 3));
-		SmartDashboard.putNumber("Angle to gear lift using horizontal values", Utilities.round(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION), 3));
-		SmartDashboard.putNumber("Angle to high goal using horizontal values", Utilities.round(Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL), 3));
-		SmartDashboard.putNumber("Angle to target1", Utilities.round(Robot.visionProcessor.getAnglesFromGearTargets()[0], 3));
-		SmartDashboard.putNumber("Angle to target2", Utilities.round(Robot.visionProcessor.getAnglesFromGearTargets()[1], 3));
-		SmartDashboard.putNumber("Distance to gear lift using horizontal and vertical average", Utilities.round(Robot.visionProcessor.getAverageDistanceUsingHorAndVerDistances(TargetType.GEAR_VISION), 3));
-		SmartDashboard.putNumber("Distance to high goal using horizontal and vertical average", Utilities.round(Robot.visionProcessor.getAverageDistanceUsingHorAndVerDistances(TargetType.HIGH_GOAL), 3));
-		SmartDashboard.putNumber("Distance to gear lift using average of both targets", Utilities.round(Robot.visionProcessor.getAverageDistanceToGearTargets(), 3));
-	}
-
 
     public Joystick getLeftStick() {
         return leftStick;
