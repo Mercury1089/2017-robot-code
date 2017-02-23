@@ -1,9 +1,6 @@
 package org.usfirst.frc.team1089.robot;
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
-import org.usfirst.frc.team1089.robot.commands.DeliverGear;
-import org.usfirst.frc.team1089.robot.commands.RunShooter;
-import org.usfirst.frc.team1089.robot.commands.StopShooter;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1089.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team1089.robot.subsystems.Gear;
@@ -12,7 +9,6 @@ import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.subsystems.Ultrasonic;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
-import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -56,8 +52,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		MercLogger.init("/home/lvuser/log/");
-		
 		// Flush the NetworkTables
 		NetworkTable.flush();
 		
@@ -97,6 +91,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		MercLogger.close();
 		driveTrain.getGyro().reset();
 		driveTrain.getGyro().calibrate();
 		driveTrain.getNAVX().reset();
@@ -123,7 +118,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
+		MercLogger.init("/home/lvuser/log/auton");
 		autonomousCommand = new AutonCommand(oi.getStartPos(), DriverStation.getInstance().getAlliance()/*Alliance.Blue*/, oi.getStep3());
 		
 		/*
@@ -152,6 +147,8 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		MercLogger.init("/home/lvuser/log/teleop");
+		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}

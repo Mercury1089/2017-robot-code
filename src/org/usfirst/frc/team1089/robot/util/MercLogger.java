@@ -13,8 +13,7 @@ import java.util.logging.Logger;
 import edu.wpi.first.wpilibj.DriverStation;
 
 /**
- * This class utilizes Java's built-in {@link Logger} to output debug text to a logfile
- * at {@code "home/lvuser/logs/"} on the roboRIO.
+ * This class utilizes Java's built-in {@link Logger} to output debug text to a logfile.
  * 
  */
 public class MercLogger {
@@ -23,10 +22,14 @@ public class MercLogger {
 		TIME = new SimpleDateFormat("hhmmss.SSS"),
 		TIME_EXTENDED = new SimpleDateFormat("hh:mm:ss.SSS");
 	
-    private static final Logger LOGGER = Logger.getLogger("");
+    private static final Logger LOGGER;
+    private static FileHandler handler;
     private static final DriverStation DRIVER_STATION = DriverStation.getInstance();
-    
-    private static boolean exists = false;
+
+    static {
+    	LOGGER = Logger.getLogger("");
+    	LOGGER.setUseParentHandlers(false);
+    }
     
     private static final Formatter FORMATTER = new Formatter() {
         @Override
@@ -47,27 +50,23 @@ public class MercLogger {
      * <pre>
      * public void init(String path)
      * </pre>
-     * Initializes the logger and its {@link FileHandler}.
+     * Initializes the logger's {@link FileHandler}.
      * 
      * @param path the directory that you want the log to be stored in
      */
     public static synchronized void init(String path) {
-    	if (!exists) { // If we have never initialized the Logger
-    		Date d = Calendar.getInstance().getTime();
-    		String date = DATE.format(d), time = TIME.format(d);
-    		try {
-	    		if (!path.endsWith("/"))
-	    			path += "/";
-	    		
-	    		FileHandler fh = new FileHandler(path + "log_" + date + "T" + time + "Z" + ".txt");
-				LOGGER.setUseParentHandlers(false);
-		    	fh.setFormatter(FORMATTER);
-		    	LOGGER.addHandler(fh);
-		    	exists = true;
-			} catch (Exception e) {
-				// He's dead, Jim!
-			}
-    	}
+		Date d = Calendar.getInstance().getTime();
+		String date = DATE.format(d), time = TIME.format(d);
+		try {
+    		if (!path.startsWith("/"))
+    			path = "/" + path;
+    		
+    		handler = new FileHandler(path + "log_" + date + "T" + time + "Z" + ".txt");
+	    	handler.setFormatter(FORMATTER);
+	    	LOGGER.addHandler(handler);
+		} catch (Exception e) {
+			// He's dead, Jim!
+		}
     }
     
     /**
@@ -95,5 +94,15 @@ public class MercLogger {
     public static synchronized void logException(Exception e) {
     	LOGGER.log(Level.SEVERE, e.getMessage(), e);
     }
-
+    
+    /**
+     * <pre>
+     * public static synchronized void close()
+     * </pre>
+     * 
+     * Closes the Logger's current {@link FileHandler}
+     */
+    public static synchronized void close() {
+    	handler.close();
+    }
 }
