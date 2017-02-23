@@ -18,7 +18,7 @@ public class RunShooter extends Command {
 	private Shooter shooter;
 	private final double LOWEST_RPM = 3500;		//TODO Change this
 	private final double HIGHEST_RPM  = 5000;   //TODO CHange this
-	
+
 	/**
 	 * <pre>
 	 * public RunShooter(Shooter s)
@@ -44,18 +44,19 @@ public class RunShooter extends Command {
 		shooter.motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooter.motor.enableControl();
     	shooter.motor.reverseSensor(false);
-    	//Selectable
+    	shooter.resetHighLow();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
     	double speed = SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterRPM", 0) : 0.0;
-    		
+  
 
     	if (!SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": enableHighLow", false)) {
     		shooter.resetHighLow();
     	}
- 		
+    
+    	shooter.updateHighLow();
     	shooter.motor.set(speed);
     	if (!inRange(speed))
     		end();
@@ -76,10 +77,9 @@ public class RunShooter extends Command {
     protected void interrupted() {
     }
     
-
-    
+   
     public boolean inRange(double speed) {
     	return (speed > LOWEST_RPM && speed < HIGHEST_RPM);
     }
-    
+
 }

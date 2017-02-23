@@ -83,12 +83,6 @@ public class Robot extends IterativeRobot {
 		// Put some good data onto the SmartDashboard
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", chooser);
-		SmartDashboard.putData("PID", driveTrain);
-		SmartDashboard.putNumber("Angle", 0);
-		
-		SmartDashboard.putNumber("Left Enc Inches", 0);
-		SmartDashboard.putNumber("Right Enc Inches", 0);
-		SmartDashboard.putNumber("Ultrasonic", ultrasonic.getRange());
 		
 		changeLeftEnc = 0;
 		changeRightEnc = 0;
@@ -114,10 +108,6 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		driveTrain.resetEncoders();
-		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
-		SmartDashboard.putNumber("Ultrasonic", ultrasonic.getRange());
-		SmartDashboard.putNumber("Right Shooter Encoder" , rightShooter.motor.getEncPosition());
-		SmartDashboard.putNumber("Left Shooter Encoder", leftShooter.motor.getEncPosition());
 	}
 
 	/**
@@ -154,7 +144,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 	}
 
 	@Override
@@ -198,8 +187,6 @@ public class Robot extends IterativeRobot {
 		
 		System.out.println("GetDistance: " + visionProcessor.getDistance(VisionProcessor.TargetType.HIGH_GOAL));
 		System.out.println("GetAngle: " + visionProcessor.getAngleFromCenter(VisionProcessor.TargetType.HIGH_GOAL));
-		SmartDashboard.putNumber("Right Shooter " , rightShooter.motor.getEncPosition());
-		SmartDashboard.putNumber("Left Shooter", leftShooter.motor.getEncPosition());
 		
 		//SmartDashboard.putNumber("Gear Delivery Movements: distance", Utilities.round(DeliverGear.getAlignMovements()[0], 3));
 		//SmartDashboard.putNumber("Gear Delivery Movements: angle", Utilities.round(DeliverGear.getAlignMovements()[1], 3));

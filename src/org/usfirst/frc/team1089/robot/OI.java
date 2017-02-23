@@ -141,8 +141,7 @@ public class OI {
 		SmartDashboard.putData("Shot Selection : Dual Staggered", ShooterEnum.DUAL_STAGGERED_SHOOTER);*/
 		// Update the network tables with a notifier.
 		// This will update the table every 50 milliseconds, during every stage of the game. OISlow() updates every 500 milliseconds
-		new Notifier(() -> updateOI()).startPeriodic(0.050);
-		new Notifier(() -> updateOISlow()).startPeriodic(0.500);
+		new Notifier(() -> updateOI()).startPeriodic(0.500);
     }
 	
 	/**
@@ -157,8 +156,14 @@ public class OI {
 		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
+		SmartDashboard.putData("PID", Robot.driveTrain);
+		SmartDashboard.putNumber("Angle", 0);
+		SmartDashboard.putNumber("Left Enc Inches", 0);
+		SmartDashboard.putNumber("Right Enc Inches", 0);
 		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
 		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
+		SmartDashboard.putNumber("Shooter ID 7: Encoder Position" , Robot.rightShooter.motor.getEncPosition());
+		SmartDashboard.putNumber("Shooter ID 8: Encoder Position", Robot.leftShooter.motor.getEncPosition());
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Value", Robot.rightShooter.motor.getSpeed());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Value", Robot.leftShooter.motor.getSpeed());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Velocity", Robot.leftShooter.motor.getEncVelocity());
@@ -181,8 +186,6 @@ public class OI {
     	SmartDashboard.putNumber("Shooter ID 8: shooterVolts", 0.0);
     	SmartDashboard.putNumber("Shooter ID 8: LOWEST", Robot.leftShooter.getLowest());
 		SmartDashboard.putNumber("Shooter ID 8: HIGHEST", Robot.leftShooter.getHighest());
-		//SmartDashboard.putNumber("Encoder Value", Robot.shooter.motor.getSpeed());
-		//SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
 		SmartDashboard.putNumber("Ultrasonic", Robot.ultrasonic.getRange());
 	}
 	
