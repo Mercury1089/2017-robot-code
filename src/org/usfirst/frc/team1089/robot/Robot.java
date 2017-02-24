@@ -118,7 +118,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		MercLogger.init("/home/lvuser/log/auton");
+		MercLogger.createLog("/home/lvuser/log/auton");
 		autonomousCommand = new AutonCommand(oi.getStartPos(), DriverStation.getInstance().getAlliance()/*Alliance.Blue*/, oi.getStep3());
 		
 		/*
@@ -147,7 +147,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		MercLogger.init("/home/lvuser/log/teleop");
+		MercLogger.createLog("/home/lvuser/log/teleop");
 		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();

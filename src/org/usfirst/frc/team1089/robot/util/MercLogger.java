@@ -34,7 +34,6 @@ public class MercLogger {
     private static final Formatter FORMATTER = new Formatter() {
         @Override
         public String format(LogRecord record) {
-        	
             String output = "";
             
             // Format: [<real_time> / <match_time>] <log_level>: <message>
@@ -48,31 +47,37 @@ public class MercLogger {
 
     /**
      * <pre>
-     * public void init(String path)
+     * public static synchronized void createLog(String path)
      * </pre>
-     * Initializes the logger's {@link FileHandler}.
+     * 
+     * Creates a {@link FileHandler} to give to logger that
+     * handles outputting logs to a log file that it is in a specified folder.
      * 
      * @param path the directory that you want the log to be stored in
      */
-    public static synchronized void init(String path) {
-		Date d = Calendar.getInstance().getTime();
-		String date = DATE.format(d), time = TIME.format(d);
-		try {
-    		if (!path.startsWith("/"))
-    			path = "/" + path;
-    		
-    		handler = new FileHandler(path + "log_" + date + "T" + time + "Z" + ".txt");
-	    	handler.setFormatter(FORMATTER);
-	    	LOGGER.addHandler(handler);
-		} catch (Exception e) {
-			// He's dead, Jim!
-		}
+    public static synchronized void createLog(String path) {
+    	if (handler == null) {
+			Date d = Calendar.getInstance().getTime();
+			String date = DATE.format(d), time = TIME.format(d);
+			try {
+	    		if (!path.startsWith("/"))
+	    			path = "/" + path;
+	    		
+	    		handler = new FileHandler(path + "log_" + date + "T" + time + "Z" + ".txt");
+		    	handler.setFormatter(FORMATTER);
+		    	LOGGER.addHandler(handler);
+			} catch (Exception e) {
+				// He's dead, Jim!
+			}
+    	}
     }
     
     /**
      * <pre>
-     * public static void logMessage(Level lvl, String msg)
+     * public static synchronized void logMessage(Level lvl,
+     *                                            String msg)
      * </pre>
+     * 
      * Logs a message.
      * 
      * @param lvl the level of the log message
@@ -86,6 +91,7 @@ public class MercLogger {
      * <pre>
      * public static void logException(Exception e)
      * </pre>
+     * 
      * Logs an exception to the logfile.
      * This should only be used when an exception is thrown.
      * 
@@ -100,10 +106,15 @@ public class MercLogger {
      * public static synchronized void close()
      * </pre>
      * 
-     * Closes the Logger's current {@link FileHandler}
+     * Closes the Logger's current {@link FileHandler}, 
+     * removes it from the logger, 
+     * and nulls it.
      */
     public static synchronized void close() {
-    	if (handler != null)
+    	if (handler != null) {
     		handler.close();
+    		LOGGER.removeHandler(handler);
+    		handler = null;
+    	}
     }
 }
