@@ -50,7 +50,7 @@ public class StopShooter extends Command {
 	@Override
 	protected void end() {
 		MercLogger.logMessage(Level.INFO, "The Stop Shooter Command has ended.");
-		shooter.motor.disable();
+		shooter.getMotor().disable();
 	}
 
 	// Called when another command which requires one or more of the same

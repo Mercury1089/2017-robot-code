@@ -6,6 +6,7 @@ import org.usfirst.frc.team1089.robot.commands.ShootWithDistance;
 import org.usfirst.frc.team1089.robot.commands.TestShooter;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -16,8 +17,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * specifically controlling the speed of the motor of the shooter.
  */
 public class Shooter extends Subsystem implements PIDOutput{
-	public CANTalon motor;
+	
+	private CANTalon motor;
 	private double highest, lowest;
+
+	public static final double P = 0.7;
+	public static final double I = 0.0;
+	public static final double D = 0.2;
 
 	public enum ShooterEnum {
 		NO_SHOOTER,
@@ -30,6 +36,10 @@ public class Shooter extends Subsystem implements PIDOutput{
 	
 	public Shooter(int ID) {
 		motor = new CANTalon(ID);
+    	motor.enableBrakeMode(false);
+		motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		motor.reverseSensor(false);
+
 	}
 	
 	public void initDefaultCommand() {
@@ -44,6 +54,9 @@ public class Shooter extends Subsystem implements PIDOutput{
 		motor.set(output);
 	}
 
+	public CANTalon getMotor() {
+		return motor;
+	}
 	//For testing PID of the shooter
 	public double getHighest(){
     	return highest;
@@ -54,6 +67,18 @@ public class Shooter extends Subsystem implements PIDOutput{
 		return lowest;
 	}
 	
+	public void setToVbus() {
+    	motor.setPID(P, I, D);
+    	motor.changeControlMode(CANTalon.TalonControlMode.Speed);
+    	motor.configPeakOutputVoltage(12, -12);
+		motor.configNominalOutputVoltage(0,0);
+		motor.enableControl();
+	}
+	
+	public void setToSpeed() {
+		motor.disableControl();
+    	motor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+	}
 
 	public void updateHighLow() {
     	double magVal = motor.getEncPosition();

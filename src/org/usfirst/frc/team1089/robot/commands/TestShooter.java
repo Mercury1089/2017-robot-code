@@ -1,6 +1,9 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -9,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * @deprecated {@link RunShooter} does the same thing?
+ * Test the shooter with voltage instead of RPMs
  */
 public class TestShooter extends Command {
 
@@ -23,20 +26,14 @@ public class TestShooter extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	shooter.motor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-    	shooter.motor.enableBrakeMode(false);
-    	shooter.motor.configPeakOutputVoltage(12, -12);
-		shooter.motor.configNominalOutputVoltage(0,0);
-		shooter.motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shooter.motor.enableControl();
-
+    	shooter.setToVbus();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double volts = SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterVolts", 0) : 0.0;
+    	double volts = SmartDashboard.getBoolean("Shooter ID " + shooter.getMotor().getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.getMotor().getDeviceID() + ": shooterVolts", 0) : 0.0;
     	
-    	shooter.motor.set(volts);
+    	shooter.getMotor().set(volts);
    	}
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,7 +43,7 @@ public class TestShooter extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-		//MercLogger.logMessage(Level.INFO, "The Run Shooter Command has ended.");
+		MercLogger.logMessage(Level.INFO, "The Run Shooter Command has ended.");
     }
 
     // Called when another command which requires one or more of the same

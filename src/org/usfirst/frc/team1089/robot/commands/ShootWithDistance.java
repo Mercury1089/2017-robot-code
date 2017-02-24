@@ -15,24 +15,24 @@ public class ShootWithDistance extends RunShooter {
 	private double speed;
 	private double offset;
 	
-    public ShootWithDistance(Shooter s/*, double distanceFromTarget*/) {
+    public ShootWithDistance(Shooter s) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super(s);
     	shooter = s;
-    	distance = /*distanceFromTarget*/0;
+    	distance = 0;
     	speed = 0;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	super.initialize();
-    	//SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": distance", 0.0);
+    	//SmartDashboard.putNumber("Shooter ID " + shooter.getMotor().getDeviceID() + ": distance", 0.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	distance = SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.motor.getDeviceID() + ": distance", 0) : 0.0;
+    	distance = SmartDashboard.getBoolean("Shooter ID " + shooter.getMotor().getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.getMotor().getDeviceID() + ": distance", 0) : 0.0;
     	//distance -= 0.2;
     	offset = (14 - distance) / 28;
     	distance -= offset;
@@ -42,7 +42,7 @@ public class ShootWithDistance extends RunShooter {
     	if(distance < 6)
     		speed = 0;
     	
-    	shooter.motor.set(speed);
+    	shooter.getMotor().set(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

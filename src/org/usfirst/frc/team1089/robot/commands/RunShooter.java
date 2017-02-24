@@ -35,29 +35,21 @@ public class RunShooter extends Command {
 	
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
-    	shooter.motor.changeControlMode(CANTalon.TalonControlMode.Speed);
-    	shooter.motor.enableBrakeMode(false);
-    	shooter.motor.setPID(0.7, 0.0, 0.2);
-		shooter.motor.configPeakOutputVoltage(12, -12);
-		shooter.motor.configNominalOutputVoltage(0,0);
-		shooter.motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shooter.motor.enableControl();
-    	shooter.motor.reverseSensor(false);
+    	shooter.setToSpeed();
     	shooter.resetHighLow();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
-    	double speed = SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterRPM", 0) : 0.0;
+    	double speed = SmartDashboard.getBoolean("Shooter ID " + shooter.getMotor().getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.getMotor().getDeviceID() + ": shooterRPM", 0) : 0.0;
   
 
-    	if (!SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": enableHighLow", false)) {
+    	if (!SmartDashboard.getBoolean("Shooter ID " + shooter.getMotor().getDeviceID() + ": enableHighLow", false)) {
     		shooter.resetHighLow();
     	}
     
     	shooter.updateHighLow();
-    	shooter.motor.set(speed);
+    	shooter.getMotor().set(speed);
     	if (!inRange(speed))
     		end();
     	

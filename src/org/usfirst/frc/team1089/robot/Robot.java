@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
 		leftShooter = new Shooter(RobotMap.CAN.LEFT_SHOOTER_TALON_ID);			//TODO Change Talon Value
 		rightShooter = new Shooter(RobotMap.CAN.RIGHT_SHOOTER_TALON_ID);			//TODO Change Talon Value
 		//shooter = new Shooter(7);
-		leftShooter.motor.setInverted(true);
+		leftShooter.getMotor().setInverted(true);
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
@@ -95,8 +95,8 @@ public class Robot extends IterativeRobot {
 		driveTrain.getGyro().reset();
 		driveTrain.getGyro().calibrate();
 		driveTrain.getNAVX().reset();
-		leftShooter.motor.setEncPosition(0);
-		rightShooter.motor.setEncPosition(0);
+		leftShooter.getMotor().setEncPosition(0);
+		rightShooter.getMotor().setEncPosition(0);
 	}
 
 	@Override
