@@ -80,7 +80,7 @@ public class OI {
         //gamePadBtnX.whenPressed(new RunMotionProfile());     
         
         rightBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.RB);
-        rightBack.whenPressed(new DegreeRotate(180));
+        rightBack.whenPressed(new AutoShoot());
         
         leftBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
         leftBack.whenPressed(new DeliverGear());

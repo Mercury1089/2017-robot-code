@@ -28,9 +28,7 @@ public class DeliverGear extends CommandGroup {
     	CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE);
     	addSequential(calculateGearPath);
     	
-    	//addSequential(new DegreeRotate(calculateGearPath:getTheta));
     	addSequential(new DriveDistance(calculateGearPath::getDistance, 5.0));
-    	//Timer.delay(1);
     	addSequential(new DegreeRotate(calculateGearPath::getTheta));
     }
     
