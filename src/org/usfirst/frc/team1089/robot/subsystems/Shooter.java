@@ -31,7 +31,6 @@ public class Shooter extends Subsystem implements PIDOutput{
 		RIGHT_SHOOTER,
 		DUAL_SHOOTER,
 		DUAL_STAGGERED_SHOOTER
-		
 	}
 	
 	public Shooter(int ID) {
@@ -58,12 +57,11 @@ public class Shooter extends Subsystem implements PIDOutput{
 		return motor;
 	}
 	//For testing PID of the shooter
-	public double getHighest(){
-    	return highest;
-		
+	public double getHighest() {
+    	return highest;		
 	}
 	//For testing PID of the shooter
-	public double getLowest(){
+	public double getLowest() {
 		return lowest;
 	}
 	

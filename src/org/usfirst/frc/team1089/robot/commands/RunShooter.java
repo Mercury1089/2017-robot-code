@@ -23,7 +23,7 @@ public class RunShooter extends Command {
 	 * <pre>
 	 * public RunShooter(Shooter s)
 	 * </pre>
-	 * Creates this {@code RunShooter} command with the specifie
+	 * Creates this {@code RunShooter} command with the specific
 	 * {@code Shooter} to control
 	 * 
 	 * @param s the {@code Shooter} that this command will control 
@@ -42,7 +42,11 @@ public class RunShooter extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
     	double speed = SmartDashboard.getBoolean("Shooter ID " + shooter.getMotor().getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.getMotor().getDeviceID() + ": shooterRPM", 0) : 0.0;
-  
+ 
+    	if (speed == 0.0)
+    		shooter.getMotor().disableControl();
+    	else 
+    		shooter.getMotor().enableControl();
 
     	if (!SmartDashboard.getBoolean("Shooter ID " + shooter.getMotor().getDeviceID() + ": enableHighLow", false)) {
     		shooter.resetHighLow();
