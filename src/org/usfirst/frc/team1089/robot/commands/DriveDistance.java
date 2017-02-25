@@ -19,11 +19,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveDistance extends Command {
 
+	private static double MOVE_THRESHOLD = 0.05;
     private double distance;
     private double endPosL, endPosR;
     private double waitTime;
     private DoubleSupplier distanceSupplier = null;
-    private double maxV = 10.0;
+    private double maxV = 5.0;
     
     /**
      * <pre>
@@ -78,7 +79,8 @@ public class DriveDistance extends Command {
     	if (distanceSupplier != null) {
     		distance = distanceSupplier.getAsDouble() / 12;
     	}
-        endPosL = endPosR = Robot.driveTrain.feetToEncoderTicks(distance);
+        endPosL = Robot.driveTrain.feetToRevolutions(distance);
+        endPosR = -endPosL;
 
 		Robot.driveTrain.disableRobotDrive();
 		Robot.driveTrain.setToPosition();
@@ -96,13 +98,13 @@ public class DriveDistance extends Command {
 		Robot.driveTrain.getLeft().enableControl();
 		Robot.driveTrain.getRight().enableControl();
 		Robot.driveTrain.getLeft().set(endPosL);
-		Robot.driveTrain.getRight().set(-endPosR);
+		Robot.driveTrain.getRight().set(endPosR);
 		
 		SmartDashboard.putString("EndPosVals", endPosL + ", " + endPosR);
 		SmartDashboard.putString("DriveDistance: ", "Initialize");
 		
-		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
-		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
+		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.revolutionsToFeet(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
+		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.revolutionsToFeet(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
 		
 		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
@@ -117,20 +119,19 @@ public class DriveDistance extends Command {
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-   		double leftPos = Robot.driveTrain.getLeftEncoder();
-   		double rightPos = Robot.driveTrain.getRightEncoder();
+   		double leftPos = Robot.driveTrain.getLeft().get();
+   		double rightPos = Robot.driveTrain.getRight().get();
    		
 		SmartDashboard.putString("leftPos, rightPos", leftPos + ", " + rightPos);
 		SmartDashboard.putString("DriveDistance: ", "isFinished");
 
-   		if ((distance > 0 && leftPos < endPosL && rightPos < endPosR) 
-   				|| (distance < 0 && leftPos > endPosL && rightPos > endPosR)) {
-   			return false;
+		if ((leftPos > endPosL - MOVE_THRESHOLD && leftPos < endPosL + MOVE_THRESHOLD)
+				&& (rightPos > endPosR - MOVE_THRESHOLD && rightPos < endPosR + MOVE_THRESHOLD)) {
+			MercLogger.logMessage(Level.INFO, "DriveDistance.isFinished() will return true.");
+   			return true;
    		}
-
-		MercLogger.logMessage(Level.INFO, "DriveDistance.isFinished() will return true.");
    		
-    	return true;
+    	return false;
     }
 
     // Called once after isFinished returns true

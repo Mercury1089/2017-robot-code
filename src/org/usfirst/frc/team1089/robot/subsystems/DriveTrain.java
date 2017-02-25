@@ -46,7 +46,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     
     //private Encoder rightEnc, leftEnc;
     
-    private static final double GEAR_RATIO = 1, WHEEL_DIAMETER = 4 / 12;
+    private static final double GEAR_RATIO = 1, WHEEL_DIAMETER = 4.0 / 12.0;
     
 	public DriveTrain() {
 		
@@ -71,6 +71,9 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		rightBack.enableBrakeMode(true);
 		leftFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		rightFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+
+		leftFront.reverseOutput(true);
+		rightFront.reverseOutput(true);
 
 		// Configure back talons as followers.
 		leftBack.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -187,6 +190,14 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	
 	public double feetToEncoderTicks(double feet) {
 		return (MAG_ENCODER_TICKS_PER_REVOLUTION * GEAR_RATIO) / (Math.PI * WHEEL_DIAMETER) * feet;
+	}
+	
+	public double revolutionsToFeet(double revolutions) {
+		return revolutions * (Math.PI * WHEEL_DIAMETER);
+	}
+	
+	public double feetToRevolutions(double feet) {
+		return feet / (Math.PI * WHEEL_DIAMETER);
 	}
 	
 	public void setToVbus() {

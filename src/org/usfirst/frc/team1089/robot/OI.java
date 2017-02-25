@@ -66,7 +66,7 @@ public class OI {
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new DriveDistance(1.0));
+        gamePadBtnB.whenPressed(new DriveDistance(-3.0));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         gamePadBtnY.whenPressed(new  ToggleGearDelivery(true));
         
@@ -153,8 +153,8 @@ public class OI {
 	 */
 	public void updateOI() {
 		SmartDashboard.putNumber("Gyro", Robot.driveTrain.getGyro().getAngle());
-		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
-		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
+		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeft().get());
+		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRight().get());
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 		SmartDashboard.putData("PID", Robot.driveTrain);
 		SmartDashboard.putNumber("Angle", 0);
