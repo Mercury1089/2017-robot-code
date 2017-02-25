@@ -49,7 +49,7 @@ public class DriveDistance extends Command {
      * public DriveDistance(double distance)
      * </pre>
      * Creates this {@code Command} to drive the specified distance
-     * and wait 0 milliseconds after travelling the specified distance.
+     * and wait 0 milliseconds after traveling the specified distance.
      * 
      * @param distance the distance in inches to travel
      */

@@ -40,6 +40,9 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	rightFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);leftFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 	rightFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);*/
 	private AHRS navx;
+	
+	private final int MAG_ENCODER_TICKS_PER_REVOLUTION = 1024;
+	private final int QUAD_ENC_TICKS_PER_ROTATION = 1440;
     
     //private Encoder rightEnc, leftEnc;
     
@@ -185,11 +188,11 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	}
 	
 	public double encoderTicksToInches(double ticks) {
-		return (Math.PI * WHEEL_DIAMETER) / (1440 * GEAR_RATIO) * ticks;
+		return (Math.PI * WHEEL_DIAMETER) / (MAG_ENCODER_TICKS_PER_REVOLUTION * GEAR_RATIO) * ticks;
 	}
 	
 	public double inchesToEncoderTicks(double inches) {
-		return (1440 * GEAR_RATIO) / (Math.PI * WHEEL_DIAMETER) * inches;
+		return (MAG_ENCODER_TICKS_PER_REVOLUTION * GEAR_RATIO) / (Math.PI * WHEEL_DIAMETER) * inches;
 	}
 	
 	public void setToVbus() {
