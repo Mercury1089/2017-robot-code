@@ -41,12 +41,12 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	rightFront.changeControlMode(CANTalon.TalonControlMode.PercentVbus);*/
 	private AHRS navx;
 	
-	private final int MAG_ENCODER_TICKS_PER_REVOLUTION = 1024;
-	private final int QUAD_ENC_TICKS_PER_ROTATION = 1440;
+	private static final int MAG_ENCODER_TICKS_PER_REVOLUTION = 4096;
+	private static final int QUAD_ENC_TICKS_PER_ROTATION = 1440;
     
     //private Encoder rightEnc, leftEnc;
     
-    private final double GEAR_RATIO, WHEEL_DIAMETER;
+    private static final double GEAR_RATIO = 1, WHEEL_DIAMETER = 4 / 12;
     
 	public DriveTrain() {
 		
@@ -69,8 +69,8 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		rightFront.enableBrakeMode(true);
 		leftBack.enableBrakeMode(true);
 		rightBack.enableBrakeMode(true);
-		leftFront.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		rightFront.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		leftFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		rightFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 
 		// Configure back talons as followers.
 		leftBack.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -91,12 +91,6 @@ public class DriveTrain extends Subsystem implements PIDOutput{
         LiveWindow.addSensor("DriveTrain", "Nav-X", navx);
         LiveWindow.addActuator("DriveTrain", "LeftFront", leftFront);
         LiveWindow.addActuator("DriveTrain", "RightFront", rightFront);
-        
-        GEAR_RATIO = 1;
-        WHEEL_DIAMETER = 4;
-        /*getPIDController().disable();*/
-        
-        //A: In order to get their attention, you have to turn them on.
 	}
 	
 	public void enableRobotDrive() {
@@ -187,12 +181,12 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		return output;
 	}
 	
-	public double encoderTicksToInches(double ticks) {
+	public double encoderTicksToFeet(double ticks) {
 		return (Math.PI * WHEEL_DIAMETER) / (MAG_ENCODER_TICKS_PER_REVOLUTION * GEAR_RATIO) * ticks;
 	}
 	
-	public double inchesToEncoderTicks(double inches) {
-		return (MAG_ENCODER_TICKS_PER_REVOLUTION * GEAR_RATIO) / (Math.PI * WHEEL_DIAMETER) * inches;
+	public double feetToEncoderTicks(double feet) {
+		return (MAG_ENCODER_TICKS_PER_REVOLUTION * GEAR_RATIO) / (Math.PI * WHEEL_DIAMETER) * feet;
 	}
 	
 	public void setToVbus() {

@@ -66,7 +66,7 @@ public class OI {
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new DriveToWall(2));
+        gamePadBtnB.whenPressed(new DriveDistance(1.0));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         gamePadBtnY.whenPressed(new  ToggleGearDelivery(true));
         
@@ -160,8 +160,8 @@ public class OI {
 		SmartDashboard.putNumber("Angle", 0);
 		SmartDashboard.putNumber("Left Enc Inches", 0);
 		SmartDashboard.putNumber("Right Enc Inches", 0);
-		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
-		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
+		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
+		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Position" , Robot.rightShooter.getMotor().getEncPosition());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Position", Robot.leftShooter.getMotor().getEncPosition());
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Value", Robot.rightShooter.getMotor().getSpeed());

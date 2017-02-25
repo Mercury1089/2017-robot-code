@@ -100,6 +100,8 @@ public class Robot extends IterativeRobot {
 		driveTrain.getGyro().reset();
 		driveTrain.getGyro().calibrate();
 		driveTrain.getNAVX().reset();
+		driveTrain.getLeft().setEncPosition(0);
+		driveTrain.getRight().setEncPosition(0);
 		leftShooter.getMotor().setEncPosition(0);
 		rightShooter.getMotor().setEncPosition(0);
 		MercLogger.logMessage(Level.INFO, "Completed Disabled Init");
@@ -108,7 +110,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		driveTrain.resetEncoders();
 	}
 
 	/**

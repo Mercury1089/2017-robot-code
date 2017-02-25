@@ -41,7 +41,6 @@ public class DriveDistance extends Command {
         requires(Robot.driveTrain);
         this.distance = distance;
         this.waitTime = waitTime;
-        endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
     }
 
 	/**
@@ -77,13 +76,13 @@ public class DriveDistance extends Command {
     protected void initialize() {
     	MercLogger.logMessage(Level.INFO, "Entering DriveDistance.initialize()");
     	if (distanceSupplier != null) {
-    		distance = distanceSupplier.getAsDouble();
-    		endPosL = endPosR = Robot.driveTrain.inchesToEncoderTicks(distance);
+    		distance = distanceSupplier.getAsDouble() / 12;
     	}
+        endPosL = endPosR = Robot.driveTrain.feetToEncoderTicks(distance);
 
+		Robot.driveTrain.disableRobotDrive();
 		Robot.driveTrain.setToPosition();
 		Robot.driveTrain.resetEncoders();
-		Robot.driveTrain.disableRobotDrive();
     	
 		Robot.driveTrain.getLeft().setPID(1, 0, 0);
 		Robot.driveTrain.getRight().setPID(1, 0, 0);
@@ -94,16 +93,16 @@ public class DriveDistance extends Command {
 		Robot.driveTrain.getRight().configNominalOutputVoltage(0, 0);
 		
 
+		Robot.driveTrain.getLeft().enableControl();
+		Robot.driveTrain.getRight().enableControl();
 		Robot.driveTrain.getLeft().set(endPosL);
 		Robot.driveTrain.getRight().set(-endPosR);
 		
-		Robot.driveTrain.getLeft().enableControl();
-		Robot.driveTrain.getRight().enableControl();
 		SmartDashboard.putString("EndPosVals", endPosL + ", " + endPosR);
 		SmartDashboard.putString("DriveDistance: ", "Initialize");
 		
-		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
-		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
+		SmartDashboard.putNumber("Left Enc Inches", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
+		SmartDashboard.putNumber("Right Enc Inches", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
 		
 		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
@@ -140,8 +139,8 @@ public class DriveDistance extends Command {
     	Robot.driveTrain.setToVbus();
     	Robot.driveTrain.stop();
     	Robot.driveTrain.enableRobotDrive();
-    	SmartDashboard.putNumber("EncRFinal", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getRightEncoder()));
-    	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToInches(Robot.driveTrain.getLeftEncoder()));
+    	SmartDashboard.putNumber("EncRFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()));
+    	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()));
     	Robot.driveTrain.resetEncoders();
 		SmartDashboard.putString("DriveDistance: ", "end");
 		MercLogger.logMessage(Level.INFO, "The Drive Distance Command has ended.");
