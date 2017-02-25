@@ -42,6 +42,7 @@ public class CalculateGearPath extends InstantCommand {
     protected void initialize() {
 		getAlignMovements();
 		//getAlignMovementsOnAPoint();
+		MercLogger.logMessage(Level.INFO, "CalculateGearPath: Initialized");
     }
 	
     public double getDistance() {

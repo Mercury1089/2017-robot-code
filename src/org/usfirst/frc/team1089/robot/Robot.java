@@ -1,4 +1,6 @@
 package org.usfirst.frc.team1089.robot;
+import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
@@ -25,6 +27,10 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
+
+//Q: How many programmers does it take to change a light bulb?
+//Scroll down to find out!
+
 public class Robot extends IterativeRobot {
 
 	// Declare subsystems (public static so there is only ever one instance)
@@ -80,7 +86,7 @@ public class Robot extends IterativeRobot {
 		changeLeftEnc = 0;
 		changeRightEnc = 0;
 			
-		
+		MercLogger.logMessage(Level.INFO, "Completed Robot Init");
 	}
 
 	/**
@@ -96,6 +102,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.getNAVX().reset();
 		leftShooter.getMotor().setEncPosition(0);
 		rightShooter.getMotor().setEncPosition(0);
+		MercLogger.logMessage(Level.INFO, "Completed Disabled Init");
 	}
 
 	@Override
@@ -130,6 +137,8 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start(); 
+		
+		MercLogger.logMessage(Level.INFO, "Completed Auton Init");
 	}
 
 	/**
@@ -150,6 +159,8 @@ public class Robot extends IterativeRobot {
 		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		
+		MercLogger.logMessage(Level.INFO, "Completed Teleop Init");
 	}
 
 	/**
@@ -157,6 +168,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		//A: None, that's a hardware problem
+
+		
 		Scheduler.getInstance().run();
 		
 		oi.updateOI();

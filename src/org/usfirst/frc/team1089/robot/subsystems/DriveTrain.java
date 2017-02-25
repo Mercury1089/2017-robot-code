@@ -27,6 +27,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class DriveTrain extends Subsystem implements PIDOutput{
 
+	//Q: How are computers like men?
+	//Scroll down for the answer!
+		
     private AnalogGyro gyro;
     private CANTalon leftBack;
     private CANTalon rightBack;
@@ -89,6 +92,8 @@ public class DriveTrain extends Subsystem implements PIDOutput{
         GEAR_RATIO = 1;
         WHEEL_DIAMETER = 4;
         /*getPIDController().disable();*/
+        
+        //A: In order to get their attention, you have to turn them on.
 	}
 	
 	public void enableRobotDrive() {

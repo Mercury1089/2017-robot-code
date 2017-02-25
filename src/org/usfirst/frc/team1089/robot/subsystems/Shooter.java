@@ -18,6 +18,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Shooter extends Subsystem implements PIDOutput{
 	
+	//Programming is like sex:
+	//One mistake and you have to support it for the rest of your life.
+	
+	//Moral of the Story: Shoot your shots my guys
+	
 	private CANTalon motor;
 	private double highest, lowest;
 

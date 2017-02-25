@@ -47,7 +47,7 @@ public class DegreeRotate extends PIDCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.initialize()");
+    	//MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.initialize()");
     	if (_angleSupplier != null) {
     		_heading = _angleSupplier.getAsDouble();
     	}
@@ -57,6 +57,7 @@ public class DegreeRotate extends PIDCommand {
     	getPIDController().setInputRange(-180, 180);
     	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5
     	
+    	//Debugging Logs (delete if necessary)
     	MercLogger.logMessage(Level.INFO, "Before reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
     	Robot.driveTrain.getGyro().reset();
     	MercLogger.logMessage(Level.INFO, "After reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
@@ -68,6 +69,7 @@ public class DegreeRotate extends PIDCommand {
     	MercLogger.logMessage(Level.INFO, "New Set Point " + getPIDController().getSetpoint() + " degrees.");
 		//Debug.logMessage(Level.INFO, "The Degree Rotate Command has been initialized.");
 
+    	MercLogger.logMessage(Level.INFO, "DegreeRotate: Initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -86,12 +88,13 @@ public class DegreeRotate extends PIDCommand {
     	Robot.driveTrain.stop();
     	MercLogger.logMessage(Level.INFO, "Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
 		Robot.driveTrain.enableRobotDrive();
-		MercLogger.logMessage(Level.INFO, "The Degree Rotate Command has ended.");
+		MercLogger.logMessage(Level.INFO, "DegreeRotate: Completed");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	MercLogger.logMessage(Level.INFO, "CalculateGearPath: Interrupted");
     	end();
     }
 
