@@ -1,7 +1,10 @@
 	package org.usfirst.frc.team1089.robot.commands;
 
+import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -37,6 +40,7 @@ public class RunShooter extends Command {
     protected void initialize() {
     	shooter.setToSpeed();
     	shooter.resetHighLow();
+    	MercLogger.logMessage(Level.INFO, "RunShooter: Initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -66,11 +70,13 @@ public class RunShooter extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	MercLogger.logMessage(Level.INFO, "RunShooter: Completed");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	MercLogger.logMessage(Level.INFO, "RunShooter: Interrupted");
     }
     
    

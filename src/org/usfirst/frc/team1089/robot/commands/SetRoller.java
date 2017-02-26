@@ -1,6 +1,9 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.subsystems.Intake;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon;
 
@@ -27,6 +30,7 @@ public class SetRoller extends Command {
     	roller.motor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	roller.motor.enableBrakeMode(true);
     	roller.motor.enableControl();
+    	MercLogger.logMessage(Level.INFO, "SetRoller: Initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -41,10 +45,12 @@ public class SetRoller extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	MercLogger.logMessage(Level.INFO, "SetRoller: Completed");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	MercLogger.logMessage(Level.INFO, "SetRoller: Interrupted");
     }
 }
