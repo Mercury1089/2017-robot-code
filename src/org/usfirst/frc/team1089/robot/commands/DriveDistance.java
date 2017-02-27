@@ -134,7 +134,8 @@ public class DriveDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	MercLogger.logMessage(Level.INFO, "Entering DriveDistance.end()");
+    	//MercLogger.logMessage(Level.INFO, "Entering DriveDistance.end()");
+    	
     	Robot.driveTrain.setToVbus();
     	Robot.driveTrain.stop();
     	Robot.driveTrain.enableRobotDrive();
@@ -142,6 +143,7 @@ public class DriveDistance extends Command {
     	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()));
     	Robot.driveTrain.resetEncoders();
 		SmartDashboard.putString("DriveDistance: ", "end");
+		
 		MercLogger.logMessage(Level.INFO, "DriveDistance: Completed");
 
     }
@@ -149,7 +151,7 @@ public class DriveDistance extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     	MercLogger.logMessage(Level.INFO, "DriveDistance: Interrupted");
+    	end();
     }
 }
