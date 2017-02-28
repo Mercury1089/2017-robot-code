@@ -42,7 +42,7 @@ public class ToggleGearDelivery extends InstantCommand {
     protected void initialize() {
     	startTimeMillis = Robot.gear.getServoPosition() == position ? System.currentTimeMillis() - MOVE_DURATION_MILLISECONDS : System.currentTimeMillis();
     	Robot.gear.setServoPosition(position);
-    	MercLogger.logMessage(Level.INFO, "Initialize complete");
+    	MercLogger.logMessage(Level.INFO, "ToggleGearDelivery: Initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -58,12 +58,12 @@ public class ToggleGearDelivery extends InstantCommand {
 
     // Called once after isFinished returns true
     protected void end() {
-    	MercLogger.logMessage(Level.INFO, "End called.");
+    	MercLogger.logMessage(Level.INFO, "ToggleGearDelivery: Completed");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	MercLogger.logMessage(Level.INFO, "Interrupted called.");
+    	MercLogger.logMessage(Level.INFO, "ToggleGearDelivery: Interrupted");
     }
 }

@@ -18,13 +18,12 @@ public class CalculateHighGoalPath extends InstantCommand {
 	
 	/**
 	 * <pre>
-	 * public CalculateHighGoalPath(Direction direction)
+	 * public CalculateHighGoalPath()
 	 * </pre>
-	 * Creates an {@code InstantCommand} to generate the gear path. This is an InstantCommand that will run once and complete.
-	 * The command will calculate the distance and angles for optimal gear delivery. After this command runs, the values
-	 * can be accessed via getDistance(), getAngle(), getTheta() 
+	 * Creates an {@code InstantCommand} to generate the high goal path. This is an InstantCommand that will run once and complete.
+	 * The command will calculate the distance and angles for optimal high goal shooting. After this command runs, the values
+	 * can be accessed via getDistance(), getAngle()
 	 *
-	 * @param reverseMovement whether the approach is forward or reverse (e.g. front/back of robot)
 	 */
 	public CalculateHighGoalPath() {
 		distToMove = angleToTurn = 0.0;

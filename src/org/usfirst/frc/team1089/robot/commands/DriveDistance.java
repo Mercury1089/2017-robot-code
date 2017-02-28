@@ -75,7 +75,6 @@ public class DriveDistance extends Command {
 	
     // Called just before this Command runs the first time
     protected void initialize() {
-    	MercLogger.logMessage(Level.INFO, "Entering DriveDistance.initialize()");
     	if (distanceSupplier != null) {
     		distance = distanceSupplier.getAsDouble();
     	}
@@ -108,12 +107,12 @@ public class DriveDistance extends Command {
 		
 		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
-		MercLogger.logMessage(Level.INFO, "The Drive Distance Command has been initialized. Moving " + distance + " inches.");
+		
+		MercLogger.logMessage(Level.INFO, "DriveDistance: Initialized. Moving " + distance + "feet.");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
 		SmartDashboard.putString("DriveDistance: ", "Execute");
     }
     
@@ -127,7 +126,6 @@ public class DriveDistance extends Command {
 
 		if ((leftPos > endPosL - MOVE_THRESHOLD && leftPos < endPosL + MOVE_THRESHOLD)
 				&& (rightPos > endPosR - MOVE_THRESHOLD && rightPos < endPosR + MOVE_THRESHOLD)) {
-			MercLogger.logMessage(Level.INFO, "DriveDistance.isFinished() will return true.");
    			return true;
    		}
    		
@@ -136,7 +134,8 @@ public class DriveDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	MercLogger.logMessage(Level.INFO, "Entering DriveDistance.end()");
+    	//MercLogger.logMessage(Level.INFO, "Entering DriveDistance.end()");
+    	
     	Robot.driveTrain.setToVbus();
     	Robot.driveTrain.stop();
     	Robot.driveTrain.enableRobotDrive();
@@ -144,14 +143,15 @@ public class DriveDistance extends Command {
     	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()));
     	Robot.driveTrain.resetEncoders();
 		SmartDashboard.putString("DriveDistance: ", "end");
-		MercLogger.logMessage(Level.INFO, "The Drive Distance Command has ended.");
+		
+		MercLogger.logMessage(Level.INFO, "DriveDistance: Completed");
 
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	MercLogger.logMessage(Level.INFO, "DriveDistance: Interrupted");
     	end();
-		MercLogger.logMessage(Level.INFO, "The DriveDistance Command has been interrupted.");
     }
 }

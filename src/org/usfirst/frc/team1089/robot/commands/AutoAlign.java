@@ -30,7 +30,8 @@ public class AutoAlign extends DegreeRotate {
     // Called just before this Command runs the first time
     protected void initialize() {
     	super.initialize();
-    	MercLogger.logMessage(Level.INFO, "AutoAlign: Initialized with heading: " + _heading + " and target type: " + target);
+    	MercLogger.logMessage(Level.INFO, "AutoAlign: Initialized with heading: " + _heading);
+    	MercLogger.logMessage(Level.INFO, "AutoAlign: Initialized with targetType: " + target);
     }
 
     // Called repeatedly when this Command is scheduled to run

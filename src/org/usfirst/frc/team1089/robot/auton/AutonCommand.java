@@ -2,7 +2,9 @@ package org.usfirst.frc.team1089.robot.auton;
 
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
+import org.usfirst.frc.team1089.robot.commands.DeliverGear;
 import org.usfirst.frc.team1089.robot.commands.DriveDistance;
+import org.usfirst.frc.team1089.robot.commands.DriveToWall;
 import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
@@ -61,42 +63,45 @@ public class AutonCommand extends CommandGroup {
     	//Auton Step 1
     	addSequential(new DriveDistance(distances[0], 0.5));
     	if(!(truePos >= 4 && truePos <= 6)) {
-    		addSequential(new DegreeRotate(60 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
-    		addSequential(new DriveDistance((distances[1] - 2), 0.2));     	//-2 to be away from Gear Lift by 2 ft
+    		addSequential(new DegreeRotate(-120 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
+    		addSequential(new DriveDistance(-(distances[1] - 5), 0.2));     	//-5 to be away from Gear Lift by 5 ft ~ARBITRARY VALUE~
     	}
+    	
+    	addSequential(new DeliverGear());
     	addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
-    	addSequential(new DriveDistance(2, 0.3));					   	    //After auto aligning, drive forward to deliver gear
+    	addSequential(new DriveToWall(0.6));					   	    //After auto aligning, drive forward to deliver gear ~ARBITRARY VALUE~
     	addSequential(new ToggleGearDelivery(true));
     	
     	
     	//Auton Step 2
-    	addSequential(new DriveDistance(-40, 0.5));
+    	addSequential(new DriveDistance(6, 0.5));							// ARBITRARY VALUE
+    	addParallel(new ToggleGearDelivery(false));
     	addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
     	
     	//Auton Step 3
     	//FIXME many of these values are wrong
     	switch(choice) {
-    	case FAR_HOPPER:								//TODO make a far hopper sequence
+    	case FAR_HOPPER:								//TODO make a far hopper sequence and TODO Change some of these values 
     	case NEAR_HOPPER:
     		if(fieldPos == 1) {
     			addSequential(new DegreeRotate(120 * reversalFactor));
-    			addSequential(new DriveDistance(100));	
+    			addSequential(new DriveDistance(20));						// ARBITRARY VALUE
     			addSequential(new DegreeRotate(90 * reversalFactor));
-    			addSequential(new DriveDistance(-30));
+    			addSequential(new DriveDistance(-4));						// ARBITRARY VALUE
     		}
     		else if(fieldPos == 3){
     			addSequential(new DegreeRotate(-30 * reversalFactor));	
-    			addSequential(new DriveDistance(-60, 2.5));				//TODO Change these values
-    			addSequential(new DriveDistance(60));
-    			addSequential(new DegreeRotate(120));
+    			addSequential(new DriveDistance(-5, 2.5));					// ARBITRARY VALUE
+    			addSequential(new DriveDistance(5));						// ARBITRARY VALUE
+    			addSequential(new DegreeRotate(45));
     			addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL)));
     			//Shoot
     		}
     		break;
     	case TURN_SHOOT:
     		if(fieldPos == 1) {
-    			addSequential(new DegreeRotate(-110 * reversalFactor));
-    			addSequential(new DriveDistance(36, 0.5));
+    			addSequential(new DegreeRotate(150 * reversalFactor));		
+    			addSequential(new DriveDistance(5, 0.5));					// ARBITRARY VALUE
     		}
     		else if(fieldPos == 2) {
     			if(color.equals(Alliance.Red))

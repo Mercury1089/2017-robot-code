@@ -55,13 +55,13 @@ public class DriveToWall extends PIDCommand {
 
     // Called once after isFinished returns true
     protected void end() {
-    	MercLogger.logMessage(Level.INFO, "We have driven to the wall");
-    	System.out.println("Driven to wall!");
+    	MercLogger.logMessage(Level.INFO, "DriveToWall: Completed"); 
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	MercLogger.logMessage(Level.INFO, "DriveToWall: Interrupted");
     	end();
     }
 

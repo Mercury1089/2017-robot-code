@@ -20,9 +20,8 @@ public class DriveWithJoysticks extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveTrain.setToVbus();
-		//Debug.logMessage(Level.INFO, "The robot has returned to Driving With Joysticks.");
-    	MercLogger.logMessage(Level.INFO, "The robot has returned to Driving With Joysticks.");
-
+    	MercLogger.logMessage(Level.INFO, "DriveWithJoysticks: Enabled");
+    	//MercLogger.logMessage(Level.INFO, "The robot has returned to Driving With Joysticks.");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -39,14 +38,14 @@ public class DriveWithJoysticks extends Command {
     protected void end() {
     	Robot.driveTrain.stop();
 		//Debug.logMessage(Level.INFO, "The robot is no longer using Drive With Joysticks.");
-    	MercLogger.logMessage(Level.INFO, "The robot is no longer using Drive With Joysticks.");
-
+    	//MercLogger.logMessage(Level.INFO, "The robot is no longer using Drive With Joysticks.");
+    	MercLogger.logMessage(Level.INFO, "DriveWithJoysticks: Disabled");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	MercLogger.logMessage(Level.INFO, "Drive With Joysticks was interrupted");
+    	MercLogger.logMessage(Level.INFO, "DriveWithJoysticks: Interrupted");
     	end();
     }
 }

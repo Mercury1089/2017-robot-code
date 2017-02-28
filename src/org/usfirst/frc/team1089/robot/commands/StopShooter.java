@@ -31,7 +31,7 @@ public class StopShooter extends Command {
 	
 	@Override
 	protected void initialize() {
-		MercLogger.logMessage(Level.INFO, "The Stop Shooter Command has been initialized.");
+		MercLogger.logMessage(Level.INFO, "StopShooter: Initialized");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -49,13 +49,14 @@ public class StopShooter extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		MercLogger.logMessage(Level.INFO, "The Stop Shooter Command has ended.");
 		shooter.getMotor().disable();
+		MercLogger.logMessage(Level.INFO, "StopShooter: Completed");
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		MercLogger.logMessage(Level.INFO, "StopShooter: Interrupted");
 	}
 }

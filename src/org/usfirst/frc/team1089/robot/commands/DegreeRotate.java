@@ -24,24 +24,23 @@ public class DegreeRotate extends PIDCommand {
     	_heading = 0.0;
     	requires(Robot.driveTrain);
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
-    	
     }
     
     /**
-     * Construct a DegreeRotate command that gets it angle during initialize by calling
-     * the provided DoubleSupplier method
-     * @param angleSupplier The DoubleSupplier method to output the angle
+     * Construct a DegreeRotate command that gets its angle during initialize by calling
+     * the provided DoubleSupplier method.
+     * @param angleSupplier The DoubleSupplier method to output the angle.
      */
     public DegreeRotate(DoubleSupplier angleSupplier) {
     	this();
-    	MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.DegreeRotate(DoubleSupplier angleSupplier)");
     	_angleSupplier = angleSupplier;
+    	MercLogger.logMessage(Level.INFO, "DegreeRotate: Constructed using DegreeRotate(DoubleSupplier angleSupplier)");
 	}
     
-    public DegreeRotate (double heading) {
+    public DegreeRotate(double heading) {
     	this();
-    	MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.DegreeRotate(double heading)");
     	_heading = heading;
+    	MercLogger.logMessage(Level.INFO, "DegreeRotate: Constructed using DegreeRotate(double heading). _heading = " + _heading);
     }
     
 
@@ -61,7 +60,7 @@ public class DegreeRotate extends PIDCommand {
     	MercLogger.logMessage(Level.INFO, "Before reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
     	Robot.driveTrain.getGyro().reset();
     	MercLogger.logMessage(Level.INFO, "After reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
-    	//Timer.delay(10);
+    	//Timer.delay(10); 
     	
     	MercLogger.logMessage(Level.INFO, "Previous Set Point" + getPIDController().getSetpoint() + " degrees.");
     	
@@ -94,7 +93,7 @@ public class DegreeRotate extends PIDCommand {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	MercLogger.logMessage(Level.INFO, "CalculateGearPath: Interrupted");
+    	MercLogger.logMessage(Level.INFO, "DegreeRotate: Interrupted");
     	end();
     }
 

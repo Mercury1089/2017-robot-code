@@ -27,6 +27,7 @@ public class TestShooter extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	shooter.setToVbus();
+    	MercLogger.logMessage(Level.INFO, "TestShooter: Initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -43,12 +44,13 @@ public class TestShooter extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-		MercLogger.logMessage(Level.INFO, "The Run Shooter Command has ended.");
+    	MercLogger.logMessage(Level.INFO, "TestShooter: Completed");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	MercLogger.logMessage(Level.INFO, "TestShooter: Interrupted");
     	end();
     }
 
