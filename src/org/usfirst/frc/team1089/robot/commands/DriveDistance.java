@@ -24,7 +24,7 @@ public class DriveDistance extends Command {
     private double endPosL, endPosR;
     private double waitTime;
     private DoubleSupplier distanceSupplier = null;
-    private double maxV = 5.0;
+    private double maxV = 3.0;
     
     /**
      * <pre>
@@ -77,7 +77,7 @@ public class DriveDistance extends Command {
     protected void initialize() {
     	MercLogger.logMessage(Level.INFO, "Entering DriveDistance.initialize()");
     	if (distanceSupplier != null) {
-    		distance = distanceSupplier.getAsDouble() / 12;
+    		distance = distanceSupplier.getAsDouble();
     	}
         endPosL = Robot.driveTrain.feetToRevolutions(distance);
         endPosR = -endPosL;
@@ -86,8 +86,8 @@ public class DriveDistance extends Command {
 		Robot.driveTrain.setToPosition();
 		Robot.driveTrain.resetEncoders();
     	
-		Robot.driveTrain.getLeft().setPID(1, 0, 0);
-		Robot.driveTrain.getRight().setPID(1, 0, 0);
+		Robot.driveTrain.getLeft().setPID(0.4, 0, 0.05);
+		Robot.driveTrain.getRight().setPID(0.4, 0, 0.05);
 		
 		Robot.driveTrain.getLeft().configPeakOutputVoltage(maxV, -maxV);
 		Robot.driveTrain.getLeft().configNominalOutputVoltage(0, 0);

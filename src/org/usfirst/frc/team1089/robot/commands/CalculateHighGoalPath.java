@@ -39,7 +39,7 @@ public class CalculateHighGoalPath extends InstantCommand {
 	
     public double getDistance() {
     	MercLogger.logMessage(Level.INFO, "getDistance() : returning " + distToMove + " feet.");
-    	return distToMove * 12;
+    	return distToMove;
     }
     
     public double getAngle() {

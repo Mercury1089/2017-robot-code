@@ -47,7 +47,7 @@ public class CalculateGearPath extends InstantCommand {
 	
     public double getDistance() {
     	MercLogger.logMessage(Level.INFO, "getDistance() : returning " + distToMove * signedDirection + " feet.");
-    	return distToMove * signedDirection * 12;
+    	return distToMove * signedDirection;
     }
     
     public double getAngle() {
