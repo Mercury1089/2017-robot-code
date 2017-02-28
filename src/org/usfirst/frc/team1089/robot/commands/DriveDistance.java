@@ -141,6 +141,8 @@ public class DriveDistance extends Command {
     	Robot.driveTrain.enableRobotDrive();
     	SmartDashboard.putNumber("EncRFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()));
     	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()));
+    	MercLogger.logMessage(Level.INFO, "LeftEnc Reads: " + Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()) + 
+    			", RightEnc Reads: " + Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()));
     	Robot.driveTrain.resetEncoders();
 		SmartDashboard.putString("DriveDistance: ", "end");
 		

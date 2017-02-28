@@ -2,7 +2,7 @@ package org.usfirst.frc.team1089.robot.commands;
 
 import java.util.logging.Level;
 
-import org.usfirst.frc.team1089.robot.subsystems.Intake;
+import org.usfirst.frc.team1089.robot.subsystems.Feeder;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon;
@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SetRoller extends Command {
 
-	private Intake roller;
+	private Feeder roller;
 	private int speed;
 	
-    public SetRoller(Intake i, int s) {
+    public SetRoller(Feeder i, int s) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(i);

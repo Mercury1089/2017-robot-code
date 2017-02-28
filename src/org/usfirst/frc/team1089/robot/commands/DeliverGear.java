@@ -1,5 +1,8 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import org.usfirst.frc.team1089.robot.Robot;
+import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -30,6 +33,7 @@ public class DeliverGear extends CommandGroup {
     	
     	addSequential(new DriveDistance(calculateGearPath::getDistance, 5.0));
     	addSequential(new DegreeRotate(calculateGearPath::getTheta));
+    	//addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
     }
     
 }

@@ -6,7 +6,7 @@ import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1089.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team1089.robot.subsystems.Gear;
-import org.usfirst.frc.team1089.robot.subsystems.Intake;
+import org.usfirst.frc.team1089.robot.subsystems.Feeder;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.subsystems.Ultrasonic;
@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
 	public static VisionProcessor visionProcessor;
 	public static Ultrasonic ultrasonic;
 	public static Shooter leftShooter, rightShooter, shooter;
-	public static Intake intake;
+	public static Feeder rightFeeder, leftFeeder;
 	public static Gear gear;
 	public static OI oi;
 	
@@ -67,11 +67,13 @@ public class Robot extends IterativeRobot {
 		driveTrain = new DriveTrain();
 		gear = new Gear();
 		ultrasonic = new Ultrasonic();
-		intake = new Intake(RobotMap.CAN.INTAKE_TALON_ID);
+		rightFeeder = new Feeder(RobotMap.CAN.RIGHT_INTAKE_TALON_ID);
+		leftFeeder = new Feeder(RobotMap.CAN.LEFT_INTAKE_TALON_ID);
 		leftShooter = new Shooter(RobotMap.CAN.LEFT_SHOOTER_TALON_ID);			//TODO Change Talon Value
 		rightShooter = new Shooter(RobotMap.CAN.RIGHT_SHOOTER_TALON_ID);			//TODO Change Talon Value
 		//shooter = new Shooter(7);
 		leftShooter.getMotor().setInverted(true);
+		rightShooter.getMotor().setInverted(true);
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null

@@ -19,7 +19,7 @@ public class DegreeRotate extends PIDCommand {
 	private DoubleSupplier _angleSupplier = null;
 	
     protected DegreeRotate() {
-    	super(0.4, 0, 0.2);
+    	super(0.3, 0, 0.2);
     	MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.DegreeRotate()");
     	_heading = 0.0;
     	requires(Robot.driveTrain);
@@ -48,7 +48,7 @@ public class DegreeRotate extends PIDCommand {
     protected void initialize() {
     	//MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.initialize()");
     	if (_angleSupplier != null) {
-    		_heading = _angleSupplier.getAsDouble();
+    		_heading = _angleSupplier.getAsDouble() / 2;
     	}
     	Robot.driveTrain.disableRobotDrive();
     	getPIDController().setContinuous(true);

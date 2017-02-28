@@ -23,7 +23,7 @@ public class Shooter extends Subsystem implements PIDOutput{
 	
 	//Moral of the Story: Shoot your shots my guys
 	
-	private CANTalon motor;
+	public CANTalon motor;
 	private double highest, lowest;
 
 	public static final double P = 0.7;
@@ -47,8 +47,8 @@ public class Shooter extends Subsystem implements PIDOutput{
 	}
 	
 	public void initDefaultCommand() {
-		//setDefaultCommand(new RunShooter(this));
-		setDefaultCommand(new ShootWithDistance(this));
+		setDefaultCommand(new RunShooter(this));
+		//setDefaultCommand(new ShootWithDistance(this));
 		//setDefaultCommand(new TestShooter(this));
 	}
 	

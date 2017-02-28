@@ -34,7 +34,7 @@ public class CalculateGearPath extends InstantCommand {
 	 * @param reverseMovement whether the approach is forward or reverse (e.g. front/back of robot)
 	 */
 	public CalculateGearPath(Direction direction) {
-		signedDirection = direction == Direction.FORWARD ? 1.0 : -1.0;
+		signedDirection = direction == Direction.FORWARD ? -1.0 : 1.0;
 		distToMove = angleToTurn = theta = 0.0;
     }
 

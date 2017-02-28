@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Intake extends Subsystem {
+public class Feeder extends Subsystem {
 
 	public CANTalon motor;
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	public Intake(int ID) {
+	public Feeder(int ID) {
 		motor = new CANTalon(ID);
 	}
 	

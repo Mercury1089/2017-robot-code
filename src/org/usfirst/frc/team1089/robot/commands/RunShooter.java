@@ -1,10 +1,7 @@
 	package org.usfirst.frc.team1089.robot.commands;
 
-import java.util.logging.Level;
-
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
-import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -26,7 +23,7 @@ public class RunShooter extends Command {
 	 * <pre>
 	 * public RunShooter(Shooter s)
 	 * </pre>
-	 * Creates this {@code RunShooter} command with the specific
+	 * Creates this {@code RunShooter} command with the specifie
 	 * {@code Shooter} to control
 	 * 
 	 * @param s the {@code Shooter} that this command will control 
@@ -38,26 +35,35 @@ public class RunShooter extends Command {
 	
     // Called just before this Command runs the first time
     protected void initialize() {
-    	shooter.setToSpeed();
+    	
+    	shooter.motor.changeControlMode(CANTalon.TalonControlMode.Speed);
+    	shooter.motor.enableBrakeMode(false);
+    	shooter.motor.setPID(0.7, 0.0, 0.2);
+		shooter.motor.configPeakOutputVoltage(12, -12);
+		shooter.motor.configNominalOutputVoltage(0,0);
+		shooter.motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		shooter.motor.enableControl();
+    	shooter.motor.reverseSensor(false);
     	shooter.resetHighLow();
-    	MercLogger.logMessage(Level.INFO, "RunShooter: Initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
-    	double speed = SmartDashboard.getBoolean("Shooter ID " + shooter.getMotor().getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.getMotor().getDeviceID() + ": shooterRPM", 0) : 0.0;
- 
-    	if (speed == 0.0)
-    		shooter.getMotor().disableControl();
-    	else 
-    		shooter.getMotor().enableControl();
+    	double speed = SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterRPM", 0) : 0.0;
+  
 
-    	if (!SmartDashboard.getBoolean("Shooter ID " + shooter.getMotor().getDeviceID() + ": enableHighLow", false)) {
+    	if (!SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": enableHighLow", false)) {
     		shooter.resetHighLow();
     	}
     
     	shooter.updateHighLow();
-    	shooter.getMotor().set(speed);
+    	
+    	if (speed == 0) 
+    		shooter.motor.disableControl();
+    	else 
+    		shooter.motor.enableControl();
+    	
+    	shooter.motor.set(speed);
     	if (!inRange(speed))
     		end();
     	
@@ -70,13 +76,11 @@ public class RunShooter extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	MercLogger.logMessage(Level.INFO, "RunShooter: Completed");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	MercLogger.logMessage(Level.INFO, "RunShooter: Interrupted");
     }
     
    
