@@ -85,14 +85,13 @@ public class OI {
         leftBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
         leftBack.whenPressed(new DeliverGear());
         
-        rightStick4 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN4);
+/*        rightStick4 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN4);
         rightStick4.whenPressed(new SetRoller(Robot.rightFeeder, 1));
-
         rightStick5 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN5);
-        rightStick5.whenPressed(new SetRoller(Robot.rightFeeder, -1));
+        rightStick5.whenPressed(new ShootWithDistance(Robot.rightShooter, Robot.rightFeeder));
         
-        rightStick2 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN2);
-        rightStick2.whenPressed(new SetRoller(Robot.rightFeeder, 0));
+/*        rightStick2 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN2);
+        rightStick2.whenPressed(new SetRoller(Robot.rightFeeder, 0));*/
     	//// TRIGGERING COMMANDS WITH BUTTONS
     	// Once you have a button, it's trivial to bind it to a button in one of
     	// three ways:
@@ -161,6 +160,10 @@ public class OI {
 		SmartDashboard.putNumber("Right Enc Feet", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Value", Robot.rightShooter.motor.getSpeed());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Value", Robot.leftShooter.motor.getSpeed());
+		SmartDashboard.putNumber("Shooter ID 7: Encoder Position", Robot.rightShooter.motor.getPosition());
+		SmartDashboard.putNumber("Shooter ID 8: Encoder Position", Robot.leftShooter.motor.getPosition());
+		SmartDashboard.putNumber("Shooter ID 7: Encoder Value GET", Robot.rightShooter.motor.get());
+		SmartDashboard.putNumber("Shooter ID 8: Encoder Value GET", Robot.leftShooter.motor.get());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Velocity", Robot.leftShooter.motor.getEncVelocity());
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Velocity", Robot.rightShooter.motor.getEncVelocity());
 		SmartDashboard.putNumber("Shooter ID 7: Voltage", Robot.rightShooter.motor.getOutputVoltage());

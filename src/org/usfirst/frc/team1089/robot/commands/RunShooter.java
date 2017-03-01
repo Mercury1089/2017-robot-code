@@ -35,15 +35,7 @@ public class RunShooter extends Command {
 	
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
-    	shooter.motor.changeControlMode(CANTalon.TalonControlMode.Speed);
-    	shooter.motor.enableBrakeMode(false);
-    	shooter.motor.setPID(0.7, 0.0, 0.2);
-		shooter.motor.configPeakOutputVoltage(12, -12);
-		shooter.motor.configNominalOutputVoltage(0,0);
-		shooter.motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shooter.motor.enableControl();
-    	shooter.motor.reverseSensor(false);
+    	shooter.setToSpeed();
     	shooter.resetHighLow();
     }
 
@@ -64,9 +56,9 @@ public class RunShooter extends Command {
     		shooter.motor.enableControl();
     	
     	shooter.motor.set(speed);
+    	
     	if (!inRange(speed))
     		end();
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

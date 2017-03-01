@@ -48,7 +48,7 @@ public class DegreeRotate extends PIDCommand {
     protected void initialize() {
     	//MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.initialize()");
     	if (_angleSupplier != null) {
-    		_heading = _angleSupplier.getAsDouble() / 2;
+    		_heading = _angleSupplier.getAsDouble();
     	}
     	Robot.driveTrain.disableRobotDrive();
     	getPIDController().setContinuous(true);

@@ -4,6 +4,7 @@ import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
+import org.usfirst.frc.team1089.robot.util.Preferences;
 import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
@@ -46,8 +47,10 @@ public class CalculateGearPath extends InstantCommand {
     }
 	
     public double getDistance() {
-    	MercLogger.logMessage(Level.INFO, "getDistance() : returning " + distToMove * signedDirection + " feet.");
-    	return distToMove * signedDirection;
+    	MercLogger.logMessage(Level.INFO, "Calculated Distance : " + distToMove * signedDirection + " feet.");
+    	double fullDist = distToMove + Preferences.ROBOT_LENGTH_COMPETITION / 2.0;
+    	MercLogger.logMessage(Level.INFO, "getDistance() : returning " + fullDist * signedDirection + " feet.");
+    	return fullDist * signedDirection;
     }
     
     public double getAngle() {

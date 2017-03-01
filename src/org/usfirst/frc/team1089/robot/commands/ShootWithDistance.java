@@ -1,7 +1,10 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.subsystems.Feeder;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class ShootWithDistance extends RunShooter {
+public class ShootWithDistance extends Command {
 
 	private Shooter shooter;
 	private double distance;
@@ -20,7 +23,8 @@ public class ShootWithDistance extends RunShooter {
     public ShootWithDistance(Shooter s, Feeder f) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	super(s);
+    	requires(s);
+    	requires(f);
     	shooter = s;
     	distance = /*distanceFromTarget*/0;
     	speed = 0;
@@ -29,7 +33,7 @@ public class ShootWithDistance extends RunShooter {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	super.initialize();
+    	shooter.setToSpeed();
     	//SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": distance", 0.0);
     }
 
@@ -45,14 +49,18 @@ public class ShootWithDistance extends RunShooter {
     	if(distance < 6)
     		speed = 0;
     	
-    	if (speed == 0) 
+    	if (speed == 0) {
     		shooter.motor.disableControl();
-    	else 
+    		feeder.motor.set(0);
+    	}
+    	else {
     		shooter.motor.enableControl();
+    	}
     	
+    	SmartDashboard.putNumber("Encoder Set Speed", speed);
     	shooter.motor.set(speed);
     	
-    	if (shooter.motor.get() > (speed - 500) && shooter.motor.get() < (speed + 500)) 
+    	if (Math.abs(shooter.motor.getSpeed()) > (Math.pow(0.000004*speed,2) + .8737 * speed + 20.877 - 1000) && Math.abs(shooter.motor.getSpeed()) < (Math.pow(0.000004*speed,2) + .8737 * speed + 20.877 + 1000)) 
     		feeder.motor.set(1);
     	else
     		feeder.motor.set(0);
@@ -71,6 +79,7 @@ public class ShootWithDistance extends RunShooter {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+		MercLogger.logMessage(Level.INFO, "ShootWithDistance " + shooter.getMotor().getDeviceID() + " interrupted.");
     	super.interrupted();
     }
 }

@@ -1,9 +1,14 @@
 package org.usfirst.frc.team1089.robot.subsystems;
 
+import java.util.logging.Level;
+
+import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.RobotMap;
+import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1089.robot.commands.RunShooter;
 import org.usfirst.frc.team1089.robot.commands.ShootWithDistance;
 import org.usfirst.frc.team1089.robot.commands.TestShooter;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -16,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * This {@link Subsystem} handles the shooting mechanism,
  * specifically controlling the speed of the motor of the shooter.
  */
-public class Shooter extends Subsystem implements PIDOutput{
+public class Shooter extends Subsystem {
 	
 	//Programming is like sex:
 	//One mistake and you have to support it for the rest of your life.
@@ -47,15 +52,10 @@ public class Shooter extends Subsystem implements PIDOutput{
 	}
 	
 	public void initDefaultCommand() {
-		setDefaultCommand(new RunShooter(this));
-		//setDefaultCommand(new ShootWithDistance(this));
+		//setDefaultCommand(new RunShooter(this));
+		setDefaultCommand(new ShootWithDistance(this, Robot.rightFeeder));
 		//setDefaultCommand(new TestShooter(this));
-	}
-	
-	@Override
-	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		motor.set(output);
+		//setDefaultCommand(new ExampleCommand());
 	}
 
 	public CANTalon getMotor() {
@@ -70,17 +70,19 @@ public class Shooter extends Subsystem implements PIDOutput{
 		return lowest;
 	}
 	
-	public void setToVbus() {
+	public void setToSpeed() {
     	motor.setPID(P, I, D);
     	motor.changeControlMode(CANTalon.TalonControlMode.Speed);
     	motor.configPeakOutputVoltage(12, -12);
 		motor.configNominalOutputVoltage(0,0);
 		motor.enableControl();
+		MercLogger.logMessage(Level.INFO, "Shooter " + motor.getDeviceID() + " in Speed mode.");
 	}
 	
-	public void setToSpeed() {
+	public void setToVbus() {
 		motor.disableControl();
     	motor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		MercLogger.logMessage(Level.INFO, "Shooter " + motor.getDeviceID() + " in Vbus mode.");
 	}
 
 	public void updateHighLow() {
