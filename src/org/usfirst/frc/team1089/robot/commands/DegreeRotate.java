@@ -20,10 +20,10 @@ public class DegreeRotate extends PIDCommand {
 	
     protected DegreeRotate() {
     	super(0.3, 0, 0.2);
-    	MercLogger.logMessage(Level.INFO, "Entering DegreeRotate.DegreeRotate()");
     	_heading = 0.0;
     	requires(Robot.driveTrain);
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
+    	
     }
     
     /**
@@ -40,7 +40,7 @@ public class DegreeRotate extends PIDCommand {
     public DegreeRotate(double heading) {
     	this();
     	_heading = heading;
-    	MercLogger.logMessage(Level.INFO, "DegreeRotate: Constructed using DegreeRotate(double heading). _heading = " + _heading);
+    	MercLogger.logMessage(Level.INFO, "DegreeRotate: Constructed using DegreeRotate(double heading).");
     }
     
 
@@ -57,18 +57,18 @@ public class DegreeRotate extends PIDCommand {
     	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5
     	
     	//Debugging Logs (delete if necessary)
-    	MercLogger.logMessage(Level.INFO, "Before reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
+    	//MercLogger.logMessage(Level.INFO, "Before reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
     	Robot.driveTrain.getGyro().reset();
-    	MercLogger.logMessage(Level.INFO, "After reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
+    	//MercLogger.logMessage(Level.INFO, "After reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
     	//Timer.delay(10); 
     	
-    	MercLogger.logMessage(Level.INFO, "Previous Set Point" + getPIDController().getSetpoint() + " degrees.");
+    	//MercLogger.logMessage(Level.INFO, "Previous Set Point" + getPIDController().getSetpoint() + " degrees.");
     	
     	getPIDController().setSetpoint(_heading);
-    	MercLogger.logMessage(Level.INFO, "New Set Point " + getPIDController().getSetpoint() + " degrees.");
+    	//MercLogger.logMessage(Level.INFO, "New Set Point " + getPIDController().getSetpoint() + " degrees.");
 		//Debug.logMessage(Level.INFO, "The Degree Rotate Command has been initialized.");
 
-    	MercLogger.logMessage(Level.INFO, "DegreeRotate: Initialized");
+    	MercLogger.logMessage(Level.INFO, "DegreeRotate: Initialized with heading: " + _heading);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -25,6 +25,9 @@ public class AutoAlign extends DegreeRotate {
 			_heading = Robot.visionProcessor.angleHigh;
 		else
 			_heading = 0;
+		
+    	MercLogger.logMessage(Level.INFO, "AutoAlign: Constructed using AutoAlign(TargetType t)");
+
     }
 
     // Called just before this Command runs the first time

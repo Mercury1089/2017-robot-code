@@ -27,13 +27,17 @@ public class CalculateHighGoalPath extends InstantCommand {
 	 */
 	public CalculateHighGoalPath() {
 		distToMove = angleToTurn = 0.0;
+		MercLogger.logMessage(Level.INFO, "CalculateHighGoalPath: Constructed using CalculateHighGoalPath()");
+
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
 		getAlignMovements();
 		//getAlignMovementsOnAPoint();
-		MercLogger.logMessage(Level.INFO, "CalculateHighGoalPath: Initialized");
+		MercLogger.logMessage(Level.INFO, "CalculateHighGoalPath: Initialized with distToMove: " + distToMove + "feet");
+		MercLogger.logMessage(Level.INFO, "CalculateHighGoalPath: Initialized with angleToTurn: " + angleToTurn + "degrees");
+
     }
 	
     public double getDistance() {

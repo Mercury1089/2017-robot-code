@@ -24,9 +24,12 @@ public class StopShooter extends Command {
 	 * 
 	 * @param s the {@code Shooter} to stop
 	 */
-	public StopShooter(Shooter s){
+	public StopShooter(Shooter s) {
 		requires(s);
 		shooter = s;
+		
+    	MercLogger.logMessage(Level.INFO, "StopShooter: Constructed using StopShooter(Shooter s)");
+
 	}
 	
 	@Override

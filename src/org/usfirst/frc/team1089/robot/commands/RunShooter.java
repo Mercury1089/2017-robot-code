@@ -1,7 +1,10 @@
 	package org.usfirst.frc.team1089.robot.commands;
 
+import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -31,12 +34,17 @@ public class RunShooter extends Command {
 	public RunShooter(Shooter s) {
     	requires(s);
     	shooter = s;
+    	
+    	MercLogger.logMessage(Level.INFO, "RunShooter: Constructed using RunShooter(Shooter s)");
     }
 	
     // Called just before this Command runs the first time
     protected void initialize() {
     	shooter.setToSpeed();
     	shooter.resetHighLow();
+    	
+    	MercLogger.logMessage(Level.INFO, "RunShooter: Initialized");
+
     }
 
     // Called repeatedly when this Command is scheduled to run

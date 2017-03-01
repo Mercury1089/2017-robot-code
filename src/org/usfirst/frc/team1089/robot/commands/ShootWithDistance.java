@@ -29,12 +29,14 @@ public class ShootWithDistance extends Command {
     	distance = /*distanceFromTarget*/0;
     	speed = 0;
     	feeder = f;
+    	
+    	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Constructed using ShootWithDistance(Shooter s, Feeder f)");
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	MercLogger.logMessage(Level.INFO, "ShootWithDistance was initialized");
     	shooter.setToSpeed();
+    	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Initialized");
     	//SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": distance", 0.0);
     }
 
@@ -74,13 +76,14 @@ public class ShootWithDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Completed");
     	//super.end();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-		MercLogger.logMessage(Level.INFO, "ShootWithDistance " + shooter.getMotor().getDeviceID() + " interrupted.");
+		MercLogger.logMessage(Level.INFO, "ShootWithDistance: Shooter ID #" + shooter.getMotor().getDeviceID() + " Interrupted.");
     	//super.interrupted();
     }
 }

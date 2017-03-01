@@ -42,6 +42,10 @@ public class DriveDistance extends Command {
         requires(Robot.driveTrain);
         this.distance = distance;
         this.waitTime = waitTime;
+        
+        if (waitTime != 0)
+        	MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance, double waitTime)");
+
     }
 
 	/**
@@ -55,6 +59,8 @@ public class DriveDistance extends Command {
      */
 	public DriveDistance(double distance) {
 		this(distance, 0);
+		
+    	MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance)");
     }
 	
 	/**
@@ -68,9 +74,11 @@ public class DriveDistance extends Command {
 	 */
 	public DriveDistance(DoubleSupplier distanceSupplier, double maxV) {
 		this(0, 0.4);
-    	MercLogger.logMessage(Level.INFO, "Entering DriveDistance.DriveDistance()");
     	this.distanceSupplier = distanceSupplier;	
 		this.maxV = maxV;
+		
+    	MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(DoubleSupplier distanceSupplier, double maxV)");
+
 	}
 	
     // Called just before this Command runs the first time
@@ -108,7 +116,8 @@ public class DriveDistance extends Command {
 		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
 		
-		MercLogger.logMessage(Level.INFO, "DriveDistance: Initialized. Moving " + distance + "feet.");
+		MercLogger.logMessage(Level.INFO, "DriveDistance: Initialized with distance: " + distance + "feet.");
+		MercLogger.logMessage(Level.INFO, "DriveDistance: Initialized with waitTime: " + waitTime + "milliseconds.");
     }
 
     // Called repeatedly when this Command is scheduled to run

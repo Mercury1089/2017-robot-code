@@ -22,6 +22,9 @@ public class TestShooter extends Command {
     public TestShooter(Shooter s) {
     	requires(s);
         shooter = s;
+        
+    	MercLogger.logMessage(Level.INFO, "TestShooter: Constructed using TestShooter(Shooter s)");
+
     }
 
     // Called just before this Command runs the first time

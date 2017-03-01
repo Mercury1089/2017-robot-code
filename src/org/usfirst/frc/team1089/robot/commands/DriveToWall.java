@@ -36,10 +36,13 @@ public class DriveToWall extends PIDCommand {
     	getPIDController().setInputRange(0, 10);
     	getPIDController().setOutputRange(-.4, .4);
     	distanceFromWall = distance;
+    	
+    	MercLogger.logMessage(Level.INFO, "DriveToWall: Constructed using DriveToWall(double distance)");
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	MercLogger.logMessage(Level.INFO, "DriveToWall: Initialized with distanceFromWall: " + distanceFromWall + "feet.");
     	//Robot.ultrasonic.getUltrasonic().resetAccumulator();
     }
 

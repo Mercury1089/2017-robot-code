@@ -37,6 +37,8 @@ public class CalculateGearPath extends InstantCommand {
 	public CalculateGearPath(Direction direction) {
 		signedDirection = direction == Direction.FORWARD ? -1.0 : 1.0;
 		distToMove = angleToTurn = theta = 0.0;
+		
+		MercLogger.logMessage(Level.INFO, "CalculateGearPath: Constructed using CalculateGearPath(Direction direction)");
     }
 
     // Called just before this Command runs the first time
