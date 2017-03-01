@@ -65,8 +65,8 @@ public class DriveDistance extends Command {
      *        set in initialize()
      */
 	public DriveDistance(double distance, double waitTime, double maxV) {
-        this(distance);
         this.distance = distance;
+        this.waitTime = waitTime;
         this.maxV = maxV;
         MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance, double waitTime, double maxV)");
 
