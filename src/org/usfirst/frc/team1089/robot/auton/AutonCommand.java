@@ -1,11 +1,14 @@
 package org.usfirst.frc.team1089.robot.auton;
 
+import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.commands.AutoAlign;
 import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DeliverGear;
 import org.usfirst.frc.team1089.robot.commands.DriveDistance;
 import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
+import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -42,6 +45,8 @@ public class AutonCommand extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
+    	MercLogger.logMessage(Level.INFO, "AutonCommand CommandGroup: Started");
+    	
     	int truePos = startPos, fieldPos = 2;
 		DriverStation.getInstance().getAlliance();
 		//Red is switched; Blue is normal
@@ -60,6 +65,7 @@ public class AutonCommand extends CommandGroup {
     	else if(truePos > 6)
     		fieldPos = 3;
     	
+    	MercLogger.logMessage(Level.INFO, "AutonCommand: Auton Part 1 - Started");
     	//Auton Step 1
     	addSequential(new DriveDistance(distances[0], 0.3, 7.0));
     	if(!(truePos >= 4 && truePos <= 6)) {
@@ -69,55 +75,61 @@ public class AutonCommand extends CommandGroup {
     	
     	addSequential(new DeliverGear());
     	
-    	
+    	MercLogger.logMessage(Level.INFO, "AutonCommand: Auton Part 1 - Completed");
+
     	//Auton Step 2
+    	MercLogger.logMessage(Level.INFO, "AutonCommand: Auton Part 2 - Started");
     	addSequential(new DriveDistance(6, 0.1, 7.0));							// ARBITRARY VALUE
     	addParallel(new ToggleGearDelivery(false));
     	addSequential(new AutoAlign(TargetType.GEAR_VISION));
-    	
+    	MercLogger.logMessage(Level.INFO, "AutonCommand: Auton Part 2 - Completed");
+
     	//Auton Step 3
     	//FIXME many of these values are wrong
+    	MercLogger.logMessage(Level.INFO, "AutonCommand: Auton Part 3 - Started");
+
     	switch(choice) {
-    	case FAR_HOPPER:								//TODO make a far hopper sequence and TODO Change some of these values 
-    	case NEAR_HOPPER:
-    		if(fieldPos == 1) {
-    			addSequential(new DegreeRotate(120 * reversalFactor));
-    			addSequential(new DriveDistance(20));						// ARBITRARY VALUE
-    			addSequential(new DegreeRotate(90 * reversalFactor));
-    			addSequential(new DriveDistance(-4));						// ARBITRARY VALUE
-    		}
-    		else if(fieldPos == 3){
-    			addSequential(new DegreeRotate(-30 * reversalFactor));	
-    			addSequential(new DriveDistance(-5, 2.5));					// ARBITRARY VALUE
-    			addSequential(new DriveDistance(5));						// ARBITRARY VALUE
-    			addSequential(new DegreeRotate(45));
-    			addSequential(new AutoAlign(TargetType.GEAR_VISION));
-    			//Shoot
-    		}
-    		break;
-    	case TURN_SHOOT:
-    		if(fieldPos == 1) {
-    			addSequential(new DegreeRotate(150 * reversalFactor));		
-    			addSequential(new DriveDistance(5, 0.5));					// ARBITRARY VALUE
-    		}
-    		else if(fieldPos == 2) {
-    			if(color.equals(Alliance.Red))
-    				addSequential(new DegreeRotate(110));
-    			else
-    				addSequential(new DegreeRotate(-110));
-    		}
-    		else if(fieldPos == 3) {
-    			addSequential(new DegreeRotate(180 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
-    		}
-    		addSequential(new AutoAlign(TargetType.GEAR_VISION));
-    		//Shoot
-    		break;
-    	case STOP:
-    		Robot.driveTrain.stop();
-    		break;
-    	default:
-    		Robot.driveTrain.stop();
-    		break;
+	    	case FAR_HOPPER:								//TODO make a far hopper sequence and TODO Change some of these values 
+	    	case NEAR_HOPPER:
+	    		if(fieldPos == 1) {
+	    			addSequential(new DegreeRotate(120 * reversalFactor));
+	    			addSequential(new DriveDistance(20));						// ARBITRARY VALUE
+	    			addSequential(new DegreeRotate(90 * reversalFactor));
+	    			addSequential(new DriveDistance(-4));						// ARBITRARY VALUE
+	    		}
+	    		else if(fieldPos == 3){
+	    			addSequential(new DegreeRotate(-30 * reversalFactor));	
+	    			addSequential(new DriveDistance(-5, 2.5));					// ARBITRARY VALUE
+	    			addSequential(new DriveDistance(5));						// ARBITRARY VALUE
+	    			addSequential(new DegreeRotate(45));
+	    			addSequential(new AutoAlign(TargetType.GEAR_VISION));
+	    			//Shoot
+	    		}
+	    		break;
+	    	case TURN_SHOOT:
+	    		if(fieldPos == 1) {
+	    			addSequential(new DegreeRotate(150 * reversalFactor));		
+	    			addSequential(new DriveDistance(5, 0.5));					// ARBITRARY VALUE
+	    		}
+	    		else if(fieldPos == 2) {
+	    			if(color.equals(Alliance.Red))
+	    				addSequential(new DegreeRotate(110));
+	    			else
+	    				addSequential(new DegreeRotate(-110));
+	    		}
+	    		else if(fieldPos == 3) {
+	    			addSequential(new DegreeRotate(180 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
+	    		}
+	    		addSequential(new AutoAlign(TargetType.GEAR_VISION));
+	    		//Shoot
+	    		break;
+	    	case STOP:
+	    		Robot.driveTrain.stop();
+	    		break;
+	    	default:
+	    		Robot.driveTrain.stop();
+	    		break;
     	}
+    	MercLogger.logMessage(Level.INFO, "AutonCommand CommandGroup: Completed");
     }
 }
