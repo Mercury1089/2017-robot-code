@@ -160,24 +160,22 @@ public class OI {
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 		SmartDashboard.putNumber("Left Enc Feet", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
 		SmartDashboard.putNumber("Right Enc Feet", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
-		SmartDashboard.putNumber("Shooter ID 7: Encoder Value", Robot.rightShooter.motor.getSpeed());
-		SmartDashboard.putNumber("Shooter ID 8: Encoder Value", Robot.leftShooter.motor.getSpeed());
+		SmartDashboard.putNumber("Shooter ID 7: Encoder Speed", Robot.rightShooter.motor.getSpeed());
+		SmartDashboard.putNumber("Shooter ID 8: Encoder Speed", Robot.leftShooter.motor.getSpeed());
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Position", Robot.rightShooter.motor.getPosition());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Position", Robot.leftShooter.motor.getPosition());
-		SmartDashboard.putNumber("Shooter ID 7: Encoder Value GET", Robot.rightShooter.motor.get());
-		SmartDashboard.putNumber("Shooter ID 8: Encoder Value GET", Robot.leftShooter.motor.get());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Velocity", Robot.leftShooter.motor.getEncVelocity());
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Velocity", Robot.rightShooter.motor.getEncVelocity());
 		SmartDashboard.putNumber("Shooter ID 7: Voltage", Robot.rightShooter.motor.getOutputVoltage());
 		SmartDashboard.putNumber("Shooter ID 8: Voltage", Robot.leftShooter.motor.getOutputVoltage());
 		SmartDashboard.putNumber("Shooter ID 7: Current", Robot.rightShooter.motor.getOutputCurrent());
 		SmartDashboard.putNumber("Shooter ID 8: Current", Robot.leftShooter.motor.getOutputCurrent());
-		//SmartDashboard.putNumber("Encoder Value", Robot.shooter.motor.getSpeed());
-		//SmartDashboard.putString("Mag Enc MODE", " " + Robot.shooter.motor.getControlMode());
 		SmartDashboard.putNumber("Ultrasonic", Robot.ultrasonic.getRange());
 	}
 	
 	public void updateOISlow() {
+		CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE);
+		
 		SmartDashboard.putNumber("Distance to gear lift using vertical values", Utilities.round(Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.GEAR_VISION), 3));
 		SmartDashboard.putNumber("Distance to gear lift using horizontal values", Utilities.round(Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.GEAR_VISION), 3));
 		SmartDashboard.putNumber("Distance to high goal using vertical values", Utilities.round(Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL), 3));
@@ -191,9 +189,8 @@ public class OI {
 		SmartDashboard.putNumber("Distance to gear lift using horizontal and vertical average", Utilities.round(Robot.visionProcessor.getAverageDistanceUsingHorAndVerDistances(TargetType.GEAR_VISION), 3));
 		SmartDashboard.putNumber("Distance to high goal using horizontal and vertical average", Utilities.round(Robot.visionProcessor.getAverageDistanceUsingHorAndVerDistances(TargetType.HIGH_GOAL), 3));
 		SmartDashboard.putNumber("Distance to gear lift using average of both targets", Utilities.round(Robot.visionProcessor.getAverageDistanceToGearTargets(), 3));
-/*		CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE);
-		SmartDashboard.putNumber("Gear Path distance", calculateGearPath::getDistance);
-		SmartDashboard.putNumber("Gear Path theta", (calculateGearPath::getTheta);*/
+		SmartDashboard.putNumber("Gear Path Distance", calculateGearPath.getDistance());
+		SmartDashboard.putNumber("Gear Path Theta", calculateGearPath.getTheta());
 	}
 
 

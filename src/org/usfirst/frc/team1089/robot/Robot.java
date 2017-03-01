@@ -67,12 +67,10 @@ public class Robot extends IterativeRobot {
 		driveTrain = new DriveTrain();
 		gear = new Gear();
 		ultrasonic = new Ultrasonic();
-		rightFeeder = new Feeder(RobotMap.CAN.RIGHT_INTAKE_TALON_ID);
-		leftFeeder = new Feeder(RobotMap.CAN.LEFT_INTAKE_TALON_ID);
-		leftShooter = new Shooter(RobotMap.CAN.LEFT_SHOOTER_TALON_ID);			//TODO Change Talon Value
-		rightShooter = new Shooter(RobotMap.CAN.RIGHT_SHOOTER_TALON_ID);			//TODO Change Talon Value
+		leftShooter = new Shooter(RobotMap.CAN.LEFT_SHOOTER_TALON_ID, RobotMap.CAN.LEFT_FEEDER_TALON_ID);			
+		rightShooter = new Shooter(RobotMap.CAN.RIGHT_SHOOTER_TALON_ID, RobotMap.CAN.RIGHT_FEEDER_TALON_ID);			
 		//shooter = new Shooter(7);
-		leftShooter.getMotor().setInverted(true);
+		leftShooter.getMotor().setInverted(true);		//TODO Check if they are inverted or not
 		rightShooter.getMotor().setInverted(true);
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
@@ -171,7 +169,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		//A: None, that's a hardware problem
+		//A: None, that's a hardware problem!
 
 		
 		Scheduler.getInstance().run();

@@ -95,6 +95,8 @@ public class DriveTrain extends Subsystem implements PIDOutput{
         LiveWindow.addActuator("DriveTrain", "LeftFront", leftFront);
         LiveWindow.addActuator("DriveTrain", "RightFront", rightFront);
 	}
+
+	//A: You need to turn them on to get their attention!
 	
 	public void enableRobotDrive() {
 		robotDrive.setSafetyEnabled(true);
