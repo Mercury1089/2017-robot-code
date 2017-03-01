@@ -53,7 +53,7 @@ public class Shooter extends Subsystem {
 	
 	public void initDefaultCommand() {
 		//setDefaultCommand(new RunShooter(this));
-		setDefaultCommand(new ShootWithDistance(this, Robot.rightFeeder));
+		//setDefaultCommand(new ShootWithDistance(this, Robot.rightFeeder));
 		//setDefaultCommand(new TestShooter(this));
 		//setDefaultCommand(new ExampleCommand());
 	}
@@ -71,8 +71,8 @@ public class Shooter extends Subsystem {
 	}
 	
 	public void setToSpeed() {
+		motor.changeControlMode(CANTalon.TalonControlMode.Speed);
     	motor.setPID(P, I, D);
-    	motor.changeControlMode(CANTalon.TalonControlMode.Speed);
     	motor.configPeakOutputVoltage(12, -12);
 		motor.configNominalOutputVoltage(0,0);
 		motor.enableControl();

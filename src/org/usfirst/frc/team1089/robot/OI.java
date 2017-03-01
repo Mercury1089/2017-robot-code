@@ -2,6 +2,7 @@ package org.usfirst.frc.team1089.robot;
 
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.commands.*;
+import org.usfirst.frc.team1089.robot.commands.CalculateGearPath.Direction;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
 import org.usfirst.frc.team1089.robot.util.Utilities;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
@@ -87,8 +88,9 @@ public class OI {
         
 /*        rightStick4 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN4);
         rightStick4.whenPressed(new SetRoller(Robot.rightFeeder, 1));
+*/
         rightStick5 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN5);
-        rightStick5.whenPressed(new ShootWithDistance(Robot.rightShooter, Robot.rightFeeder));
+        rightStick5.whenPressed(new CalculateGearPath(Direction.REVERSE));
         
 /*        rightStick2 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN2);
         rightStick2.whenPressed(new SetRoller(Robot.rightFeeder, 0));*/
@@ -189,6 +191,9 @@ public class OI {
 		SmartDashboard.putNumber("Distance to gear lift using horizontal and vertical average", Utilities.round(Robot.visionProcessor.getAverageDistanceUsingHorAndVerDistances(TargetType.GEAR_VISION), 3));
 		SmartDashboard.putNumber("Distance to high goal using horizontal and vertical average", Utilities.round(Robot.visionProcessor.getAverageDistanceUsingHorAndVerDistances(TargetType.HIGH_GOAL), 3));
 		SmartDashboard.putNumber("Distance to gear lift using average of both targets", Utilities.round(Robot.visionProcessor.getAverageDistanceToGearTargets(), 3));
+/*		CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE);
+		SmartDashboard.putNumber("Gear Path distance", calculateGearPath::getDistance);
+		SmartDashboard.putNumber("Gear Path theta", (calculateGearPath::getTheta);*/
 	}
 
 

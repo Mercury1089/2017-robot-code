@@ -33,6 +33,7 @@ public class ShootWithDistance extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	MercLogger.logMessage(Level.INFO, "ShootWithDistance was initialized");
     	shooter.setToSpeed();
     	//SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": distance", 0.0);
     }
@@ -57,7 +58,7 @@ public class ShootWithDistance extends Command {
     		shooter.motor.enableControl();
     	}
     	
-    	SmartDashboard.putNumber("Encoder Set Speed", speed);
+    	SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": Encoder Set Speed", speed);
     	shooter.motor.set(speed);
     	
     	if (Math.abs(shooter.motor.getSpeed()) > (Math.pow(0.000004*speed,2) + .8737 * speed + 20.877 - 1000) && Math.abs(shooter.motor.getSpeed()) < (Math.pow(0.000004*speed,2) + .8737 * speed + 20.877 + 1000)) 
@@ -73,13 +74,13 @@ public class ShootWithDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	super.end();
+    	//super.end();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
 		MercLogger.logMessage(Level.INFO, "ShootWithDistance " + shooter.getMotor().getDeviceID() + " interrupted.");
-    	super.interrupted();
+    	//super.interrupted();
     }
 }
