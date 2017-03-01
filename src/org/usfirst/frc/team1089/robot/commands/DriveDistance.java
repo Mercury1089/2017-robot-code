@@ -47,6 +47,30 @@ public class DriveDistance extends Command {
         	MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance, double waitTime)");
 
     }
+	
+	/**
+     * <pre>
+     * public DriveDistance(double distance,
+     *                      double waitTime,
+     *                      double maxV)
+     * </pre>
+     * Creates this {@code Command} to drive the specified distance
+     * and to wait the specified amount of milliseconds after the distance has been traveled
+     * while moving with a certain maximum voltage.
+     * 
+     * @param distance the distance in inches to travel
+     * @param waitTime the amount of time to wait in seconds
+     *        after the distance has been driven
+     * @param maxV the maximum voltage of the talons while driving forward, 
+     *        set in initialize()
+     */
+	public DriveDistance(double distance, double waitTime, double maxV) {
+        this(distance);
+        this.distance = distance;
+        this.maxV = maxV;
+        MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance, double waitTime, double maxV)");
+
+    }
 
 	/**
      * <pre>
@@ -147,6 +171,7 @@ public class DriveDistance extends Command {
     	
     	Robot.driveTrain.setToVbus();
     	Robot.driveTrain.stop();
+    	Timer.delay(waitTime);
     	Robot.driveTrain.enableRobotDrive();
     	SmartDashboard.putNumber("EncRFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()));
     	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()));

@@ -39,7 +39,9 @@ public class DeliverGear extends CommandGroup {
     	
     	addSequential(new DriveDistance(calculateGearPath::getDistance, 5.0));
     	addSequential(new DegreeRotate(calculateGearPath::getTheta));
-    	//addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
+    	addSequential(new AutoAlign(TargetType.GEAR_VISION));
+    	addSequential(new DriveToWall(1.75));
+    	addSequential(new ToggleGearDelivery(true));
     	
     	MercLogger.logMessage(Level.INFO, "DeliverGear CommandGroup: Completed");
 

@@ -1,10 +1,10 @@
 package org.usfirst.frc.team1089.robot.auton;
 
 import org.usfirst.frc.team1089.robot.Robot;
+import org.usfirst.frc.team1089.robot.commands.AutoAlign;
 import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DeliverGear;
 import org.usfirst.frc.team1089.robot.commands.DriveDistance;
-import org.usfirst.frc.team1089.robot.commands.DriveToWall;
 import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
@@ -61,22 +61,19 @@ public class AutonCommand extends CommandGroup {
     		fieldPos = 3;
     	
     	//Auton Step 1
-    	addSequential(new DriveDistance(distances[0], 0.5));
+    	addSequential(new DriveDistance(distances[0], 0.3, 7.0));
     	if(!(truePos >= 4 && truePos <= 6)) {
     		addSequential(new DegreeRotate(-120 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
-    		addSequential(new DriveDistance(-(distances[1] - 5), 0.2));     	//-5 to be away from Gear Lift by 5 ft ~ARBITRARY VALUE~
+    		addSequential(new DriveDistance(-(distances[1] - 4), 0.2, 5.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
     	}
     	
     	addSequential(new DeliverGear());
-    	addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
-    	addSequential(new DriveToWall(0.6));					   	    //After auto aligning, drive forward to deliver gear ~ARBITRARY VALUE~
-    	addSequential(new ToggleGearDelivery(true));
     	
     	
     	//Auton Step 2
-    	addSequential(new DriveDistance(6, 0.5));							// ARBITRARY VALUE
+    	addSequential(new DriveDistance(6, 0.1, 7.0));							// ARBITRARY VALUE
     	addParallel(new ToggleGearDelivery(false));
-    	addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION)));
+    	addSequential(new AutoAlign(TargetType.GEAR_VISION));
     	
     	//Auton Step 3
     	//FIXME many of these values are wrong
@@ -94,7 +91,7 @@ public class AutonCommand extends CommandGroup {
     			addSequential(new DriveDistance(-5, 2.5));					// ARBITRARY VALUE
     			addSequential(new DriveDistance(5));						// ARBITRARY VALUE
     			addSequential(new DegreeRotate(45));
-    			addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL)));
+    			addSequential(new AutoAlign(TargetType.GEAR_VISION));
     			//Shoot
     		}
     		break;
@@ -112,10 +109,15 @@ public class AutonCommand extends CommandGroup {
     		else if(fieldPos == 3) {
     			addSequential(new DegreeRotate(180 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
     		}
-    		addSequential(new DegreeRotate(Robot.visionProcessor.getAngleFromCenter(TargetType.HIGH_GOAL)));
+    		addSequential(new AutoAlign(TargetType.GEAR_VISION));
     		//Shoot
     		break;
-    		
+    	case STOP:
+    		Robot.driveTrain.stop();
+    		break;
+    	default:
+    		Robot.driveTrain.stop();
+    		break;
     	}
     }
 }
