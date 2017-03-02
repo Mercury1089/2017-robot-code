@@ -28,7 +28,7 @@ public class Shooter extends Subsystem {
 	
 	//Moral of the Story: Shoot your shots my guys
 	
-	public CANTalon motor;
+	public CANTalon motor, feederMotor;
 	private double highest, lowest;
 
 	public static final double P = 0.7;
@@ -43,17 +43,18 @@ public class Shooter extends Subsystem {
 		DUAL_STAGGERED_SHOOTER
 	}
 	
-	public Shooter(int ID) {
-		motor = new CANTalon(ID);
+	public Shooter(int shooterID, int feederID) {
+		motor = new CANTalon(shooterID);
     	motor.enableBrakeMode(false);
 		motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		motor.reverseSensor(false);
-
+		feederMotor = new CANTalon(feederID);
+		feederMotor.enableBrakeMode(true);
 	}
 	
 	public void initDefaultCommand() {
 		//setDefaultCommand(new RunShooter(this));
-		//setDefaultCommand(new ShootWithDistance(this, Robot.rightFeeder));
+		setDefaultCommand(new ShootWithDistance(this));
 		//setDefaultCommand(new TestShooter(this));
 		//setDefaultCommand(new ExampleCommand());
 	}
