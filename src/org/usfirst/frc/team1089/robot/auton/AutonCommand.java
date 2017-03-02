@@ -45,8 +45,6 @@ public class AutonCommand extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	MercLogger.logMessage(Level.INFO, "AutonCommand CommandGroup: Started");
-    	
     	int truePos = startPos, fieldPos = 2;
 		DriverStation.getInstance().getAlliance();
 		//Red is switched; Blue is normal
@@ -65,7 +63,6 @@ public class AutonCommand extends CommandGroup {
     	else if(truePos > 6)
     		fieldPos = 3;
     	
-    	MercLogger.logMessage(Level.INFO, "AutonCommand: Auton Part 1 - Started");
     	//Auton Step 1
     	addSequential(new DriveDistance(distances[0], 0.3, 7.0));
     	if(!(truePos >= 4 && truePos <= 6)) {
@@ -74,19 +71,14 @@ public class AutonCommand extends CommandGroup {
     	}
     	
     	addSequential(new DeliverGear());
-    	
-    	MercLogger.logMessage(Level.INFO, "AutonCommand: Auton Part 1 - Completed");
 
     	//Auton Step 2
-    	MercLogger.logMessage(Level.INFO, "AutonCommand: Auton Part 2 - Started");
     	addSequential(new DriveDistance(6, 0.1, 7.0));							// ARBITRARY VALUE
     	addParallel(new ToggleGearDelivery(false));
     	addSequential(new AutoAlign(TargetType.GEAR_VISION));
-    	MercLogger.logMessage(Level.INFO, "AutonCommand: Auton Part 2 - Completed");
 
     	//Auton Step 3
     	//FIXME many of these values are wrong
-    	MercLogger.logMessage(Level.INFO, "AutonCommand: Auton Part 3 - Started");
 
     	switch(choice) {
 	    	case FAR_HOPPER:								//TODO make a far hopper sequence and TODO Change some of these values 
@@ -130,6 +122,5 @@ public class AutonCommand extends CommandGroup {
 	    		Robot.driveTrain.stop();
 	    		break;
     	}
-    	MercLogger.logMessage(Level.INFO, "AutonCommand CommandGroup: Completed");
     }
 }
