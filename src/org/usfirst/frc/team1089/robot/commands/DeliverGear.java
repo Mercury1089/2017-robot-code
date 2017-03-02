@@ -29,9 +29,6 @@ public class DeliverGear extends CommandGroup {
 	 * </ol>
 	 */
     public DeliverGear() {
-    	
-    	MercLogger.logMessage(Level.INFO, "DeliverGear CommandGroup: Started");
-
     	// Instantiate CalculateGearPath before adding it to the sequence so we have a reference to the
     	// distance and angle methods, so we can pass them to DriveDistance and DegreeRotate.
     	CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE);
@@ -42,9 +39,5 @@ public class DeliverGear extends CommandGroup {
     	addSequential(new AutoAlign(TargetType.GEAR_VISION));
     	addSequential(new DriveToWall(1.75));
     	addSequential(new ToggleGearDelivery(true));
-    	
-    	MercLogger.logMessage(Level.INFO, "DeliverGear CommandGroup: Completed");
-
     }
-    
 }

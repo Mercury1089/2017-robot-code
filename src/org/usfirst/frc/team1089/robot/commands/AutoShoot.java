@@ -29,15 +29,10 @@ public class AutoShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	MercLogger.logMessage(Level.INFO, "AutoShoot CommandGroup: Started");
-    	
     	CalculateHighGoalPath CalculateHighGoalPath = new CalculateHighGoalPath();
     	addSequential(CalculateHighGoalPath);
     	
     	//addSequential(new DriveDistance(CalculateHighGoalPath::getDistance, 5.0));
     	addSequential(new DegreeRotate(CalculateHighGoalPath::getAngle));
-    	
-    	MercLogger.logMessage(Level.INFO, "AutoShoot CommandGroup: Completed");
-
-    }
+   }
 }
