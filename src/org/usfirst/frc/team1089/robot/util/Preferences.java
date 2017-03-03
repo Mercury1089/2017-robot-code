@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
  *
  */
 public class Preferences {
-	public static final int ROBOT_LENGTH_COMPETITION = 40, ROBOT_LENGTH_PROTO = 33;
-	public static final int ROBOT_WIDTH_COMPETITION = 36, ROBOT_WIDTH_PROTO = 32;
+	public static final int ROBOT_LENGTH_COMPETITION = 40 / 12, ROBOT_LENGTH_PROTO = 33 / 12;
+	public static final int ROBOT_WIDTH_COMPETITION = 36 / 12, ROBOT_WIDTH_PROTO = 32 / 12;
 	private final NetworkTable NT;
 	
 	public Preferences() {

@@ -60,8 +60,11 @@ public class MercLogger {
 			Date d = Calendar.getInstance().getTime();
 			String date = DATE.format(d), time = TIME.format(d);
 			try {
-	    		if (!path.startsWith("/"))
+				if (!path.startsWith("/"))
 	    			path = "/" + path;
+	    		
+				
+	    		
 	    		
 	    		handler = new FileHandler(path + "log_" + date + "T" + time + "Z" + ".txt");
 		    	handler.setFormatter(FORMATTER);

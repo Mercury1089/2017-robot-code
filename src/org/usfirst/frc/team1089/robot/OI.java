@@ -67,7 +67,7 @@ public class OI {
         //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new DriveToWall(2));
+        gamePadBtnB.whenPressed(new DriveDistance(2));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         gamePadBtnY.whenPressed(new  ToggleGearDelivery(true));
         
@@ -84,7 +84,7 @@ public class OI {
         rightBack.whenPressed(new DegreeRotate(60));
         
         leftBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
-        leftBack.whenPressed(new DeliverGear());
+        leftBack.whenPressed(new DeliverGear());        
         
 /*        rightStick4 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN4);
         rightStick4.whenPressed(new SetRoller(Robot.rightFeeder, 1));
@@ -143,7 +143,7 @@ public class OI {
 		// Update the network tables with a notifier.
 		// This will update the table every 50 milliseconds, during every stage of the game. OISlow() updates every 500 milliseconds
 		new Notifier(() -> updateOI()).startPeriodic(0.050);
-		new Notifier(() -> updateOISlow()).startPeriodic(0.500);
+		//new Notifier(() -> updateOISlow()).startPeriodic(0.500);
     }
 	
 	/**
@@ -162,6 +162,8 @@ public class OI {
 		SmartDashboard.putNumber("Right Enc Feet", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Speed", Robot.rightShooter.motor.getSpeed());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Speed", Robot.leftShooter.motor.getSpeed());
+		SmartDashboard.putNumber("Shooter ID 7: Encoder GET", Robot.rightShooter.motor.get());
+		SmartDashboard.putNumber("Shooter ID 8: Encoder GET", Robot.leftShooter.motor.get());
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Position", Robot.rightShooter.motor.getPosition());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Position", Robot.leftShooter.motor.getPosition());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Velocity", Robot.leftShooter.motor.getEncVelocity());
@@ -173,8 +175,8 @@ public class OI {
 		SmartDashboard.putNumber("Ultrasonic", Robot.ultrasonic.getRange());
 	}
 	
-	public void updateOISlow() {
-		CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE);
+	/*public void updateOISlow() {
+		//CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE);
 		
 		SmartDashboard.putNumber("Distance to gear lift using vertical values", Utilities.round(Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.GEAR_VISION), 3));
 		SmartDashboard.putNumber("Distance to gear lift using horizontal values", Utilities.round(Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.GEAR_VISION), 3));
@@ -191,7 +193,7 @@ public class OI {
 		SmartDashboard.putNumber("Distance to gear lift using average of both targets", Utilities.round(Robot.visionProcessor.getAverageDistanceToGearTargets(), 3));
 		SmartDashboard.putNumber("Gear Path Distance", calculateGearPath.getDistance());
 		SmartDashboard.putNumber("Gear Path Theta", calculateGearPath.getTheta());
-	}
+	}*/
 
 
     public Joystick getLeftStick() {

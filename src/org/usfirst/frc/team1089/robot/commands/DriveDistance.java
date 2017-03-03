@@ -24,7 +24,7 @@ public class DriveDistance extends Command {
     private double endPosL, endPosR;
     private double waitTime;
     private DoubleSupplier distanceSupplier = null;
-    private double maxV = 3.0;
+    private double maxV = 7.0;
     
     /**
      * <pre>
@@ -171,7 +171,7 @@ public class DriveDistance extends Command {
     	
     	Robot.driveTrain.setToVbus();
     	Robot.driveTrain.stop();
-    	Timer.delay(waitTime);
+    	//Timer.delay(waitTime);
     	Robot.driveTrain.enableRobotDrive();
     	SmartDashboard.putNumber("EncRFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()));
     	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()));

@@ -119,6 +119,8 @@ public class CalculateGearPath extends InstantCommand {
     	MercLogger.logMessage(Level.INFO, "distToMove is: " + distToMove);
     	
     	theta *= reversalFactor;
+    	if(theta > 0) 
+    		theta = 90 - theta;
     	MercLogger.logMessage(Level.INFO, "theta is: " + theta);
     	
     	//Return. Congratulations! You have made it.

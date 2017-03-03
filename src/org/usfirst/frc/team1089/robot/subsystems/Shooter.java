@@ -31,10 +31,13 @@ public class Shooter extends Subsystem {
 	public CANTalon motor, feederMotor;
 	private double highest, lowest;
 
-	public static final double P = 0.7;
+	public static final double F = 0.1;
+	public static final double P = 0.2; // 0.7
 	public static final double I = 0.0;
-	public static final double D = 0.2;
+	public static final double D = 0.0; // 0.2
 
+	private static final int QUAD_ENC_TICKS_PER_ROTATION = 32;
+	
 	public enum ShooterEnum {
 		NO_SHOOTER,
 		LEFT_SHOOTER,
@@ -47,7 +50,9 @@ public class Shooter extends Subsystem {
 		motor = new CANTalon(shooterID);
     	motor.enableBrakeMode(false);
 		motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		motor.configEncoderCodesPerRev(QUAD_ENC_TICKS_PER_ROTATION);
 		motor.reverseSensor(false);
+		
 		feederMotor = new CANTalon(feederID);
 		feederMotor.enableBrakeMode(true);
 	}
@@ -73,7 +78,10 @@ public class Shooter extends Subsystem {
 	
 	public void setToSpeed() {
 		motor.changeControlMode(CANTalon.TalonControlMode.Speed);
-    	motor.setPID(P, I, D);
+    	motor.setP(P);
+    	motor.setI(I);
+    	motor.setD(D);
+    	motor.setF(F);
     	motor.configPeakOutputVoltage(12, -12);
 		motor.configNominalOutputVoltage(0,0);
 		motor.enableControl();

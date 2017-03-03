@@ -42,7 +42,6 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	private AHRS navx;
 	
 	private static final int MAG_ENCODER_TICKS_PER_REVOLUTION = 4096;
-	private static final int QUAD_ENC_TICKS_PER_ROTATION = 1440;
     
     //private Encoder rightEnc, leftEnc;
     

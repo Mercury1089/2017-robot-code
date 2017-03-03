@@ -16,7 +16,7 @@ public class ShootWithDistance extends Command {
 	private double distance;
 	private double speed;
 	private double offset;
-	private final int SPEED_THRESHOLD = 750;
+	private final int SPEED_THRESHOLD = 500;
 	
     public ShootWithDistance(Shooter s) {
         // Use requires() here to declare subsystem dependencies
@@ -41,29 +41,38 @@ public class ShootWithDistance extends Command {
     	distance = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.motor.getDeviceID() + ": shooterIsRunning",
     			false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.motor.getDeviceID() + ": distance", 0) : 0.0;
     	//distance -= 0.2;
-    	offset = (14 - distance) / 28;
-    	distance -= offset;
+    	//offset = (14 - distance) / 28;
+    	//distance -= offset;
     	
-    	speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;
-    	speed = speed/29.1585*10051;
+/*    	speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;
+    	speed = speed/29.1585*10051(.9459*6021);		//XXX Attempt at converting big boy to little enc
+*/    	
+    	
+    	
     	if(distance < 6)
     		speed = 0;
+    	else {
+    		speed=(distance-6)/8*6000;
+    	}
     	
     	if (speed == 0) {
-    		shooterSystem.motor.disableControl();
+//    		shooterSystem.motor.disableControl();
     		shooterSystem.feederMotor.set(0);
     	}
-    	else {
-    		shooterSystem.motor.enableControl();
-    	}
+//    	else {
+//    		shooterSystem.motor.enableControl();
+//    	}
     	
     	SmartDashboard.putNumber("Shooter ID " + shooterSystem.motor.getDeviceID() + ": Encoder Set Speed", speed);
     	shooterSystem.motor.set(speed);
     	
     	
     	//TODO Test what the encoder gets vs. what we set
-    	if (Math.abs(shooterSystem.motor.getSpeed()) > (/*Math.pow(0.000004*speed,2) + */.8737 * speed + 20.877 - SPEED_THRESHOLD)
-    			&& Math.abs(shooterSystem.motor.getSpeed()) < (/*Math.pow(0.000004*speed,2) +*/ .8737 * speed + 20.877 + SPEED_THRESHOLD)) { 
+    	/*if (Math.abs(shooterSystem.motor.getSpeed()) > (Math.pow(0.000004*speed,2) + .8737 * speed + 20.877 - SPEED_THRESHOLD)
+    			&& Math.abs(shooterSystem.motor.getSpeed()) < (Math.pow(0.000004*speed,2) + .8737 * speed + 20.877 + SPEED_THRESHOLD)) { 
+    	*/
+    	if (Math.abs(shooterSystem.motor.getSpeed()) > speed - SPEED_THRESHOLD
+    			&& Math.abs(shooterSystem.motor.getSpeed()) < speed + SPEED_THRESHOLD) { 
     	
     		shooterSystem.feederMotor.set(1);
     	}
