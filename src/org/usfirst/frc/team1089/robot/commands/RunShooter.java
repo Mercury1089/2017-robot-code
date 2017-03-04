@@ -49,21 +49,21 @@ public class RunShooter extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
-    	double speed = SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.motor.getDeviceID() + ": shooterRPM", 0) : 0.0;
+    	double speed = SmartDashboard.getBoolean("Shooter ID " + shooter.shooterMotor.getDeviceID() + ": shooterIsRunning", false) ? SmartDashboard.getNumber("Shooter ID " + shooter.shooterMotor.getDeviceID() + ": shooterRPM", 0) : 0.0;
   
 
-    	if (!SmartDashboard.getBoolean("Shooter ID " + shooter.motor.getDeviceID() + ": enableHighLow", false)) {
+    	if (!SmartDashboard.getBoolean("Shooter ID " + shooter.shooterMotor.getDeviceID() + ": enableHighLow", false)) {
     		shooter.resetHighLow();
     	}
     
     	shooter.updateHighLow();
     	
     	if (speed == 0) 
-    		shooter.motor.disableControl();
+    		shooter.shooterMotor.disableControl();
     	else 
-    		shooter.motor.enableControl();
+    		shooter.shooterMotor.enableControl();
     	
-    	shooter.motor.set(speed);
+    	shooter.shooterMotor.set(speed);
     	
     	if (!inRange(speed))
     		end();

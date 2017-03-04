@@ -4,6 +4,8 @@ import java.util.logging.Level;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,7 +18,7 @@ public class ShootWithDistance extends Command {
 	private double distance;
 	private double speed;
 	private double offset;
-	private final int SPEED_THRESHOLD = 500;
+	private final int SPEED_THRESHOLD = 200;
 	
     public ShootWithDistance(Shooter s) {
         // Use requires() here to declare subsystem dependencies
@@ -32,14 +34,19 @@ public class ShootWithDistance extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	shooterSystem.setToSpeed();
+    	
     	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Initialized");
     	//SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": distance", 0.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	distance = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.motor.getDeviceID() + ": shooterIsRunning",
-    			false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.motor.getDeviceID() + ": distance", 0) : 0.0;
+ 
+/*    	shooterSystem.shooterMotor.set(1);
+    	shooterSystem.feederMotor.set(0);*/
+    	
+    	distance = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooterIsRunning",
+    			false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": distance", 0) : 0.0;
     	//distance -= 0.2;
     	//offset = (14 - distance) / 28;
     	//distance -= offset;
@@ -47,38 +54,34 @@ public class ShootWithDistance extends Command {
 /*    	speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;
     	speed = speed/29.1585*10051(.9459*6021);		//XXX Attempt at converting big boy to little enc
 */    	
-    	
-    	
+  	
     	if(distance < 6)
     		speed = 0;
     	else {
-    		speed=(distance-6)/8*6000;
+    		speed=(distance-6)/8*5000;
     	}
     	
-    	if (speed == 0) {
-//    		shooterSystem.motor.disableControl();
-    		shooterSystem.feederMotor.set(0);
+    	if(speed != shooterSystem.getSetSpeed()) {
+        	if (speed == 0) {
+        		shooterSystem.runFeeder(false);;
+        	}
+        	SmartDashboard.putNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": Encoder Set Speed", speed);
+        	shooterSystem.setSpeed(speed);    		
     	}
-//    	else {
-//    		shooterSystem.motor.enableControl();
-//    	}
-    	
-    	SmartDashboard.putNumber("Shooter ID " + shooterSystem.motor.getDeviceID() + ": Encoder Set Speed", speed);
-    	shooterSystem.motor.set(speed);
     	
     	
     	//TODO Test what the encoder gets vs. what we set
-    	/*if (Math.abs(shooterSystem.motor.getSpeed()) > (Math.pow(0.000004*speed,2) + .8737 * speed + 20.877 - SPEED_THRESHOLD)
-    			&& Math.abs(shooterSystem.motor.getSpeed()) < (Math.pow(0.000004*speed,2) + .8737 * speed + 20.877 + SPEED_THRESHOLD)) { 
-    	*/
-    	if (Math.abs(shooterSystem.motor.getSpeed()) > speed - SPEED_THRESHOLD
-    			&& Math.abs(shooterSystem.motor.getSpeed()) < speed + SPEED_THRESHOLD) { 
+//    	if (Math.abs(shooterSystem.shooterMotor.getSpeed()) > /*(Math.pow(0.000004*speed,2)*/ + .8737 * speed + 20.877 - SPEED_THRESHOLD
+//    			&& Math.abs(shooterSystem.shooterMotor.getSpeed()) < /*(Math.pow(0.000004*speed,2)*/ + .8737 * speed + 20.877 + SPEED_THRESHOLD) { 
     	
-    		shooterSystem.feederMotor.set(1);
+    	if (Math.abs(shooterSystem.getSpeed()) > speed - SPEED_THRESHOLD
+    			&& Math.abs(shooterSystem.getSpeed()) < speed + SPEED_THRESHOLD) { 
+    	
+    		shooterSystem.runFeeder(true);
     	}
     	
     	else
-    		shooterSystem.feederMotor.set(0);
+    		shooterSystem.runFeeder(false);
     }
     
     // Make this return true when this Command no longer needs to run execute()

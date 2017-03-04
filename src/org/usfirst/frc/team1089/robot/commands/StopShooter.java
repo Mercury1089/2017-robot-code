@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1089.robot.commands;
 
 import java.util.logging.Level;
-
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
@@ -34,13 +33,14 @@ public class StopShooter extends Command {
 	
 	@Override
 	protected void initialize() {
+		shooter.setSpeed(0);
+		shooter.runFeeder(false);
 		MercLogger.logMessage(Level.INFO, "StopShooter: Initialized");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		end();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -61,5 +61,6 @@ public class StopShooter extends Command {
 	@Override
 	protected void interrupted() {
 		MercLogger.logMessage(Level.INFO, "StopShooter: Interrupted");
+		end();
 	}
 }

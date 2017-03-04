@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1089.robot.subsystems;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
@@ -7,6 +8,7 @@ import org.usfirst.frc.team1089.robot.RobotMap;
 import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1089.robot.commands.RunShooter;
 import org.usfirst.frc.team1089.robot.commands.ShootWithDistance;
+import org.usfirst.frc.team1089.robot.commands.StopShooter;
 import org.usfirst.frc.team1089.robot.commands.TestShooter;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 
@@ -28,15 +30,18 @@ public class Shooter extends Subsystem {
 	
 	//Moral of the Story: Shoot your shots my guys
 	
-	public CANTalon motor, feederMotor;
+	public CANTalon shooterMotor;
+	private CANTalon feederMotor;
 	private double highest, lowest;
+	private double setSpeed;
 
-	public static final double F = 0.1;
-	public static final double P = 0.2; // 0.7
+	public static final double F = 0.2;
+	public static final double P = 0.45; // 0.7
 	public static final double I = 0.0;
-	public static final double D = 0.0; // 0.2
+	public static final double D = 0.2; // 0.2
 
-	private static final int QUAD_ENC_TICKS_PER_ROTATION = 32;
+	private static final double QUAD_ENC_TICKS_PER_ROTATION = 128;	//Includes x4 for QUAD
+	private static final double HUNDRED_MS_PER_MINUTE = 600;
 	
 	public enum ShooterEnum {
 		NO_SHOOTER,
@@ -47,11 +52,12 @@ public class Shooter extends Subsystem {
 	}
 	
 	public Shooter(int shooterID, int feederID) {
-		motor = new CANTalon(shooterID);
-    	motor.enableBrakeMode(false);
-		motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		motor.configEncoderCodesPerRev(QUAD_ENC_TICKS_PER_ROTATION);
-		motor.reverseSensor(false);
+		shooterMotor = new CANTalon(shooterID);
+    	shooterMotor.enableBrakeMode(false);
+		shooterMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		shooterMotor.reverseSensor(false);
+		setToSpeed();
+		setSpeed = 0.0;
 		
 		feederMotor = new CANTalon(feederID);
 		feederMotor.enableBrakeMode(true);
@@ -59,13 +65,13 @@ public class Shooter extends Subsystem {
 	
 	public void initDefaultCommand() {
 		//setDefaultCommand(new RunShooter(this));
-		setDefaultCommand(new ShootWithDistance(this));
+		//setDefaultCommand(new ShootWithDistance(this));
 		//setDefaultCommand(new TestShooter(this));
-		//setDefaultCommand(new ExampleCommand());
+		setDefaultCommand(new StopShooter(this));
 	}
 
 	public CANTalon getMotor() {
-		return motor;
+		return shooterMotor;
 	}
 	//For testing PID of the shooter
 	public double getHighest() {
@@ -77,25 +83,25 @@ public class Shooter extends Subsystem {
 	}
 	
 	public void setToSpeed() {
-		motor.changeControlMode(CANTalon.TalonControlMode.Speed);
-    	motor.setP(P);
-    	motor.setI(I);
-    	motor.setD(D);
-    	motor.setF(F);
-    	motor.configPeakOutputVoltage(12, -12);
-		motor.configNominalOutputVoltage(0,0);
-		motor.enableControl();
-		MercLogger.logMessage(Level.INFO, "Shooter " + motor.getDeviceID() + " in Speed mode.");
+		shooterMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+    	shooterMotor.setP(P);
+    	shooterMotor.setI(I);
+    	shooterMotor.setD(D);
+    	shooterMotor.setF(F);
+    	shooterMotor.configPeakOutputVoltage(12, -12);
+		shooterMotor.configNominalOutputVoltage(0,0);
+		shooterMotor.enableControl();
+		MercLogger.logMessage(Level.INFO, "Shooter " + shooterMotor.getDeviceID() + " in Speed mode.");
 	}
 	
 	public void setToVbus() {
-		motor.disableControl();
-    	motor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		MercLogger.logMessage(Level.INFO, "Shooter " + motor.getDeviceID() + " in Vbus mode.");
+		//shooterMotor.disableControl();
+    	shooterMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		MercLogger.logMessage(Level.INFO, "Shooter " + shooterMotor.getDeviceID() + " in Vbus mode.");
 	}
 
 	public void updateHighLow() {
-    	double magVal = motor.getEncPosition();
+    	double magVal = shooterMotor.getEncPosition();
 		if (magVal > highest) {
     		highest = magVal;
     	}
@@ -108,4 +114,24 @@ public class Shooter extends Subsystem {
 		highest = 0;
 		lowest = 20000;
 	}
+    
+    public void setSpeed(double rpm) {
+    	setSpeed = rpm;
+    	double pulsesPer100ms = rpm * QUAD_ENC_TICKS_PER_ROTATION / HUNDRED_MS_PER_MINUTE;
+    	shooterMotor.set(pulsesPer100ms);
+    	MercLogger.logMessage(Level.INFO, "Shooter: " + shooterMotor.getDeviceID() + ": setSpeed(" + rpm + "): shooterMotor.set(" + pulsesPer100ms + ")");
+    }
+    
+    public double getSpeed() {
+    	double pulsesPer100ms = shooterMotor.get();
+    	return pulsesPer100ms * HUNDRED_MS_PER_MINUTE / QUAD_ENC_TICKS_PER_ROTATION;
+    }
+    
+    public double getSetSpeed() {
+    	return setSpeed;
+    }
+    
+    public void runFeeder(boolean run) {
+    	feederMotor.set(run ? 1 : 0);
+    } 
 }

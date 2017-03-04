@@ -86,9 +86,9 @@ public class OI {
         leftBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
         leftBack.whenPressed(new DeliverGear());        
         
-/*        rightStick4 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN4);
-        rightStick4.whenPressed(new SetRoller(Robot.rightFeeder, 1));
-*/
+        rightStick4 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN4);
+        rightStick4.whenPressed(new ShootWithDistance(Robot.rightShooter));
+
         rightStick5 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN5);
         rightStick5.whenPressed(new CalculateGearPath(Direction.REVERSE));
         
@@ -160,23 +160,21 @@ public class OI {
 		SmartDashboard.putNumber("NAV-X", Robot.driveTrain.getNAVX().getAngle());
 		SmartDashboard.putNumber("Left Enc Feet", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()) - SmartDashboard.getNumber("SetLeftChange", 0));
 		SmartDashboard.putNumber("Right Enc Feet", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()) - SmartDashboard.getNumber("SetRightChange", 0));
-		SmartDashboard.putNumber("Shooter ID 7: Encoder Speed", Robot.rightShooter.motor.getSpeed());
-		SmartDashboard.putNumber("Shooter ID 8: Encoder Speed", Robot.leftShooter.motor.getSpeed());
-		SmartDashboard.putNumber("Shooter ID 7: Encoder GET", Robot.rightShooter.motor.get());
-		SmartDashboard.putNumber("Shooter ID 8: Encoder GET", Robot.leftShooter.motor.get());
-		SmartDashboard.putNumber("Shooter ID 7: Encoder Position", Robot.rightShooter.motor.getPosition());
-		SmartDashboard.putNumber("Shooter ID 8: Encoder Position", Robot.leftShooter.motor.getPosition());
-		SmartDashboard.putNumber("Shooter ID 8: Encoder Velocity", Robot.leftShooter.motor.getEncVelocity());
-		SmartDashboard.putNumber("Shooter ID 7: Encoder Velocity", Robot.rightShooter.motor.getEncVelocity());
-		SmartDashboard.putNumber("Shooter ID 7: Voltage", Robot.rightShooter.motor.getOutputVoltage());
-		SmartDashboard.putNumber("Shooter ID 8: Voltage", Robot.leftShooter.motor.getOutputVoltage());
-		SmartDashboard.putNumber("Shooter ID 7: Current", Robot.rightShooter.motor.getOutputCurrent());
-		SmartDashboard.putNumber("Shooter ID 8: Current", Robot.leftShooter.motor.getOutputCurrent());
+		SmartDashboard.putNumber("Shooter ID 7: Encoder RPM", Robot.rightShooter.getSpeed());
+		SmartDashboard.putNumber("Shooter ID 8: Encoder RPM", Robot.leftShooter.getSpeed());
+		SmartDashboard.putNumber("Shooter ID 7: Encoder Native Units", Robot.rightShooter.shooterMotor.get());
+		SmartDashboard.putNumber("Shooter ID 8: Encoder Native Units", Robot.leftShooter.shooterMotor.get());
+		SmartDashboard.putNumber("Shooter ID 7: Encoder Position", Robot.rightShooter.shooterMotor.getPosition());
+		SmartDashboard.putNumber("Shooter ID 8: Encoder Position", Robot.leftShooter.shooterMotor.getPosition());
+		SmartDashboard.putNumber("Shooter ID 7: Voltage", Robot.rightShooter.shooterMotor.getOutputVoltage());
+		SmartDashboard.putNumber("Shooter ID 8: Voltage", Robot.leftShooter.shooterMotor.getOutputVoltage());
+		SmartDashboard.putNumber("Shooter ID 7: Current", Robot.rightShooter.shooterMotor.getOutputCurrent());
+		SmartDashboard.putNumber("Shooter ID 8: Current", Robot.leftShooter.shooterMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Ultrasonic", Robot.ultrasonic.getRange());
 	}
-	
-	/*public void updateOISlow() {
-		//CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE);
+/*	
+	public void updateOISlow() {
+		CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE);
 		
 		SmartDashboard.putNumber("Distance to gear lift using vertical values", Utilities.round(Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.GEAR_VISION), 3));
 		SmartDashboard.putNumber("Distance to gear lift using horizontal values", Utilities.round(Robot.visionProcessor.getDistanceUsingHorizontalInformation(TargetType.GEAR_VISION), 3));
