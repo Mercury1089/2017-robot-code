@@ -3,6 +3,7 @@ package org.usfirst.frc.team1089.robot.commands;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.util.MercLogger;
+import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
