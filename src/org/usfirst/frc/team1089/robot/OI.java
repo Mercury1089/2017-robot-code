@@ -23,7 +23,8 @@ public class OI {
 	
 	public AutonEnum step3;
 	
-	SendableChooser startPosition, step3Chooser, shooterType;
+	SendableChooser startPosition, shooterType, firstAction, secondAction,
+		movementOffStart, nextMovement;
 	
 	Alliance allianceColor;
 
@@ -120,14 +121,32 @@ public class OI {
 		startPosition.addObject("Left, Right Line: 7", 7);
 		startPosition.addObject("Right, Right Line: 8", 8);
 		startPosition.addObject("Right Corner: 9", 9);
-		SmartDashboard.putData("Starting Pos", startPosition);
+		SmartDashboard.putData("Starting Position", startPosition);
 		
-		/*step3Chooser = new SendableChooser();
-		step3Chooser.addDefault("STOP", AutonEnum.STOP);
-		step3Chooser.addObject("Turn and Shoot", AutonEnum.TURN_SHOOT);
-		step3Chooser.addObject("Far Hopper", AutonEnum.FAR_HOPPER);
-		step3Chooser.addObject("Near Hopper", AutonEnum.NEAR_HOPPER);
-		SmartDashboard.putData("Step 3 (After delivering gear)", step3Chooser);*/
+		movementOffStart = new SendableChooser();
+		movementOffStart.addDefault("Do nothing", 1);
+		movementOffStart.addObject("Drive forward", 2);
+		movementOffStart.addObject("Drive to gear station", 3);
+		movementOffStart.addObject("Move to shooting range", 4);
+		SmartDashboard.putData("Step 1", movementOffStart);
+		
+		firstAction = new SendableChooser();
+		firstAction.addDefault("Stop", 1);
+		firstAction.addObject("Deliver gear", 2);
+		firstAction.addObject("Shoot", 3);
+		SmartDashboard.putData("Step 2", firstAction);
+		
+		nextMovement = new SendableChooser();
+		nextMovement.addDefault("Stop", 1);
+		nextMovement.addObject("Near hopper", 2);
+		nextMovement.addObject("Far hopper", 3);
+		nextMovement.addObject("Shooting range", 3);
+		SmartDashboard.putData("Step 3", nextMovement);
+		
+		secondAction = new SendableChooser();
+		secondAction.addDefault("Stop", 1/*AutonEnum.STOP*/);
+		secondAction.addObject("Shoot", 1/*AutonEnum.TURN_SHOOT*/);
+		SmartDashboard.putData("Step 4", secondAction);
 		
 		shooterType = new SendableChooser();
 		shooterType.addDefault("None", ShooterEnum.NO_SHOOTER);
@@ -229,7 +248,7 @@ public class OI {
     }
     
     public AutonEnum getStep3() {
-    	return (AutonEnum) step3Chooser.getSelected();
+    	return (AutonEnum) nextMovement.getSelected();
     }
     
     public int getStartPos() {
