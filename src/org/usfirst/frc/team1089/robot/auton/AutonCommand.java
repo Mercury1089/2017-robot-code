@@ -1,14 +1,11 @@
 package org.usfirst.frc.team1089.robot.auton;
 
-import java.util.logging.Level;
-
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.commands.AutoAlign;
 import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DeliverGear;
 import org.usfirst.frc.team1089.robot.commands.DriveDistance;
 import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
-import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -26,7 +23,7 @@ public class AutonCommand extends CommandGroup {
 	 * @param StartPos - from 1-9 as determined by AutonKid 
 	 * @param color - Alliance color determined by DriverStation.getInstance.getAlliance()
 	 */
-    public AutonCommand(int startPos, Alliance color, AutonEnum choice) {
+    public AutonCommand(AutonPosition startPos, Alliance color, AutonEnum choice) {
     	
     	// Add Commands here:
         // e.g. addSequential(new Command1());
@@ -45,11 +42,12 @@ public class AutonCommand extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	int truePos = startPos, fieldPos = 2;
+    	int truePos = startPos.ordinal();
+    	AutonFieldPosition fieldPos = AutonFieldPosition.MIDDLE;
 		DriverStation.getInstance().getAlliance();
 		//Red is switched; Blue is normal
 		if (color.equals(Alliance.Red)) 		 
-			truePos = 10 - startPos;			//XXX makes 9 to 1 and 1 to 9, etc
+			truePos = 10 - startPos.ordinal();			//XXX makes 9 to 1 and 1 to 9, etc
 		
 		double[] distances = AutonMath.autonDistances(truePos);
     	
@@ -59,9 +57,9 @@ public class AutonCommand extends CommandGroup {
     		reversalFactor = -1;
     	
     	if(truePos < 4)
-    		fieldPos = 1; 					//Loading Station side
+    		fieldPos = AutonFieldPosition.LEFT; 					//Loading Station side
     	else if(truePos > 6)
-    		fieldPos = 3;
+    		fieldPos = AutonFieldPosition.RIGHT;
     	
     	//Auton Step 1
     	addSequential(new DriveDistance(distances[0], 0.3, 7.0));
@@ -80,7 +78,7 @@ public class AutonCommand extends CommandGroup {
     	//Auton Step 3
     	//FIXME many of these values are wrong
 
-    	switch(choice) {
+    	/*switch(choice) {
 	    	case FAR_HOPPER:								//TODO make a far hopper sequence and TODO Change some of these values 
 	    	case NEAR_HOPPER:
 	    		if(fieldPos == 1) {
@@ -121,6 +119,6 @@ public class AutonCommand extends CommandGroup {
 	    	default:
 	    		Robot.driveTrain.stop();
 	    		break;
-    	}
+    	}*/
     }
 }
