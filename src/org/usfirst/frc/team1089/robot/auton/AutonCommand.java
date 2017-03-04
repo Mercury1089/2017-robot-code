@@ -1,12 +1,10 @@
 package org.usfirst.frc.team1089.robot.auton;
 
-import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.commands.AutoAlign;
+import org.usfirst.frc.team1089.robot.commands.AutoShoot;
 import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DeliverGear;
 import org.usfirst.frc.team1089.robot.commands.DriveDistance;
 import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
-import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -92,8 +90,8 @@ public class AutonCommand extends CommandGroup {
     		addSequential(new DeliverGear());
     		addSequential(new DriveDistance(6, 0.1, 7.0));							// ARBITRARY VALUE
         	addParallel(new ToggleGearDelivery(false));
-        	addSequential(new AutoAlign(TargetType.GEAR_VISION));
     	case SHOOT:
+    		addSequential(new AutoShoot());
     		return;																//TODO Later
     	}
     	
@@ -118,6 +116,8 @@ public class AutonCommand extends CommandGroup {
     			addSequential(new DegreeRotate(45));
     			//Shoot
     		}
+    		else
+    			return;//if its in the middle
     		break;
     	case SHOOTING_RANGE:
     		if(fieldPos == AutonFieldPosition.LEFT) {
@@ -140,7 +140,7 @@ public class AutonCommand extends CommandGroup {
     	//AutonSecondAction
     	switch(secondAction) {
     	case SHOOT:
-    		//shoot
+    		addSequential(new AutoShoot());
     		break;
     	case STOP:
     		return;
