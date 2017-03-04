@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import java.util.function.DoubleSupplier;
 import java.util.logging.Level;
+
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 
@@ -19,13 +21,24 @@ public class ShootWithDistance extends Command {
 	private double speed;
 	private double offset;
 	private final int SPEED_THRESHOLD = 200;
+	private DoubleSupplier distanceSupplier;
+
 	
     public ShootWithDistance(Shooter s) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(s);
     	shooterSystem = s;
-    	distance = /*distanceFromTarget*/0;
+    	distance = 0;
+    	speed = 0;
+    	
+    	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Constructed using ShootWithDistance(Shooter s)");
+    }
+    
+    public ShootWithDistance(Shooter s, DoubleSupplier d) {
+    	requires(s);
+    	shooterSystem = s;
+    	distanceSupplier = d;
     	speed = 0;
     	
     	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Constructed using ShootWithDistance(Shooter s)");
@@ -34,6 +47,8 @@ public class ShootWithDistance extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	shooterSystem.setToSpeed();
+    	if (distanceSupplier != null)
+    		distance = distanceSupplier.getAsDouble();
     	
     	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Initialized");
     	//SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": distance", 0.0);
@@ -41,7 +56,10 @@ public class ShootWithDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
- 
+    	if (distance == 0) {
+    		distance = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooterIsRunning",
+        			false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": distance", 0) : 0.0;
+    	}
 /*    	shooterSystem.shooterMotor.set(1);
     	shooterSystem.feederMotor.set(0);*/
     	
