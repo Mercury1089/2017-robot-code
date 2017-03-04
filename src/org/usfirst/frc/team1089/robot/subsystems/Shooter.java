@@ -28,7 +28,7 @@ public class Shooter extends Subsystem {
 	//Programming is like sex:
 	//One mistake and you have to support it for the rest of your life.
 	
-	//Moral of the Story: Shoot your shots my guys
+	//Moral of the Story: Shoot your shots my guys 
 	
 	public CANTalon shooterMotor;
 	private CANTalon feederMotor;
