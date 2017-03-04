@@ -19,6 +19,8 @@ public class AutoAlign extends DegreeRotate {
 		super();
 		target = t;
 		
+		// TODO: ANGLE/HEADING MUST BE OBTAINED FROM SUPPLIER BECAUSE WE DO NOT HAVE THE PROPER VALUE DURING CONSTRUCTION
+		
 		if (target.equals(TargetType.GEAR_VISION))
 			_heading = Robot.visionProcessor.angleGear;
 		else if (target.equals(TargetType.HIGH_GOAL))
