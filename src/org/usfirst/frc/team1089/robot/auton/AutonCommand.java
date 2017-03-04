@@ -20,10 +20,16 @@ public class AutonCommand extends CommandGroup {
 	
 	
 	/**
-	 * @param StartPos - from 1-9 as determined by AutonKid 
+	 * @param startPos
 	 * @param color - Alliance color determined by DriverStation.getInstance.getAlliance()
+	 * @param firstMovement
+	 * @param firstAction
+	 * @param secondMovement
+	 * @param secondAction
 	 */
-    public AutonCommand(AutonPosition startPos, Alliance color, AutonEnum choice) {
+    public AutonCommand(AutonPosition startPos, Alliance color, AutonFirstMovement firstMovement,
+    					AutonFirstAction firstAction, AutonSecondMovement secondMovement, 
+    					AutonSecondAction secondAction) {
     	
     	// Add Commands here:
         // e.g. addSequential(new Command1());
