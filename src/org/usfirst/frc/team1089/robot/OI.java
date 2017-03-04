@@ -1,6 +1,11 @@
 package org.usfirst.frc.team1089.robot;
 
 import org.usfirst.frc.team1089.robot.auton.AutonEnum;
+import org.usfirst.frc.team1089.robot.auton.AutonFirstAction;
+import org.usfirst.frc.team1089.robot.auton.AutonFirstMovement;
+import org.usfirst.frc.team1089.robot.auton.AutonPosition;
+import org.usfirst.frc.team1089.robot.auton.AutonSecondAction;
+import org.usfirst.frc.team1089.robot.auton.AutonSecondMovement;
 import org.usfirst.frc.team1089.robot.commands.*;
 import org.usfirst.frc.team1089.robot.commands.CalculateGearPath.Direction;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
@@ -112,40 +117,40 @@ public class OI {
     	// button.whenReleased(new ExampleCommand());
         
         startPosition = new SendableChooser();
-		startPosition.addDefault("Left Corner: 1", 1);
-		startPosition.addObject("Left, Left Line: 2", 2);
-		startPosition.addObject("Right, Left Line: 3", 3);
-		startPosition.addObject("Left, Midline: 4", 4);
-		startPosition.addObject("Mid, Midline: 5", 5);
-		startPosition.addObject("Right, Midline: 6", 6);
-		startPosition.addObject("Left, Right Line: 7", 7);
-		startPosition.addObject("Right, Right Line: 8", 8);
-		startPosition.addObject("Right Corner: 9", 9);
+		startPosition.addDefault("Left Corner: 1", AutonPosition.POSITION_1);
+		startPosition.addObject("Left, Left Line: 2", AutonPosition.POSITION_2);
+		startPosition.addObject("Right, Left Line: 3", AutonPosition.POSITION_3);
+		startPosition.addObject("Left, Midline: 4", AutonPosition.POSITION_4);
+		startPosition.addObject("Mid, Midline: 5", AutonPosition.POSITION_5);
+		startPosition.addObject("Right, Midline: 6", AutonPosition.POSITION_6);
+		startPosition.addObject("Left, Right Line: 7", AutonPosition.POSITION_7);
+		startPosition.addObject("Right, Right Line: 8", AutonPosition.POSITION_8);
+		startPosition.addObject("Right Corner: 9", AutonPosition.POSITION_9);
 		SmartDashboard.putData("Starting Position", startPosition);
 		
 		movementOffStart = new SendableChooser();
-		movementOffStart.addDefault("Do nothing", 1);
-		movementOffStart.addObject("Drive forward", 2);
-		movementOffStart.addObject("Drive to gear station", 3);
-		movementOffStart.addObject("Move to shooting range", 4);
+		movementOffStart.addDefault("Do nothing", AutonFirstMovement.DO_NOTHING);
+		movementOffStart.addObject("Drive forward", AutonFirstMovement.DRIVE_FORWARD);
+		movementOffStart.addObject("Drive to gear station", AutonFirstMovement.GO_TO_LIFT);
+		movementOffStart.addObject("Move to shooting range", AutonFirstMovement.GO_TO_SHOOTING_RANGE);
 		SmartDashboard.putData("Step 1", movementOffStart);
 		
 		firstAction = new SendableChooser();
-		firstAction.addDefault("Stop", 1);
-		firstAction.addObject("Deliver gear", 2);
-		firstAction.addObject("Shoot", 3);
+		firstAction.addDefault("Stop", AutonFirstAction.DO_NOTHING);
+		firstAction.addObject("Deliver gear", AutonFirstAction.DELIVER_GEAR);
+		firstAction.addObject("Shoot", AutonFirstAction.SHOOT);
 		SmartDashboard.putData("Step 2", firstAction);
 		
 		nextMovement = new SendableChooser();
-		nextMovement.addDefault("Stop", 1);
-		nextMovement.addObject("Near hopper", 2);
-		nextMovement.addObject("Far hopper", 3);
-		nextMovement.addObject("Shooting range", 3);
+		nextMovement.addDefault("Stop", AutonSecondMovement.STOP);
+		nextMovement.addObject("Near hopper", AutonSecondMovement.NEAR_HOPPER);
+		nextMovement.addObject("Far hopper", AutonSecondMovement.FAR_HOPPER);
+		nextMovement.addObject("Shooting range", AutonSecondMovement.SHOOTING_RANGE);
 		SmartDashboard.putData("Step 3", nextMovement);
 		
 		secondAction = new SendableChooser();
-		secondAction.addDefault("Stop", 1/*AutonEnum.STOP*/);
-		secondAction.addObject("Shoot", 1/*AutonEnum.TURN_SHOOT*/);
+		secondAction.addDefault("Stop", AutonSecondAction.STOP);
+		secondAction.addObject("Shoot", AutonSecondAction.SHOOT);
 		SmartDashboard.putData("Step 4", secondAction);
 		
 		shooterType = new SendableChooser();
@@ -247,12 +252,24 @@ public class OI {
     	return (Math.abs(val) > dzLimit) ? newVal : 0.0;*/ 
     }
     
-    public AutonEnum getStep3() {
-    	return (AutonEnum) nextMovement.getSelected();
+    public AutonPosition getStartPosition() {
+    	return (AutonPosition) startPosition.getSelected();
     }
     
-    public int getStartPos() {
-    	return (int) startPosition.getSelected();
+    public AutonFirstMovement getFirstMovement() {
+    	return (AutonFirstMovement) movementOffStart.getSelected();
+    }
+    
+    public AutonFirstAction getFirstAction() {
+    	return (AutonFirstAction) firstAction.getSelected();
+    }
+    
+    public AutonSecondMovement getSecondMovement() {
+    	return (AutonSecondMovement) nextMovement.getSelected();
+    }
+    
+    public AutonSecondAction getSecondAction() {
+    	return (AutonSecondAction) secondAction.getSelected();
     }
     
     public ShooterEnum getShot() {

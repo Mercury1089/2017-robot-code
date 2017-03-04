@@ -126,7 +126,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		MercLogger.createLog("/home/lvuser/log/auton");
-		//autonomousCommand = new AutonCommand(oi.getStartPos(), DriverStation.getInstance().getAlliance()/*Alliance.Blue*/, oi.getStep3());
+		autonomousCommand = new AutonCommand(oi.getStartPosition(), DriverStation.getInstance().getAlliance()/*Alliance.Blue*/, 
+											 oi.getFirstMovement(), oi.getFirstAction(), 
+											 oi.getSecondMovement(), oi.getSecondAction());
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
