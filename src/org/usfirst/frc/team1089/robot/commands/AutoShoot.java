@@ -2,6 +2,7 @@ package org.usfirst.frc.team1089.robot.commands;
 
 import java.util.logging.Level;
 
+import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
@@ -35,5 +36,7 @@ public class AutoShoot extends CommandGroup {
     	
     	//addSequential(new DriveDistance(CalculateHighGoalPath::getDistance, 5.0));
     	addSequential(new DegreeRotate(CalculateHighGoalPath::getAngle));
-   }
+    	addSequential(new ShootWithDistance(Robot.leftShooter, CalculateHighGoalPath::getDistance));
+     	addSequential(new ShootWithDistance(Robot.rightShooter, CalculateHighGoalPath::getDistance));
+    }
 }
