@@ -122,12 +122,12 @@ public class OI {
 		startPosition.addObject("Right Corner: 9", 9);
 		SmartDashboard.putData("Starting Pos", startPosition);
 		
-		step3Chooser = new SendableChooser();
+		/*step3Chooser = new SendableChooser();
 		step3Chooser.addDefault("STOP", AutonEnum.STOP);
 		step3Chooser.addObject("Turn and Shoot", AutonEnum.TURN_SHOOT);
 		step3Chooser.addObject("Far Hopper", AutonEnum.FAR_HOPPER);
 		step3Chooser.addObject("Near Hopper", AutonEnum.NEAR_HOPPER);
-		SmartDashboard.putData("Step 3 (After delivering gear)", step3Chooser);
+		SmartDashboard.putData("Step 3 (After delivering gear)", step3Chooser);*/
 		
 		shooterType = new SendableChooser();
 		shooterType.addDefault("None", ShooterEnum.NO_SHOOTER);
