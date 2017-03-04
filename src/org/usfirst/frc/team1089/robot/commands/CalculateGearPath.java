@@ -19,7 +19,7 @@ public class CalculateGearPath extends InstantCommand {
 
 	private double signedDirection;	// Used to multiply directions
 	private double distToMove, angleToTurn, theta;
-	private static double centerToCenterDistanceByTwo = 5.125 / 12 - 1;
+	private static double centerToCenterDistanceByTwo = (10.75 - 2) / 2 / 12;
 	public static final double INCH_OFFSET_FROM_TARGET = 36; //TODO Maybe move this to a better place. Also, edit this value
 
 	public enum Direction { FORWARD, REVERSE }
