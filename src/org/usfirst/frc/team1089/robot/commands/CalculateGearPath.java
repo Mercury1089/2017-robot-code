@@ -106,13 +106,13 @@ public class CalculateGearPath extends InstantCommand {
     	double distanceFromRetroHorizontal = 0;
     	
     	// in the case where we are not already between the tapes (e.g. far on the left)
-    	if (liftDistance >= targetTapeDistance && targetTapeDistanceFar >= liftDistance) {
-    		MercLogger.logMessage(Level.INFO, "liftDistance >= targetTapeDistance && targetTapeDistanceFar >= liftDistance");
+    	if (liftDistance > targetTapeDistance && targetTapeDistanceFar > liftDistance) {
+    		MercLogger.logMessage(Level.INFO, "liftDistance > targetTapeDistance && targetTapeDistanceFar > liftDistance");
     		distanceFromRetroHorizontal = 
     			(Math.pow(liftDistance, 2) - Math.pow(targetTapeDistance, 2)) / (centerToCenterDistanceByTwo * 2) - 
     			centerToCenterDistanceByTwo / 2;
     	} else {
-    		MercLogger.logMessage(Level.INFO, "liftDistance < targetTapeDistance || targetTapeDistanceFar < liftDistance");
+    		MercLogger.logMessage(Level.INFO, "liftDistance <= targetTapeDistance || targetTapeDistanceFar <= liftDistance");
     		distanceFromRetroHorizontal = 
         			(Math.pow(targetTapeDistance, 2) - Math.pow(liftDistance, 2)) / (centerToCenterDistanceByTwo * 2) + 
         			centerToCenterDistanceByTwo / 2;    		
