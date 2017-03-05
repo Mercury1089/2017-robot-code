@@ -2,7 +2,6 @@ package org.usfirst.frc.team1089.robot;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
-import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1089.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team1089.robot.subsystems.Gear;
@@ -48,9 +47,9 @@ public class Robot extends IterativeRobot {
 	private double changeRightEnc;
 	private double changeLeftEnc;
 	
-	private AutonEnum step3;
 	private ShooterEnum choice;
 	Alliance allianceColor;
+	
 	/**
 	 * This function is ho when the robot is first started up and should be
 	 * used for any initialization code.

@@ -68,6 +68,9 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		rightFront.enableBrakeMode(true);
 		leftBack.enableBrakeMode(true);
 		rightBack.enableBrakeMode(true);
+		
+		// setting feedback device as CtreMagEncoder_Relative automatically enables unit scaling
+		// when set to position mode the positions will be expressed in revolutions rather than encoder ticks
 		leftFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		rightFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 

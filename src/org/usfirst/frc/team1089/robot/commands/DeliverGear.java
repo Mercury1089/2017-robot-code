@@ -37,7 +37,7 @@ public class DeliverGear extends CommandGroup {
     	addSequential(new DriveDistance(calculateGearPath::getDistance, 3.0));
     	addSequential(new DegreeRotate(calculateGearPath::getTheta));
     	addSequential(new AutoAlign(TargetType.GEAR_VISION));
-    	//addSequential(new DriveToWall(1.75));
+    	//addSequential(new DriveToWall(1.75)); // TODO make sure we drive to the wall somehow
     	addSequential(new ToggleGearDelivery(true));
     }
 }

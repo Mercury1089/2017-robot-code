@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1089.robot;
 
-import org.usfirst.frc.team1089.robot.auton.AutonEnum;
 import org.usfirst.frc.team1089.robot.auton.AutonFirstAction;
 import org.usfirst.frc.team1089.robot.auton.AutonFirstMovement;
 import org.usfirst.frc.team1089.robot.auton.AutonPosition;
@@ -25,8 +24,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 
 	public static final double JS_DEADZONE_LIMIT = 0.3; // Deadzone limit for the stick	
-	
-	public AutonEnum step3;
 	
 	SendableChooser startPosition, shooterType, firstAction, secondAction,
 		movementOffStart, nextMovement;
@@ -63,6 +60,7 @@ public class OI {
 	public JoystickButton rightStick4;
 	public JoystickButton rightStick5;
     public JoystickButton rightStick2;
+    
     public OI() {
     	
         leftStick = new Joystick(RobotMap.DS_USB.LEFT_STICK);

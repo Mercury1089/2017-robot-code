@@ -45,7 +45,6 @@ public class DriveDistance extends Command {
         
         if (waitTime != 0)
         	MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance, double waitTime)");
-
     }
 	
 	/**
@@ -68,8 +67,8 @@ public class DriveDistance extends Command {
         this.distance = distance;
         this.waitTime = waitTime;
         this.maxV = maxV;
+        
         MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance, double waitTime, double maxV)");
-
     }
 
 	/**
@@ -102,7 +101,6 @@ public class DriveDistance extends Command {
 		this.maxV = maxV;
 		
     	MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(DoubleSupplier distanceSupplier, double maxV)");
-
 	}
 	
     // Called just before this Command runs the first time
@@ -124,10 +122,10 @@ public class DriveDistance extends Command {
 		Robot.driveTrain.getLeft().configNominalOutputVoltage(0, 0);
 		Robot.driveTrain.getRight().configPeakOutputVoltage(maxV, -maxV);
 		Robot.driveTrain.getRight().configNominalOutputVoltage(0, 0);
-		
 
 		Robot.driveTrain.getLeft().enableControl();
 		Robot.driveTrain.getRight().enableControl();
+		
 		Robot.driveTrain.getLeft().set(endPosL);
 		Robot.driveTrain.getRight().set(endPosR);
 		
@@ -173,6 +171,7 @@ public class DriveDistance extends Command {
     	Robot.driveTrain.stop();
     	//Timer.delay(waitTime);
     	Robot.driveTrain.enableRobotDrive();
+    	
     	SmartDashboard.putNumber("EncRFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getRightEncoder()));
     	SmartDashboard.putNumber("EncLFinal", Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()));
     	MercLogger.logMessage(Level.INFO, "LeftEnc Reads: " + Robot.driveTrain.encoderTicksToFeet(Robot.driveTrain.getLeftEncoder()) + 
@@ -181,7 +180,6 @@ public class DriveDistance extends Command {
 		SmartDashboard.putString("DriveDistance: ", "end");
 		
 		MercLogger.logMessage(Level.INFO, "DriveDistance: Completed");
-
     }
 
     // Called when another command which requires one or more of the same

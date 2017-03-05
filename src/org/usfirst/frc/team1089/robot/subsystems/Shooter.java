@@ -54,6 +54,9 @@ public class Shooter extends Subsystem {
 	public Shooter(int shooterID, int feederID) {
 		shooterMotor = new CANTalon(shooterID);
     	shooterMotor.enableBrakeMode(false);
+    	
+    	// setting feedback as quad encoder does NOT enable unit scaling by default
+    	// when set to speed mode the speed will be expressed in pulses per 100 ms
 		shooterMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooterMotor.reverseSensor(false);
 		setToSpeed();

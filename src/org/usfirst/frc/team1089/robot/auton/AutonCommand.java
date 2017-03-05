@@ -46,7 +46,9 @@ public class AutonCommand extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	int truePos = startPos.ordinal();
+    	int truePos = startPos.ordinal(); // returns position as integer based on order in enum declaration
+    	// it is important to note that this only works because an unused zero-position is declared in the enum 
+    	
     	AutonFieldPosition fieldPos = AutonFieldPosition.MIDDLE;
 		DriverStation.getInstance().getAlliance();
 		//Red is switched; Blue is normal
@@ -93,8 +95,7 @@ public class AutonCommand extends CommandGroup {
     	case SHOOT:
     		addSequential(new AutoShoot());
     		return;																//TODO Later
-    	}
-    	
+    	}    	
 
     	//AutonSecondMovement
     	switch(secondMovement) {
