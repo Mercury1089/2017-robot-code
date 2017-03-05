@@ -121,24 +121,26 @@ public class CalculateGearPath extends InstantCommand {
 //    	SmartDashboard.putNumber("distanceFromRetroHorizontal", Utilities.round(distanceFromRetroHorizontal, 3));
     	MercLogger.logMessage(Level.INFO, "distanceFromRetroHorizontal is: " + distanceFromRetroHorizontal);
     	
-    	//
+    	// we use Pythagoras' theorem to get the shortest distance to the lift face 
     	double distanceFromLiftFace =
     			Math.sqrt(Math.pow(targetTapeDistance,  2) - Math.pow(distanceFromRetroHorizontal, 2));
     	
 //    	SmartDashboard.putNumber("distanceFromLiftFace", Utilities.round(distanceFromLiftFace, 3));
     	MercLogger.logMessage(Level.INFO, "distanceFromLiftFace is: " + distanceFromLiftFace);
     	
-    	//
+    	// we use trig to compute the angle between targetTapeDistance and distanceFromLiftFace lines
     	double phi = 
     			Math.toDegrees(Math.atan(distanceFromRetroHorizontal / distanceFromLiftFace));
     	
 //    	SmartDashboard.putNumber("phi", Utilities.round(phi, 3));
     	MercLogger.logMessage(Level.INFO, "phi is: " + phi);
     	
+    	// theta is the sum of the angleFromTargetTape + phi (all unsigned in the current context)
     	theta = 
     			(Math.abs(phi) + Math.abs(angleFromTargetTape));
     	
-//    	SmartDashboard.putNumber("theta", theta);
+//    	SmartDashboard.putNumber("raw theta", theta);
+    	MercLogger.logMessage(Level.INFO, "raw theta is: " + theta);
     	
     	//Getting the distance to move
     	distToMove = 
@@ -150,7 +152,7 @@ public class CalculateGearPath extends InstantCommand {
     	theta *= reversalFactor;
 /*    	if(theta > 0) 
     		theta = 90 - theta;*/
-    	MercLogger.logMessage(Level.INFO, "theta is: " + theta);
+    	MercLogger.logMessage(Level.INFO, "final theta is: " + theta);
     	
     	//Return. Congratulations! You have made it.
     	MercLogger.logMessage(Level.INFO, "Calculating that we should move " + distToMove + " feet and rotate " + theta + "degrees.");
