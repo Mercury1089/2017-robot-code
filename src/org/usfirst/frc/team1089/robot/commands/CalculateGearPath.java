@@ -102,21 +102,18 @@ public class CalculateGearPath extends InstantCommand {
     	MercLogger.logMessage(Level.INFO, "liftDistance: " + liftDistance);
     	MercLogger.logMessage(Level.INFO, "angleFromTargetTape: " + angleFromTargetTape);
     	MercLogger.logMessage(Level.INFO, "targetTapeDistance: " + targetTapeDistance);
+    	MercLogger.logMessage(Level.INFO, "targetTapeDistanceFar: " + targetTapeDistanceFar);
     	
-    	double distanceFromRetroHorizontal = 0;
-    	
-    	// in the case where we are not already between the tapes (e.g. far on the left)
-    	if (liftDistance > targetTapeDistance && targetTapeDistanceFar > liftDistance) {
-    		MercLogger.logMessage(Level.INFO, "liftDistance > targetTapeDistance && targetTapeDistanceFar > liftDistance");
-    		distanceFromRetroHorizontal = 
-    			(Math.pow(liftDistance, 2) - Math.pow(targetTapeDistance, 2)) / (centerToCenterDistanceByTwo * 2) - 
-    			centerToCenterDistanceByTwo / 2;
+    	if (liftDistance < targetTapeDistance) {
+    		MercLogger.logMessage(Level.INFO, "we are closer to the lift than the closest tape (i.e. inside the delivery zone)");
     	} else {
-    		MercLogger.logMessage(Level.INFO, "liftDistance <= targetTapeDistance || targetTapeDistanceFar <= liftDistance");
-    		distanceFromRetroHorizontal = 
-        			(Math.pow(targetTapeDistance, 2) - Math.pow(liftDistance, 2)) / (centerToCenterDistanceByTwo * 2) + 
-        			centerToCenterDistanceByTwo / 2;    		
-    	}
+    		MercLogger.logMessage(Level.INFO, "we are closer to the closest tape than the lift (i.e. outside the delivery zone)");
+    	}   	
+    	
+		// we take the absolute value of the formula so that we get a proper distance regardless the side we are located on 
+    	double distanceFromRetroHorizontal = Math.abs( 
+    			(Math.pow(targetTapeDistance, 2) - Math.pow(liftDistance, 2)) / (centerToCenterDistanceByTwo * 2) + 
+    			centerToCenterDistanceByTwo / 2);    		
     	
 //    	SmartDashboard.putNumber("distanceFromRetroHorizontal", Utilities.round(distanceFromRetroHorizontal, 3));
     	MercLogger.logMessage(Level.INFO, "distanceFromRetroHorizontal is: " + distanceFromRetroHorizontal);
