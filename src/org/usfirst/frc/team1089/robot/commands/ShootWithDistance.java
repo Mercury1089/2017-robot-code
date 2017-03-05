@@ -63,8 +63,6 @@ public class ShootWithDistance extends Command {
 /*    	shooterSystem.shooterMotor.set(1);
     	shooterSystem.feederMotor.set(0);*/
     	
-    	distance = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooterIsRunning",
-    			false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": distance", 0) : 0.0;
     	//distance -= 0.2;
     	//offset = (14 - distance) / 28;
     	//distance -= offset;
