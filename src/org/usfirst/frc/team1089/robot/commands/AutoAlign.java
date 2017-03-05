@@ -19,22 +19,21 @@ public class AutoAlign extends DegreeRotate {
 		super();
 		target = t;
 		
-		// TODO: ANGLE/HEADING MUST BE OBTAINED FROM SUPPLIER BECAUSE WE DO NOT HAVE THE PROPER VALUE DURING CONSTRUCTION
-		
-		if (target.equals(TargetType.GEAR_VISION))
-			_heading = Robot.visionProcessor.angleGear;
-		else if (target.equals(TargetType.HIGH_GOAL))
-			_heading = Robot.visionProcessor.angleHigh;
-		else
-			_heading = 0;
-		
-    	MercLogger.logMessage(Level.INFO, "AutoAlign: Constructed using AutoAlign(TargetType t)");
+		MercLogger.logMessage(Level.INFO, "AutoAlign: Constructed using AutoAlign(TargetType t)");
 
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if (target.equals(TargetType.GEAR_VISION))
+			_heading = Robot.visionProcessor.angleGear;
+		else if (target.equals(TargetType.HIGH_GOAL))
+			_heading = Robot.visionProcessor.angleHigh;
+		else
+			_heading = 0;
+    	
     	super.initialize();
+    	
     	MercLogger.logMessage(Level.INFO, "AutoAlign: Initialized with heading: " + _heading);
     	MercLogger.logMessage(Level.INFO, "AutoAlign: Initialized with targetType: " + target);
     }
