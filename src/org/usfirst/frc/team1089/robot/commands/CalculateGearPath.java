@@ -73,13 +73,28 @@ public class CalculateGearPath extends InstantCommand {
     	//Getting the closer tape
     	int targetTape = Robot.visionProcessor.getDistancesToGearTargets()[0] 
     					 <= Robot.visionProcessor.getDistancesToGearTargets()[1] ? 0 : 1; //Coming in from right and left, respectively
+    	
+    	int targetTapeFar = targetTape == 0 ? 1: 0; // opposite of targetTape 
+    	
     	int reversalFactor = targetTape == 0 ? -1 : 1;
     	
     	
-    	double liftDistance = Robot.visionProcessor.getAverageDistanceToGearTargets(),				//Gets distance to center of lift
-    		   angleFromTargetTape = Robot.visionProcessor.getAnglesFromGearTargets()[targetTape],	//Angle from closer tape
-    		   liftAngle = Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION),		//Angle from center of lift
-    		   targetTapeDistance = Robot.visionProcessor.getDistancesToGearTargets()[targetTape];	//Distance from target tape
+    	// Gets distance to center of lift using the average of both tape distances for consistency.
+    	// It should be noted that this currently require full visibility of both tapes.
+    	double liftDistance = Robot.visionProcessor.getAverageDistanceToGearTargets();
+    	
+    	//Angle from closer tape
+    	double angleFromTargetTape = Robot.visionProcessor.getAnglesFromGearTargets()[targetTape];
+    	
+		//Angle from center of lift
+    	//double liftAngle = Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION);
+    	
+    	//Distance from target tape (closest)
+    	double targetTapeDistance = Robot.visionProcessor.getDistancesToGearTargets()[targetTape];
+    	
+    	//Distance from target tape (farthest)
+    	double targetTapeDistanceFar = Robot.visionProcessor.getDistancesToGearTargets()[targetTapeFar];
+    	
     	/*SmartDashboard.putNumber("liftDistance", liftDistance);
     	SmartDashboard.putNumber("angleFromTargetTape", angleFromTargetTape);
     	SmartDashboard.putNumber("liftAngle", liftAngle);
@@ -88,33 +103,47 @@ public class CalculateGearPath extends InstantCommand {
     	MercLogger.logMessage(Level.INFO, "angleFromTargetTape: " + angleFromTargetTape);
     	MercLogger.logMessage(Level.INFO, "targetTapeDistance: " + targetTapeDistance);
     	
+    	double distanceFromRetroHorizontal = 0;
     	
-    	//
-    	double distanceFromRetroHorizontal = 
+    	// in the case where we are not already between the tapes (e.g. far on the left)
+    	if (liftDistance >= targetTapeDistance && targetTapeDistanceFar >= liftDistance) {
+    		MercLogger.logMessage(Level.INFO, "liftDistance >= targetTapeDistance && targetTapeDistanceFar >= liftDistance");
+    		distanceFromRetroHorizontal = 
     			(Math.pow(liftDistance, 2) - Math.pow(targetTapeDistance, 2)) / (centerToCenterDistanceByTwo * 2) - 
-    			(centerToCenterDistanceByTwo * 2) / 4;
+    			centerToCenterDistanceByTwo / 2;
+    	} else {
+    		MercLogger.logMessage(Level.INFO, "liftDistance < targetTapeDistance || targetTapeDistanceFar < liftDistance");
+    		distanceFromRetroHorizontal = 
+        			(Math.pow(targetTapeDistance, 2) - Math.pow(liftDistance, 2)) / (centerToCenterDistanceByTwo * 2) + 
+        			centerToCenterDistanceByTwo / 2;    		
+    	}
+    	
 //    	SmartDashboard.putNumber("distanceFromRetroHorizontal", Utilities.round(distanceFromRetroHorizontal, 3));
     	MercLogger.logMessage(Level.INFO, "distanceFromRetroHorizontal is: " + distanceFromRetroHorizontal);
     	
     	//
     	double distanceFromLiftFace =
     			Math.sqrt(Math.pow(targetTapeDistance,  2) - Math.pow(distanceFromRetroHorizontal, 2));
+    	
 //    	SmartDashboard.putNumber("distanceFromLiftFace", Utilities.round(distanceFromLiftFace, 3));
     	MercLogger.logMessage(Level.INFO, "distanceFromLiftFace is: " + distanceFromLiftFace);
     	
     	//
     	double phi = 
     			Math.toDegrees(Math.atan(distanceFromRetroHorizontal / distanceFromLiftFace));
+    	
 //    	SmartDashboard.putNumber("phi", Utilities.round(phi, 3));
     	MercLogger.logMessage(Level.INFO, "phi is: " + phi);
     	
     	theta = 
     			(Math.abs(phi) + Math.abs(angleFromTargetTape));
+    	
 //    	SmartDashboard.putNumber("theta", theta);
     	
     	//Getting the distance to move
     	distToMove = 
-    			(distanceFromRetroHorizontal + centerToCenterDistanceByTwo) / Math.sin(Math.toRadians(theta));	// * 12 for feet
+    			(distanceFromRetroHorizontal + centerToCenterDistanceByTwo) / Math.sin(Math.toRadians(theta));
+    	
 //    	SmartDashboard.putNumber("distToMove", Utilities.round(distToMove, 3));
     	MercLogger.logMessage(Level.INFO, "distToMove is: " + distToMove);
     	
@@ -127,7 +156,6 @@ public class CalculateGearPath extends InstantCommand {
     	MercLogger.logMessage(Level.INFO, "Calculating that we should move " + distToMove + " feet and rotate " + theta + "degrees.");
     	MercLogger.logMessage(Level.INFO, "Exiting getAlignMovements().");
     	MercLogger.logMessage(Level.INFO, "_______________________________________________________________________________");
-
     }
     
     private synchronized void getAlignMovementsOnAPoint() {
