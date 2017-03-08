@@ -21,6 +21,9 @@ public class CalculateGearPath extends InstantCommand {
 	private double distToMove, angleToTurn, theta;
 	private static double centerToCenterDistanceByTwo = (10.75 - 2) / 2 / 12;
 	public static final double INCH_OFFSET_FROM_TARGET = 36; //TODO Maybe move this to a better place. Also, edit this value
+	private double liftAngle = 0;
+	private double liftDistancePart1 = 0;
+	private double liftDistancePart2 = 0;
 
 	public enum Direction { FORWARD, REVERSE }
 	
@@ -55,6 +58,22 @@ public class CalculateGearPath extends InstantCommand {
     	return fullDist * signedDirection;
     }
     
+    public double getBasicTurnToLiftAngle() {
+    	MercLogger.logMessage(Level.INFO, "getBasicTurnToLiftAngle() : returning " + liftAngle + " degrees.");
+    	return liftAngle;
+    }
+    
+    //This one only goes part ofo the distance
+    public double getBasicLiftDistancePart1() {
+    	MercLogger.logMessage(Level.INFO, "getBasicLiftDistancePart1() : returning " + liftDistancePart1 / 2 + " feet.");
+    	return (liftDistancePart1) / 2;  //The / 2 is because we split up the move forward into two parts.
+    }
+    
+    public double getBasicLiftDistancePart2() {
+    	MercLogger.logMessage(Level.INFO, "getBasicLiftDistancePart2() : returning " + (liftDistancePart2 - 2) + " feet.");
+    	return (liftDistancePart2 - 2);  //The - 1 is because the spring is 1 ft. 1 in.
+    }
+    
     public double getAngle() {
     	return angleToTurn;
     }
@@ -81,13 +100,14 @@ public class CalculateGearPath extends InstantCommand {
     	
     	// Gets distance to center of lift using the average of both tape distances for consistency.
     	// It should be noted that this currently require full visibility of both tapes.
-    	double liftDistance = Robot.visionProcessor.getAverageDistanceToGearTargets();
+    	liftDistancePart1 = Robot.visionProcessor.getAverageDistanceToGearTargetsVertical();
+    	liftDistancePart2 = Robot.visionProcessor.getAverageDistanceToGearTargetsHorizontal();
     	
     	//Angle from closer tape
     	double angleFromTargetTape = Robot.visionProcessor.getAnglesFromGearTargets()[targetTape];
     	
 		//Angle from center of lift
-    	//double liftAngle = Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION);
+    	liftAngle = Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION);
     	
     	//Distance from target tape (closest)
     	double targetTapeDistance = Robot.visionProcessor.getDistancesToGearTargets()[targetTape];
@@ -99,12 +119,13 @@ public class CalculateGearPath extends InstantCommand {
     	SmartDashboard.putNumber("angleFromTargetTape", angleFromTargetTape);
     	SmartDashboard.putNumber("liftAngle", liftAngle);
     	SmartDashboard.putNumber("targetTapeDistance", targetTapeDistance);*/
-    	MercLogger.logMessage(Level.INFO, "liftDistance: " + liftDistance);
+    	MercLogger.logMessage(Level.INFO, "liftDistancePart1: " + liftDistancePart1);
+    	MercLogger.logMessage(Level.INFO, "liftDistancePart2: " + liftDistancePart2);
     	MercLogger.logMessage(Level.INFO, "angleFromTargetTape: " + angleFromTargetTape);
     	MercLogger.logMessage(Level.INFO, "targetTapeDistance: " + targetTapeDistance);
     	MercLogger.logMessage(Level.INFO, "targetTapeDistanceFar: " + targetTapeDistanceFar);
     	
-    	if (liftDistance < targetTapeDistance) {
+    	if (liftDistancePart1 < targetTapeDistance) {
     		MercLogger.logMessage(Level.INFO, "we are closer to the lift than the closest tape (i.e. inside the delivery zone)");
     	} else {
     		MercLogger.logMessage(Level.INFO, "we are closer to the closest tape than the lift (i.e. outside the delivery zone)");
@@ -112,7 +133,7 @@ public class CalculateGearPath extends InstantCommand {
     	
 		// we take the absolute value of the formula so that we get a proper distance regardless the side we are located on 
     	double distanceFromRetroHorizontal = Math.abs( 
-    			(Math.pow(targetTapeDistance, 2) - Math.pow(liftDistance, 2)) / (centerToCenterDistanceByTwo * 2) + 
+    			(Math.pow(targetTapeDistance, 2) - Math.pow(liftDistancePart1, 2)) / (centerToCenterDistanceByTwo * 2) + 
     			centerToCenterDistanceByTwo / 2);    		
     	MercLogger.logMessage(Level.INFO, "centerToCenterDistanceByTwo is:" + centerToCenterDistanceByTwo);
     	
@@ -162,7 +183,7 @@ public class CalculateGearPath extends InstantCommand {
     	
     	int targetTape = Robot.visionProcessor.getDistancesToGearTargets()[0] <= Robot.visionProcessor.getDistancesToGearTargets()[1] ? 0 : 1;//Coming in from right
     	int reversalFactor = targetTape == 0 ? -1 : 1;
-    	double liftDistance = Robot.visionProcessor.getAverageDistanceToGearTargets(),				//Gets distance to center of lift
+    	double liftDistance = Robot.visionProcessor.getAverageDistanceToGearTargetsVertical(),				//Gets distance to center of lift
      		   angleFromTargetTape = Robot.visionProcessor.getAnglesFromGearTargets()[targetTape],	//Angle from closer tape
      		   liftAngle = Robot.visionProcessor.getAngleFromCenter(TargetType.GEAR_VISION),		//Angle from center of lift
      		   targetTapeDistance = Robot.visionProcessor.getDistancesToGearTargets()[targetTape];	//Distance from target tape

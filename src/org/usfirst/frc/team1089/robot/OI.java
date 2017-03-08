@@ -103,7 +103,8 @@ public class OI {
         gamePadBtnRB.whenPressed(new DegreeRotate(60));
         
         gamePadBtnLB = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
-        gamePadBtnLB.whenPressed(new DeliverGear());        
+        //gamePadBtnLB.whenPressed(new DeliverGear());
+        gamePadBtnLB.whenPressed(new BasicGearDelivery());
         
         rightStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
         rightStick1.whenPressed(new ShootWithDistance(Robot.rightShooter));
