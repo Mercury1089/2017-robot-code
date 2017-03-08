@@ -74,10 +74,10 @@ public class AutonCommand extends CommandGroup {
     		return;
     	case GO_TO_LIFT:
     		double[] distances = AutonMath.autonDistances(truePos);
-    		addSequential(new DriveDistance(distances[0], 0.3, 7.0));
+    		addSequential(new DriveDistance(distances[0], 0.1, 7.0));
         	if(!(truePos >= 4 && truePos <= 6)) {
         		addSequential(new DegreeRotate(-120 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
-        		addSequential(new DriveDistance(-(distances[1] - 4), 0.2, 5.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
+        		addSequential(new DriveDistance(-(distances[1] - 4), 0.1, 5.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
         	}
     		break;
     	case GO_TO_SHOOTING_RANGE:
@@ -89,50 +89,67 @@ public class AutonCommand extends CommandGroup {
     	case DO_NOTHING:
     		return;
     	case DELIVER_GEAR:
-    		addSequential(new DeliverGear());
-    		addSequential(new DriveDistance(6, 0.1, 7.0));							// ARBITRARY VALUE
-        	addParallel(new ToggleGearDelivery(false));
+    		if(firstMovement == AutonFirstMovement.GO_TO_LIFT) {
+    			addSequential(new DeliverGear());
+    			addSequential(new DriveDistance(5.4, 0.1, 7.0));
+    			addParallel(new ToggleGearDelivery(false));
+    		}
     	case SHOOT:
-    		addSequential(new AutoShoot());
-    		return;																//TODO Later
+    		if(firstMovement == AutonFirstMovement.GO_TO_SHOOTING_RANGE)
+    			addSequential(new AutoShoot());
+    		return;																//TODO fix AutoShoot
     	}    	
 
     	//AutonSecondMovement
     	switch(secondMovement) {
     	case STOP:
     		return;
-    	case NEAR_HOPPER:													//TODO Later
-    		return;
-    	case FAR_HOPPER:
+    	case NEAR_HOPPER:
     		if(fieldPos == AutonFieldPosition.LEFT) {
     			addSequential(new DegreeRotate(120 * reversalFactor));
-    			addSequential(new DriveDistance(20));						// ARBITRARY VALUE
-    			addSequential(new DegreeRotate(90 * reversalFactor));
-    			addSequential(new DriveDistance(-4));						// ARBITRARY VALUE
+    			addSequential(new DriveDistance(7.425));
+    			addSequential(new DegreeRotate(-90 * reversalFactor));
+    			addSequential(new DriveDistance(6.75));
     		}
     		else if(fieldPos == AutonFieldPosition.RIGHT) {
     			addSequential(new DegreeRotate(-30 * reversalFactor));	
-    			addSequential(new DriveDistance(-5, 2.5));					// ARBITRARY VALUE
-    			addSequential(new DriveDistance(5));						// ARBITRARY VALUE
-    			addSequential(new DegreeRotate(45));
+    			addSequential(new DriveDistance(6.75));
+    			/*addSequential(new DriveDistance(5));
+    			addSequential(new DegreeRotate(45));*/
     			//Shoot
+    		}
+    		else
+    			return;//if its in the middle
+    		break;
+    	case FAR_HOPPER:
+    		if(fieldPos == AutonFieldPosition.LEFT) {
+    			addSequential(new DegreeRotate(120 * reversalFactor));
+    			addSequential(new DriveDistance(18.9 + 7.425));
+    			addSequential(new DegreeRotate(-90 * reversalFactor));
+    			addSequential(new DriveDistance(6.75));
+    		}
+    		else if(fieldPos == AutonFieldPosition.RIGHT) {
+    			addSequential(new DegreeRotate(-120 * reversalFactor));
+    			addSequential(new DriveDistance(16.2));
+    			addSequential(new DegreeRotate(90 * reversalFactor));
+    			addSequential(new DriveDistance(6.75));
     		}
     		else
     			return;//if its in the middle
     		break;
     	case SHOOTING_RANGE:
     		if(fieldPos == AutonFieldPosition.LEFT) {
-    			addSequential(new DegreeRotate(150 * reversalFactor));		
-    			addSequential(new DriveDistance(5, 0.5));					// ARBITRARY VALUE
+    			addSequential(new DegreeRotate(125 * reversalFactor));		
+    			addSequential(new DriveDistance(8.78));					// ARBITRARY VALUE
     		}
     		else if(fieldPos == AutonFieldPosition.MIDDLE) {
     			if(color.equals(Alliance.Red))
-    				addSequential(new DegreeRotate(110));
+    				addSequential(new DegreeRotate(-70));
     			else
-    				addSequential(new DegreeRotate(-110));
+    				addSequential(new DegreeRotate(70));
     		}
     		else if(fieldPos == AutonFieldPosition.RIGHT) {
-    			addSequential(new DegreeRotate(180 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
+    			addSequential(new DegreeRotate(10 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
     		}
     		//Shoot
     		break;
