@@ -51,6 +51,12 @@ public class AutoAlign extends DegreeRotate {
     // Called once after isFinished returns true
     protected void end() {
     	super.end();
+    	
+    	if (target.equals(TargetType.GEAR_VISION))
+			MercLogger.logMessage(Level.INFO, "AutoAlign: Ending with angle gear: " + Robot.visionProcessor.angleGear);
+		else if (target.equals(TargetType.HIGH_GOAL))
+			MercLogger.logMessage(Level.INFO, "AutoAlign: Ending with angle high: " + Robot.visionProcessor.angleHigh);
+    	
     	MercLogger.logMessage(Level.INFO, "AutoAlign: Completed");
     }
 

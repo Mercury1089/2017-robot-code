@@ -52,7 +52,7 @@ public class DegreeRotate extends PIDCommand {
     	}
     	Robot.driveTrain.disableRobotDrive();
     	getPIDController().setContinuous(true);
-    	getPIDController().setAbsoluteTolerance(0.15);
+    	getPIDController().setAbsoluteTolerance(0.05);
     	getPIDController().setInputRange(-180, 180);
     	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5
     	

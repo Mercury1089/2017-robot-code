@@ -311,12 +311,12 @@ public class VisionProcessor {
 			case GEAR_VISION:
 				centerX = GEAR_VISION_TABLE.getNumberArray("center", DEF_VALUE)[0];
 				hfov = PICam.HFOV_PI;
-				hres = PICam.VRES_PI;
+				hres = PICam.HRES_PI;
 				break;
 			case HIGH_GOAL:
 				centerX = HIGH_GOAL_TABLE.getNumberArray("center", DEF_VALUE)[0];
 				hfov = LifeCam.HFOV_LIFECAM;
-				hres = LifeCam.VRES_LIFECAM;
+				hres = LifeCam.HRES_LIFECAM;
 				break;
 			default: 
 				return 0;

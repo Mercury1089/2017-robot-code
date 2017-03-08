@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1089.robot.auton;
 
 import org.usfirst.frc.team1089.robot.commands.AutoShoot;
+import org.usfirst.frc.team1089.robot.commands.BasicGearDelivery;
 import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DeliverGear;
 import org.usfirst.frc.team1089.robot.commands.DriveDistance;
@@ -55,10 +56,10 @@ public class AutonCommand extends CommandGroup {
 		if (color.equals(Alliance.Red)) 		 
 			truePos = 10 - startPos.ordinal();			//XXX makes 9 to 1 and 1 to 9, etc=
     	
-    	int reversalFactor = 1;
+    	int reversalFactor = -1;
     	
     	if(truePos >= 7 && truePos <= 9) 	
-    		reversalFactor = -1;
+    		reversalFactor = 1;
     	
     	if(truePos < 4)
     		fieldPos = AutonFieldPosition.LEFT; 					//Loading Station side
@@ -90,7 +91,7 @@ public class AutonCommand extends CommandGroup {
     		return;
     	case DELIVER_GEAR:
     		if(firstMovement == AutonFirstMovement.GO_TO_LIFT) {
-    			addSequential(new DeliverGear());
+    			addSequential(new BasicGearDelivery());
     			addSequential(new DriveDistance(5.4, 0.1, 7.0));
     			addParallel(new ToggleGearDelivery(false));
     		}

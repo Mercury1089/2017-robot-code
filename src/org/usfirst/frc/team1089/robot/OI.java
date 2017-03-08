@@ -109,8 +109,14 @@ public class OI {
         rightStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
         rightStick1.whenPressed(new ShootWithDistance(Robot.rightShooter));
 
-        leftStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN2);
-        leftStick1.whenPressed(new CalculateGearPath(Direction.REVERSE));
+        rightStick3 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN3);
+        rightStick3.whenPressed(new AutoAlign(TargetType.GEAR_VISION));
+        
+        leftStick2 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN2);
+        leftStick2.whenPressed(new DeliverGear());
+        
+        leftStick3 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN3);
+        leftStick3.whenPressed(new CalculateGearPath(Direction.REVERSE));
         
 /*        rightStick2 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN2);
         rightStick2.whenPressed(new SetRoller(Robot.rightFeeder, 0));*/
@@ -209,6 +215,7 @@ public class OI {
 		SmartDashboard.putNumber("Shooter ID 7: Current", Robot.rightShooter.shooterMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Shooter ID 8: Current", Robot.leftShooter.shooterMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Ultrasonic", Robot.ultrasonic.getRange());
+		SmartDashboard.putNumber("Angle Gear", Robot.visionProcessor.angleGear);
 	}
 /*	
 	public void updateOISlow() {
