@@ -26,7 +26,7 @@ public class OI {
 	public static final double JS_DEADZONE_LIMIT = 0.3; // Deadzone limit for the stick	
 	
 	SendableChooser startPosition, shooterType, firstAction, secondAction,
-		movementOffStart, nextMovement;
+		firstMovement, secondMovement;
 	
 	Alliance allianceColor;
 
@@ -142,12 +142,12 @@ public class OI {
 		startPosition.addObject("Right Corner: 9", AutonPosition.POSITION_9);
 		SmartDashboard.putData("Starting Position", startPosition);
 		
-		movementOffStart = new SendableChooser();
-		movementOffStart.addDefault("Do nothing", AutonFirstMovement.DO_NOTHING);
-		movementOffStart.addObject("Drive forward", AutonFirstMovement.DRIVE_FORWARD);
-		movementOffStart.addObject("Drive to gear station", AutonFirstMovement.GO_TO_LIFT);
-		movementOffStart.addObject("Move to shooting range", AutonFirstMovement.GO_TO_SHOOTING_RANGE);
-		SmartDashboard.putData("Step 1", movementOffStart);
+		firstMovement = new SendableChooser();
+		firstMovement.addDefault("Do nothing", AutonFirstMovement.DO_NOTHING);
+		firstMovement.addObject("Drive forward", AutonFirstMovement.DRIVE_FORWARD);
+		firstMovement.addObject("Drive to gear station", AutonFirstMovement.GO_TO_LIFT);
+		firstMovement.addObject("Move to shooting range", AutonFirstMovement.GO_TO_SHOOTING_RANGE);
+		SmartDashboard.putData("Step 1", firstMovement);
 		
 		firstAction = new SendableChooser();
 		firstAction.addDefault("Stop", AutonFirstAction.DO_NOTHING);
@@ -155,12 +155,12 @@ public class OI {
 		firstAction.addObject("Shoot", AutonFirstAction.SHOOT);
 		SmartDashboard.putData("Step 2", firstAction);
 		
-		nextMovement = new SendableChooser();
-		nextMovement.addDefault("Stop", AutonSecondMovement.STOP);
-		nextMovement.addObject("Near hopper", AutonSecondMovement.NEAR_HOPPER);
-		nextMovement.addObject("Far hopper", AutonSecondMovement.FAR_HOPPER);
-		nextMovement.addObject("Shooting range", AutonSecondMovement.SHOOTING_RANGE);
-		SmartDashboard.putData("Step 3", nextMovement);
+		secondMovement = new SendableChooser();
+		secondMovement.addDefault("Stop", AutonSecondMovement.STOP);
+		secondMovement.addObject("Near hopper", AutonSecondMovement.NEAR_HOPPER);
+		secondMovement.addObject("Far hopper", AutonSecondMovement.FAR_HOPPER);
+		secondMovement.addObject("Shooting range", AutonSecondMovement.SHOOTING_RANGE);
+		SmartDashboard.putData("Step 3", secondMovement);
 		
 		secondAction = new SendableChooser();
 		secondAction.addDefault("Stop", AutonSecondAction.STOP);
@@ -269,7 +269,7 @@ public class OI {
     }
     
     public AutonFirstMovement getFirstMovement() {
-    	return (AutonFirstMovement) movementOffStart.getSelected();
+    	return (AutonFirstMovement) firstMovement.getSelected();
     }
     
     public AutonFirstAction getFirstAction() {
@@ -277,7 +277,7 @@ public class OI {
     }
     
     public AutonSecondMovement getSecondMovement() {
-    	return (AutonSecondMovement) nextMovement.getSelected();
+    	return (AutonSecondMovement) secondMovement.getSelected();
     }
     
     public AutonSecondAction getSecondAction() {
