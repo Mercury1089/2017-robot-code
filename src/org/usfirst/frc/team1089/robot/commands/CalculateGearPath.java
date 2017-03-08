@@ -114,6 +114,7 @@ public class CalculateGearPath extends InstantCommand {
     	double distanceFromRetroHorizontal = Math.abs( 
     			(Math.pow(targetTapeDistance, 2) - Math.pow(liftDistance, 2)) / (centerToCenterDistanceByTwo * 2) + 
     			centerToCenterDistanceByTwo / 2);    		
+    	MercLogger.logMessage(Level.INFO, "centerToCenterDistanceByTwo is:" + centerToCenterDistanceByTwo);
     	
 //    	SmartDashboard.putNumber("distanceFromRetroHorizontal", Utilities.round(distanceFromRetroHorizontal, 3));
     	MercLogger.logMessage(Level.INFO, "distanceFromRetroHorizontal is: " + distanceFromRetroHorizontal);
@@ -171,7 +172,6 @@ public class CalculateGearPath extends InstantCommand {
     			(Math.pow(targetTapeDistance, 2) - Math.pow(liftDistance, 2)) / (centerToCenterDistanceByTwo * 2) - 
     			(centerToCenterDistanceByTwo * 2) / 4;
     	SmartDashboard.putNumber("distanceFromRetroHorizontal", Utilities.round(distanceFromRetroHorizontal, 3));
-    	
     	//
     	double distanceFromLiftFace =
     			Math.sqrt(Math.pow(targetTapeDistance,  2) - Math.pow(distanceFromRetroHorizontal, 2));

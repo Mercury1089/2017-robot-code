@@ -58,8 +58,8 @@ public class VisionProcessor {
             //VFOV_PI = 41.41;      //Vertical field of view for the PI Cam
             VFOV_PI = 37.5;
 		public static final int
-			HRES_PI = 320,        //Resolution-x of the PI feed
-			VRES_PI = 240;		  //Resolution-y of the PI feed
+			HRES_PI = 640,        //Resolution-x of the PI feed, normally 320
+			VRES_PI = 480;		  //Resolution-y of the PI feed, normally 240
 	}
 	
 	public static class LifeCam {
@@ -67,8 +67,8 @@ public class VisionProcessor {
 			HFOV_LIFECAM = 60.00, //Horizontal Field of View for the Life Cam
             VFOV_LIFECAM = 33.05; //Vertical field of view for the Life Cam
 		public static final int
-	        HRES_LIFECAM = 320,   //Resolution-x of the Life Cam feed
-			VRES_LIFECAM = 240;   //Resolution-y of the Life Cam feed
+	        HRES_LIFECAM = 640,   //Resolution-x of the Life Cam feed, normally 320
+			VRES_LIFECAM = 480;   //Resolution-y of the Life Cam feed, normally 480
 	} 
 	
 	// Targeting constants
@@ -267,6 +267,31 @@ public class VisionProcessor {
 		output[1] = (targetHeight / IN_TO_FT) * vres / ( 2 * target2Height * Math.tan( Math.toRadians( vfov / 2 ) ) );
 		return output;
 	}
+	/*
+	public double[] getDistancesToGearTargets() {
+		double target1Width, target2Width, hfov, targetWidth, hres;
+		double[] output = new double[2];
+		//System.out.println("Getting distance to each target using vertical information");
+		
+		target1Width = GEAR_VISION_TABLE.getNumberArray("boundsTarget1", new double[]{-1, -1})[0];
+		target2Width = GEAR_VISION_TABLE.getNumberArray("boundsTarget2", new double[]{-1, -1})[0];
+		hfov = PICam.HFOV_PI;
+		hres = PICam.HRES_PI;
+		targetWidth = TARGET_WIDTH_INCHES_GEAR;		
+		
+		// Don't return anything if either can't be seen
+		if (target1Width == -1 || target2Width == -1) {
+			output[0] = Double.NEGATIVE_INFINITY;
+			output[1] = Double.NEGATIVE_INFINITY;
+			return output;
+		}
+			
+		
+		// Magic equation derived from a few things we know about the target
+		output[0] = (targetWidth / IN_TO_FT) * hres / ( 2 * target1Width * Math.tan( Math.toRadians( hfov / 2 ) ) );
+		output[1] = (targetWidth / IN_TO_FT) * hres / ( 2 * target2Width * Math.tan( Math.toRadians( hfov / 2 ) ) );
+		return output;
+	}*/
 	
 	/**
 	 * <pre>

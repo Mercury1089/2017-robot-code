@@ -51,15 +51,30 @@ public class OI {
 //    public JoystickButton rightBtn2;
 
     public Joystick gamePad;
+    
+    //Buttons
     public JoystickButton gamePadBtnA;
     public JoystickButton gamePadBtnB;
     public JoystickButton gamePadBtnY;
     public JoystickButton gamePadBtnX;
-	public JoystickButton rightBack;
-	public JoystickButton leftBack;
-	public JoystickButton rightStick4;
-	public JoystickButton rightStick5;
-    public JoystickButton rightStick2;
+    public JoystickButton select;
+    public JoystickButton gamePadBtnLB;
+    public JoystickButton gamePadBtnRB;
+    public JoystickButton gamePadBtnRT;
+    
+    //Dhruver
+
+    //Right Stick
+    public JoystickButton rightStick1;
+	public JoystickButton rightStick3;
+	
+	//Left Stick
+    public JoystickButton leftStick1;
+    public JoystickButton leftStick2;
+    public JoystickButton leftStick3;
+    public JoystickButton leftStick7;
+    
+    
     
     public OI() {
     	
@@ -84,17 +99,17 @@ public class OI {
         //gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
         //gamePadBtnX.whenPressed(new RunMotionProfile());     
         
-        rightBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.RB);
-        rightBack.whenPressed(new DegreeRotate(60));
+        gamePadBtnRB = new JoystickButton(gamePad, RobotMap.GamepadButtons.RB);
+        gamePadBtnRB.whenPressed(new DegreeRotate(60));
         
-        leftBack = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
-        leftBack.whenPressed(new DeliverGear());        
+        gamePadBtnLB = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
+        gamePadBtnLB.whenPressed(new DeliverGear());        
         
-        rightStick4 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN4);
-        rightStick4.whenPressed(new ShootWithDistance(Robot.rightShooter));
+        rightStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
+        rightStick1.whenPressed(new ShootWithDistance(Robot.rightShooter));
 
-        rightStick5 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN5);
-        rightStick5.whenPressed(new CalculateGearPath(Direction.REVERSE));
+        leftStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN2);
+        leftStick1.whenPressed(new CalculateGearPath(Direction.REVERSE));
         
 /*        rightStick2 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN2);
         rightStick2.whenPressed(new SetRoller(Robot.rightFeeder, 0));*/
