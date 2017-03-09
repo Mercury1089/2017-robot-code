@@ -57,7 +57,7 @@ public class OI {
     public JoystickButton gamePadBtnB;
     public JoystickButton gamePadBtnY;
     public JoystickButton gamePadBtnX;
-    public JoystickButton select;
+    public JoystickButton start;
     public JoystickButton gamePadBtnLB;
     public JoystickButton gamePadBtnRB;
     public JoystickButton gamePadBtnRT;
@@ -83,32 +83,29 @@ public class OI {
         gamePad = new Joystick(RobotMap.DS_USB.GAMEPAD);
         gamePadBtnA = new JoystickButton(gamePad, RobotMap.GamepadButtons.A);
         gamePadBtnA.whenPressed(new DriveWithJoysticks());
-        //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        //gamePadBtnB.whenPressed(Robot.driveTrain.);
         gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
         gamePadBtnB.whenPressed(new DriveDistance(2));
         gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
         gamePadBtnY.whenPressed(new  ToggleGearDelivery(true));
         
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
-        /*gamePadBtnX.whenPressed(new RunMotionProfile());     */
         gamePadBtnX.whenPressed(new  ToggleGearDelivery(false));
-        //gamePadBtnX.whenPressed(new AutonDriveOnCurve(2, 3));
-        /*gamePadBtnX.whenPressed(new MotionProfile());*/
-        
-        //gamePadBtnX.whenPressed(new AutonDriveOnCurve(5, 7));
-        //gamePadBtnX.whenPressed(new RunMotionProfile());     
         
         gamePadBtnRB = new JoystickButton(gamePad, RobotMap.GamepadButtons.RB);
         gamePadBtnRB.whenPressed(new DegreeRotate(60));
         
         gamePadBtnLB = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
-        //gamePadBtnLB.whenPressed(new DeliverGear());
         gamePadBtnLB.whenPressed(new BasicGearDelivery());
+        
+        start = new JoystickButton(gamePad, RobotMap.GamepadButtons.START);
+        start.whenPressed(new CalibrateGyro());
         
         rightStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
         rightStick1.whenPressed(new ShootWithDistance(Robot.rightShooter));
 
+        leftStick1 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN1);
+        leftStick1.whenPressed(new ShootWithDistance(Robot.leftShooter));        
+        
         rightStick3 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN3);
         rightStick3.whenPressed(new AutoAlign(TargetType.GEAR_VISION));
         

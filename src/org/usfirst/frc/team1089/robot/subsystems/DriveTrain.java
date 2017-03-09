@@ -237,6 +237,11 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     	rightFront.setEncPosition(0);
     }
     
+    public void calibrateGyro() {
+    	gyro.calibrate();
+    	gyro.reset();
+    }
+    
     public void resetMotionProfiling() {
     	leftFront.clearMotionProfileHasUnderrun();
     	leftFront.clearMotionProfileTrajectories();
