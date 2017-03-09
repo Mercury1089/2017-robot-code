@@ -19,7 +19,7 @@ public class DegreeRotate extends PIDCommand {
 	private DoubleSupplier _angleSupplier = null;
 	
     protected DegreeRotate() {
-    	super(0.3, 0, 0.35);
+    	super(0.25, 0.001, 0.15);
     	_heading = 0.0;
     	requires(Robot.driveTrain);
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
@@ -54,7 +54,7 @@ public class DegreeRotate extends PIDCommand {
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(0.05);
     	getPIDController().setInputRange(-180, 180);
-    	getPIDController().setOutputRange(-.4, .4);   //was at -.5,.5
+    	getPIDController().setOutputRange(-.5, .5);   //was at -.5,.5
     	
     	//Debugging Logs (delete if necessary)
     	//MercLogger.logMessage(Level.INFO, "Before reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");

@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveDistance extends Command {
 
-	private static double MOVE_THRESHOLD = 0.05;
+	private static double MOVE_THRESHOLD = 0.15;
     private double distance;
     private double endPosL, endPosR;
     private double waitTime;
@@ -108,15 +108,15 @@ public class DriveDistance extends Command {
     	if (distanceSupplier != null) {
     		distance = distanceSupplier.getAsDouble();
     	}
-        endPosL = Robot.driveTrain.feetToRevolutions(distance);
+        endPosL = -Robot.driveTrain.feetToRevolutions(distance);
         endPosR = -endPosL;
 
 		Robot.driveTrain.disableRobotDrive();
 		Robot.driveTrain.setToPosition();
 		Robot.driveTrain.resetEncoders();
     	
-		Robot.driveTrain.getLeft().setPID(0.4, 0, 0.05);
-		Robot.driveTrain.getRight().setPID(0.4, 0, 0.05);
+		Robot.driveTrain.getLeft().setPID(0.1, 0, 0.05);
+		Robot.driveTrain.getRight().setPID(0.1, 0, 0.05);
 		
 		Robot.driveTrain.getLeft().configPeakOutputVoltage(maxV, -maxV);
 		Robot.driveTrain.getLeft().configNominalOutputVoltage(0, 0);

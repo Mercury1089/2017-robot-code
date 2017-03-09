@@ -25,8 +25,13 @@ public class OI {
 
 	public static final double JS_DEADZONE_LIMIT = 0.3; // Deadzone limit for the stick	
 	
-	SendableChooser startPosition, shooterType, firstAction, secondAction,
-		firstMovement, secondMovement;
+	SendableChooser<AutonPosition> startPosition; 
+	SendableChooser<ShooterEnum> shooterType; 
+	SendableChooser<AutonFirstAction> firstAction;
+	SendableChooser<AutonSecondAction> secondAction;
+	SendableChooser<AutonFirstMovement> firstMovement; 
+	SendableChooser<AutonSecondMovement> secondMovement;
+	
 	
 	Alliance allianceColor;
 
@@ -133,50 +138,10 @@ public class OI {
     	// until it is finished as determined by it's isFinished method.
     	// button.whenReleased(new ExampleCommand());
         
-        startPosition = new SendableChooser();
-		startPosition.addDefault("Left Corner: 1", AutonPosition.POSITION_1);
-		startPosition.addObject("Left, Left Line: 2", AutonPosition.POSITION_2);
-		startPosition.addObject("Right, Left Line: 3", AutonPosition.POSITION_3);
-		startPosition.addObject("Left, Midline: 4", AutonPosition.POSITION_4);
-		startPosition.addObject("Mid, Midline: 5", AutonPosition.POSITION_5);
-		startPosition.addObject("Right, Midline: 6", AutonPosition.POSITION_6);
-		startPosition.addObject("Left, Right Line: 7", AutonPosition.POSITION_7);
-		startPosition.addObject("Right, Right Line: 8", AutonPosition.POSITION_8);
-		startPosition.addObject("Right Corner: 9", AutonPosition.POSITION_9);
-		SmartDashboard.putData("Starting Position", startPosition);
-		
-		firstMovement = new SendableChooser();
-		firstMovement.addDefault("Do nothing", AutonFirstMovement.DO_NOTHING);
-		firstMovement.addObject("Drive forward", AutonFirstMovement.DRIVE_FORWARD);
-		firstMovement.addObject("Drive to gear station", AutonFirstMovement.GO_TO_LIFT);
-		firstMovement.addObject("Move to shooting range", AutonFirstMovement.GO_TO_SHOOTING_RANGE);
-		SmartDashboard.putData("Step 1", firstMovement);
-		
-		firstAction = new SendableChooser();
-		firstAction.addDefault("Stop", AutonFirstAction.DO_NOTHING);
-		firstAction.addObject("Deliver gear", AutonFirstAction.DELIVER_GEAR);
-		firstAction.addObject("Shoot", AutonFirstAction.SHOOT);
-		SmartDashboard.putData("Step 2", firstAction);
-		
-		secondMovement = new SendableChooser();
-		secondMovement.addDefault("Stop", AutonSecondMovement.STOP);
-		secondMovement.addObject("Near hopper", AutonSecondMovement.NEAR_HOPPER);
-		secondMovement.addObject("Far hopper", AutonSecondMovement.FAR_HOPPER);
-		secondMovement.addObject("Shooting range", AutonSecondMovement.SHOOTING_RANGE);
-		SmartDashboard.putData("Step 3", secondMovement);
-		
-		secondAction = new SendableChooser();
-		secondAction.addDefault("Stop", AutonSecondAction.STOP);
-		secondAction.addObject("Shoot", AutonSecondAction.SHOOT);
-		SmartDashboard.putData("Step 4", secondAction);
-		
-		shooterType = new SendableChooser();
-		shooterType.addDefault("None", ShooterEnum.NO_SHOOTER);
-		shooterType.addObject("Left", ShooterEnum.LEFT_SHOOTER);
-		shooterType.addObject("Right", ShooterEnum.RIGHT_SHOOTER);
-		shooterType.addObject("Dual", ShooterEnum.DUAL_SHOOTER);
-		shooterType.addObject("Dual Staggered", ShooterEnum.DUAL_STAGGERED_SHOOTER);
-		/*SmartDashboard.putData("Shot Selection : None", ShooterEnum.NO_SHOOTER);
+        
+        selectAuton();
+
+        /*SmartDashboard.putData("Shot Selection : None", ShooterEnum.NO_SHOOTER);
 		SmartDashboard.putData("Shot Selection : Left", ShooterEnum.LEFT_SHOOTER);
 		SmartDashboard.putData("Shot Selection : Right", ShooterEnum.RIGHT_SHOOTER);
 		SmartDashboard.putData("Shot Selection : Dual", ShooterEnum.DUAL_SHOOTER);
@@ -213,6 +178,17 @@ public class OI {
 		SmartDashboard.putNumber("Shooter ID 8: Current", Robot.leftShooter.shooterMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Ultrasonic", Robot.ultrasonic.getRange());
 		SmartDashboard.putNumber("Angle Gear", Robot.visionProcessor.angleGear);
+		SmartDashboard.putNumber("Gear Distance", Robot.visionProcessor.distGear);
+		SmartDashboard.putNumber("High Distance", Robot.visionProcessor.distHigh);
+		
+		/*SmartDashboard.putData("Starting Position", startPosition);
+		SmartDashboard.putData("Step 1", firstMovement);
+		SmartDashboard.putData("Step 2", firstAction);
+		SmartDashboard.putData("Step 3", secondMovement);
+		SmartDashboard.putData("Step 4", secondAction);
+		*/
+		
+		//selectAuton();
 	}
 /*	
 	public void updateOISlow() {
@@ -248,6 +224,56 @@ public class OI {
         return gamePad;
     }
     
+    public void selectAuton() {
+    	System.out.println("Adding sendables boi");
+    	
+    	startPosition = new SendableChooser<AutonPosition>();
+		startPosition.addDefault("Left Corner: 1", AutonPosition.POSITION_1);
+		startPosition.addObject("Left, Left Line: 2", AutonPosition.POSITION_2);
+		startPosition.addObject("Right, Left Line: 3", AutonPosition.POSITION_3);
+		startPosition.addObject("Left, Midline: 4", AutonPosition.POSITION_4);
+		startPosition.addObject("Mid, Midline: 5", AutonPosition.POSITION_5);
+		startPosition.addObject("Right, Midline: 6", AutonPosition.POSITION_6);
+		startPosition.addObject("Left, Right Line: 7", AutonPosition.POSITION_7);
+		startPosition.addObject("Right, Right Line: 8", AutonPosition.POSITION_8);
+		startPosition.addObject("Right Corner: 9", AutonPosition.POSITION_9);
+		SmartDashboard.putData("Start Pos", startPosition);
+		
+		firstMovement = new SendableChooser<AutonFirstMovement>();
+		firstMovement.addDefault("Do nothing", AutonFirstMovement.DO_NOTHING);
+		firstMovement.addObject("Drive forward", AutonFirstMovement.DRIVE_FORWARD);
+		firstMovement.addObject("Drive to gear station", AutonFirstMovement.GO_TO_LIFT);
+		firstMovement.addObject("Move to shooting range", AutonFirstMovement.GO_TO_SHOOTING_RANGE);
+		SmartDashboard.putData("S1", firstMovement);
+		
+		firstAction = new SendableChooser<AutonFirstAction>();
+		firstAction.addDefault("Stop", AutonFirstAction.DO_NOTHING);
+		firstAction.addObject("Deliver gear", AutonFirstAction.DELIVER_GEAR);
+		firstAction.addObject("Shoot", AutonFirstAction.SHOOT);
+		SmartDashboard.putData("S2", firstAction);
+		
+		secondMovement = new SendableChooser<AutonSecondMovement>();
+		secondMovement.addDefault("Stop", AutonSecondMovement.STOP);
+		secondMovement.addObject("Near hopper", AutonSecondMovement.NEAR_HOPPER);
+		secondMovement.addObject("Far hopper", AutonSecondMovement.FAR_HOPPER);
+		secondMovement.addObject("Shooting range", AutonSecondMovement.SHOOTING_RANGE);
+		SmartDashboard.putData("S3", secondMovement);
+		
+		secondAction = new SendableChooser<AutonSecondAction>();
+		secondAction.addDefault("Stop", AutonSecondAction.STOP);
+		secondAction.addObject("Shoot", AutonSecondAction.SHOOT);
+		SmartDashboard.putData("S4", secondAction);
+		
+		/*shooterType = new SendableChooser<ShooterEnum>();
+		shooterType.addDefault("None", ShooterEnum.NO_SHOOTER);
+		shooterType.addObject("Left", ShooterEnum.LEFT_SHOOTER);
+		shooterType.addObject("Right", ShooterEnum.RIGHT_SHOOTER);
+		shooterType.addObject("Dual", ShooterEnum.DUAL_SHOOTER);
+		shooterType.addObject("Dual Staggered", ShooterEnum.DUAL_STAGGERED_SHOOTER);
+		*/
+		System.out.println("Boio");
+    }
+    
 	/**
 	 * <pre>
 	 * public boolean applyDeadzone(double val, double dzLimit)
@@ -269,26 +295,26 @@ public class OI {
     }
     
     public AutonPosition getStartPosition() {
-    	return (AutonPosition) startPosition.getSelected();
+    	return startPosition.getSelected();
     }
     
     public AutonFirstMovement getFirstMovement() {
-    	return (AutonFirstMovement) firstMovement.getSelected();
+    	return firstMovement.getSelected();
     }
     
     public AutonFirstAction getFirstAction() {
-    	return (AutonFirstAction) firstAction.getSelected();
+    	return firstAction.getSelected();
     }
     
     public AutonSecondMovement getSecondMovement() {
-    	return (AutonSecondMovement) secondMovement.getSelected();
+    	return secondMovement.getSelected();
     }
     
     public AutonSecondAction getSecondAction() {
-    	return (AutonSecondAction) secondAction.getSelected();
+    	return secondAction.getSelected();
     }
     
     public ShooterEnum getShot() {
-    	return (ShooterEnum) shooterType.getSelected();
+    	return shooterType.getSelected();
     }
 }

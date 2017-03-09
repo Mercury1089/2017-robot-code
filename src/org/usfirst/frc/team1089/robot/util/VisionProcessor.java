@@ -132,7 +132,8 @@ public class VisionProcessor {
 						timeGear = (double)systm - (double)value; 
 				}
 				
-				distGear = getDistanceUsingVerticalInformation(TargetType.GEAR_VISION);
+				distGear = getDistanceUsingVerticalInformation(TargetType.GEAR_VISION) <= 3.0 ? 
+						getDistanceUsingHorizontalInformation(TargetType.GEAR_VISION) : getDistanceUsingVerticalInformation(TargetType.GEAR_VISION);
 				angleGear = getAngleFromCenter(TargetType.GEAR_VISION);
 			}
 		});
