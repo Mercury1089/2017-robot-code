@@ -353,7 +353,7 @@ public class VisionProcessor {
 		centerX1 = GEAR_VISION_TABLE.getNumberArray("centerTarget1", DEF_VALUE)[0];
 		centerX2 = GEAR_VISION_TABLE.getNumberArray("centerTarget2", DEF_VALUE)[0];
 		hfov = PICam.HFOV_PI;
-		hres = PICam.VRES_PI;
+		hres = PICam.HRES_PI;
 		
 		// Don't return anything if it can't be seen
 		if (centerX1 == -1 || centerX2 == -1) {
