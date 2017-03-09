@@ -6,8 +6,11 @@ import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
+import edu.wpi.first.wpilibj.command.InstantCommand;
+
 /**
- *
+ *	{@link AutoAlign} rotates the robot to minimize
+ *  the angle between robot and specified target type
  */
 public class AutoAlign extends DegreeRotate {
 

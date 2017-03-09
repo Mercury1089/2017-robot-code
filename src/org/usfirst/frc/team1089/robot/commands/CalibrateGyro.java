@@ -6,40 +6,23 @@ import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
  *
  */
-public class CalibrateGyro extends Command {
+public class CalibrateGyro extends InstantCommand {
 	
     public CalibrateGyro() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    }
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
     	Robot.driveTrain.calibrateGyro();
-    	end();
+    	MercLogger.logMessage(Level.INFO, "CalibrateGyro: Completed");
     }
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
-    	MercLogger.logMessage(Level.INFO, "Calibrate Gyro: Completed");
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	MercLogger.logMessage(Level.INFO, "Calibrate Gyro: Interrupted");
-    }
 }

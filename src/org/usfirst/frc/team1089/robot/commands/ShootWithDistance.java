@@ -9,10 +9,12 @@ import org.usfirst.frc.team1089.robot.util.MercLogger;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * This {@link Command} calculates the speed to set the shooters
+ * depending on distance from the boiler and runs the shooters
  */
 public class ShootWithDistance extends Command {
 
