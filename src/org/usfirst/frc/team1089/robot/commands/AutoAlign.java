@@ -48,7 +48,16 @@ public class AutoAlign extends DegreeRotate {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(Robot.visionProcessor.getAngleFromCenter(target)) <= 1.5;
+    	return super.isFinished();
+/*        if (super.isFinished()) {
+        	double angle_from_center = Robot.visionProcessor.getAngleFromCenter(target);
+        	if (Math.abs(angle_from_center) < 1.5) {
+        		return true;
+        	} else {
+            	super.updateHeading(angle_from_center);
+        	}
+        }
+        return false;*/
     }
 
     // Called once after isFinished returns true

@@ -88,11 +88,15 @@ public class AutonCommand extends CommandGroup {
     		MercLogger.logMessage(Level.INFO, "True Pos: " +truePos);
     		
     		if(truePos == 3) {
-    			addSequential(new DriveDistance(-7, 0.1, 3.0));
-        		addSequential(new DegreeRotate(-60 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
+    			addSequential(new DriveDistance(-5.5, 0.1, 3.0));
+        		addSequential(new DegreeRotate(60));	//Assuming that the gear delivery mechanism is in the back of the robot
         		//addSequential(new BasicGearDelivery());
     			
         		//addSequential(new DriveDistance((distances[1] - 4), 0.1, 3.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
+    		}
+    		else if(truePos == 7) {
+    			addSequential(new DriveDistance(-5.5, 0.1, 3.0));
+        		addSequential(new DegreeRotate(-60));
     		}
     		else {
         		addSequential(new DriveDistance(-2));
