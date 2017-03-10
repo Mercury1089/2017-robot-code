@@ -86,18 +86,24 @@ public class OI {
         leftStick = new Joystick(RobotMap.DS_USB.LEFT_STICK);
         rightStick = new Joystick(RobotMap.DS_USB.RIGHT_STICK);
         gamePad = new Joystick(RobotMap.DS_USB.GAMEPAD);
+        
+        //Drive W/ Joysticks
         gamePadBtnA = new JoystickButton(gamePad, RobotMap.GamepadButtons.A);
         gamePadBtnA.whenPressed(new DriveWithJoysticks());
-        gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new DriveDistance(2));
-        gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
-        gamePadBtnY.whenPressed(new  ToggleGearDelivery(true));
         
+        //StopFeeder	(only needed if feeder/shooter combo is not working properly)
+        gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
+        gamePadBtnB.whenPressed(new RunFeeder(false));
+        
+        //Run Feeder	(only needed if feeder/shooter combo is not working properly)
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
-        gamePadBtnX.whenPressed(new  ToggleGearDelivery(false));
+        gamePadBtnX.whenPressed(new RunFeeder(true));
         
         gamePadBtnRB = new JoystickButton(gamePad, RobotMap.GamepadButtons.RB);
-        gamePadBtnRB.whenPressed(new DegreeRotate(60));
+        gamePadBtnRB.whenPressed(new ToggleGearDelivery(true));
+        
+        gamePadBtnRB = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
+        gamePadBtnRB.whenPressed(new ToggleGearDelivery(false));
         
         gamePadBtnLB = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
         gamePadBtnLB.whenPressed(new BasicGearDelivery());
@@ -112,7 +118,7 @@ public class OI {
         leftStick1.whenPressed(new ShootWithDistance(Robot.leftShooter));        
         
         rightStick3 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN3);
-        rightStick3.whenPressed(new AutoAlign(TargetType.GEAR_VISION));
+        //rightStick3.whenPressed(new Climb());
         
         leftStick2 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN2);
         leftStick2.whenPressed(new DeliverGear());
