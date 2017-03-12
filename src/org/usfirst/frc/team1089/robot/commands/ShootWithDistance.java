@@ -3,8 +3,10 @@ package org.usfirst.frc.team1089.robot.commands;
 import java.util.function.DoubleSupplier;
 import java.util.logging.Level;
 
+import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
+import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -58,10 +60,17 @@ public class ShootWithDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (distance == 0) {
-    		distance = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooterIsRunning",
-        			false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": distance", 0) : 0.0;
-    	}
+//    	if (distance == 0) {
+//    		distance = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooterIsRunning",
+//        			false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": distance", 0) : 0.0;
+    	
+    	//distance = (Math.abs(distance) > 16 || Math.abs(distance) < 6 ? 8 : Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL));
+    	distance = Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL);
+    	
+    	//speed = (Math.abs(distance) > 14 || Math.abs(distance) < 6 ? 3000 : (distance-6)/8*5000);
+    	
+    	speed = 2000;
+    	
 /*    	shooterSystem.shooterMotor.set(1);
     	shooterSystem.feederMotor.set(0);*/
     	
@@ -73,11 +82,11 @@ public class ShootWithDistance extends Command {
     	speed = speed/29.1585*10051(.9459*6021);		//XXX Attempt at converting big boy to little enc
 */    	
   	
-    	if(distance < 6)
+    	/*if(distance < 6)
     		speed = 0;
     	else {
     		speed=(distance-6)/8*5000;
-    	}
+    	}*/
     	
     	if(speed != shooterSystem.getSetSpeed()) {
         	if (speed == 0) {

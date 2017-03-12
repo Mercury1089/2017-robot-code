@@ -2,9 +2,11 @@ package org.usfirst.frc.team1089.robot;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
+import org.usfirst.frc.team1089.robot.subsystems.Climber;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1089.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team1089.robot.subsystems.Gear;
+import org.usfirst.frc.team1089.robot.subsystems.Intake;
 import org.usfirst.frc.team1089.robot.subsystems.Feeder;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
@@ -15,6 +17,7 @@ import org.usfirst.frc.team1089.robot.util.VisionProcessor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -40,6 +43,9 @@ public class Robot extends IterativeRobot {
 	public static Shooter leftShooter, rightShooter, shooter;
 	public static Feeder rightFeeder, leftFeeder;
 	public static Gear gear;
+	public static Climber climber;
+	public static Intake intake;
+	public static Servo latchServo;
 	public static OI oi;
 	
 	AutonCommand autonomousCommand;
@@ -71,10 +77,14 @@ public class Robot extends IterativeRobot {
 		//shooter = new Shooter(7);
 		leftShooter.getMotor().setInverted(true);		//TODO Check if they are inverted or not
 		rightShooter.getMotor().setInverted(true);
+		climber = new Climber(11);
+		intake = new Intake(12);
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
         // pointers. Bad news. Don't move it.
+		
+		latchServo = new Servo(1);
 		
 		oi = new OI();
 		

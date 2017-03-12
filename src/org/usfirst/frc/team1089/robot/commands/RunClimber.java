@@ -8,22 +8,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class RunFeeder extends Command {
+public class RunClimber extends Command {
 
 	private boolean run;
 	
-    public RunFeeder(Shooter shooter, boolean runFeeder) {
+    public RunClimber(boolean runClimber) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(shooter);
-    	run = runFeeder;
+    	requires(Robot.climber);
+    	run = runClimber;
     }
-    
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.rightShooter.runFeeder(run);
-    	Robot.leftShooter.runFeeder(run);
+    	Robot.climber.runClimber(run);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -40,7 +40,7 @@ public class Shooter extends Subsystem {
 	public static final double I = 0.0;
 	public static final double D = 0.2; // 0.2
 
-	private static final double QUAD_ENC_TICKS_PER_ROTATION = 128;	//Includes x4 for QUAD
+	private static final double QUAD_ENC_TICKS_PER_ROTATION = 200;	//Includes x4 for QUAD
 	private static final double HUNDRED_MS_PER_MINUTE = 600;
 	
 	public enum ShooterEnum {
@@ -135,6 +135,6 @@ public class Shooter extends Subsystem {
     }
     
     public void runFeeder(boolean run) {
-    	feederMotor.set(run ? 1 : 0);
+    	feederMotor.set(run ? -1 : 0);
     } 
 }

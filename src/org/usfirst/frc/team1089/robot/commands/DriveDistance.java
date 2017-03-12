@@ -25,6 +25,8 @@ public class DriveDistance extends Command {
     private double waitTime;
     private DoubleSupplier distanceSupplier = null;
     private double maxV = 7.0;
+    private double errorLeft, errorRight;
+    private int noProgressCountdown;
     
     /**
      * <pre>
@@ -45,7 +47,9 @@ public class DriveDistance extends Command {
         
         if (waitTime != 0)
         	MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance, double waitTime)");
-    }
+        errorLeft =  errorRight = 0;
+        noProgressCountdown = 100;
+	}
 	
 	/**
      * <pre>
@@ -137,6 +141,10 @@ public class DriveDistance extends Command {
 		
 		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getRightEncoder());
+
+        errorLeft = Math.abs(endPosL);
+        errorRight = Math.abs(endPosR);
+        noProgressCountdown = 100;
 		
 		MercLogger.logMessage(Level.INFO, "DriveDistance: Initialized with distance: " + distance + "feet.");
 		MercLogger.logMessage(Level.INFO, "DriveDistance: Initialized with waitTime: " + waitTime + "milliseconds.");
@@ -152,6 +160,9 @@ public class DriveDistance extends Command {
    		double leftPos = Robot.driveTrain.getLeft().get();
    		double rightPos = Robot.driveTrain.getRight().get();
    		
+   		double newErrorLeft = Math.abs(endPosL) - Math.abs(leftPos);
+   		double newErrorRight = Math.abs(endPosR) - Math.abs(rightPos);
+   		
 		SmartDashboard.putString("leftPos, rightPos", leftPos + ", " + rightPos);
 		SmartDashboard.putString("DriveDistance: ", "isFinished");
 
@@ -159,10 +170,18 @@ public class DriveDistance extends Command {
 				&& (rightPos > endPosR - MOVE_THRESHOLD && rightPos < endPosR + MOVE_THRESHOLD)) {
    			return true;
    		}
-   		
-    	return false;
+		
+		if ((newErrorLeft - errorLeft < MOVE_THRESHOLD && newErrorRight - errorRight < MOVE_THRESHOLD)) {
+			noProgressCountdown--;
+			if(noProgressCountdown <= 0) {
+				return true;
+			}
+		} else {
+			errorLeft = newErrorLeft;
+			errorRight = newErrorRight;
+		}
+		return false;
     }
-
     // Called once after isFinished returns true
     protected void end() {
     	//MercLogger.logMessage(Level.INFO, "Entering DriveDistance.end()");

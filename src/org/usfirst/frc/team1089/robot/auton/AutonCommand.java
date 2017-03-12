@@ -7,6 +7,7 @@ import org.usfirst.frc.team1089.robot.commands.BasicGearDelivery;
 import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DeliverGear;
 import org.usfirst.frc.team1089.robot.commands.DriveDistance;
+import org.usfirst.frc.team1089.robot.commands.OpenLatch;
 import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 
@@ -55,26 +56,28 @@ public class AutonCommand extends CommandGroup {
     	
     	AutonFieldPosition fieldPos = AutonFieldPosition.MIDDLE;
 		DriverStation.getInstance().getAlliance();
-		//Red is switched; Blue is normal
-		if (color.equals(Alliance.Blue)) 		 
-			truePos = 10 - startPos.ordinal();			//XXX makes 9 to 1 and 1 to 9, etc=
-    	
-    	int reversalFactor = -1;
-    	
-    	if(truePos >= 7 && truePos <= 9) 	
-    		reversalFactor = 1;
+		
+		int reversalFactor = 1;
+		
+		if (color.equals(Alliance.Blue)) { 		 
+			truePos = 10 - startPos.ordinal();//XXX makes 9 to 1 and 1 to 9, etc=
+    		reversalFactor = -1;
+		}
+		
     	
     	if(truePos < 4)
     		fieldPos = AutonFieldPosition.LEFT; 					//Loading Station side
     	else if(truePos > 6)
     		fieldPos = AutonFieldPosition.RIGHT;
     	
+    	addParallel(new OpenLatch());
+    	
     	//AutonFirstMovement
     	switch(firstMovement) {
     	case DO_NOTHING:
     		return;
     	case DRIVE_FORWARD:
-    		addSequential(new DriveDistance(8));
+    		addSequential(new DriveDistance(-8));
     		return;
     	case GO_TO_LIFT:
     		double[] distances = AutonMath.autonDistances(truePos);
@@ -82,25 +85,26 @@ public class AutonCommand extends CommandGroup {
         	/*if(!(truePos >= 4 && truePos <= 6)) {
         		addSequential(new DriveDistance(-distances[0], 0.1, 3.0));
         		addSequential(new DegreeRotate(-60 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
-        		addSequential(new DriveDistance((distances[1] - 4), 0.1, 3.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
+//        		addSequential(new DriveDistance((distances[1] - 4), 0.1, 3.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
         	}*/
         	
     		MercLogger.logMessage(Level.INFO, "True Pos: " +truePos);
     		
     		if(truePos == 3) {
     			addSequential(new DriveDistance(-5.5, 0.1, 3.0));
-        		addSequential(new DegreeRotate(60));	//Assuming that the gear delivery mechanism is in the back of the robot
+        		addSequential(new DegreeRotate(60 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
         		//addSequential(new BasicGearDelivery());
     			
         		//addSequential(new DriveDistance((distances[1] - 4), 0.1, 3.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
     		}
     		else if(truePos == 7) {
     			addSequential(new DriveDistance(-5.5, 0.1, 3.0));
-        		addSequential(new DegreeRotate(-60));
+        		addSequential(new DegreeRotate(-40 * reversalFactor));
     		}
     		else {
         		addSequential(new DriveDistance(-2));
         	}
+    		
     		break;
     	case GO_TO_SHOOTING_RANGE:
     		return; 															//TODO LATER
@@ -112,6 +116,7 @@ public class AutonCommand extends CommandGroup {
     		return;
     	case DELIVER_GEAR:
     		addSequential(new BasicGearDelivery());
+//    		addSequential(new DeliverGear());
     		addSequential(new DriveDistance(5.4, 0.1, 3.0));
    			addParallel(new ToggleGearDelivery(false));
     	case SHOOT:
@@ -171,7 +176,6 @@ public class AutonCommand extends CommandGroup {
     		else if(fieldPos == AutonFieldPosition.RIGHT) {
     			addSequential(new DegreeRotate(10 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
     		}
-    		//Shoot
     		break;
     	}
     	

@@ -23,6 +23,7 @@ public class RobotMap {
 	 */
 	public static class PWM {
 		public static final int SERVO_ID = 0;
+		public static final int SERVO_LATCH_ID = 1;
 	}
 
 	/**
@@ -51,6 +52,8 @@ public class RobotMap {
 		public static final int LEFT_SHOOTER_TALON_ID = 8; 
 		public static final int RIGHT_FEEDER_TALON_ID = 9;
 		public static final int LEFT_FEEDER_TALON_ID = 10;
+		public static final int CLIMBER_TALON_ID = 11;
+		public static final int INTAKE_TALON_ID = 12;
 	}
 
 	/**
