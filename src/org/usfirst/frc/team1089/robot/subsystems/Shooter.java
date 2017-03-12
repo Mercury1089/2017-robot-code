@@ -35,11 +35,12 @@ public class Shooter extends Subsystem {
 	private double highest, lowest;
 	private double setSpeed;
 
-	public static final double F = 0.2;
-	public static final double P = 0.45; // 0.7
+	public static final double F = 0.4;
+	public static double P = 0; // .45
 	public static final double I = 0.0;
-	public static final double D = 0.2; // 0.2
+	public static final double D = 0.0; // 0.2		
 
+	private int reversalFactor = 1;
 	private static final double QUAD_ENC_TICKS_PER_ROTATION = 200;	//Includes x4 for QUAD
 	private static final double HUNDRED_MS_PER_MINUTE = 600;
 	
@@ -51,16 +52,18 @@ public class Shooter extends Subsystem {
 		DUAL_STAGGERED_SHOOTER
 	}
 	
-	public Shooter(int shooterID, int feederID) {
+	public Shooter(int shooterID, int feederID, double proportional, int reverse) {
 		shooterMotor = new CANTalon(shooterID);
     	shooterMotor.enableBrakeMode(false);
-    	
+    	P = proportional;
     	// setting feedback as quad encoder does NOT enable unit scaling by default
     	// when set to speed mode the speed will be expressed in pulses per 100 ms
 		shooterMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooterMotor.reverseSensor(false);
 		setToSpeed();
 		setSpeed = 0.0;
+		
+		reversalFactor = reverse;
 		
 		feederMotor = new CANTalon(feederID);
 		feederMotor.enableBrakeMode(true);
@@ -91,7 +94,7 @@ public class Shooter extends Subsystem {
     	shooterMotor.setI(I);
     	shooterMotor.setD(D);
     	shooterMotor.setF(F);
-    	shooterMotor.configPeakOutputVoltage(0, -12);
+    	shooterMotor.configPeakOutputVoltage(12, -12);
 		shooterMotor.configNominalOutputVoltage(0,0);
 		shooterMotor.enableControl();
 		MercLogger.logMessage(Level.INFO, "Shooter " + shooterMotor.getDeviceID() + " in Speed mode.");
@@ -135,6 +138,6 @@ public class Shooter extends Subsystem {
     }
     
     public void runFeeder(boolean run) {
-    	feederMotor.set(run ? -1 : 0);
+    	feederMotor.set(run ? reversalFactor : 0);
     } 
 }
