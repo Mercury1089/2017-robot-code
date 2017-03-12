@@ -66,7 +66,7 @@ public class CalculateGearPath extends InstantCommand {
     //This one only goes part ofo the distance
     public double getBasicLiftDistancePart1() {
     	MercLogger.logMessage(Level.INFO, "getBasicLiftDistancePart1() : returning " + liftDistancePart1 / 2 + " feet.");
-    	return -((liftDistancePart1) / 2 -.2);  //The / 2 is because we split up the move forward into two parts.
+    	return -((liftDistancePart1) - 1.4);  //The / 2 is because we split up the move forward into two parts.
     }
     
     public double getBasicLiftDistancePart2() {

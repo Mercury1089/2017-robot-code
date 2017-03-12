@@ -20,7 +20,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveDistance extends Command {
 
 	private static double MOVE_THRESHOLD = 0.15;
-    private double distance;
+	private static final double MAX_DIST_FEET = 20.0;
+	
+	private double distance;
     private double endPosL, endPosR;
     private double waitTime;
     private DoubleSupplier distanceSupplier = null;
@@ -28,33 +30,25 @@ public class DriveDistance extends Command {
     private double errorLeft, errorRight;
     private int noProgressCountdown;
     
+    
     /**
      * <pre>
      * public DriveDistance(double distance,
-     *                      double waitTime)
      * </pre>
      * Creates this {@code Command} to drive the specified distance
      * and to wait the specified amount of milliseconds after the distance has been traveled.
      * 
      * @param distance the distance in inches to travel
-     * @param waitTime the amount of time to wait in milliseconds
      *                 after the distance has been driven
      */
-	public DriveDistance(double distance, double waitTime) {
-        requires(Robot.driveTrain);
-        this.distance = distance;
-        this.waitTime = waitTime;
-        
-        if (waitTime != 0)
-        	MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance, double waitTime)");
-        errorLeft =  errorRight = 0;
-        noProgressCountdown = 100;
+	public DriveDistance(double distance) {
+        this(distance, 7.0);
+        MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance)");
 	}
 	
 	/**
      * <pre>
      * public DriveDistance(double distance,
-     *                      double waitTime,
      *                      double maxV)
      * </pre>
      * Creates this {@code Command} to drive the specified distance
@@ -62,32 +56,17 @@ public class DriveDistance extends Command {
      * while moving with a certain maximum voltage.
      * 
      * @param distance the distance in inches to travel
-     * @param waitTime the amount of time to wait in seconds
-     *        after the distance has been driven
      * @param maxV the maximum voltage of the talons while driving forward, 
      *        set in initialize()
      */
-	public DriveDistance(double distance, double waitTime, double maxV) {
+	public DriveDistance(double distance, double maxV) {
         this.distance = distance;
-        this.waitTime = waitTime;
         this.maxV = maxV;
         
+        errorLeft =  errorRight = 0;
+        noProgressCountdown = 100;
+        
         MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance, double waitTime, double maxV)");
-    }
-
-	/**
-     * <pre>
-     * public DriveDistance(double distance)
-     * </pre>
-     * Creates this {@code Command} to drive the specified distance
-     * and wait 0 milliseconds after traveling the specified distance.
-     * 
-     * @param distance the distance in inches to travel
-     */
-	public DriveDistance(double distance) {
-		this(distance, 0);
-		
-    	MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(double distance)");
     }
 	
 	/**
@@ -100,9 +79,8 @@ public class DriveDistance extends Command {
 	 * @param distanceSupplier the {@code DoubleSupplier} to use to get the distance to travel
 	 */
 	public DriveDistance(DoubleSupplier distanceSupplier, double maxV) {
-		this(0, 0.4);
+		this(0, maxV);
     	this.distanceSupplier = distanceSupplier;	
-		this.maxV = maxV;
 		
     	MercLogger.logMessage(Level.INFO, "DriveDistance: Constructed using DriveDistance(DoubleSupplier distanceSupplier, double maxV)");
 	}
@@ -112,6 +90,9 @@ public class DriveDistance extends Command {
     	if (distanceSupplier != null) {
     		distance = distanceSupplier.getAsDouble();
     	}
+    	if (Math.abs(distance) > MAX_DIST_FEET)
+			distance = 0;
+    	
         endPosL = -Robot.driveTrain.feetToRevolutions(distance);
         endPosR = -endPosL;
 

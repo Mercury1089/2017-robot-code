@@ -31,6 +31,7 @@ public class Climber extends Subsystem {
 	
 	public Climber(int ID) {
 		motor = new CANTalon(ID);
+		//motor.enableBrakeMode(false);
 	}
 	
     public void initDefaultCommand() {

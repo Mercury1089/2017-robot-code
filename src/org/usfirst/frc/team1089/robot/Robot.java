@@ -2,6 +2,7 @@ package org.usfirst.frc.team1089.robot;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
+import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1089.robot.subsystems.Climber;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1089.robot.subsystems.ExampleSubsystem;
@@ -106,13 +107,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		MercLogger.close();
-		driveTrain.getGyro().reset();
-		driveTrain.getGyro().calibrate();
-		driveTrain.getNAVX().reset();
-		driveTrain.getLeft().setEncPosition(0);
-		driveTrain.getRight().setEncPosition(0);
-		leftShooter.getMotor().setEncPosition(0);
-		rightShooter.getMotor().setEncPosition(0);
 		MercLogger.logMessage(Level.INFO, "Completed Disabled Init");
 	}
 
@@ -136,8 +130,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		MercLogger.createLog("/home/lvuser/log/auton");
 		autonomousCommand = new AutonCommand(oi.getStartPosition(), DriverStation.getInstance().getAlliance()/*Alliance.Blue*/, 
-											 oi.getFirstMovement(), oi.getFirstAction(), 
-											 oi.getSecondMovement(), oi.getSecondAction());
+											 oi.getFirstMovement(), oi.getFirstAction(), oi.getSecondMovement(), oi.getSecondAction());
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -152,6 +145,7 @@ public class Robot extends IterativeRobot {
 		
 		MercLogger.logMessage(Level.INFO, "Completed Auton Init");
 	}
+	
 
 	/**
 	 * This function is called periodically during autonomous
@@ -168,10 +162,15 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		MercLogger.createLog("/home/lvuser/log/teleop");
+		DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks();
 		
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) 
 			autonomousCommand.cancel();
+	
 		
+		if (driveWithJoysticks != null)
+			driveWithJoysticks.start();
+			
 		MercLogger.logMessage(Level.INFO, "Completed Teleop Init");
 	}
 

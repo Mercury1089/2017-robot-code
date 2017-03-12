@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutonCommand extends CommandGroup {
 	
-	
 	/**
 	 * @param startPos
 	 * @param color - Alliance color determined by DriverStation.getInstance.getAlliance()
@@ -64,7 +63,8 @@ public class AutonCommand extends CommandGroup {
     		reversalFactor = -1;
 		}
 		
-    	
+    	//MercLogger.logMessage(Level.INFO, "True Pos: " + truePos + ", ");
+		
     	if(truePos < 4)
     		fieldPos = AutonFieldPosition.LEFT; 					//Loading Station side
     	else if(truePos > 6)
@@ -75,10 +75,10 @@ public class AutonCommand extends CommandGroup {
     	//AutonFirstMovement
     	switch(firstMovement) {
     	case DO_NOTHING:
-    		return;
+    		break;
     	case DRIVE_FORWARD:
     		addSequential(new DriveDistance(-8));
-    		return;
+    		break;
     	case GO_TO_LIFT:
     		double[] distances = AutonMath.autonDistances(truePos);
     		
@@ -91,14 +91,14 @@ public class AutonCommand extends CommandGroup {
     		MercLogger.logMessage(Level.INFO, "True Pos: " +truePos);
     		
     		if(truePos == 3) {
-    			addSequential(new DriveDistance(-5.5, 0.1, 3.0));
+    			addSequential(new DriveDistance(-5.5, 3.0));
         		addSequential(new DegreeRotate(60 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
         		//addSequential(new BasicGearDelivery());
     			
         		//addSequential(new DriveDistance((distances[1] - 4), 0.1, 3.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
     		}
     		else if(truePos == 7) {
-    			addSequential(new DriveDistance(-5.5, 0.1, 3.0));
+    			addSequential(new DriveDistance(-5.5, 3.0));
         		addSequential(new DegreeRotate(-40 * reversalFactor));
     		}
     		else {
@@ -107,28 +107,28 @@ public class AutonCommand extends CommandGroup {
     		
     		break;
     	case GO_TO_SHOOTING_RANGE:
-    		return; 															//TODO LATER
+    		break; 															//TODO LATER
     	}
     	
     	//AutonFirstAction
     	switch(firstAction) {
     	case DO_NOTHING:
-    		return;
+    		break;
     	case DELIVER_GEAR:
     		addSequential(new BasicGearDelivery());
 //    		addSequential(new DeliverGear());
-    		addSequential(new DriveDistance(5.4, 0.1, 3.0));
+    		addSequential(new DriveDistance(5.4, 3.0));
    			addParallel(new ToggleGearDelivery(false));
     	case SHOOT:
     		if(firstMovement == AutonFirstMovement.GO_TO_SHOOTING_RANGE)
     			addSequential(new AutoShoot());
-    		return;																//TODO fix AutoShoot
+    		break;																//TODO fix AutoShoot
     	}    	
 
     	//AutonSecondMovement
     	switch(secondMovement) {
     	case STOP:
-    		return;
+    		break;
     	case NEAR_HOPPER:
     		if(fieldPos == AutonFieldPosition.LEFT) {
     			addSequential(new DegreeRotate(120 * reversalFactor));
@@ -144,7 +144,7 @@ public class AutonCommand extends CommandGroup {
     			//Shoot
     		}
     		else
-    			return;//if its in the middle
+    			break;//if its in the middle
     		break;
     	case FAR_HOPPER:
     		if(fieldPos == AutonFieldPosition.LEFT) {
@@ -160,7 +160,7 @@ public class AutonCommand extends CommandGroup {
     			addSequential(new DriveDistance(6.75));
     		}
     		else
-    			return;//if its in the middle
+    			break;//if its in the middle
     		break;
     	case SHOOTING_RANGE:
     		if(fieldPos == AutonFieldPosition.LEFT) {
@@ -185,7 +185,7 @@ public class AutonCommand extends CommandGroup {
     		addSequential(new AutoShoot());
     		break;
     	case STOP:
-    		return;
+    		break;
     	}
     }
 }

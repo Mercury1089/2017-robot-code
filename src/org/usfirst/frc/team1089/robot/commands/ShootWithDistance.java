@@ -96,7 +96,6 @@ public class ShootWithDistance extends Command {
         	shooterSystem.setSpeed(speed);    		
     	}
     	
-    	
     	//TODO Test what the encoder gets vs. what we set
 //    	if (Math.abs(shooterSystem.shooterMotor.getSpeed()) > /*(Math.pow(0.000004*speed,2)*/ + .8737 * speed + 20.877 - SPEED_THRESHOLD
 //    			&& Math.abs(shooterSystem.shooterMotor.getSpeed()) < /*(Math.pow(0.000004*speed,2)*/ + .8737 * speed + 20.877 + SPEED_THRESHOLD) { 

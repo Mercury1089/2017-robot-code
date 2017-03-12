@@ -54,7 +54,7 @@ public class DegreeRotate extends PIDCommand {
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(1);
     	getPIDController().setInputRange(-180, 180);
-    	getPIDController().setOutputRange(-.7, .7);   //was at -.5,.5
+    	getPIDController().setOutputRange(-.5, .5);   //was at -.5,.5
     	
     	//Debugging Logs (delete if necessary)
     	//MercLogger.logMessage(Level.INFO, "Before reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");

@@ -40,11 +40,11 @@ public class BasicGearDelivery extends CommandGroup {
     	//addSequential(new AutoAlign(TargetType.GEAR_VISION));
     	addSequential(new DriveDistance(calculateGearPath1::getBasicLiftDistancePart1, 3.0));
     	
-    	addSequential(calculateGearPath2);
+    	//addSequential(calculateGearPath2);
     	//addSequential(new DegreeRotate(calculateGearPath2::getBasicTurnToLiftAngle));    	
-    	addSequential(new AutoAlign(TargetType.GEAR_VISION));
     	//addSequential(new AutoAlign(TargetType.GEAR_VISION));
-    	addSequential(new DriveDistance(calculateGearPath2::getBasicLiftDistancePart2, 3.0));
+    	//addSequential(new AutoAlign(TargetType.GEAR_VISION));
+    	//addSequential(new DriveDistance(calculateGearPath2::getBasicLiftDistancePart2, 3.0));
     	//addSequential(new DriveToWall(1.75)); // TODO make sure we drive to the wall somehow
     	addSequential(new ToggleGearDelivery(true));
     }

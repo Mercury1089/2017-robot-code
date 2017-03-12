@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1089.robot.subsystems;
 
+import org.usfirst.frc.team1089.robot.OI;
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.RobotMap;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
@@ -153,8 +154,8 @@ public class DriveTrain extends Subsystem implements PIDOutput{
      */
     public void joystickDrive(Joystick leftStick, Joystick rightStick) {
     	// Apply the joystick deadzones to the move and rotate values
-    	double moveValue = Robot.oi.applyDeadzone(rightStick.getX(), Robot.oi.JS_DEADZONE_LIMIT);
-    	double rotateValue = Robot.oi.applyDeadzone(leftStick.getY(), Robot.oi.JS_DEADZONE_LIMIT);
+    	double moveValue = Robot.oi.applyDeadzone(rightStick.getX(), OI.RIGHT_JS_DEADZONE_LIMIT);
+    	double rotateValue = Robot.oi.applyDeadzone(leftStick.getY(), OI.LEFT_JS_DEADZONE_LIMIT);
     	arcadeDrive(moveValue, rotateValue);
     }
     

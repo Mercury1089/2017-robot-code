@@ -23,7 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 
-	public static final double JS_DEADZONE_LIMIT = 0.3; // Deadzone limit for the stick	
+	public static final double LEFT_JS_DEADZONE_LIMIT = 0.3; // Deadzone limit for the left stick	
+	public static final double RIGHT_JS_DEADZONE_LIMIT = 0.2; // Deadzone limit for the right stick	
+	
 	
 	SendableChooser<AutonPosition> startPosition; 
 	SendableChooser<ShooterEnum> shooterType; 
@@ -194,6 +196,8 @@ public class OI {
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Native Units", Robot.leftShooter.shooterMotor.get());
 		SmartDashboard.putNumber("Shooter ID 7: Encoder Position", Robot.rightShooter.shooterMotor.getPosition());
 		SmartDashboard.putNumber("Shooter ID 8: Encoder Position", Robot.leftShooter.shooterMotor.getPosition());
+		SmartDashboard.putNumber("Shooter ID 7: Encoder V", Robot.rightShooter.shooterMotor.getEncVelocity());
+		SmartDashboard.putNumber("Shooter ID 8: Encoder V", Robot.leftShooter.shooterMotor.getEncVelocity());
 		SmartDashboard.putNumber("Shooter ID 7: Voltage", Robot.rightShooter.shooterMotor.getOutputVoltage());
 		SmartDashboard.putNumber("Shooter ID 8: Voltage", Robot.leftShooter.shooterMotor.getOutputVoltage());
 		SmartDashboard.putNumber("Shooter ID 7: Current", Robot.rightShooter.shooterMotor.getOutputCurrent());

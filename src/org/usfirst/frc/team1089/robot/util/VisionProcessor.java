@@ -20,6 +20,7 @@ public class VisionProcessor {
 	// Network Table stuff
 	private final String VISION_ROOT = "Vision/";
 	private final NetworkTable GEAR_VISION_TABLE, HIGH_GOAL_TABLE;
+	private final long LATENCY_MS = 10;
 	
 	// Timestamps for each of the vision threads
 	private double
@@ -373,6 +374,34 @@ public class VisionProcessor {
 		output[0] = Math.abs(ratio1 * hfov) > 1.0 ? ratio1 * hfov : 0.0;
 		output[1] = Math.abs(ratio2 * hfov) > 1.0 ? ratio2 * hfov : 0.0;
 		return output;
+	}
+	
+	/**
+	 * <pre>
+	 * public boolean isRecent(TargetType type)
+	 * </pre>
+	 * Tests whether or not the image from the specified camera
+	 * is current
+	 * 
+	 * @param type the {@code TargetType} for which camera to take the timestamp from
+	 * @return whether or not the image timestamp is at least 10 milliseconds earlier than the system time
+	 */
+	public boolean isRecent(TargetType type) {
+		long curTime = System.currentTimeMillis();
+		long imgTime = 0;
+		
+		switch (type) {
+			case GEAR_VISION:
+				imgTime = (long)timeGear;
+				break;
+			case HIGH_GOAL:
+				imgTime = (long)timeHigh;
+				break;
+			default: 
+				return false;
+		}
+		
+		return curTime >= imgTime + LATENCY_MS;
 	}
 	
 	public double getAverageDistanceUsingHorAndVerDistances(TargetType type) {
