@@ -55,7 +55,7 @@ public class ShootWithDistance extends Command {
     		distance = distanceSupplier.getAsDouble();
     	
     	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Initialized");
-    	//SmartDashboard.putNumber("Shooter ID " + shooter.motor.getDeviceID() + ": distance", 0.0);
+    	SmartDashboard.putNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": Encoder Set", 2000.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -69,7 +69,10 @@ public class ShootWithDistance extends Command {
     	
     	//speed = (Math.abs(distance) > 14 || Math.abs(distance) < 6 ? 3000 : (distance-6)/8*5000);
     	
-    	speed = 2000;
+//    	speed = 2000;
+    	
+    	speed = /*SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooter	IsRunning",
+       		false) ?*/ SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": Encoder Set", 0)/* : 0.0*/;
     	
 /*    	shooterSystem.shooterMotor.set(1);
     	shooterSystem.feederMotor.set(0);*/
@@ -100,7 +103,8 @@ public class ShootWithDistance extends Command {
 //    	if (Math.abs(shooterSystem.shooterMotor.getSpeed()) > /*(Math.pow(0.000004*speed,2)*/ + .8737 * speed + 20.877 - SPEED_THRESHOLD
 //    			&& Math.abs(shooterSystem.shooterMotor.getSpeed()) < /*(Math.pow(0.000004*speed,2)*/ + .8737 * speed + 20.877 + SPEED_THRESHOLD) { 
     	
-    	if (Math.abs(shooterSystem.getSpeed()) > speed - SPEED_THRESHOLD
+    	if (Math.abs(shooterSystem.getSpeed()) > 0 &&
+    			Math.abs(shooterSystem.getSpeed()) > speed - SPEED_THRESHOLD
     			&& Math.abs(shooterSystem.getSpeed()) < speed + SPEED_THRESHOLD) { 
     	
     		shooterSystem.runFeeder(true);

@@ -202,6 +202,7 @@ public class OI {
 		SmartDashboard.putNumber("Shooter ID 8: Voltage", Robot.leftShooter.shooterMotor.getOutputVoltage());
 		SmartDashboard.putNumber("Shooter ID 7: Current", Robot.rightShooter.shooterMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Shooter ID 8: Current", Robot.leftShooter.shooterMotor.getOutputCurrent());
+		SmartDashboard.putNumber("Shooter ID 7: Current", Robot.rightShooter.shooterMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Ultrasonic", Robot.ultrasonic.getRange());
 		SmartDashboard.putNumber("Angle Gear", Robot.visionProcessor.angleGear);
 		SmartDashboard.putNumber("Gear Distance", Robot.visionProcessor.distGear);

@@ -35,10 +35,10 @@ public class Shooter extends Subsystem {
 	private double highest, lowest;
 	private double setSpeed;
 
-	public static final double F = 0.4;
+	public static double F = 0;
 	public static double P = 0; // .45
-	public static final double I = 0.0;
-	public static final double D = 0.0; // 0.2		
+	public static double I = 0.0;
+	public static double D = 0.0; // 0.2		
 
 	private int reversalFactor = 1;
 	private static final double QUAD_ENC_TICKS_PER_ROTATION = 200;	//Includes x4 for QUAD
@@ -52,10 +52,13 @@ public class Shooter extends Subsystem {
 		DUAL_STAGGERED_SHOOTER
 	}
 	
-	public Shooter(int shooterID, int feederID, double proportional, int reverse) {
+	public Shooter(int shooterID, int feederID, double proportional, double integral, double derivative, double feed, int reverse) {
 		shooterMotor = new CANTalon(shooterID);
     	shooterMotor.enableBrakeMode(false);
     	P = proportional;
+    	I = integral;
+    	D = derivative;
+    	F = feed;
     	// setting feedback as quad encoder does NOT enable unit scaling by default
     	// when set to speed mode the speed will be expressed in pulses per 100 ms
 		shooterMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
