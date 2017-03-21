@@ -23,10 +23,8 @@ public class ShootWithDistance extends Command {
 	private Shooter shooterSystem;
 	private double distance;
 	private double speed;
-	private double offset;
 	private final int SPEED_THRESHOLD = 200;
 	private DoubleSupplier distanceSupplier;
-
 	
     public ShootWithDistance(Shooter s) {
         // Use requires() here to declare subsystem dependencies
@@ -71,25 +69,21 @@ public class ShootWithDistance extends Command {
     	
 //    	speed = 2000;
     	
-    	speed = /*SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooter	IsRunning",
-       		false) ?*/ SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": Encoder Set", 0)/* : 0.0*/;
+    	/*speed = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooter	IsRunning",
+       		false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": Encoder Set", 0) : 0.0;*/
     	
 /*    	shooterSystem.shooterMotor.set(1);
     	shooterSystem.feederMotor.set(0);*/
     	
-    	//distance -= 0.2;
-    	//offset = (14 - distance) / 28;
-    	//distance -= offset;
+//    	distance += 20.5/12;
+    	/*offset = (14 - distance) / 28;
+    	distance -= offset;*/
     	
-/*    	speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;
-    	speed = speed/29.1585*10051(.9459*6021);		//XXX Attempt at converting big boy to little enc
-*/    	
-  	
-    	/*if(distance < 6)
-    		speed = 0;
-    	else {
-    		speed=(distance-6)/8*5000;
-    	}*/
+    	speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;
+    	speed = speed/29.1585/* *rpmFor14Ft*/;		//XXX Attempt at converting big boy to little enc
+    	
+    	
+    	//(.9459*6000)
     	
     	if(speed != shooterSystem.getSetSpeed()) {
         	if (speed == 0) {

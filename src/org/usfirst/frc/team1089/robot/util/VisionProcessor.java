@@ -86,6 +86,8 @@ public class VisionProcessor {
 	// so we can avoid recreating this space-consuming line
 	private double[] DEF_VALUE = {-1, -1};
 	
+	private double offset;
+	
 	public VisionProcessor() {
 		// Get the tables
 		GEAR_VISION_TABLE = NetworkTable.getTable(VISION_ROOT + "gearVision");
@@ -226,12 +228,14 @@ public class VisionProcessor {
 				vfov = PICam.VFOV_PI;
 				vres = PICam.VRES_PI;
 				targetHeight = TARGET_HEIGHT_INCHES_GEAR;
+				offset = 0;
 				break;
 			case HIGH_GOAL:
 				perceivedHeight = HIGH_GOAL_TABLE.getNumber("targetHeight", 0);
 				vfov = LifeCam.VFOV_LIFECAM;
 				vres = LifeCam.VRES_LIFECAM;
 				targetHeight = TARGET_HEIGHT_INCHES_HIGH;
+				offset = 20.5/12;
 				break;
 			default: 
 				return Double.NEGATIVE_INFINITY;
@@ -242,7 +246,7 @@ public class VisionProcessor {
 			return Double.NEGATIVE_INFINITY;
 		
 		// Magic equation derived from a few things we know about the target
-		return (targetHeight / IN_TO_FT) * vres / ( 2 * perceivedHeight * Math.tan( Math.toRadians( vfov / 2 ) ) );
+		return (targetHeight / IN_TO_FT) * vres / ( 2 * perceivedHeight * Math.tan( Math.toRadians( vfov / 2 ) ) ) + offset;
 	}
 	
 	public double[] getDistancesToGearTargets() {

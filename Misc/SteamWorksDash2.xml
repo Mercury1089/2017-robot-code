@@ -1,5 +1,89 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Shooter ID 7: Encoder Set" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="10" y="16"/>
+	</widget>
+	<widget field="Shooter ID 8: Encoder Set" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="17" y="1"/>
+	</widget>
+	<widget field="Shooter ID 8: Encoder V" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="631" y="670"/>
+	</widget>
+	<widget field="Shooter ID 7: Encoder V" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="631" y="647"/>
+	</widget>
+	<widget field="Servo Pos" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="631" y="624"/>
+	</widget>
+	<widget field="EncLFinal" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="631" y="374"/>
+	</widget>
+	<widget field="EncRFinal" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="666" y="313"/>
+	</widget>
+	<widget field="Left Enc Inches" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="631" y="189"/>
+	</widget>
+	<widget field="EndPosVals" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="380" y="655"/>
+	</widget>
+	<widget field="Shooter ID 7: Encoder RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="631" y="121"/>
+	</widget>
+	<widget field="NAV-X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="675" y="98"/>
+	</widget>
+	<widget field="Shooter ID 7: Current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="675" y="75"/>
+	</widget>
+	<widget field="Left Enc Feet" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="631" y="23"/>
+	</widget>
+	<widget field="Gyro" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="631" y="0"/>
+	</widget>
+	<widget field="Shooter ID 8: Encoder Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="650" y="562"/>
+	</widget>
+	<widget field="Shooter ID 8: Voltage" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="699" y="522"/>
+	</widget>
+	<widget field="Shooter ID 8: Encoder RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="622" y="437"/>
+	</widget>
+	<widget field="High Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="324" y="246"/>
+	</widget>
+	<widget field="Angle Gear" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="324" y="183"/>
+	</widget>
+	<widget field="Gear Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="667" y="351"/>
+	</widget>
+	<widget field="Shooter ID 7: Voltage" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="581" y="263"/>
+	</widget>
+	<widget field="Right Enc Feet" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="547" y="487"/>
+	</widget>
+	<widget field="Shooter ID 8: Current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="628" y="601"/>
+	</widget>
+	<widget field="Ultrasonic" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="711" y="475"/>
+	</widget>
+	<widget field="Shooter ID 8: Encoder Native Units" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="665" y="397"/>
+	</widget>
+	<widget field="Right Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="719" y="290"/>
+	</widget>
+	<widget field="Shooter ID 7: Encoder Native Units" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="644" y="166"/>
+	</widget>
+	<widget field="Shooter ID 7: Encoder Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="685" y="219"/>
+	</widget>
 	<widget field="Shooter ID 8: Encoder Set Speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="324" y="23"/>
 	</widget>
@@ -82,42 +166,4 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="Shooter ID 7: Encoder RPM"/>
-	<hidden field="Distance to gear lift using horizontal values"/>
-	<hidden field="Shooter ID 8: Encoder RPM"/>
-	<hidden field="Gear Distance"/>
-	<hidden field="Shooter ID 8: Current"/>
-	<hidden field="Shooter ID 7: Encoder Value"/>
-	<hidden field="Shooter ID 8: Encoder Native Units"/>
-	<hidden field="Shooter ID 7: Encoder Velocity"/>
-	<hidden field="EncRFinal"/>
-	<hidden field="Shooter ID 7: shooterRPM"/>
-	<hidden field="Distance to high goal using vertical values"/>
-	<hidden field="Shooter ID 7: Voltage"/>
-	<hidden field="Shooter ID 8: Encoder Position"/>
-	<hidden field="Right Encoder"/>
-	<hidden field="High Distance"/>
-	<hidden field="Servo Pos"/>
-	<hidden field="Left Enc Inches"/>
-	<hidden field="Left Shooter Encoder"/>
-	<hidden field="Shooter ID 7: HIGHEST"/>
-	<hidden field="Shooter ID 8: Voltage"/>
-	<hidden field="NAV-X"/>
-	<hidden field="EndPosVals"/>
-	<hidden field="Right Enc Feet"/>
-	<hidden field="PID"/>
-	<hidden field="Shooter ID 7: Current"/>
-	<hidden field="Gyro"/>
-	<hidden field="Left Enc Feet"/>
-	<hidden field="Distance to gear lift using horizontal and vertical average"/>
-	<hidden field="Angle"/>
-	<hidden field="Right Shooter Encoder"/>
-	<hidden field="Angle Gear"/>
-	<hidden field="Shooter ID 7: Encoder Position"/>
-	<hidden field="Distance to high goal using horizontal values"/>
-	<hidden field="Shooter ID 8: Encoder Value"/>
-	<hidden field="EncLFinal"/>
-	<hidden field="Shooter ID 7: Encoder Native Units"/>
-	<hidden field="Ultrasonic"/>
-	<hidden field="Shooter ID 8: Encoder Velocity"/>
 </xml>

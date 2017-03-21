@@ -58,16 +58,11 @@ public class AutonCommand extends CommandGroup {
 		
 		int reversalFactor = 1;
 		
-		if (color.equals(Alliance.Blue)) { 		 
-			truePos = 10 - startPos.ordinal();//XXX makes 9 to 1 and 1 to 9, etc=
-    		reversalFactor = -1;
-		}
-		
     	//MercLogger.logMessage(Level.INFO, "True Pos: " + truePos + ", ");
 		
-    	if(truePos < 4)
+    	if(truePos == 1)
     		fieldPos = AutonFieldPosition.LEFT; 					//Loading Station side
-    	else if(truePos > 6)
+    	else if(truePos == 3)
     		fieldPos = AutonFieldPosition.RIGHT;
     	
     	addParallel(new OpenLatch());
@@ -90,14 +85,14 @@ public class AutonCommand extends CommandGroup {
         	
     		MercLogger.logMessage(Level.INFO, "True Pos: " +truePos);
     		
-    		if(truePos == 3) {
+    		if(fieldPos == AutonFieldPosition.LEFT) {
     			addSequential(new DriveDistance(-5.5, 3.0));
         		addSequential(new DegreeRotate(60 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
         		//addSequential(new BasicGearDelivery());
     			
         		//addSequential(new DriveDistance((distances[1] - 4), 0.1, 3.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
     		}
-    		else if(truePos == 7) {
+    		else if(fieldPos == AutonFieldPosition.RIGHT) {
     			addSequential(new DriveDistance(-5.5, 3.0));
         		addSequential(new DegreeRotate(-40 * reversalFactor));
     		}
@@ -168,9 +163,9 @@ public class AutonCommand extends CommandGroup {
     			addSequential(new DriveDistance(8.78));					// ARBITRARY VALUE
     		}
     		else if(fieldPos == AutonFieldPosition.MIDDLE) {
-    			if(color.equals(Alliance.Red))
+    			/*if(color.equals(Alliance.Red))
     				addSequential(new DegreeRotate(-70));
-    			else
+    			else*/
     				addSequential(new DegreeRotate(70));
     		}
     		else if(fieldPos == AutonFieldPosition.RIGHT) {

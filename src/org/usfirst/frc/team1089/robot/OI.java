@@ -255,15 +255,15 @@ public class OI {
     	System.out.println("Adding sendables boi");
     	
     	startPosition = new SendableChooser<AutonPosition>();
-		startPosition.addDefault("Left Corner: 1", AutonPosition.POSITION_1);
-		startPosition.addObject("Left, Left Line: 2", AutonPosition.POSITION_2);
-		startPosition.addObject("Right, Left Line: 3", AutonPosition.POSITION_3);
-		startPosition.addObject("Left, Midline: 4", AutonPosition.POSITION_4);
-		startPosition.addObject("Mid, Midline: 5", AutonPosition.POSITION_5);
-		startPosition.addObject("Right, Midline: 6", AutonPosition.POSITION_6);
-		startPosition.addObject("Left, Right Line: 7", AutonPosition.POSITION_7);
-		startPosition.addObject("Right, Right Line: 8", AutonPosition.POSITION_8);
-		startPosition.addObject("Right Corner: 9", AutonPosition.POSITION_9);
+		//startPosition.addDefault("Left Corner: 1", AutonPosition.POSITION_1);
+		//startPosition.addObject("Left, Left Line: 2", AutonPosition.POSITION_2);
+		startPosition.addObject("Left Line: 1", AutonPosition.LEFT);
+		//startPosition.addObject("Left, Midline: 4", AutonPosition.POSITION_4);
+		startPosition.addObject("Mid, Midline: 2", AutonPosition.MIDDLE);
+		//startPosition.addObject("Right, Midline: 6", AutonPosition.POSITION_6);
+		startPosition.addObject("Right Line: 3", AutonPosition.RIGHT);
+		//startPosition.addObject("Right, Right Line: 8", AutonPosition.POSITION_8);
+		//startPosition.addObject("Right Corner: 9", AutonPosition.POSITION_9);
 		SmartDashboard.putData("Start Pos", startPosition);
 		
 		firstMovement = new SendableChooser<AutonFirstMovement>();
