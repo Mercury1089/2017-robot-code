@@ -74,11 +74,11 @@ public class VisionProcessor {
 	
 	// Targeting constants
 	private final double
-		TARGET_WIDTH_INCHES_GEAR = 10.75,
+		TARGET_WIDTH_INCHES_GEAR = 10.75, // the width of the virtual target which is the aggregate of both targets 1 and 2
 		TARGET_HEIGHT_INCHES_GEAR = 5,
 		TARGET_ELEVATION_FEET_GEAR = 10.75 / 12,
 		TARGET_WIDTH_INCHES_HIGH = 15,
-		TARGET_HEIGHT_INCHES_HIGH = 10,
+		TARGET_HEIGHT_INCHES_HIGH = 10, // the height of the virtual target which is the aggregate of both targets 1 and 2
 		TARGET_ELEVATION_FEET_HIGH = 6.5,
 		IN_TO_FT = 12.0; // Study your freedom units guys
 	
@@ -283,7 +283,7 @@ public class VisionProcessor {
 		target2Width = GEAR_VISION_TABLE.getNumberArray("boundsTarget2", new double[]{-1, -1})[0];
 		hfov = PICam.HFOV_PI;
 		hres = PICam.HRES_PI;
-		targetWidth = TARGET_WIDTH_INCHES_GEAR;		
+		targetWidth = TARGET_WIDTH_INCHES_GEAR; // FIXME THIS IS THE WRONG WIDTH - DEFINE ANOTHER CONSTANT
 		
 		// Don't return anything if either can't be seen
 		if (target1Width == -1 || target2Width == -1) {
