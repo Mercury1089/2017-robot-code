@@ -74,9 +74,9 @@ public class Shooter extends Subsystem {
 	
 	public void initDefaultCommand() {
 		//setDefaultCommand(new RunShooter(this));
-		//setDefaultCommand(new ShootWithDistance(this));
+		setDefaultCommand(new ShootWithDistance(this));
 		//setDefaultCommand(new TestShooter(this));
-		setDefaultCommand(new StopShooter(this));
+		//setDefaultCommand(new StopShooter(this));
 	}
 
 	public CANTalon getMotor() {

@@ -111,7 +111,7 @@ public class OI {
         gamePadBtnRB.whenPressed(new ToggleGearDelivery(false));
         
         gamePadBtnLB = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
-        gamePadBtnLB.whenPressed(new BasicGearDelivery());
+        gamePadBtnLB.whenPressed(new AutoAlign(TargetType.GEAR_VISION));
         
         gamePadBtnR3 = new JoystickButton(gamePad, RobotMap.GamepadButtons.R3);
         gamePadBtnR3.whenPressed(new ReverseIntake(true));
@@ -264,7 +264,7 @@ public class OI {
 		startPosition.addObject("Right Line: 3", AutonPosition.RIGHT);
 		//startPosition.addObject("Right, Right Line: 8", AutonPosition.POSITION_8);
 		//startPosition.addObject("Right Corner: 9", AutonPosition.POSITION_9);
-		SmartDashboard.putData("Start Pos", startPosition);
+		SmartDashboard.putData("S P", startPosition);
 		
 		firstMovement = new SendableChooser<AutonFirstMovement>();
 		firstMovement.addDefault("Do nothing", AutonFirstMovement.DO_NOTHING);

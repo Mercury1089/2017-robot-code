@@ -163,13 +163,13 @@ public class AutonCommand extends CommandGroup {
     			addSequential(new DriveDistance(8.78));					// ARBITRARY VALUE
     		}
     		else if(fieldPos == AutonFieldPosition.MIDDLE) {
-    			/*if(color.equals(Alliance.Red))
+    			if(color.equals(Alliance.Red))
     				addSequential(new DegreeRotate(-70));
-    			else*/
+    			else
     				addSequential(new DegreeRotate(70));
     		}
     		else if(fieldPos == AutonFieldPosition.RIGHT) {
-    			addSequential(new DegreeRotate(10 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
+    			//addSequential(new DegreeRotate(10 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
     		}
     		break;
     	}
