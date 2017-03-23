@@ -98,12 +98,9 @@ public class ShootWithDistance extends Command {
 //    			&& Math.abs(shooterSystem.shooterMotor.getSpeed()) < /*(Math.pow(0.000004*speed,2)*/ + .8737 * speed + 20.877 + SPEED_THRESHOLD) { 
     	
     	if (Math.abs(shooterSystem.getSetSpeed()) > 0 &&
-    			Math.abs(shooterSystem.getSpeed()) > speed - SPEED_THRESHOLD
-    			&& Math.abs(shooterSystem.getSpeed()) < speed + SPEED_THRESHOLD) { 
-    	
+    			Math.abs(shooterSystem.getSpeed()) > speed - SPEED_THRESHOLD) { 
     		shooterSystem.runFeeder(true);
     	}
-    	
     	else
     		shooterSystem.runFeeder(false);
     }
