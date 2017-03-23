@@ -50,21 +50,10 @@ public class AutonCommand extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	int truePos = startPos.ordinal(); // returns position as integer based on order in enum declaration
-    	// it is important to note that this only works because an unused zero-position is declared in the enum 
-    	
-    	AutonFieldPosition fieldPos = AutonFieldPosition.MIDDLE;
 		DriverStation.getInstance().getAlliance();
 		
 		int reversalFactor = 1;
 		
-    	//MercLogger.logMessage(Level.INFO, "True Pos: " + truePos + ", ");
-		
-    	if(truePos == 1)
-    		fieldPos = AutonFieldPosition.LEFT; 					//Loading Station side
-    	else if(truePos == 3)
-    		fieldPos = AutonFieldPosition.RIGHT;
-    	
     	addParallel(new OpenLatch());
     	
     	//AutonFirstMovement
@@ -75,7 +64,7 @@ public class AutonCommand extends CommandGroup {
     		addSequential(new DriveDistance(-8));
     		break;
     	case GO_TO_LIFT:
-    		double[] distances = AutonMath.autonDistances(truePos);
+    		//double[] distances = AutonMath.autonDistances(truePos);
     		
         	/*if(!(truePos >= 4 && truePos <= 6)) {
         		addSequential(new DriveDistance(-distances[0], 0.1, 3.0));
@@ -83,23 +72,21 @@ public class AutonCommand extends CommandGroup {
 //        		addSequential(new DriveDistance((distances[1] - 4), 0.1, 3.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
         	}*/
         	
-    		MercLogger.logMessage(Level.INFO, "True Pos: " +truePos);
     		
-    		if(fieldPos == AutonFieldPosition.LEFT) {
+    		if(startPos == AutonPosition.LEFT) {
     			addSequential(new DriveDistance(-5.5, 3.0));
         		addSequential(new DegreeRotate(60 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
         		//addSequential(new BasicGearDelivery());
     			
         		//addSequential(new DriveDistance((distances[1] - 4), 0.1, 3.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
     		}
-    		else if(fieldPos == AutonFieldPosition.RIGHT) {
+    		else if(startPos == AutonPosition.RIGHT) {
     			addSequential(new DriveDistance(-5.5, 3.0));
         		addSequential(new DegreeRotate(-40 * reversalFactor));
     		}
     		else {
         		addSequential(new DriveDistance(-2));
         	}
-    		
     		break;
     	case GO_TO_SHOOTING_RANGE:
     		break; 															//TODO LATER
@@ -125,13 +112,13 @@ public class AutonCommand extends CommandGroup {
     	case STOP:
     		break;
     	case NEAR_HOPPER:
-    		if(fieldPos == AutonFieldPosition.LEFT) {
+    		if(startPos == AutonPosition.LEFT) {
     			addSequential(new DegreeRotate(120 * reversalFactor));
     			addSequential(new DriveDistance(7.425));
     			addSequential(new DegreeRotate(-90 * reversalFactor));
     			addSequential(new DriveDistance(6.75));
     		}
-    		else if(fieldPos == AutonFieldPosition.RIGHT) {
+    		else if(startPos == AutonPosition.RIGHT) {
     			addSequential(new DegreeRotate(-30 * reversalFactor));	
     			addSequential(new DriveDistance(6.75));
     			/*addSequential(new DriveDistance(5));
@@ -142,13 +129,13 @@ public class AutonCommand extends CommandGroup {
     			break;//if its in the middle
     		break;
     	case FAR_HOPPER:
-    		if(fieldPos == AutonFieldPosition.LEFT) {
+    		if(startPos == AutonPosition.LEFT) {
     			addSequential(new DegreeRotate(120 * reversalFactor));
     			addSequential(new DriveDistance(18.9 + 7.425));
     			addSequential(new DegreeRotate(-90 * reversalFactor));
     			addSequential(new DriveDistance(6.75));
     		}
-    		else if(fieldPos == AutonFieldPosition.RIGHT) {
+    		else if(startPos == AutonPosition.RIGHT) {
     			addSequential(new DegreeRotate(-120 * reversalFactor));
     			addSequential(new DriveDistance(16.2));
     			addSequential(new DegreeRotate(90 * reversalFactor));
@@ -158,17 +145,17 @@ public class AutonCommand extends CommandGroup {
     			break;//if its in the middle
     		break;
     	case SHOOTING_RANGE:
-    		if(fieldPos == AutonFieldPosition.LEFT) {
+    		if(startPos == AutonPosition.LEFT) {
     			addSequential(new DegreeRotate(125 * reversalFactor));		
     			addSequential(new DriveDistance(8.78));					// ARBITRARY VALUE
     		}
-    		else if(fieldPos == AutonFieldPosition.MIDDLE) {
+    		else if(startPos == AutonPosition.MIDDLE) {
     			if(color.equals(Alliance.Red))
     				addSequential(new DegreeRotate(-70));
     			else
     				addSequential(new DegreeRotate(70));
     		}
-    		else if(fieldPos == AutonFieldPosition.RIGHT) {
+    		else if(startPos == AutonPosition.RIGHT) {
     			//addSequential(new DegreeRotate(10 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
     		}
     		break;
