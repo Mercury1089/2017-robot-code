@@ -37,6 +37,7 @@ public class BasicGearDelivery extends CommandGroup {
     	addSequential(calculateGearPath1);
     	//addSequential(new DegreeRotate(calculateGearPath1::getBasicTurnToLiftAngle));
     	addSequential(new AutoAlign(TargetType.GEAR_VISION));
+    	addSequential(new AutoAlign(TargetType.GEAR_VISION));
     	//addSequential(new AutoAlign(TargetType.GEAR_VISION));
     	addSequential(new DriveDistance(calculateGearPath1::getBasicLiftDistancePart1, 3.0));
     	

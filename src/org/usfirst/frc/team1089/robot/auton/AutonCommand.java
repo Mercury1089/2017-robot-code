@@ -150,7 +150,7 @@ public class AutonCommand extends CommandGroup {
     			addSequential(new DriveDistance(8.78));					// ARBITRARY VALUE
     		}
     		else if(startPos == AutonPosition.MIDDLE) {
-    			if(color.equals(Alliance.Red))
+    			if(color.equals(Alliance.Blue))
     				addSequential(new DegreeRotate(-70));
     			else
     				addSequential(new DegreeRotate(70));

@@ -97,7 +97,7 @@ public class Shooter extends Subsystem {
     	shooterMotor.setI(I);
     	shooterMotor.setD(D);
     	shooterMotor.setF(F);
-    	shooterMotor.configPeakOutputVoltage(12, -12);
+    	shooterMotor.configPeakOutputVoltage(0, -12);
 		shooterMotor.configNominalOutputVoltage(0,0);
 		shooterMotor.enableControl();
 		MercLogger.logMessage(Level.INFO, "Shooter " + shooterMotor.getDeviceID() + " in Speed mode.");
