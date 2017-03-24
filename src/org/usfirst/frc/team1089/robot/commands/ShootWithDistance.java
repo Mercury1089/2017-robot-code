@@ -69,8 +69,8 @@ public class ShootWithDistance extends Command {
     	
 //    	speed = 2000;
     	
-    	speed = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooterIsRunning",
-       		false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": Encoder Set", 0) : 0.0;
+    	/*speed = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooterIsRunning",
+       		false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": Encoder Set", 0) : 0.0;*/
     	
 /*    	shooterSystem.shooterMotor.set(1);
     	shooterSystem.feederMotor.set(0);*/
@@ -79,9 +79,9 @@ public class ShootWithDistance extends Command {
     	/*offset = (14 - distance) / 28;
     	distance -= offset;*/
     	
-    	/*speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;
-    	speed = speed/29.1585 *rpmFor14Ft;		//XXX Attempt at converting big boy to little enc
-    	*/
+    	speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;	//temporary, will work for 12 ft and under
+    	speed = speed/29.1585 * 3700;		//XXX Attempt at converting big boy to little enc
+    	
     	
     	//(.9459*6000)
     	

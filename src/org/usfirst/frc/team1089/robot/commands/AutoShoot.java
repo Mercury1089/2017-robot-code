@@ -35,7 +35,8 @@ public class AutoShoot extends CommandGroup {
     	addSequential(CalculateHighGoalPath);
     	
     	//addSequential(new DriveDistance(CalculateHighGoalPath::getDistance, 5.0));
-    	addSequential(new DegreeRotate(CalculateHighGoalPath::getAngle));
+    	//addSequential(new DegreeRotate(CalculateHighGoalPath::getAngle));
+    	addSequential(new AutoAlign(TargetType.HIGH_GOAL));
     	addSequential(new ShootWithDistance(Robot.leftShooter, CalculateHighGoalPath::getDistance));
      	addSequential(new ShootWithDistance(Robot.rightShooter, CalculateHighGoalPath::getDistance));
     }
