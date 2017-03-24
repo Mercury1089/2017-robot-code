@@ -97,21 +97,21 @@ public class OI {
         gamePadBtnA.whenPressed(new DriveWithJoysticks());
         
         //StopFeeder	(only needed if feeder/shooter combo is not working properly)
-        gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new RunFeeder(Robot.rightShooter, false));
+//        gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
+//        gamePadBtnB.whenPressed(new AutoAlign(TargetType.GEAR_VISION));
         
         //Run Feeder	(only needed if feeder/shooter combo is not working properly)
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
-        gamePadBtnX.whenPressed(new RunFeeder(Robot.rightShooter, true));
+        gamePadBtnX.whenPressed(new ToggleGearDelivery(true));
+        
+        gamePadBtnY = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
+        gamePadBtnY.whenPressed(new ToggleGearDelivery(false));
         
         gamePadBtnRB = new JoystickButton(gamePad, RobotMap.GamepadButtons.RB);
-        gamePadBtnRB.whenPressed(new ToggleGearDelivery(true));
-        
-        gamePadBtnRB = new JoystickButton(gamePad, RobotMap.GamepadButtons.Y);
-        gamePadBtnRB.whenPressed(new ToggleGearDelivery(false));
+        gamePadBtnRB.whenPressed(new RunAllShooters());
         
         gamePadBtnLB = new JoystickButton(gamePad, RobotMap.GamepadButtons.LB);
-        gamePadBtnLB.whenPressed(new AutoAlign(TargetType.GEAR_VISION));
+        gamePadBtnLB.whenPressed(new StopAllShooters());
         
         gamePadBtnR3 = new JoystickButton(gamePad, RobotMap.GamepadButtons.R3);
         gamePadBtnR3.whenPressed(new ReverseIntake(true));
@@ -120,10 +120,13 @@ public class OI {
         start.whenPressed(new CalibrateGyro());
         
         rightStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
-        rightStick1.whenPressed(new RunAllShooters());
+        rightStick1.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
 
         leftStick1 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN1);
-        leftStick1.whenPressed(new StopAllShooters());        
+        leftStick1.whenPressed(new AutoAlign(TargetType.GEAR_VISION));        
+        
+        leftStick2 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN2);
+        leftStick2.whenPressed(new RunIntake(true));
         
         leftStick3 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN3);
         leftStick3.whenPressed(new RunIntake(false));
@@ -134,11 +137,8 @@ public class OI {
         leftStick7 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN7);
         leftStick7.whenPressed(new RunClimber(false));
         
-        leftStick2 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN2);
-        leftStick2.whenPressed(new RunIntake(true));
-        
-        rightStick3 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN3);
-        rightStick3.whenPressed(new /*CalculateGearPath(Direction.REVERSE)*/AutoAlign(TargetType.HIGH_GOAL));
+/*        rightStick3 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN3);
+        rightStick3.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));*/
         
         rightStick6 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN6);
         rightStick6.whenPressed(new OpenLatch());
