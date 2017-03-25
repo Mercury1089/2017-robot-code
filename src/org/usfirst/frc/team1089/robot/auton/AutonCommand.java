@@ -158,7 +158,7 @@ public class AutonCommand extends CommandGroup {
     				addSequential(new DegreeRotate(70));
     		}
     		else if(startPos == AutonPosition.RIGHT) {
-    			//addSequential(new DegreeRotate(10 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
+    			addSequential(new DegreeRotate(20 * reversalFactor)); //FIXME Not actually 180, needs to be fixed hence the FIXME xD
     		}
     		break;
     	}

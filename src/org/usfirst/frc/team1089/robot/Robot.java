@@ -112,9 +112,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		MercLogger.close();
 		MercLogger.logMessage(Level.INFO, "Completed Disabled Init");
-/*		CalibrateGyro cal = new CalibrateGyro();
-
-		cal.start();*/	
+		gyroCalibrated = false;
 	}
 
 	private boolean gyroCalibrated = false;

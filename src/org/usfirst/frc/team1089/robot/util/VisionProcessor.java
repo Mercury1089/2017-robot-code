@@ -323,7 +323,7 @@ public class VisionProcessor {
 				centerX = GEAR_VISION_TABLE.getNumberArray("center", DEF_VALUE)[0];
 				hfov = PICam.HFOV_PI;
 				hres = PICam.HRES_PI;
-				angleOffset = 1;
+				angleOffset = -1;
 				break;
 			case HIGH_GOAL:
 				centerX = HIGH_GOAL_TABLE.getNumberArray("center", DEF_VALUE)[0];

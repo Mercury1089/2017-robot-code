@@ -23,6 +23,7 @@ public class Gear extends Subsystem {
 		servo = new Servo(RobotMap.PWM.SERVO_ID);
 		CLOSED_POSITION = 0.9; //TODO Edit these values
 		OPEN_POSITION = 0.2;  //TODO Edit these values
+		servo.set(CLOSED_POSITION);
 	}
 
     public void initDefaultCommand() {
