@@ -44,6 +44,8 @@ public class Shooter extends Subsystem {
 	private static final double QUAD_ENC_TICKS_PER_ROTATION = 200;	//Includes x4 for QUAD
 	private static final double HUNDRED_MS_PER_MINUTE = 600;
 	
+	private boolean isFeederRunning = false;
+	
 	public enum ShooterEnum {
 		NO_SHOOTER,
 		LEFT_SHOOTER,
@@ -141,6 +143,11 @@ public class Shooter extends Subsystem {
     }
     
     public void runFeeder(boolean run) {
+    	isFeederRunning = run;
     	feederMotor.set(run ? reversalFactor : 0);
     } 
+    
+    public boolean getIsFeederRunning() {
+    	return isFeederRunning;
+    }
 }

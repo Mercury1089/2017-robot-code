@@ -54,6 +54,7 @@ public class RobotMap {
 		public static final int LEFT_FEEDER_TALON_ID = 10;
 		public static final int CLIMBER_TALON_ID = 11;
 		public static final int INTAKE_TALON_ID = 12;
+		public static final int AGITATOR_TALON_ID = 13;
 	}
 
 	/**

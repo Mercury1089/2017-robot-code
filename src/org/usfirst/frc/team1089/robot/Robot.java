@@ -3,6 +3,7 @@ import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1089.robot.subsystems.Agitator;
 import org.usfirst.frc.team1089.robot.subsystems.Climber;
 import org.usfirst.frc.team1089.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1089.robot.subsystems.ExampleSubsystem;
@@ -43,6 +44,7 @@ public class Robot extends IterativeRobot {
 	public static Ultrasonic ultrasonic;
 	public static Shooter leftShooter, rightShooter, shooter;
 	public static Feeder rightFeeder, leftFeeder;
+	public static Agitator rumbler;
 	public static Gear gear;
 	public static Climber climber;
 	public static Intake intake;
@@ -78,8 +80,9 @@ public class Robot extends IterativeRobot {
 		//shooter = new Shooter(7);
 		leftShooter.getMotor().setInverted(true);		//TODO Check if they are inverted or not
 		rightShooter.getMotor().setInverted(true);
-		climber = new Climber(11);
-		intake = new Intake(12);
+		climber = new Climber(RobotMap.CAN.CLIMBER_TALON_ID);
+		intake = new Intake(RobotMap.CAN.INTAKE_TALON_ID);
+		rumbler = new Agitator(RobotMap.CAN.AGITATOR_TALON_ID);
 		// OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null

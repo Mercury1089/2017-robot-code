@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveDistance extends Command {
 
-	private static double MOVE_THRESHOLD = 0.15;
+	private static double MOVE_THRESHOLD = 0.1;
 	private static final double MAX_DIST_FEET = 20.0;
 	
 	private double distance;

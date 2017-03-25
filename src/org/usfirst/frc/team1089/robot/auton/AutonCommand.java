@@ -76,18 +76,18 @@ public class AutonCommand extends CommandGroup {
         	
     		
     		if(startPos == AutonPosition.LEFT) {
-    			addSequential(new DriveDistance(-5.5, 3.0));
+    			addSequential(new DriveDistance(-5.5, 7.0));
         		addSequential(new DegreeRotate(60 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
         		//addSequential(new BasicGearDelivery());
     			
         		//addSequential(new DriveDistance((distances[1] - 4), 0.1, 3.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
     		}
     		else if(startPos == AutonPosition.RIGHT) {
-    			addSequential(new DriveDistance(-5.5, 3.0));
+    			addSequential(new DriveDistance(-5.5, 7.0));
         		addSequential(new DegreeRotate(-40 * reversalFactor));
     		}
     		else {
-        		addSequential(new DriveDistance(-2));
+        		addSequential(new DriveDistance(-2, 7.0));
         	}
     		break;
     	case GO_TO_SHOOTING_RANGE:
@@ -101,7 +101,7 @@ public class AutonCommand extends CommandGroup {
     	case DELIVER_GEAR:
     		addSequential(new BasicGearDelivery());
 //    		addSequential(new DeliverGear());
-    		addSequential(new DriveDistance(5.4, 3.0));
+    		addSequential(new DriveDistance(5.4, 7.0));
    			addParallel(new ToggleGearDelivery(false));
     	case SHOOT:
     		if(firstMovement == AutonFirstMovement.GO_TO_SHOOTING_RANGE)
