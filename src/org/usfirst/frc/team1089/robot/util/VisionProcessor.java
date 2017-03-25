@@ -51,6 +51,8 @@ public class VisionProcessor {
 		CENTER_TARGET2_HIGH,
 		CENTER_TOTAL_HIGH;
 	
+	private final double OUT_OF_RANGE_CONST = -1;
+	
 	// Vision constants
 	public static class PICam {
 		public static final double 
@@ -202,12 +204,12 @@ public class VisionProcessor {
 				targetWidth = TARGET_WIDTH_INCHES_HIGH;
 				break;
 			default: 
-				return Double.NEGATIVE_INFINITY;
+				return /*Double.NEGATIVE_INFINITY*/OUT_OF_RANGE_CONST;
 		}
 		
 		// Don't return anything if it can't be seen
 		if (percievedWidth == -1)
-			return Double.NEGATIVE_INFINITY;
+			return /*Double.NEGATIVE_INFINITY*/OUT_OF_RANGE_CONST;
 		
 		// Magic equation derived from a few things we know about the target
 		return (targetWidth / IN_TO_FT) * hres / ( 2 * percievedWidth * Math.tan( Math.toRadians( hfov / 2 ) ) );

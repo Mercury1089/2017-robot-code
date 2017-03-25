@@ -79,24 +79,20 @@ public class ShootWithDistance extends Command {
     	/*offset = (14 - distance) / 28;
     	distance -= offset;*/
     	
-    	speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;	//temporary, will work for 12 ft and under
-    	speed = speed/29.1585 * 3700;		//XXX Attempt at converting big boy to little enc
-    	
+    	if ( distance >= 6 && distance <= 14) {
+    		speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;	//temporary, will work for 12 ft and under
+        	speed = speed/29.1585 * 3600;		//XXX Attempt at converting big boy to little enc	
+    	} else {
+    		speed = 0;
+    	}
     	
     	//(.9459*6000)
     	
     	if(speed != shooterSystem.getSetSpeed()) {
-        	if (speed == 0) {
-        		shooterSystem.runFeeder(false);
-        	}
         	SmartDashboard.putNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": Encoder Set Speed", speed);
         	shooterSystem.setSpeed(speed);    		
     	}
-    	
-    	//TODO Test what the encoder gets vs. what we set
-//    	if (Math.abs(shooterSystem.shooterMotor.getSpeed()) > /*(Math.pow(0.000004*speed,2)*/ + .8737 * speed + 20.877 - SPEED_THRESHOLD
-//    			&& Math.abs(shooterSystem.shooterMotor.getSpeed()) < /*(Math.pow(0.000004*speed,2)*/ + .8737 * speed + 20.877 + SPEED_THRESHOLD) { 
-    	
+    	   	
     	if (Math.abs(shooterSystem.getSetSpeed()) > 0 &&
     			Math.abs(shooterSystem.getSpeed()) > speed - SPEED_THRESHOLD) { 
     		shooterSystem.runFeeder(true);

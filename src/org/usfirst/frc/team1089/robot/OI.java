@@ -97,8 +97,8 @@ public class OI {
         gamePadBtnA.whenPressed(new DriveWithJoysticks());
         
         //StopFeeder	(only needed if feeder/shooter combo is not working properly)
-//        gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-//        gamePadBtnB.whenPressed(new AutoAlign(TargetType.GEAR_VISION));
+        gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
+        gamePadBtnB.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
         
         //Run Feeder	(only needed if feeder/shooter combo is not working properly)
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);

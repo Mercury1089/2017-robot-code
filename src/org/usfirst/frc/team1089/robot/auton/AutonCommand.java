@@ -8,6 +8,7 @@ import org.usfirst.frc.team1089.robot.commands.DegreeRotate;
 import org.usfirst.frc.team1089.robot.commands.DeliverGear;
 import org.usfirst.frc.team1089.robot.commands.DriveDistance;
 import org.usfirst.frc.team1089.robot.commands.OpenLatch;
+import org.usfirst.frc.team1089.robot.commands.StopAllShooters;
 import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 
@@ -55,6 +56,7 @@ public class AutonCommand extends CommandGroup {
 		int reversalFactor = 1;
 		
     	addParallel(new OpenLatch());
+    	addParallel(new StopAllShooters());
     	
     	//AutonFirstMovement
     	switch(firstMovement) {
