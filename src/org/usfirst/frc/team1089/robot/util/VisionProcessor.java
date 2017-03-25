@@ -314,7 +314,8 @@ public class VisionProcessor {
 	 *         or negative infinity if the target cannot be seen
 	 */
 	public double getAngleFromCenter(TargetType type) {
-		double centerX, dist, ratio, hfov, hres;
+		double centerX, dist, ratio, hfov, hres, angleOffset;
+		double angleFromCenter;
 	
 		// Define our variables
 		switch (type) {
@@ -322,11 +323,13 @@ public class VisionProcessor {
 				centerX = GEAR_VISION_TABLE.getNumberArray("center", DEF_VALUE)[0];
 				hfov = PICam.HFOV_PI;
 				hres = PICam.HRES_PI;
+				angleOffset = 1;
 				break;
 			case HIGH_GOAL:
 				centerX = HIGH_GOAL_TABLE.getNumberArray("center", DEF_VALUE)[0];
 				hfov = LifeCam.HFOV_LIFECAM;
 				hres = LifeCam.HRES_LIFECAM;
+				angleOffset = 0;
 				break;
 			default: 
 				return 0;
@@ -340,8 +343,9 @@ public class VisionProcessor {
 		dist = centerX - hres / 2.0;
 		ratio = dist / (double)hres;
 		
+		angleFromCenter = ratio * hfov + angleOffset;
 		// Multiply the ratio by the HFOV
-		return Math.abs(ratio * hfov) > 1.0 ? ratio * hfov : 0.0;
+		return Math.abs(angleFromCenter) > 1.0 ? angleFromCenter : 0.0;
 	}
 	
 	/**
@@ -424,6 +428,10 @@ public class VisionProcessor {
 	public double getAverageDistanceToGearTargetsHorizontal() {
 		double[] input = getDistancesToGearTargetsHorizontal();
 		return (input[0] + input[1]) / 2; 
+	}
+
+	public double getAdjustedAverageDistanceToGearTargetsHorizontal() {
+		return -(getAverageDistanceToGearTargetsHorizontal() - 0.5); 
 	}
 	
 	public boolean isOnTarget(TargetType target) {

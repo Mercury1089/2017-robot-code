@@ -117,10 +117,13 @@ public class Robot extends IterativeRobot {
 		cal.start();*/	
 	}
 
+	private boolean gyroCalibrated = false;
+	
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		if (Robot.oi.gamePad.getRawButton(RobotMap.GamepadButtons.START)) {
+		if (!gyroCalibrated && Robot.oi.gamePad.getRawButton(RobotMap.GamepadButtons.START)) {	
+			gyroCalibrated = true;
 			Robot.driveTrain.calibrateGyro();
 		}
 	}
