@@ -50,12 +50,11 @@ public class AutoAlign extends DegreeRotate {
     protected boolean isFinished() {
 //    	return super.isFinished();
     	if (super.isFinished() && Robot.visionProcessor.isRecent(target)) {
-    		double angle_from_center = Robot.visionProcessor.getAngleFromCenter(target);
         	
-    		if (Math.abs(angle_from_center) < 1.5) {
+    		if (Robot.visionProcessor.isOnTarget(target)) {
         		return true;
         	} else {
-            	super.updateHeading(angle_from_center);
+            	super.updateHeading(Robot.visionProcessor.getAngleFromCenter(target));
         	}
     	}
     	return false;

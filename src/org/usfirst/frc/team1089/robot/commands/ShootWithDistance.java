@@ -93,7 +93,8 @@ public class ShootWithDistance extends Command {
         	shooterSystem.setSpeed(speed);    		
     	}
     	   	
-    	if (Math.abs(shooterSystem.getSetSpeed()) > 0 &&
+    	if (	Robot.visionProcessor.isOnTarget(TargetType.HIGH_GOAL) &&
+    			Math.abs(shooterSystem.getSetSpeed()) > 0 &&
     			Math.abs(shooterSystem.getSpeed()) > speed - SPEED_THRESHOLD) { 
     		shooterSystem.runFeeder(true);
     	}

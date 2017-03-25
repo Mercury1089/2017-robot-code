@@ -20,7 +20,7 @@ public class VisionProcessor {
 	// Network Table stuff
 	private final String VISION_ROOT = "Vision/";
 	private final NetworkTable GEAR_VISION_TABLE, HIGH_GOAL_TABLE;
-	private final long LATENCY_MS = 10;
+	private final long LATENCY_MS = 100;
 	
 	// Timestamps for each of the vision threads
 	private double
@@ -52,6 +52,7 @@ public class VisionProcessor {
 		CENTER_TOTAL_HIGH;
 	
 	private final double OUT_OF_RANGE_CONST = -1;
+	private final double ON_TARGET_THRESHOLD = 1.5; 
 	
 	// Vision constants
 	public static class PICam {
@@ -77,6 +78,7 @@ public class VisionProcessor {
 	// Targeting constants
 	private final double
 		TARGET_WIDTH_INCHES_GEAR = 10.75, // the width of the virtual target which is the aggregate of both targets 1 and 2
+		TARGET_WIDTH_INCHES_GEAR_SINGLE = 2.0, // the width of the virtual target which is the aggregate of both targets 1 and 2
 		TARGET_HEIGHT_INCHES_GEAR = 5,
 		TARGET_ELEVATION_FEET_GEAR = 10.75 / 12,
 		TARGET_WIDTH_INCHES_HIGH = 15,
@@ -285,7 +287,7 @@ public class VisionProcessor {
 		target2Width = GEAR_VISION_TABLE.getNumberArray("boundsTarget2", new double[]{-1, -1})[0];
 		hfov = PICam.HFOV_PI;
 		hres = PICam.HRES_PI;
-		targetWidth = TARGET_WIDTH_INCHES_GEAR; // FIXME THIS IS THE WRONG WIDTH - DEFINE ANOTHER CONSTANT
+		targetWidth = TARGET_WIDTH_INCHES_GEAR_SINGLE;
 		
 		// Don't return anything if either can't be seen
 		if (target1Width == -1 || target2Width == -1) {
@@ -422,6 +424,11 @@ public class VisionProcessor {
 	public double getAverageDistanceToGearTargetsHorizontal() {
 		double[] input = getDistancesToGearTargetsHorizontal();
 		return (input[0] + input[1]) / 2; 
+	}
+	
+	public boolean isOnTarget(TargetType target) {
+		return Math.abs(getAngleFromCenter(target)) < ON_TARGET_THRESHOLD;
+		
 	}
 
 	public void initDefaultCommand() {
