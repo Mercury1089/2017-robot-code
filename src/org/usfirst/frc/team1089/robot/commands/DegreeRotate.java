@@ -19,7 +19,7 @@ public class DegreeRotate extends PIDCommand {
 	private DoubleSupplier _angleSupplier = null;
 	
     protected DegreeRotate() {
-    	super(0.18, 0.0002, 0.0);
+    	super(0.17, 0.0005, 0.0);
     	_heading = 0.0;
     	requires(Robot.driveTrain);
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
@@ -52,7 +52,7 @@ public class DegreeRotate extends PIDCommand {
     	}
     	Robot.driveTrain.disableRobotDrive();
     	getPIDController().setContinuous(true);
-    	getPIDController().setAbsoluteTolerance(1);
+    	getPIDController().setAbsoluteTolerance(1.5);
     	getPIDController().setInputRange(-180, 180);
     	getPIDController().setOutputRange(-.5, .5);   //was at -.5,.5
     	

@@ -32,11 +32,11 @@ public class BasicGearDelivery extends CommandGroup {
     	// Instantiate CalculateGearPath before adding it to the sequence so we have a reference to the
     	// distance and angle methods, so we can pass them to DriveDistance and DegreeRotate.
     	//addSequential(new DegreeRotate(calculateGearPath1::getBasicTurnToLiftAngle));
+    	addSequential(new WaitForRecentImage(TargetType.GEAR_VISION));		
     	addSequential(new AutoAlign(TargetType.GEAR_VISION));
     	addSequential(new AutoAlign(TargetType.GEAR_VISION));
-    	//addSequential(new AutoAlign(TargetType.GEAR_VISION));
-    	addSequential(new WaitForRecentImage(TargetType.GEAR_VISION));
-    	addSequential(new DriveDistance(Robot.visionProcessor.getAverageDistanceToGearTargetsHorizontal(), 3.0));
+    	//auto align
+    	addSequential(new DriveDistance(-Robot.visionProcessor.getAverageDistanceToGearTargetsHorizontal(), 3.0));
     	
     	//addSequential(calculateGearPath2);
     	//addSequential(new DegreeRotate(calculateGearPath2::getBasicTurnToLiftAngle));    	

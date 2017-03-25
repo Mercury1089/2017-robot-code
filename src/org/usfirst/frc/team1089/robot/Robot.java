@@ -2,6 +2,7 @@ package org.usfirst.frc.team1089.robot;
 import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.auton.AutonCommand;
+import org.usfirst.frc.team1089.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1089.robot.subsystems.Agitator;
 import org.usfirst.frc.team1089.robot.subsystems.Climber;
@@ -111,11 +112,17 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		MercLogger.close();
 		MercLogger.logMessage(Level.INFO, "Completed Disabled Init");
+/*		CalibrateGyro cal = new CalibrateGyro();
+
+		cal.start();*/	
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		if (Robot.oi.gamePad.getRawButton(RobotMap.GamepadButtons.START)) {
+			Robot.driveTrain.calibrateGyro();
+		}
 	}
 
 	/**

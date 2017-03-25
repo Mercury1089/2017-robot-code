@@ -116,8 +116,8 @@ public class OI {
         gamePadBtnR3 = new JoystickButton(gamePad, RobotMap.GamepadButtons.R3);
         gamePadBtnR3.whenPressed(new ReverseIntake(true));
         
-        start = new JoystickButton(gamePad, RobotMap.GamepadButtons.START);
-        start.whenPressed(new CalibrateGyro());
+//        start = new JoystickButton(gamePad, RobotMap.GamepadButtons.START);
+//        start.whenPressed(new CalibrateGyro());
         
         rightStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
         rightStick1.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));

@@ -87,7 +87,7 @@ public class AutonCommand extends CommandGroup {
         		addSequential(new DegreeRotate(-40 * reversalFactor));
     		}
     		else {
-        		addSequential(new DriveDistance(-2, 7.0));
+        		addSequential(new DriveDistance(-3.16, 5.0));
         	}
     		break;
     	case GO_TO_SHOOTING_RANGE:
@@ -152,7 +152,7 @@ public class AutonCommand extends CommandGroup {
     			addSequential(new DriveDistance(8.78));					// ARBITRARY VALUE
     		}
     		else if(startPos == AutonPosition.MIDDLE) {
-    			if(color.equals(Alliance.Blue))
+    			if(color.equals(Alliance.Red))
     				addSequential(new DegreeRotate(-70));
     			else
     				addSequential(new DegreeRotate(70));
