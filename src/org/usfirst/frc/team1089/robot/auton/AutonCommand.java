@@ -84,7 +84,7 @@ public class AutonCommand extends CommandGroup {
     		}
     		else if(startPos == AutonPosition.RIGHT) {
     			addSequential(new DriveDistance(-5.5, 7.0));
-        		addSequential(new DegreeRotate(-40 * reversalFactor));
+        		addSequential(new DegreeRotate(-50 * reversalFactor));
     		}
     		else {
         		addSequential(new DriveDistance(-3.16, 5.0));
@@ -101,7 +101,7 @@ public class AutonCommand extends CommandGroup {
     	case DELIVER_GEAR:
     		addSequential(new BasicGearDelivery());
 //    		addSequential(new DeliverGear());
-    		addSequential(new DriveDistance(5.4, 7.0));
+    		addSequential(new DriveDistance(4, 7.0));
    			addParallel(new ToggleGearDelivery(false));
     	case SHOOT:
     		if(firstMovement == AutonFirstMovement.GO_TO_SHOOTING_RANGE)

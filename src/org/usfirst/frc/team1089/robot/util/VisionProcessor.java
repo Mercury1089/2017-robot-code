@@ -52,7 +52,8 @@ public class VisionProcessor {
 		CENTER_TOTAL_HIGH;
 	
 	private final double OUT_OF_RANGE_CONST = -1;
-	private final double ON_TARGET_THRESHOLD = 1.5; 
+	private final double ON_TARGET_GEAR_THRESHOLD = 1.5; 
+	private final double ON_TARGET_HIGH_THRESHOLD = 4;
 	
 	// Vision constants
 	public static class PICam {
@@ -435,8 +436,7 @@ public class VisionProcessor {
 	}
 	
 	public boolean isOnTarget(TargetType target) {
-		return Math.abs(getAngleFromCenter(target)) < ON_TARGET_THRESHOLD;
-		
+		return Math.abs(getAngleFromCenter(target)) < (target == TargetType.GEAR_VISION ? ON_TARGET_GEAR_THRESHOLD : ON_TARGET_HIGH_THRESHOLD);
 	}
 
 	public void initDefaultCommand() {

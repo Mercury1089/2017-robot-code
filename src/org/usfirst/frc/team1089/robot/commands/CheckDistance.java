@@ -1,23 +1,15 @@
 package org.usfirst.frc.team1089.robot.commands;
 
-import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.subsystems.Shooter;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class RunAgitator extends Command {
+public class CheckDistance extends Command {
 
-	private Shooter leftShooter, rightShooter;
-    
-	public RunAgitator(Shooter leftShooter, Shooter rightShooter) {
+    public CheckDistance() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.rumbler);
-    	this.leftShooter = leftShooter;
-    	this.rightShooter = rightShooter;
     }
 
     // Called just before this Command runs the first time
@@ -26,8 +18,6 @@ public class RunAgitator extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	boolean run = leftShooter.getIsFeederRunning() || rightShooter.getIsFeederRunning();
-    	Robot.rumbler.motor.set(run ? 0.5 : 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -58,9 +58,9 @@ public class ShootWithDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	if (distance == 0) {
-//    		distance = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooterIsRunning",
-//        			false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": distance", 0) : 0.0;
+    	/*if (distance == 0) {
+    		distance = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooterIsRunning",
+        			false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": distance", 0) : 0.0;*/
     	
     	//distance = (Math.abs(distance) > 16 || Math.abs(distance) < 6 ? 8 : Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL));
     	distance = Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL);
@@ -100,6 +100,7 @@ public class ShootWithDistance extends Command {
     	}
     	else
     		shooterSystem.runFeeder(false);
+    	
     }
     
     // Make this return true when this Command no longer needs to run execute()
