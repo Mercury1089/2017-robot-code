@@ -77,7 +77,7 @@ public class DegreeRotate extends PIDCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return getPIDController().onTarget();
+    	return getPIDController().onTarget(); // FIXME this API is misleading - "on target" simply means we are AT the target, but not necessarily that we are finished (as we may be passing by while we are overshooting)
     }
 
     // Called once after isFinished returns true
