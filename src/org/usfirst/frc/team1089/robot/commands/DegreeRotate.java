@@ -53,6 +53,7 @@ public class DegreeRotate extends PIDCommand {
     	Robot.driveTrain.disableRobotDrive();
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(1.5);
+    	//getPIDController().setToleranceBuffer(2); // indicates that we want two measurements before confirming we are on target
     	getPIDController().setInputRange(-180, 180);
     	getPIDController().setOutputRange(-.5, .5);   //was at -.5,.5
     	
@@ -77,7 +78,7 @@ public class DegreeRotate extends PIDCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return getPIDController().onTarget(); // FIXME this API is misleading - "on target" simply means we are AT the target, but not necessarily that we are finished (as we may be passing by while we are overshooting)
+    	return getPIDController().onTarget(); // FIXME with a default tolerance buffer of 1 this could trigger false-positives
     }
 
     // Called once after isFinished returns true
