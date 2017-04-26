@@ -76,14 +76,14 @@ public class AutonCommand extends CommandGroup {
         	
     		
     		if(startPos == AutonPosition.LEFT) {
-    			addSequential(new DriveDistance(-5.5, 7.0));
+    			addSequential(new DriveDistance(-5.5, 6.0));
         		addSequential(new DegreeRotate(60 * reversalFactor));	//Assuming that the gear delivery mechanism is in the back of the robot
         		//addSequential(new BasicGearDelivery());
     			
         		//addSequential(new DriveDistance((distances[1] - 4), 0.1, 3.0));     	//-4 to be away from Gear Lift by 4 ft ~ARBITRARY VALUE~
     		}
     		else if(startPos == AutonPosition.RIGHT) {
-    			addSequential(new DriveDistance(-5.5, 7.0));
+    			addSequential(new DriveDistance(-5.5, 6.0));
         		addSequential(new DegreeRotate(-50 * reversalFactor));
     		}
     		else {

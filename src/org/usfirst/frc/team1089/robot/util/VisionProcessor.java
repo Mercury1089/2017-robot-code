@@ -233,7 +233,7 @@ public class VisionProcessor {
 				vfov = PICam.VFOV_PI;
 				vres = PICam.VRES_PI;
 				targetHeight = TARGET_HEIGHT_INCHES_GEAR;
-				offset = 0;
+				offset = 1;
 				break;
 			case HIGH_GOAL:
 				perceivedHeight = HIGH_GOAL_TABLE.getNumber("targetHeight", 0);
@@ -324,7 +324,7 @@ public class VisionProcessor {
 				centerX = GEAR_VISION_TABLE.getNumberArray("center", DEF_VALUE)[0];
 				hfov = PICam.HFOV_PI;
 				hres = PICam.HRES_PI;
-				angleOffset = -1;
+				angleOffset = 1;
 				break;
 			case HIGH_GOAL:
 				centerX = HIGH_GOAL_TABLE.getNumberArray("center", DEF_VALUE)[0];

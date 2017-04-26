@@ -36,6 +36,8 @@ public class BasicGearDelivery extends CommandGroup {
     	addSequential(new AutoAlign(TargetType.GEAR_VISION));
     	//addSequential(new AutoAlign(TargetType.GEAR_VISION));
     	//auto align will wait for a recent image.
+    	
+    	addSequential(new CheckDistance());
     	addSequential(new DriveDistance(Robot.visionProcessor::getAdjustedAverageDistanceToGearTargetsHorizontal, 3.0));
     	 
     	//addSequential(calculateGearPath2);

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1089.robot.commands;
 
+import org.usfirst.frc.team1089.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -22,7 +24,7 @@ public class CheckDistance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Math.abs(Robot.visionProcessor.getAdjustedAverageDistanceToGearTargetsHorizontal()) > 0.0;
     }
 
     // Called once after isFinished returns true

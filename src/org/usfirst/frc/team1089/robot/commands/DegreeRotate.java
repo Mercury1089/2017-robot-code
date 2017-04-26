@@ -18,8 +18,13 @@ public class DegreeRotate extends PIDCommand {
 	protected double _heading;
 	private DoubleSupplier _angleSupplier = null;
 	
+	private int counter;
+	private final int ONTARGET_THRESHOLD = 5;
+    
+    private final double MIN_PERCENT_VBUS = 0.15;
+	
     protected DegreeRotate() {
-    	super(0.2, 0.0007, 0.0);
+    	super(0.18, 0.0008, 0.0);
     	_heading = 0.0;
     	requires(Robot.driveTrain);
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());
@@ -54,7 +59,7 @@ public class DegreeRotate extends PIDCommand {
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(1.5);
     	getPIDController().setInputRange(-180, 180);
-    	getPIDController().setOutputRange(-.5, .5);   //was at -.5,.5
+    	getPIDController().setOutputRange(-.6, .6);   //was at -.5,.5
     	
     	//Debugging Logs (delete if necessary)
     	//MercLogger.logMessage(Level.INFO, "Before reset - Gyro reads: " + Robot.driveTrain.getGyro().getAngle() + " degrees.");
@@ -77,7 +82,12 @@ public class DegreeRotate extends PIDCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return getPIDController().onTarget();
+    	if(getPIDController().onTarget()) {
+    		counter++;
+    	} else {
+    		counter = 0;
+    	}
+    	return counter > ONTARGET_THRESHOLD;
     }
 
     // Called once after isFinished returns true
@@ -104,8 +114,12 @@ public class DegreeRotate extends PIDCommand {
 
 	@Override
 	protected void usePIDOutput(double output) {
+		if(getPIDController().onTarget()) {
+			output = 0;
+		} else if(Math.abs(output) < MIN_PERCENT_VBUS) {
+			output = Math.signum(output) * MIN_PERCENT_VBUS;
+		}
 		Robot.driveTrain.pidWrite(output);
-		
 	}
 	
 	protected void updateHeading(double heading) {

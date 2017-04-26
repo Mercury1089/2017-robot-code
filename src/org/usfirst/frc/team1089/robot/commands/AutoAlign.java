@@ -54,7 +54,8 @@ public class AutoAlign extends DegreeRotate {
     		if (Robot.visionProcessor.isOnTarget(target)) {
         		return true;
         	} else {
-            	super.updateHeading(Robot.visionProcessor.getAngleFromCenter(target));
+            	//super.updateHeading(Robot.visionProcessor.getAngleFromCenter(target));
+        		return true;
         	}
     	}
     	return false;
