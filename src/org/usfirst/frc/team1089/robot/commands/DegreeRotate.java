@@ -58,6 +58,7 @@ public class DegreeRotate extends PIDCommand {
     	Robot.driveTrain.disableRobotDrive();
     	getPIDController().setContinuous(true);
     	getPIDController().setAbsoluteTolerance(1.5);
+    	//getPIDController().setToleranceBuffer(2); // indicates that we want two measurements before confirming we are on target
     	getPIDController().setInputRange(-180, 180);
     	getPIDController().setOutputRange(-.6, .6);   //was at -.5,.5
     	
