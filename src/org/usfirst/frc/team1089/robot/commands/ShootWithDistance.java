@@ -5,6 +5,7 @@ import java.util.logging.Level;
 
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter;
+import org.usfirst.frc.team1089.robot.util.ITargetProvider;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
@@ -24,7 +25,8 @@ public class ShootWithDistance extends Command {
 	private double distance;
 	private double speed;
 	private final int SPEED_THRESHOLD = 300;
-	private DoubleSupplier distanceSupplier;
+	//private DoubleSupplier distanceSupplier;
+	private ITargetProvider targetProvider;
 	
     public ShootWithDistance(Shooter s) {
         // Use requires() here to declare subsystem dependencies
@@ -37,10 +39,19 @@ public class ShootWithDistance extends Command {
     	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Constructed using ShootWithDistance(Shooter s)");
     }
     
-    public ShootWithDistance(Shooter s, DoubleSupplier d) {
+    /*public ShootWithDistance(Shooter s, DoubleSupplier dp) {
     	requires(s);
     	shooterSystem = s;
-    	distanceSupplier = d;
+    	distanceSupplier = dp;
+    	speed = 0;
+    	
+    	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Constructed using ShootWithDistance(Shooter s)");
+    }*/
+    
+    public ShootWithDistance(Shooter s, ITargetProvider tP) {
+    	requires(s);
+    	shooterSystem = s;
+    	targetProvider = tP;
     	speed = 0;
     	
     	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Constructed using ShootWithDistance(Shooter s)");
@@ -49,8 +60,7 @@ public class ShootWithDistance extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	shooterSystem.setToSpeed();
-    	if (distanceSupplier != null)
-    		distance = distanceSupplier.getAsDouble();
+    	distance = 0.0;
     	
     	MercLogger.logMessage(Level.INFO, "ShootWithDistance: Initialized");
     	SmartDashboard.putNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": Encoder Set", 2000.0);
@@ -58,26 +68,8 @@ public class ShootWithDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	/*if (distance == 0) {
-    		distance = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooterIsRunning",
-        			false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": distance", 0) : 0.0;*/
-    	
-    	//distance = (Math.abs(distance) > 16 || Math.abs(distance) < 6 ? 8 : Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL));
-    	distance = Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL);
-    	
-    	//speed = (Math.abs(distance) > 14 || Math.abs(distance) < 6 ? 3000 : (distance-6)/8*5000);
-    	
-//    	speed = 2000;
-    	
-    	/*speed = SmartDashboard.getBoolean("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": shooterIsRunning",
-       		false) ? SmartDashboard.getNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": Encoder Set", 0) : 0.0;*/
-    	
-/*    	shooterSystem.shooterMotor.set(1);
-    	shooterSystem.feederMotor.set(0);*/
-    	
-//    	distance += 20.5/12;
-    	/*offset = (14 - distance) / 28;
-    	distance -= offset;*/
+    	//distance = Robot.visionProcessor.getDistanceUsingVerticalInformation(TargetType.HIGH_GOAL);
+    	distance = targetProvider.getDistance();
     	
     	if ( distance >= 6 && distance <= 14) {
     		speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;	//temporary, will work for 12 ft and under
@@ -93,7 +85,7 @@ public class ShootWithDistance extends Command {
         	shooterSystem.setSpeed(speed);    		
     	}
     	   	
-    	if (	Robot.visionProcessor.isOnTarget(TargetType.HIGH_GOAL) &&
+    	if (	targetProvider.isOnTarget() &&
     			Math.abs(shooterSystem.getSetSpeed()) > 0 &&
     			Math.abs(shooterSystem.getSpeed()) > speed - SPEED_THRESHOLD) { 
     		shooterSystem.runFeeder(true);

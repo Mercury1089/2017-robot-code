@@ -7,8 +7,11 @@ import org.usfirst.frc.team1089.robot.auton.AutonSecondAction;
 import org.usfirst.frc.team1089.robot.auton.AutonSecondMovement;
 import org.usfirst.frc.team1089.robot.commands.*;
 import org.usfirst.frc.team1089.robot.commands.CalculateGearPath.Direction;
+import org.usfirst.frc.team1089.robot.subsystems.Shooter;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
+import org.usfirst.frc.team1089.robot.util.ManualTargetProvider;
 import org.usfirst.frc.team1089.robot.util.Utilities;
+import org.usfirst.frc.team1089.robot.util.VisionProcessor;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -76,6 +79,7 @@ public class OI {
     public JoystickButton rightStick1;
 	public JoystickButton rightStick3;
 	public JoystickButton rightStick6;
+	public JoystickButton rightStick7;
 	
 	//Left Stick
     public JoystickButton leftStick1;
@@ -142,6 +146,9 @@ public class OI {
         
         rightStick6 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN6);
         rightStick6.whenPressed(new OpenLatch());
+        
+        rightStick7 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN7);
+        rightStick7.whenPressed(new ManualShoot());
         
         
 /*        rightStick2 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN2);

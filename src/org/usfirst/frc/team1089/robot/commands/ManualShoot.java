@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.BoilerTargetProvider;
 import org.usfirst.frc.team1089.robot.util.ITargetProvider;
+import org.usfirst.frc.team1089.robot.util.ManualTargetProvider;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
@@ -13,9 +14,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoShoot extends CommandGroup {
+public class ManualShoot extends CommandGroup {
 
-    public AutoShoot() {
+    public ManualShoot() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -33,14 +34,8 @@ public class AutoShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	ITargetProvider targetProvider = new BoilerTargetProvider(Robot.visionProcessor);
+    	ITargetProvider targetProvider = new ManualTargetProvider();
     	
-    	CalculateHighGoalPath CalculateHighGoalPath = new CalculateHighGoalPath();
-    	addSequential(CalculateHighGoalPath);
-    	
-    	//addSequential(new DriveDistance(CalculateHighGoalPath::getDistance, 5.0));
-    	//addSequential(new DegreeRotate(CalculateHighGoalPath::getAngle));
-    	addSequential(new AutoAlign(TargetType.HIGH_GOAL));
     	addParallel(new ShootWithDistance(Robot.leftShooter, targetProvider));
      	addSequential(new ShootWithDistance(Robot.rightShooter, targetProvider));
     }

@@ -2,6 +2,7 @@ package org.usfirst.frc.team1089.robot.util;
 
 import org.opencv.core.Point;
 import org.opencv.core.Size;
+import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
