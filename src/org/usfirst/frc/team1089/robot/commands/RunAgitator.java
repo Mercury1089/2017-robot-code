@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RunAgitator extends Command {
 
 	private Shooter leftShooter, rightShooter;
+	private int numIterations = 0;
+	private int reversalFactor = 1;
     
 	public RunAgitator(Shooter leftShooter, Shooter rightShooter) {
         // Use requires() here to declare subsystem dependencies
@@ -27,7 +29,15 @@ public class RunAgitator extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	boolean run = leftShooter.getIsFeederRunning() || rightShooter.getIsFeederRunning();
-    	Robot.rumbler.motor.set(run ? 0.5 : 0);
+    	
+    	if(numIterations == 100) {
+    		numIterations = 0;
+    		reversalFactor *= -1;
+    	}
+    	
+    	Robot.rumbler.motor.set(run ? reversalFactor * 0.5 : 0);
+    	
+    	numIterations++;
     }
 
     // Make this return true when this Command no longer needs to run execute()

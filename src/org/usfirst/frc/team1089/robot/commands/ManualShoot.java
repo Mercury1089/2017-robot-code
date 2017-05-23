@@ -1,13 +1,8 @@
 package org.usfirst.frc.team1089.robot.commands;
 
-import java.util.logging.Level;
-
 import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.util.BoilerTargetProvider;
 import org.usfirst.frc.team1089.robot.util.ITargetProvider;
 import org.usfirst.frc.team1089.robot.util.ManualTargetProvider;
-import org.usfirst.frc.team1089.robot.util.MercLogger;
-import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -23,6 +18,7 @@ public class ManualShoot extends CommandGroup {
         // these will run in order.
 
         // To run multiple commands at the same time,
+    	
         // use addParallel()
         // e.g. addParallel(new Command1());
         //      addSequential(new Command2());

@@ -78,8 +78,6 @@ public class ShootWithDistance extends Command {
     		speed = 0;
     	}
     	
-    	//(.9459*6000)
-    	
     	if(speed != shooterSystem.getSetSpeed()) {
         	SmartDashboard.putNumber("Shooter ID " + shooterSystem.shooterMotor.getDeviceID() + ": Encoder Set Speed", speed);
         	shooterSystem.setSpeed(speed);    		
