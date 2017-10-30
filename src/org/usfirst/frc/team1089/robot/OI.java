@@ -101,8 +101,8 @@ public class OI {
         gamePadBtnA.whenPressed(new DriveWithJoysticks());
         
         //StopFeeder	(only needed if feeder/shooter combo is not working properly)
-        gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
-        gamePadBtnB.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
+        //gamePadBtnB = new JoystickButton(gamePad, RobotMap.GamepadButtons.B);
+        //gamePadBtnB.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
         
         //Run Feeder	(only needed if feeder/shooter combo is not working properly)
         gamePadBtnX = new JoystickButton(gamePad, RobotMap.GamepadButtons.X);
@@ -120,11 +120,11 @@ public class OI {
         gamePadBtnR3 = new JoystickButton(gamePad, RobotMap.GamepadButtons.R3);
         gamePadBtnR3.whenPressed(new ReverseIntake(true));
         
-//        start = new JoystickButton(gamePad, RobotMap.GamepadButtons.START);
-//        start.whenPressed(new CalibrateGyro());
+        start = new JoystickButton(gamePad, RobotMap.GamepadButtons.START);
+        start.whenPressed(new CalibrateGyro());
         
-        rightStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
-        rightStick1.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
+        //rightStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
+        //rightStick1.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
 
         leftStick1 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN1);
         leftStick1.whenPressed(new AutoAlign(TargetType.GEAR_VISION));        
@@ -224,6 +224,7 @@ public class OI {
 		
 		//selectAuton();
 	}
+	
 /*	
 	public void updateOISlow() {
 		CalculateGearPath calculateGearPath = new CalculateGearPath(CalculateGearPath.Direction.REVERSE);
@@ -271,7 +272,7 @@ public class OI {
 		startPosition.addObject("Right Line: 3", AutonPosition.RIGHT);
 		//startPosition.addObject("Right, Right Line: 8", AutonPosition.POSITION_8);
 		//startPosition.addObject("Right Corner: 9", AutonPosition.POSITION_9);
-		SmartDashboard.putData("S P", startPosition);
+		SmartDashboard.putData("S  P", startPosition);
 		
 		firstMovement = new SendableChooser<AutonFirstMovement>();
 		firstMovement.addDefault("Do nothing", AutonFirstMovement.DO_NOTHING);
@@ -343,6 +344,7 @@ public class OI {
     public AutonSecondMovement getSecondMovement() {
     	return secondMovement.getSelected();
     }
+    
     
     public AutonSecondAction getSecondAction() {
     	return secondAction.getSelected();

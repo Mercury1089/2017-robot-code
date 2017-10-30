@@ -1,5 +1,20 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="EncLFinal" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="580" y="0"/>
+	</widget>
+	<widget field="EncRFinal" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="324" y="650"/>
+	</widget>
+	<widget field="Left Enc Inches" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="324" y="627"/>
+	</widget>
+	<widget field="EndPosVals" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="324" y="604"/>
+	</widget>
+	<widget field="S  P" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="833" y="325"/>
+	</widget>
 	<widget field="High Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="324" y="581"/>
 	</widget>
@@ -128,19 +143,19 @@
 		<location x="320" y="310"/>
 	</widget>
 	<widget field="S1" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="1760" y="126"/>
+		<location x="1097" y="45"/>
 	</widget>
 	<widget field="S2" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="1307" y="257"/>
+		<location x="985" y="187"/>
 	</widget>
 	<widget field="Start Pos" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
 		<location x="1504" y="410"/>
 	</widget>
 	<widget field="S3" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="1623" y="213"/>
+		<location x="1079" y="300"/>
 	</widget>
 	<widget field="S4" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="1429" y="120"/>
+		<location x="953" y="91"/>
 	</widget>
 	<widget field="S P" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
 		<location x="22" y="20"/>

@@ -24,7 +24,7 @@ public class DegreeRotate extends PIDCommand {
     private final double MIN_PERCENT_VBUS = 0.15;
 	
     protected DegreeRotate() {
-    	super(0.18, 0.0008, 0.0);
+    	super(0.195, 0.0008, 0.0);
     	_heading = 0.0;
     	requires(Robot.driveTrain);
     	LiveWindow.addActuator("Robot.driveTrain", "DegreeRotate", getPIDController());

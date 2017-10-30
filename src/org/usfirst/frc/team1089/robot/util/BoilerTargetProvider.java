@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1089.robot.util;
 
-import org.usfirst.frc.team1089.robot.Robot;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 public class BoilerTargetProvider implements ITargetProvider{

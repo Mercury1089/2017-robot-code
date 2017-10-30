@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1089.robot.commands;
 
 import org.usfirst.frc.team1089.robot.Robot;
+import org.usfirst.frc.team1089.robot.util.BoilerTargetProvider;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -27,7 +28,7 @@ public class RunAllShooters extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	this.addParallel(new ShootWithDistance(Robot.leftShooter));
-    	this.addParallel(new ShootWithDistance(Robot.rightShooter));
+    	this.addParallel(new ShootWithDistance(Robot.leftShooter, new BoilerTargetProvider(Robot.visionProcessor)));
+    	//this.addParallel(new ShootWithDistance(Robot.rightShooter, new BoilerTargetProvider(Robot.visionProcessor)));
     }
 }
