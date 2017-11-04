@@ -76,8 +76,8 @@ public class Robot extends IterativeRobot {
 		driveTrain = new DriveTrain();
 		gear = new Gear();
 		ultrasonic = new Ultrasonic();
-		leftShooter = new Shooter(RobotMap.CAN.LEFT_SHOOTER_TALON_ID, RobotMap.CAN.LEFT_FEEDER_TALON_ID, 0.02, 0, 0.2, 0.5115, -1);			
-		rightShooter = new Shooter(RobotMap.CAN.RIGHT_SHOOTER_TALON_ID, RobotMap.CAN.RIGHT_FEEDER_TALON_ID, 0.02, 0, 0.2, 0.4796, 1);			
+		leftShooter = new Shooter(RobotMap.CAN.LEFT_SHOOTER_TALON_ID, RobotMap.CAN.LEFT_FEEDER_TALON_ID, 0.03, 0, 0, 0.5115, -1);			
+		rightShooter = new Shooter(RobotMap.CAN.RIGHT_SHOOTER_TALON_ID, RobotMap.CAN.RIGHT_FEEDER_TALON_ID, 0.03, 0, 0, 0.4796, 1);			
 		//shooter = new Shooter(7);
 		leftShooter.getMotor().setInverted(true);		//TODO Check if they are inverted or not
 		rightShooter.getMotor().setInverted(true);

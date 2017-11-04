@@ -29,7 +29,7 @@ public class AutoAlign extends DegreeRotate {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if (target.equals(TargetType.GEAR_VISION))
-			_heading = Robot.visionProcessor.angleGear;
+			_heading = Robot.visionProcessor.angleGear - 6;
 		else if (target.equals(TargetType.HIGH_GOAL))
 			_heading = Robot.visionProcessor.angleHigh;
 		else
@@ -43,6 +43,8 @@ public class AutoAlign extends DegreeRotate {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	/*if(Robot.visionProcessor.isRecent(target))
+    		super.updateHeading(Robot.visionProcessor.getAngleFromCenter(target));*/
     	super.execute();
     }
 
@@ -54,7 +56,6 @@ public class AutoAlign extends DegreeRotate {
     		if (Robot.visionProcessor.isOnTarget(target)) {
         		return true;
         	} else {
-            	//super.updateHeading(Robot.visionProcessor.getAngleFromCenter(target));
         		return true;
         	}
     	}

@@ -5,13 +5,18 @@ import org.usfirst.frc.team1089.robot.auton.AutonFirstMovement;
 import org.usfirst.frc.team1089.robot.auton.AutonPosition;
 import org.usfirst.frc.team1089.robot.auton.AutonSecondAction;
 import org.usfirst.frc.team1089.robot.auton.AutonSecondMovement;
-import org.usfirst.frc.team1089.robot.commands.*;
-import org.usfirst.frc.team1089.robot.commands.CalculateGearPath.Direction;
-import org.usfirst.frc.team1089.robot.subsystems.Shooter;
+import org.usfirst.frc.team1089.robot.commands.BasicGearDelivery;
+import org.usfirst.frc.team1089.robot.commands.CalibrateGyro;
+import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1089.robot.commands.ManualShoot;
+import org.usfirst.frc.team1089.robot.commands.OpenLatch;
+import org.usfirst.frc.team1089.robot.commands.ReverseIntake;
+import org.usfirst.frc.team1089.robot.commands.RunAllShooters;
+import org.usfirst.frc.team1089.robot.commands.RunClimber;
+import org.usfirst.frc.team1089.robot.commands.RunIntake;
+import org.usfirst.frc.team1089.robot.commands.StopAllShooters;
+import org.usfirst.frc.team1089.robot.commands.ToggleGearDelivery;
 import org.usfirst.frc.team1089.robot.subsystems.Shooter.ShooterEnum;
-import org.usfirst.frc.team1089.robot.util.ManualTargetProvider;
-import org.usfirst.frc.team1089.robot.util.Utilities;
-import org.usfirst.frc.team1089.robot.util.VisionProcessor;
 import org.usfirst.frc.team1089.robot.util.VisionProcessor.TargetType;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -26,8 +31,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 
-	public static final double LEFT_JS_DEADZONE_LIMIT = 0.3; // Deadzone limit for the left stick	
-	public static final double RIGHT_JS_DEADZONE_LIMIT = 0.2; // Deadzone limit for the right stick	
+	public static final double LEFT_JS_DEADZONE_LIMIT = 0.4; // Deadzone limit for the left stick	
+	public static final double RIGHT_JS_DEADZONE_LIMIT = 0.4; // Deadzone limit for the right stick	
 	
 	
 	SendableChooser<AutonPosition> startPosition; 
@@ -127,7 +132,7 @@ public class OI {
         //rightStick1.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
 
         leftStick1 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN1);
-        leftStick1.whenPressed(new AutoAlign(TargetType.GEAR_VISION));        
+        leftStick1.whenPressed(new BasicGearDelivery());        
         
         leftStick2 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN2);
         leftStick2.whenPressed(new RunIntake(true));
