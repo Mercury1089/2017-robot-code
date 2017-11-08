@@ -29,6 +29,6 @@ public class RunAllShooters extends CommandGroup {
         // arm.
     	
     	this.addParallel(new ShootWithDistance(Robot.leftShooter, new BoilerTargetProvider(Robot.visionProcessor)));
-    	//this.addParallel(new ShootWithDistance(Robot.rightShooter, new BoilerTargetProvider(Robot.visionProcessor)));
+    	this.addParallel(new ShootWithDistance(Robot.rightShooter, new BoilerTargetProvider(Robot.visionProcessor)));
     }
 }

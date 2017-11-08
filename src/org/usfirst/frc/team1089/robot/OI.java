@@ -5,6 +5,8 @@ import org.usfirst.frc.team1089.robot.auton.AutonFirstMovement;
 import org.usfirst.frc.team1089.robot.auton.AutonPosition;
 import org.usfirst.frc.team1089.robot.auton.AutonSecondAction;
 import org.usfirst.frc.team1089.robot.auton.AutonSecondMovement;
+import org.usfirst.frc.team1089.robot.commands.AutoAlign;
+import org.usfirst.frc.team1089.robot.commands.AutoShoot;
 import org.usfirst.frc.team1089.robot.commands.BasicGearDelivery;
 import org.usfirst.frc.team1089.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team1089.robot.commands.DriveWithJoysticks;
@@ -128,8 +130,8 @@ public class OI {
         start = new JoystickButton(gamePad, RobotMap.GamepadButtons.START);
         start.whenPressed(new CalibrateGyro());
         
-        //rightStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
-        //rightStick1.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));
+        rightStick1 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN1);
+        rightStick1.whenPressed(new AutoShoot());
 
         leftStick1 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN1);
         leftStick1.whenPressed(new BasicGearDelivery());        
@@ -146,7 +148,7 @@ public class OI {
         leftStick7 = new JoystickButton(leftStick, RobotMap.JoystickButtons.BTN7);
         leftStick7.whenPressed(new RunClimber(false));
         
-/*        rightStick3 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN3);
+      /*rightStick3 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN3);
         rightStick3.whenPressed(new AutoAlign(TargetType.HIGH_GOAL));*/
         
         rightStick6 = new JoystickButton(rightStick, RobotMap.JoystickButtons.BTN6);

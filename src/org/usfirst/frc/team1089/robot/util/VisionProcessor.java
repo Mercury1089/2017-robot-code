@@ -433,7 +433,7 @@ public class VisionProcessor {
 	}
 
 	public double getAdjustedAverageDistanceToGearTargetsHorizontal() {
-		return -(getAverageDistanceToGearTargetsHorizontal() - 0.5); 
+		return -(getAverageDistanceToGearTargetsHorizontal() - 0.5 - 0.25); 
 	}
 	
 	public boolean isOnTarget(TargetType target) {

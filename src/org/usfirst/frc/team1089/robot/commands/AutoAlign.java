@@ -29,9 +29,9 @@ public class AutoAlign extends DegreeRotate {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if (target.equals(TargetType.GEAR_VISION))
-			_heading = Robot.visionProcessor.angleGear - 6;
+			_heading = Robot.visionProcessor.angleGear - 5;
 		else if (target.equals(TargetType.HIGH_GOAL))
-			_heading = Robot.visionProcessor.angleHigh;
+			_heading = Robot.visionProcessor.angleHigh - 3;
 		else
 			_heading = 0;
     	

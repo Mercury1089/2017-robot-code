@@ -73,7 +73,8 @@ public class ShootWithDistance extends Command {
     	
     	if ( distance >= 6 && distance <= 14) {
     		speed = -0.00283*Math.pow(distance, 2)+0.914*distance+16.926;	//temporary, will work for 12 ft and under
-        	speed = speed/29.1585 * 3600;		//XXX Attempt at converting big boy to little enc	
+        	speed = speed/29.1585 * 3600; //XXX Attempt at converting big boy to little enc
+        	speed = speed + 100; //Offset value
     	} else {
     		speed = 0;
     	}
