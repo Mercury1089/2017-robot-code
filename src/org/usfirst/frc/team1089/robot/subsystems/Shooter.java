@@ -1,23 +1,14 @@
 package org.usfirst.frc.team1089.robot.subsystems;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 
-import org.usfirst.frc.team1089.robot.Robot;
-import org.usfirst.frc.team1089.robot.RobotMap;
-import org.usfirst.frc.team1089.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1089.robot.commands.RunShooter;
-import org.usfirst.frc.team1089.robot.commands.ShootWithDistance;
 import org.usfirst.frc.team1089.robot.commands.StopShooter;
-import org.usfirst.frc.team1089.robot.commands.TestShooter;
 import org.usfirst.frc.team1089.robot.util.MercLogger;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This {@link Subsystem} handles the shooting mechanism,
@@ -35,11 +26,11 @@ public class Shooter extends Subsystem {
 	private double highest, lowest;
 	private double setSpeed;
 
-	public static double F = 0;
+/*	public static double F = 0;
 	public static double P = 0; // .45
 	public static double I = 0.0;
 	public static double D = 0.0; // 0.2		
-
+*/
 	private int reversalFactor = 1;
 	private static final double QUAD_ENC_TICKS_PER_ROTATION = 200;	//Includes x4 for QUAD
 	private static final double HUNDRED_MS_PER_MINUTE = 600;
@@ -54,13 +45,13 @@ public class Shooter extends Subsystem {
 		DUAL_STAGGERED_SHOOTER
 	}
 	
-	public Shooter(int shooterID, int feederID, double proportional, double integral, double derivative, double feed, int reverse) {
+	public Shooter(int shooterID, int feederID,/* double proportional, double integral, double derivative, double feed,*/ int reverse) {
 		shooterMotor = new CANTalon(shooterID);
     	shooterMotor.enableBrakeMode(false);
-    	P = proportional;
+/*    	P = proportional;
     	I = integral;
     	D = derivative;
-    	F = feed;
+    	F = feed;*/
     	// setting feedback as quad encoder does NOT enable unit scaling by default
     	// when set to speed mode the speed will be expressed in pulses per 100 ms
 		shooterMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -94,14 +85,14 @@ public class Shooter extends Subsystem {
 	}
 	
 	public void setToSpeed() {
-		shooterMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+/*		shooterMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
     	shooterMotor.setP(P);
     	shooterMotor.setI(I);
     	shooterMotor.setD(D);
     	shooterMotor.setF(F);
     	shooterMotor.configPeakOutputVoltage(0, -12);
 		shooterMotor.configNominalOutputVoltage(0,0);
-		shooterMotor.enableControl();
+		shooterMotor.enableControl();*/
 		MercLogger.logMessage(Level.INFO, "Shooter " + shooterMotor.getDeviceID() + " in Speed mode.");
 	}
 	
